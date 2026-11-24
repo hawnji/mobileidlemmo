@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "id": "greenvale_start",
+  "name": "Greenvale",
+  "description": "The starting valley: a riverside village, an oak forest and a small copper mine.",
+  "width": 64,
+  "height": 48,
+  "rows": [
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT^^^^^^^^^^^^^^^^^^^^^^^^",
+    "T........................s~~~s..........^^^^^^^^^^^^^^^^^^^^^^^^",
+    "Tfffffffffffffffffff......s~~~s.........^^^^^^^^^^^^^^^^^^^^^^^^",
+    "Tffffffffffffffffffff.....s~~~s,,.......^^^^^^^cccccccccccccc^^^",
+    "TfffffTfffffffffTffff...,..s~~~s........^^^^^^^cccccccccccccc^^^",
+    "TffffffTfTfffffffffff...,..s~~~s.........^^^^^^cccccccccccccc^^^",
+    "TffTTfTTTfffffTfTffff....,.s~~~s.........^^^^^^cccccccccccccc^^^",
+    "TffffffffTffffTfTffff......s~~~s..........^^^^^cccccccccccccc^^^",
+    "TfffTffffffffffffffff......s~~~s...........^^^^cccccccccccccc^^^",
+    "Tffffffffffffffffffff......s~~~s....,......^^^^cccccccccccccc^^^",
+    "Tffffffffffffffffffff...,..s~~~s,...........^^^cccccccccccccc^^^",
+    "TfffTffffffffffffTff.......s~~~s.............^^^^^ccccc^cccc^^^^",
+    "TffTTTTTfffffffffTff...,.,.s~~~s.,............^^^^ccccc^cccc^^^^",
+    "TffffTffffffTTffffff.......s~~~s.......,.......^^^ccccc^^^^^^^^^",
+    "TfffffTffffffTTfffff.......s~~~s.............,...^^c=c^^^^^^^^^^",
+    "Tffffffffffffffffff.......s~~~s...................^c=c^^^^^^^^^^",
+    "TfffffffffffffTffff.......s~~~s.,..................c=c^^^^^^^^^^",
+    "TffffTfffffffffffff.......s~~~s...........,.......,.=..........^",
+    "TfffffTffffffTfffff......s~~~s......................=..........^",
+    "TfffTTfffffffffffff......s~~~s.,..............,.....=..,.......^",
+    "TffTTTfffffffffffff..,...s~~~s.........,............=..........^",
+    "TffffTfffffffffffff..,..s~~~s...............=========,.........^",
+    "TfffffffffffTTTffff.....s~~~s.......pppppppppppppppp=.,....,...^",
+    "TfffffffffTffffffff....s~~~s........pHHHHpppHHHHHpHHH..........^",
+    "TfffffffffTTffffffff...s~~~s..,.....pHHHHpppHHHHHpHHH..........^",
+    "TfffffffffTTffffffff...s~~~s........pHHHHpppHHHHHpHHH,.........^",
+    "Tfffffffffffffffffff,..s~~~s........ppppppppppppppHHH..........^",
+    "TfffffffffTTffffffff...s~~~s........ppppppppppppppppp..........^",
+    "TffffffTTfffTffffffff..s~~~s........ppppppppppppppppp..........^",
+    "TfffffffTfTTff==========bbb==========pppppppppppppppp...,.....,^",
+    "TffffffffTffff==========bbb=========ppppppppppppppppp......,...^",
+    "Tffffffffffffffffffff..s~~~s........pHHHHppppppppHHHH..........^",
+    "TfffffffffffffTffffff..s~~~s........pHHHHppppppppHHHH..........^",
+    "TfffffffffTfTffffffff..s~~~s........pHHHHppHHHHppHHHH.........,^",
+    "TfffffffffffTTTffffff...s~~~s.......pHHHHppHHHHppHHHH...,.....,^",
+    "TfffffffffTTfffffffff...s~~~s,......pppppppHHHHpppppp.,........^",
+    "TfffffffffTTffffffff....s~~~s..............=..,....,...........^",
+    "TffffffffTfTffffffff.....s~~~s.======......=...................^",
+    "TfffffffffffffffTTff.....s~~~s.....wwwwwwww=wwwwwwww......,....^",
+    "TfffffffffTTffffTfff....,.s~~~s.....xxxxxxxxxxxxxxx....,....,..^",
+    "TffffTfffffffffTTTT.......s~~~s.....xxxxxxxxxxxxxxx...,........^",
+    "TfffffTfffTTTfffTTf.....,.s~~~s.....xxxxxxxxxxxxxxx.,..........^",
+    "TffffTTffffffffTfff....,..,s~~~s....xxxxxxxxxxxxxxx............^",
+    "TffffffffffffffffTf........s~~~s....xxxxxxxxxxxxxxx,...........^",
+    "TffffffffffffffTTTf........s~~~s....xxxxxxxxxxxxxxx............^",
+    "Tffffffffffffffffff........s~~~s.,.wwwwwwwwwwwwwwwww...........^",
+    "T..........................s~~~s...............................^",
+    "TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~~TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT^"
+  ],
+  "spawn_tile": [
+    44,
+    30
+  ],
+  "storage": {
+    "id": "village_storage",
+    "name": "Village Storage",
+    "tile": [
+      44,
+      28
+    ]
+  },
+  "locations": [
+    {
+      "id": "greenvale_hollow",
+      "name": "Greenvale Hollow",
+      "kind": "village",
+      "rect": [
+        35,
+        21,
+        18,
+        16
+      ]
+    },
+    {
+      "id": "copper_mine",
+      "name": "Greenvale Mine",
+      "kind": "resource_area",
+      "rect": [
+        46,
+        2,
+        15,
+        15
+      ]
+    },
+    {
+      "id": "oakwood_forest",
+      "name": "Oakwood Forest",
+      "kind": "resource_area",
+      "rect": [
+        1,
+        2,
+        21,
+        44
+      ]
+    },
+    {
+      "id": "greenvale_river",
+      "name": "Greenvale River",
+      "kind": "resource_area",
+      "rect": [
+        24,
+        32,
+        10,
+        14
+      ]
+    },
+    {
+      "id": "hollow_farms",
+      "name": "Hollow Farms",
+      "kind": "farmland",
+      "rect": [
+        35,
+        38,
+        17,
+        8
+      ]
+    }
+  ],
+  "resource_nodes": [
+    {
+      "id": "copper_rock_1",
+      "type": "copper_rock",
+      "tile": [
+        48,
+        5
+      ]
+    },
+    {
+      "id": "copper_rock_2",
+      "type": "copper_rock",
+      "tile": [
+        51,
+        4
+      ]
+    },
+    {
+      "id": "copper_rock_3",
+      "type": "copper_rock",
+      "tile": [
+        55,
+        5
+      ]
+    },
+    {
+      "id": "copper_rock_4",
+      "type": "copper_rock",
+      "tile": [
+        58,
+        8
+      ]
+    },
+    {
+      "id": "copper_rock_5",
+      "type": "copper_rock",
+      "tile": [
+        49,
+        9
+      ]
+    },
+    {
+      "id": "copper_rock_6",
+      "type": "copper_rock",
+      "tile": [
+        57,
+        11
+      ]
+    },
+    {
+      "id": "tin_rock_1",
+      "type": "tin_rock",
+      "tile": [
+        53,
+        7
+      ]
+    },
+    {
+      "id": "tin_rock_2",
+      "type": "tin_rock",
+      "tile": [
+        59,
+        4
+      ]
+    },
+    {
+      "id": "tin_rock_3",
+      "type": "tin_rock",
+      "tile": [
+        47,
+        7
+      ]
+    },
+    {
+      "id": "oak_tree_1",
+      "type": "oak_tree",
+      "tile": [
+        17,
+        25
+      ]
+    },
+    {
+      "id": "oak_tree_2",
+      "type": "oak_tree",
+      "tile": [
+        8,
+        18
+      ]
+    },
+    {
+      "id": "oak_tree_3",
+      "type": "oak_tree",
+      "tile": [
+        18,
+        38
+      ]
+    },
+    {
+      "id": "oak_tree_4",
+      "type": "oak_tree",
+      "tile": [
+        12,
+        27
+      ]
+    },
+    {
+      "id": "oak_tree_5",
+      "type": "oak_tree",
+      "tile": [
+        17,
+        33
+      ]
+    },
+    {
+      "id": "oak_tree_6",
+      "type": "oak_tree",
+      "tile": [
+        12,
+        37
+      ]
+    },
+    {
+      "id": "oak_tree_7",
+      "type": "oak_tree",
+      "tile": [
+        10,
+        10
+      ]
+    },
+    {
+      "id": "oak_tree_8",
+      "type": "oak_tree",
+      "tile": [
+        13,
+        32
+      ]
+    },
+    {
+      "id": "oak_tree_9",
+      "type": "oak_tree",
+      "tile": [
+        9,
+        14
+      ]
+    },
+    {
+      "id": "oak_tree_10",
+      "type": "oak_tree",
+      "tile": [
+        7,
+        31
+      ]
+    },
+    {
+      "id": "oak_tree_11",
+      "type": "oak_tree",
+      "tile": [
+        18,
+        22
+      ]
+    },
+    {
+      "id": "oak_tree_12",
+      "type": "oak_tree",
+      "tile": [
+        5,
+        39
+      ]
+    },
+    {
+      "id": "minnow_spot_1",
+      "type": "minnow_spot",
+      "tile": [
+        27,
+        34
+      ]
+    },
+    {
+      "id": "minnow_spot_2",
+      "type": "minnow_spot",
+      "tile": [
+        28,
+        37
+      ]
+    },
+    {
+      "id": "minnow_spot_3",
+      "type": "minnow_spot",
+      "tile": [
+        29,
+        40
+      ]
+    },
+    {
+      "id": "minnow_spot_4",
+      "type": "minnow_spot",
+      "tile": [
+        30,
+        43
+      ]
+    }
+  ]
+}

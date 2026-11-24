@@ -1,0 +1,11 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg
+*.apk
+*.aab
+*.ipa
+/android/
+# OS / editor
+.DS_Store
+*.tmp

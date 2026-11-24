@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "id": "mining",
+      "name": "Mining",
+      "category": "gathering",
+      "description": "Produces ore for Smithing.",
+      "icon": "res://assets/ui/skills/mining.png",
+      "implemented_phase": 1,
+      "mastery_enabled": false
+    },
+    {
+      "id": "woodcutting",
+      "name": "Woodcutting",
+      "category": "gathering",
+      "description": "Produces logs used as fuel and Construction material.",
+      "icon": "res://assets/ui/skills/woodcutting.png",
+      "implemented_phase": 1,
+      "mastery_enabled": false
+    },
+    {
+      "id": "fishing",
+      "name": "Fishing",
+      "category": "gathering",
+      "description": "Produces raw fish for Cooking.",
+      "icon": "res://assets/ui/skills/fishing.png",
+      "implemented_phase": 1,
+      "mastery_enabled": false
+    },
+    {
+      "id": "hunting",
+      "name": "Hunting",
+      "category": "gathering",
+      "description": "Produces hides and meat for Tailoring and Cooking.",
+      "icon": "res://assets/ui/skills/hunting.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "foraging",
+      "name": "Foraging",
+      "category": "gathering",
+      "description": "Produces wild herbs and fibres for Herblore and Tailoring.",
+      "icon": "res://assets/ui/skills/foraging.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "farming",
+      "name": "Farming",
+      "category": "gathering",
+      "description": "Grows herbs and crops for Herblore and Cooking.",
+      "icon": "res://assets/ui/skills/farming.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "archaeology",
+      "name": "Archaeology",
+      "category": "gathering",
+      "description": "Recovers artifacts, relics and rare materials.",
+      "icon": "res://assets/ui/skills/archaeology.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "smithing",
+      "name": "Smithing",
+      "category": "production",
+      "description": "Turns ore into bars and metal equipment.",
+      "icon": "res://assets/ui/skills/smithing.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "crafting",
+      "name": "Crafting",
+      "category": "production",
+      "description": "Makes tools, jewellery and accessories.",
+      "icon": "res://assets/ui/skills/crafting.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "cooking",
+      "name": "Cooking",
+      "category": "production",
+      "description": "Turns raw food into consumables.",
+      "icon": "res://assets/ui/skills/cooking.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "herblore",
+      "name": "Herblore",
+      "category": "production",
+      "description": "Brews potions from herbs.",
+      "icon": "res://assets/ui/skills/herblore.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "enchanting",
+      "name": "Enchanting",
+      "category": "production",
+      "description": "Improves equipment with magical properties.",
+      "icon": "res://assets/ui/skills/enchanting.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "construction",
+      "name": "Construction",
+      "category": "production",
+      "description": "Builds and upgrades settlement buildings.",
+      "icon": "res://assets/ui/skills/construction.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "tailoring",
+      "name": "Tailoring",
+      "category": "production",
+      "description": "Makes cloth and leather armour.",
+      "icon": "res://assets/ui/skills/tailoring.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "alchemy",
+      "name": "Alchemy",
+      "category": "production",
+      "description": "Transmutes materials and creates catalysts.",
+      "icon": "res://assets/ui/skills/alchemy.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "attack",
+      "name": "Attack",
+      "category": "combat",
+      "description": "Melee accuracy.",
+      "icon": "res://assets/ui/skills/attack.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "strength",
+      "name": "Strength",
+      "category": "combat",
+      "description": "Melee damage.",
+      "icon": "res://assets/ui/skills/strength.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "defense",
+      "name": "Defense",
+      "category": "combat",
+      "description": "Damage mitigation.",
+      "icon": "res://assets/ui/skills/defense.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "ranged",
+      "name": "Ranged",
+      "category": "combat",
+      "description": "Bows and thrown weapons.",
+      "icon": "res://assets/ui/skills/ranged.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "magic",
+      "name": "Magic",
+      "category": "combat",
+      "description": "Spellcasting.",
+      "icon": "res://assets/ui/skills/magic.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "prayer",
+      "name": "Prayer",
+      "category": "utility",
+      "description": "Combat blessings and support.",
+      "icon": "res://assets/ui/skills/prayer.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "agility",
+      "name": "Agility",
+      "category": "utility",
+      "description": "Travel speed and shortcuts.",
+      "icon": "res://assets/ui/skills/agility.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "exploration",
+      "name": "Exploration",
+      "category": "utility",
+      "description": "Discovery chance, hidden paths and fog of war.",
+      "icon": "res://assets/ui/skills/exploration.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    },
+    {
+      "id": "summoning",
+      "name": "Summoning",
+      "category": "utility",
+      "description": "Pets and familiars.",
+      "icon": "res://assets/ui/skills/summoning.png",
+      "implemented_phase": null,
+      "mastery_enabled": false
+    }
+  ]
+}

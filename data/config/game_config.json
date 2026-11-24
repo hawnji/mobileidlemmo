@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "simulation": {
+    "tick_seconds": 0.1,
+    "max_state_steps_per_tick": 32,
+    "pathfinding_requests_per_tick": 4,
+    "waiting_retry_seconds": 2.0,
+    "unreachable_node_cooldown_seconds": 30.0,
+    "max_consecutive_path_failures": 5,
+    "deposit_seconds": 1.0
+  },
+  "offline": {
+    "base_cap_hours": 8,
+    "upgraded_cap_hours": [12, 24],
+    "simulation_step_seconds": 1.0,
+    "minimum_elapsed_seconds": 60
+  },
+  "storage": {
+    "starting_distinct_item_slots": 48
+  },
+  "character_progression": {
+    "character_xp_share": 0.25,
+    "max_character_level": 100
+  },
+  "save": {
+    "autosave_seconds": 30,
+    "file_path": "user://worldbound_save.json"
+  },
+  "world": {
+    "start_region": "greenvale_start",
+    "chunk_size_tiles": 16,
+    "tile_size_px": 32
+  }
+}

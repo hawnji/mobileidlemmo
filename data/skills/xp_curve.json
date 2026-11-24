@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "skill_curve": {
+    "description": "RuneScape-style curve. points(L) = sum_{l=1}^{L-1} floor(l + base * 2^(l / divisor)); xp(L) = floor(points(L) / 4)",
+    "max_level": 99,
+    "base": 300.0,
+    "divisor": 7.0,
+    "max_xp": 200000000
+  },
+  "character_curve": {
+    "description": "Character (hero) level curve. Same formula, scaled down so level 100 is reachable through normal play.",
+    "max_level": 100,
+    "base": 120.0,
+    "divisor": 9.0,
+    "max_xp": 50000000
+  }
+}

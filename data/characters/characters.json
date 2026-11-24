@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "characters": [
+    {
+      "id": "brom_stonefist",
+      "name": "Brom Stonefist",
+      "rarity": "legendary",
+      "origin": "Dwarf",
+      "title": "Dwarven Miner",
+      "role": "mining_specialist",
+      "combat_specialty": "tank",
+      "primary_affinity": "mining",
+      "secondary_affinity": "smithing",
+      "affinities": {
+        "mining": {
+          "speed": 1.25,
+          "xp": 1.1
+        },
+        "smithing": {
+          "speed": 1.1,
+          "xp": 1.1
+        }
+      },
+      "starting_skills": {
+        "mining": 15,
+        "smithing": 8,
+        "defense": 5
+      },
+      "base_stats": {
+        "health": 120,
+        "move_speed_tiles": 3.2,
+        "carry_capacity": 28
+      },
+      "passive": {
+        "id": "deep_veins",
+        "name": "Deep Veins",
+        "description": "+25% mining speed and double the chance of rare gems.",
+        "effects": {
+          "rare_drop_multiplier.mining": 2.0
+        }
+      },
+      "personality": "Gruff, loyal, quietly sentimental about good rock.",
+      "background": "Brom left the Irondeep holds after a cave-in buried his old crew. He swore he would never again dig without someone watching his back.",
+      "portrait": "res://assets/characters/portraits/brom_stonefist.png",
+      "sprite": "res://assets/characters/sprites/brom_stonefist.png",
+      "palette": {
+        "primary": "#8a5a2b",
+        "secondary": "#c9a26b"
+      }
+    },
+    {
+      "id": "sylvara_moonleaf",
+      "name": "Sylvara Moonleaf",
+      "rarity": "mythic",
+      "origin": "Elf",
+      "title": "Elven Ranger",
+      "role": "woodcutting_specialist",
+      "combat_specialty": "ranger",
+      "primary_affinity": "woodcutting",
+      "secondary_affinity": "exploration",
+      "affinities": {
+        "woodcutting": {
+          "speed": 1.25,
+          "xp": 1.15
+        },
+        "exploration": {
+          "speed": 1.2,
+          "xp": 1.15
+        }
+      },
+      "starting_skills": {
+        "woodcutting": 18,
+        "exploration": 12,
+        "ranged": 10,
+        "hunting": 6,
+        "foraging": 5
+      },
+      "base_stats": {
+        "health": 95,
+        "move_speed_tiles": 4.0,
+        "carry_capacity": 24
+      },
+      "passive": {
+        "id": "forest_sense",
+        "name": "Forest Sense",
+        "description": "+25% woodcutting speed and finds bird nests 50% more often.",
+        "effects": {
+          "rare_drop_multiplier.woodcutting": 1.5
+        }
+      },
+      "personality": "Curious, patient, speaks to trees when she thinks nobody is listening.",
+      "background": "A ranger of the Moonleaf circle who followed a silver stag out of Whisperwood and never found her way back.",
+      "portrait": "res://assets/characters/portraits/sylvara_moonleaf.png",
+      "sprite": "res://assets/characters/sprites/sylvara_moonleaf.png",
+      "palette": {
+        "primary": "#2f6b3a",
+        "secondary": "#d8e6c0"
+      }
+    },
+    {
+      "id": "tamsin_reed",
+      "name": "Tamsin Reed",
+      "rarity": "common",
+      "origin": "Human",
+      "title": "Wandering Adventurer",
+      "role": "generalist",
+      "combat_specialty": "warrior",
+      "primary_affinity": "fishing",
+      "secondary_affinity": null,
+      "affinities": {
+        "fishing": {
+          "speed": 1.05,
+          "xp": 1.0
+        }
+      },
+      "starting_skills": {
+        "fishing": 3
+      },
+      "base_stats": {
+        "health": 100,
+        "move_speed_tiles": 3.5,
+        "carry_capacity": 32
+      },
+      "passive": {
+        "id": "jack_of_all_trades",
+        "name": "Jack of All Trades",
+        "description": "Carries more than specialists and gains 5% XP in every skill.",
+        "effects": {
+          "xp_multiplier.all": 1.05
+        }
+      },
+      "personality": "Cheerful, restless, always has a story that is probably exaggerated.",
+      "background": "A farmhand from the Greenvale outskirts who decided the world was bigger than one field.",
+      "portrait": "res://assets/characters/portraits/tamsin_reed.png",
+      "sprite": "res://assets/characters/sprites/tamsin_reed.png",
+      "palette": {
+        "primary": "#3b5b8c",
+        "secondary": "#e0c9a0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "activities": [
+    {"id": "mine_copper", "name": "Mine Copper", "type": "gathering", "skill": "mining", "required_level": 1,
+     "node_type": "copper_rock", "default_destination": "copper_mine", "animation": "mine",
+     "description": "Travel to the Greenvale mine, mine copper ore and bring it back to storage."},
+    {"id": "mine_tin", "name": "Mine Tin", "type": "gathering", "skill": "mining", "required_level": 1,
+     "node_type": "tin_rock", "default_destination": "copper_mine", "animation": "mine",
+     "description": "Mine tin ore in the Greenvale mine."},
+    {"id": "chop_oak", "name": "Chop Oak", "type": "gathering", "skill": "woodcutting", "required_level": 1,
+     "node_type": "oak_tree", "default_destination": "oakwood_forest", "animation": "chop",
+     "description": "Fell oak trees in Oakwood Forest."},
+    {"id": "fish_minnow", "name": "Fish Minnows", "type": "gathering", "skill": "fishing", "required_level": 1,
+     "node_type": "minnow_spot", "default_destination": "greenvale_river", "animation": "fish",
+     "description": "Catch minnows along the Greenvale river."}
+  ]
+}

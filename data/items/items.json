@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "items": [
+    {"id": "copper_ore", "name": "Copper Ore", "category": "ore", "tier": 1, "rarity": "common", "sell_price": 3, "icon": "res://assets/resources/items/copper_ore.png", "description": "A lump of soft reddish ore. Smelts into bronze with tin."},
+    {"id": "tin_ore", "name": "Tin Ore", "category": "ore", "tier": 1, "rarity": "common", "sell_price": 3, "icon": "res://assets/resources/items/tin_ore.png", "description": "A dull grey ore. Smelts into bronze with copper."},
+    {"id": "oak_log", "name": "Oak Log", "category": "log", "tier": 1, "rarity": "common", "sell_price": 4, "icon": "res://assets/resources/items/oak_log.png", "description": "Sturdy oak. Used for fuel, fletching and construction."},
+    {"id": "raw_minnow", "name": "Raw Minnow", "category": "fish", "tier": 1, "rarity": "common", "sell_price": 2, "icon": "res://assets/resources/items/raw_minnow.png", "description": "A small river fish. Cooks into a basic meal."},
+    {"id": "uncut_quartz", "name": "Uncut Quartz", "category": "gem", "tier": 1, "rarity": "uncommon", "sell_price": 25, "icon": "res://assets/resources/items/uncut_quartz.png", "description": "A rare find inside copper and tin veins."},
+    {"id": "bird_nest", "name": "Bird Nest", "category": "misc", "tier": 1, "rarity": "uncommon", "sell_price": 20, "icon": "res://assets/resources/items/bird_nest.png", "description": "Occasionally falls from felled trees."},
+    {"id": "river_pearl", "name": "River Pearl", "category": "gem", "tier": 1, "rarity": "rare", "sell_price": 60, "icon": "res://assets/resources/items/river_pearl.png", "description": "A lustrous pearl from the Greenvale river."}
+  ]
+}

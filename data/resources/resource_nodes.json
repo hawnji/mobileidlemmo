@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "node_types": [
+    {
+      "id": "copper_rock",
+      "name": "Copper Rock",
+      "skill": "mining",
+      "required_level": 1,
+      "gather_seconds": 5.0,
+      "xp": 17.5,
+      "yield": {
+        "item": "copper_ore",
+        "min": 1,
+        "max": 1
+      },
+      "rare_drops": [
+        {
+          "item": "uncut_quartz",
+          "chance": 0.002
+        }
+      ],
+      "charges": 4,
+      "respawn_seconds": 10.0,
+      "blocks_movement": true,
+      "sprite": "res://assets/resources/nodes/copper_rock.png",
+      "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+    },
+    {
+      "id": "tin_rock",
+      "name": "Tin Rock",
+      "skill": "mining",
+      "required_level": 1,
+      "gather_seconds": 5.0,
+      "xp": 17.5,
+      "yield": {
+        "item": "tin_ore",
+        "min": 1,
+        "max": 1
+      },
+      "rare_drops": [
+        {
+          "item": "uncut_quartz",
+          "chance": 0.002
+        }
+      ],
+      "charges": 4,
+      "respawn_seconds": 10.0,
+      "blocks_movement": true,
+      "sprite": "res://assets/resources/nodes/tin_rock.png",
+      "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+    },
+    {
+      "id": "oak_tree",
+      "name": "Oak Tree",
+      "skill": "woodcutting",
+      "required_level": 1,
+      "gather_seconds": 6.0,
+      "xp": 25.0,
+      "yield": {
+        "item": "oak_log",
+        "min": 1,
+        "max": 1
+      },
+      "rare_drops": [
+        {
+          "item": "bird_nest",
+          "chance": 0.002
+        }
+      ],
+      "charges": 5,
+      "respawn_seconds": 15.0,
+      "blocks_movement": true,
+      "sprite": "res://assets/resources/nodes/oak_tree.png",
+      "depleted_sprite": "res://assets/resources/nodes/tree_stump.png"
+    },
+    {
+      "id": "minnow_spot",
+      "name": "Minnow Fishing Spot",
+      "skill": "fishing",
+      "required_level": 1,
+      "gather_seconds": 6.0,
+      "xp": 10.0,
+      "yield": {
+        "item": "raw_minnow",
+        "min": 1,
+        "max": 1
+      },
+      "rare_drops": [
+        {
+          "item": "river_pearl",
+          "chance": 0.001
+        }
+      ],
+      "charges": 8,
+      "respawn_seconds": 12.0,
+      "blocks_movement": true,
+      "sprite": "res://assets/resources/nodes/fishing_spot.png",
+      "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+    }
+  ]
+}
