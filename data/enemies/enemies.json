@@ -255,6 +255,753 @@
    ],
    "respawn_seconds": 60,
    "sprite": "res://assets/enemies/forest_troll.png"
+  },
+  {
+   "id": "cave_bat",
+   "name": "Cave Bat",
+   "level": 18,
+   "health": 40,
+   "max_hit": 6,
+   "accuracy": 20,
+   "defense": 12,
+   "attack_speed": 2.0,
+   "weaknesses": {
+    "ranged": 1.25
+   },
+   "loot": [
+    {
+     "item": "bat_wing",
+     "chance": 0.6,
+     "min": 1,
+     "max": 2
+    },
+    {
+     "item": "coal_ore",
+     "chance": 0.2,
+     "min": 1,
+     "max": 3
+    }
+   ],
+   "gold": [
+    6,
+    18
+   ],
+   "tags": [
+    "beast",
+    "underground"
+   ],
+   "respawn_seconds": 30,
+   "sprite": "res://assets/enemies/cave_bat.png"
+  },
+  {
+   "id": "rock_golem",
+   "name": "Rock Golem",
+   "level": 32,
+   "health": 120,
+   "max_hit": 12,
+   "accuracy": 28,
+   "defense": 40,
+   "attack_speed": 3.4,
+   "weaknesses": {
+    "magic": 1.3,
+    "ranged": 0.7
+   },
+   "loot": [
+    {
+     "item": "mithril_ore",
+     "chance": 0.25,
+     "min": 1,
+     "max": 2
+    },
+    {
+     "item": "golem_core",
+     "chance": 0.06,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "uncut_sapphire",
+     "chance": 0.04,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    30,
+    70
+   ],
+   "tags": [
+    "construct",
+    "underground"
+   ],
+   "respawn_seconds": 60,
+   "sprite": "res://assets/enemies/rock_golem.png"
+  },
+  {
+   "id": "stone_troll",
+   "name": "Stone Troll",
+   "level": 42,
+   "health": 180,
+   "max_hit": 16,
+   "accuracy": 36,
+   "defense": 38,
+   "attack_speed": 3.2,
+   "weaknesses": {
+    "magic": 1.15,
+    "melee": 0.9
+   },
+   "loot": [
+    {
+     "item": "bones",
+     "chance": 1.0,
+     "min": 2,
+     "max": 3
+    },
+    {
+     "item": "troll_tooth",
+     "chance": 0.3,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "mithril_bar",
+     "chance": 0.12,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    60,
+    140
+   ],
+   "tags": [
+    "giant",
+    "underground"
+   ],
+   "respawn_seconds": 75,
+   "sprite": "res://assets/enemies/stone_troll.png"
+  },
+  {
+   "id": "enchanted_wolf",
+   "name": "Enchanted Wolf",
+   "level": 24,
+   "health": 70,
+   "max_hit": 9,
+   "accuracy": 26,
+   "defense": 20,
+   "attack_speed": 2.2,
+   "weaknesses": {
+    "ranged": 1.2
+   },
+   "loot": [
+    {
+     "item": "bones",
+     "chance": 1.0,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "enchanted_pelt",
+     "chance": 0.4,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    10,
+    30
+   ],
+   "tags": [
+    "beast",
+    "fey"
+   ],
+   "respawn_seconds": 35,
+   "sprite": "res://assets/enemies/enchanted_wolf.png"
+  },
+  {
+   "id": "forest_spirit",
+   "name": "Forest Spirit",
+   "level": 30,
+   "health": 75,
+   "max_hit": 12,
+   "accuracy": 32,
+   "defense": 18,
+   "attack_speed": 2.8,
+   "weaknesses": {
+    "melee": 1.2,
+    "magic": 0.7
+   },
+   "loot": [
+    {
+     "item": "spirit_essence",
+     "chance": 0.5,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "ranarr",
+     "chance": 0.15,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    20,
+    50
+   ],
+   "tags": [
+    "spirit",
+    "fey"
+   ],
+   "respawn_seconds": 45,
+   "sprite": "res://assets/enemies/forest_spirit.png"
+  },
+  {
+   "id": "corrupted_treant",
+   "name": "Corrupted Treant",
+   "level": 44,
+   "health": 220,
+   "max_hit": 17,
+   "accuracy": 36,
+   "defense": 34,
+   "attack_speed": 3.6,
+   "weaknesses": {
+    "magic": 1.35,
+    "ranged": 0.8
+   },
+   "loot": [
+    {
+     "item": "yew_log",
+     "chance": 0.6,
+     "min": 2,
+     "max": 5
+    },
+    {
+     "item": "heartwood",
+     "chance": 0.05,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    50,
+    120
+   ],
+   "tags": [
+    "plant",
+    "corrupted"
+   ],
+   "respawn_seconds": 80,
+   "sprite": "res://assets/enemies/corrupted_treant.png"
+  },
+  {
+   "id": "desert_raider",
+   "name": "Desert Raider",
+   "level": 36,
+   "health": 110,
+   "max_hit": 13,
+   "accuracy": 34,
+   "defense": 30,
+   "attack_speed": 2.4,
+   "weaknesses": {},
+   "loot": [
+    {
+     "item": "bones",
+     "chance": 1.0,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "cooked_carp",
+     "chance": 0.3,
+     "min": 1,
+     "max": 3
+    },
+    {
+     "item": "ancient_coin",
+     "chance": 0.1,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    60,
+    160
+   ],
+   "tags": [
+    "humanoid",
+    "bandit"
+   ],
+   "respawn_seconds": 50,
+   "sprite": "res://assets/enemies/desert_raider.png"
+  },
+  {
+   "id": "sand_wyrm",
+   "name": "Sand Wyrm",
+   "level": 48,
+   "health": 260,
+   "max_hit": 19,
+   "accuracy": 40,
+   "defense": 36,
+   "attack_speed": 3.0,
+   "weaknesses": {
+    "ranged": 1.2,
+    "magic": 0.85
+   },
+   "loot": [
+    {
+     "item": "wyrm_scale",
+     "chance": 0.3,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "adamantite_ore",
+     "chance": 0.15,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    90,
+    200
+   ],
+   "tags": [
+    "beast",
+    "dragonkin"
+   ],
+   "respawn_seconds": 90,
+   "sprite": "res://assets/enemies/sand_wyrm.png"
+  },
+  {
+   "id": "ancient_guardian",
+   "name": "Ancient Guardian",
+   "level": 56,
+   "health": 320,
+   "max_hit": 22,
+   "accuracy": 48,
+   "defense": 50,
+   "attack_speed": 3.4,
+   "weaknesses": {
+    "magic": 1.25,
+    "melee": 0.85
+   },
+   "loot": [
+    {
+     "item": "royal_tablet",
+     "chance": 0.08,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "adamantite_bar",
+     "chance": 0.12,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "sunstone",
+     "chance": 0.01,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    120,
+    260
+   ],
+   "tags": [
+    "construct",
+    "undead"
+   ],
+   "respawn_seconds": 120,
+   "sprite": "res://assets/enemies/ancient_guardian.png"
+  },
+  {
+   "id": "treasure_goblin",
+   "name": "Treasure Goblin",
+   "level": 20,
+   "health": 60,
+   "max_hit": 2,
+   "accuracy": 5,
+   "defense": 26,
+   "attack_speed": 4.0,
+   "weaknesses": {},
+   "loot": [
+    {
+     "item": "ancient_coin",
+     "chance": 0.5,
+     "min": 1,
+     "max": 3
+    },
+    {
+     "item": "uncut_ruby",
+     "chance": 0.2,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    250,
+    600
+   ],
+   "tags": [
+    "goblin",
+    "encounter"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/treasure_goblin.png",
+   "currencies": {
+    "gems": [
+     3,
+     8
+    ]
+   }
+  },
+  {
+   "id": "deepforge_colossus",
+   "name": "Deepforge Colossus",
+   "level": 60,
+   "health": 1500,
+   "max_hit": 22,
+   "accuracy": 50,
+   "defense": 52,
+   "attack_speed": 3.6,
+   "weaknesses": {
+    "magic": 1.3,
+    "ranged": 0.8
+   },
+   "loot": [
+    {
+     "item": "mithril_bar",
+     "chance": 1.0,
+     "min": 3,
+     "max": 6
+    },
+    {
+     "item": "golem_core",
+     "chance": 0.5,
+     "min": 1,
+     "max": 2
+    },
+    {
+     "item": "deepforge_hammer",
+     "chance": 0.08,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    800,
+    1600
+   ],
+   "tags": [
+    "boss",
+    "construct"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/deepforge_colossus.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.6,
+      "damage_mult": 1.25,
+      "message": "The Colossus glows white-hot!"
+     },
+     {
+      "below": 0.3,
+      "damage_mult": 1.45,
+      "attack_speed_mult": 0.8,
+      "message": "Molten cracks split its armour!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "molten_quake",
+      "name": "Molten Quake",
+      "kind": "area",
+      "every": 14.0,
+      "damage": [
+       6,
+       14
+      ]
+     },
+     {
+      "id": "crushing_blow",
+      "name": "Crushing Blow",
+      "kind": "special",
+      "every": 10.0,
+      "damage_mult": 2.2
+     },
+     {
+      "id": "call_bats",
+      "name": "Call of the Deep",
+      "kind": "summon",
+      "every": 24.0,
+      "enemy": "cave_bat",
+      "count": 2,
+      "max_adds": 3
+     }
+    ],
+    "enrage_seconds": 240.0,
+    "enrage_damage_mult": 2.0
+   }
+  },
+  {
+   "id": "heartrot_ancient",
+   "name": "Heartrot Ancient",
+   "level": 65,
+   "health": 1900,
+   "max_hit": 24,
+   "accuracy": 54,
+   "defense": 48,
+   "attack_speed": 3.8,
+   "weaknesses": {
+    "magic": 1.4,
+    "melee": 1.1,
+    "ranged": 0.75
+   },
+   "loot": [
+    {
+     "item": "heartwood",
+     "chance": 1.0,
+     "min": 1,
+     "max": 3
+    },
+    {
+     "item": "yew_log",
+     "chance": 1.0,
+     "min": 10,
+     "max": 20
+    },
+    {
+     "item": "heartwood_bow",
+     "chance": 0.08,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    900,
+    1800
+   ],
+   "tags": [
+    "boss",
+    "plant",
+    "corrupted"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/heartrot_ancient.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.5,
+      "damage_mult": 1.3,
+      "message": "Rot spreads through the Ancient's bark!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "root_snare",
+      "name": "Root Snare",
+      "kind": "area",
+      "every": 12.0,
+      "damage": [
+       8,
+       15
+      ]
+     },
+     {
+      "id": "sap_mend",
+      "name": "Sap Mend",
+      "kind": "heal",
+      "every": 30.0,
+      "pct": 0.06
+     },
+     {
+      "id": "wisp_call",
+      "name": "Wisp Call",
+      "kind": "summon",
+      "every": 28.0,
+      "enemy": "forest_spirit",
+      "count": 1,
+      "max_adds": 2
+     }
+    ],
+    "enrage_seconds": 270.0,
+    "enrage_damage_mult": 2.0
+   }
+  },
+  {
+   "id": "sand_king",
+   "name": "The Sand King",
+   "level": 75,
+   "health": 2600,
+   "max_hit": 28,
+   "accuracy": 62,
+   "defense": 60,
+   "attack_speed": 3.4,
+   "weaknesses": {
+    "magic": 1.2,
+    "ranged": 1.1,
+    "melee": 0.85
+   },
+   "loot": [
+    {
+     "item": "golden_idol",
+     "chance": 0.5,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "adamantite_bar",
+     "chance": 1.0,
+     "min": 3,
+     "max": 6
+    },
+    {
+     "item": "sunstone",
+     "chance": 0.25,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "sunstone_crown",
+     "chance": 0.06,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    1500,
+    3000
+   ],
+   "tags": [
+    "boss",
+    "undead"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/sand_king.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.66,
+      "damage_mult": 1.2,
+      "message": "The Sand King calls the storm!"
+     },
+     {
+      "below": 0.33,
+      "damage_mult": 1.5,
+      "attack_speed_mult": 0.75,
+      "message": "The Sand King's crown blazes!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "sandstorm",
+      "name": "Sandstorm",
+      "kind": "area",
+      "every": 10.0,
+      "damage": [
+       8,
+       16
+      ]
+     },
+     {
+      "id": "royal_decree",
+      "name": "Royal Decree",
+      "kind": "special",
+      "every": 13.0,
+      "damage_mult": 2.5
+     },
+     {
+      "id": "rise",
+      "name": "Rise, My Servants",
+      "kind": "summon",
+      "every": 30.0,
+      "enemy": "desert_raider",
+      "count": 2,
+      "max_adds": 2
+     }
+    ],
+    "enrage_seconds": 300.0,
+    "enrage_damage_mult": 2.2
+   }
+  },
+  {
+   "id": "goblin_chieftain",
+   "name": "Goblin Chieftain",
+   "level": 22,
+   "health": 320,
+   "max_hit": 9,
+   "accuracy": 20,
+   "defense": 16,
+   "attack_speed": 2.8,
+   "weaknesses": {
+    "magic": 1.2
+   },
+   "loot": [
+    {
+     "item": "goblin_trinket",
+     "chance": 1.0,
+     "min": 2,
+     "max": 4
+    },
+    {
+     "item": "iron_bar",
+     "chance": 0.6,
+     "min": 2,
+     "max": 4
+    },
+    {
+     "item": "uncut_quartz",
+     "chance": 0.3,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    150,
+    300
+   ],
+   "tags": [
+    "boss",
+    "goblin"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/goblin_chieftain.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.5,
+      "damage_mult": 1.3,
+      "message": "The Chieftain bellows for his guards!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "war_cry",
+      "name": "War Cry",
+      "kind": "summon",
+      "every": 20.0,
+      "enemy": "goblin",
+      "count": 1,
+      "max_adds": 2
+     },
+     {
+      "id": "whirl",
+      "name": "Whirling Axe",
+      "kind": "area",
+      "every": 15.0,
+      "damage": [
+       2,
+       6
+      ]
+     }
+    ],
+    "enrage_seconds": 180.0,
+    "enrage_damage_mult": 1.8
+   }
   }
  ],
  "variants": [

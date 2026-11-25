@@ -18,10 +18,22 @@ var rare_finds: Array[Dictionary] = []
 var currency_gained := {}  # currency -> net change
 var buildings_completed: Array[Dictionary] = []
 var interruptions: Array[Dictionary] = []
+## Phase 3 highlights: discoveries, expeditions, dungeons, quests, regions,
+## world events, characters who joined and the explored-percentage change.
+var discoveries: Array[Dictionary] = []
+var expeditions: Array[Dictionary] = []
+var dungeons: Array[Dictionary] = []
+var quests_ready: Array[String] = []
+var joined: Array[String] = []
+var encounters: Array[String] = []
+var explored_before := {}  # region -> pct
+var explored_after := {}
 
 
 static func capture(world: SimulationWorld) -> Dictionary:
-	var snap := {"storage": world.storage.items(), "characters": {}, "wallet": world.wallet.balances.duplicate()}
+	var snap := {"storage": world.storage.items(), "characters": {}, "wallet": world.wallet.balances.duplicate(), "explored": {}}
+	for rid in world.registry.map_region_order:
+		snap.explored[rid] = world.exploration.explored_pct(rid)
 	for cid in world.character_order:
 		var ch: Adventurer = world.characters[cid]
 		var levels := {}
@@ -71,10 +83,24 @@ static func build(world: SimulationWorld, before: Dictionary, after: Dictionary,
 			"status": ch.status_message,
 			"interruptions": [],
 		}
+	r.explored_before = before.get("explored", {})
+	r.explored_after = after.get("explored", {})
 	for ev in events:
 		match String(ev.get("type", "")):
 			"rare_drop":
 				r.rare_finds.append(ev)
+			"discovery":
+				r.discoveries.append(ev)
+			"expedition_completed":
+				r.expeditions.append(ev)
+			"dungeon_completed":
+				r.dungeons.append(ev)
+			"quest_ready":
+				r.quests_ready.append(String(ev.get("name", "")))
+			"character_joined":
+				r.joined.append(String(ev.get("name", "")))
+			"encounter_started":
+				r.encounters.append(String(ev.get("message", ev.get("name", ""))))
 			"building_completed":
 				r.buildings_completed.append(ev)
 			"interrupted":

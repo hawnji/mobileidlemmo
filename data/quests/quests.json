@@ -1,0 +1,1088 @@
+{
+ "schema_version": 1,
+ "check_interval_seconds": 5.0,
+ "reputation": {
+  "regions": [
+   "greenvale",
+   "irondeep",
+   "whisperwood",
+   "ashen_desert"
+  ],
+  "tiers": [
+   {
+    "name": "Neutral",
+    "points": 0
+   },
+   {
+    "name": "Friendly",
+    "points": 500
+   },
+   {
+    "name": "Honored",
+    "points": 1500
+   },
+   {
+    "name": "Revered",
+    "points": 4000
+   },
+   {
+    "name": "Exalted",
+    "points": 10000
+   }
+  ]
+ },
+ "quests": [
+  {
+   "id": "mq_01_roots",
+   "name": "Roots of Greenvale",
+   "category": "main",
+   "region": "greenvale",
+   "description": "Greenvale Hollow was a waystation for the old kingdom's caravans. Rebuild its strength: mine ore and learn the lay of the valley.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "copper_ore",
+     "qty": 25
+    },
+    {
+     "type": "explored",
+     "region": "greenvale",
+     "pct": 0.2
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 150,
+     "recruitment_tokens": 3
+    },
+    "reputation": {
+     "greenvale": 150
+    }
+   }
+  },
+  {
+   "id": "mq_02_eastern_pass",
+   "name": "The Eastern Pass",
+   "category": "main",
+   "region": "greenvale",
+   "description": "A dwarven letter arrives: the Eastern Pass to Irondeep has been sealed since the Collapse. The dwarves will open it for a settlement that proves itself.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_01_roots"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "discover_count",
+     "region": "greenvale",
+     "qty": 2
+    },
+    {
+     "type": "deliver",
+     "item": "bronze_bar",
+     "qty": 10
+    },
+    {
+     "type": "skill",
+     "skill": "mining",
+     "level": 15
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 300
+    },
+    "reputation": {
+     "irondeep": 150
+    }
+   }
+  },
+  {
+   "id": "mq_03_the_hold",
+   "name": "Stone and Song",
+   "category": "main",
+   "region": "irondeep",
+   "description": "Irondeep Hold survived the Collapse by sealing itself in. Its old warden, Marrow, wants to see the surface again.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "explored",
+     "region": "irondeep",
+     "pct": 0.2
+    },
+    {
+     "type": "kill",
+     "enemy": "cave_bat",
+     "qty": 10
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 50
+    },
+    "reputation": {
+     "irondeep": 300
+    },
+    "character": "old_marrow"
+   }
+  },
+  {
+   "id": "mq_04_whispers",
+   "name": "Whispers in the Wood",
+   "category": "main",
+   "region": "irondeep",
+   "description": "Marrow speaks of Whisperwood, the forest that grew over the old capital's gardens. To reach it, the Hollow needs a foothold in the mountains first.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_03_the_hold"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_irondeep",
+     "level": 1
+    },
+    {
+     "type": "gather",
+     "item": "coal_ore",
+     "qty": 50
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1000
+    },
+    "reputation": {
+     "irondeep": 200
+    }
+   }
+  },
+  {
+   "id": "mq_05_spirit_glades",
+   "name": "The Spirit Glades",
+   "category": "main",
+   "region": "whisperwood",
+   "description": "The druids say the forest spirits turned hostile when the Heartrot began. Calm the glades and learn what poisons the wood.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "explored",
+     "region": "whisperwood",
+     "pct": 0.25
+    },
+    {
+     "type": "kill_tag",
+     "tag": "spirit",
+     "qty": 10
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "recruitment_tokens": 10
+    },
+    "reputation": {
+     "whisperwood": 300
+    }
+   }
+  },
+  {
+   "id": "mq_06_into_the_sands",
+   "name": "Into the Sands",
+   "category": "main",
+   "region": "irondeep",
+   "description": "Deep in Irondeep lies the Deepforge Vault, where the dwarves kept the old kingdom's maps. Only those maps show the way through the Ashen Desert.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_05_spirit_glades"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "dungeon",
+     "dungeon": "deepforge_vault",
+     "qty": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 100
+    },
+    "reputation": {
+     "irondeep": 300
+    }
+   }
+  },
+  {
+   "id": "mq_07_buried_kingdom",
+   "name": "The Buried Kingdom",
+   "category": "main",
+   "region": "ashen_desert",
+   "description": "The old kingdom did not fall: it was buried. Dig through its ruins and find the King's Road.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "pottery_shard",
+     "qty": 20
+    },
+    {
+     "type": "discover",
+     "discovery": "kings_road"
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 3000
+    },
+    "reputation": {
+     "ashen_desert": 400
+    }
+   }
+  },
+  {
+   "id": "mq_08_the_sand_king",
+   "name": "The Sand King",
+   "category": "main",
+   "region": "ashen_desert",
+   "description": "The last king still rules his tomb. End his reign and the desert will be safe to settle.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_07_buried_kingdom"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "dungeon",
+     "dungeon": "tomb_of_the_sand_king",
+     "qty": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 300,
+     "recruitment_tokens": 20
+    },
+    "reputation": {
+     "ashen_desert": 600
+    }
+   }
+  },
+  {
+   "id": "rq_gv_wolves",
+   "name": "Wolf Trouble",
+   "category": "regional",
+   "region": "greenvale",
+   "description": "Wolves from the north-west den are taking sheep. Thin the pack.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "wolf",
+     "qty": 15
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 200
+    },
+    "reputation": {
+     "greenvale": 150
+    }
+   }
+  },
+  {
+   "id": "rq_gv_supplies",
+   "name": "Supplies for the Hollow",
+   "category": "regional",
+   "region": "greenvale",
+   "description": "The Hollow's larder is empty before winter.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "cooked_minnow",
+     "qty": 30
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 150
+    },
+    "reputation": {
+     "greenvale": 150
+    }
+   }
+  },
+  {
+   "id": "rq_gv_survey",
+   "name": "Map the Valley",
+   "category": "regional",
+   "region": "greenvale",
+   "description": "Chart every corner of Greenvale.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "explored",
+     "region": "greenvale",
+     "pct": 0.6
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "recruitment_tokens": 5
+    },
+    "reputation": {
+     "greenvale": 250
+    }
+   }
+  },
+  {
+   "id": "rq_gv_goblins",
+   "name": "The Goblin Camp",
+   "category": "regional",
+   "region": "greenvale",
+   "description": "Break the goblin camp south-east of the Hollow.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "kill_tag",
+     "tag": "goblin",
+     "qty": 25
+    },
+    {
+     "type": "dungeon",
+     "dungeon": "goblin_warren",
+     "qty": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 500,
+     "gems": 25
+    },
+    "reputation": {
+     "greenvale": 300
+    }
+   }
+  },
+  {
+   "id": "rq_id_supplies",
+   "name": "Steel for the Hold",
+   "category": "regional",
+   "region": "irondeep",
+   "description": "The Hold's forges are cold for want of steel.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "steel_bar",
+     "qty": 20
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 600
+    },
+    "reputation": {
+     "irondeep": 250
+    }
+   }
+  },
+  {
+   "id": "rq_id_golems",
+   "name": "Silence the Golem Halls",
+   "category": "regional",
+   "region": "irondeep",
+   "description": "Rogue golems wander the halls their makers abandoned.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "rock_golem",
+     "qty": 20
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 900
+    },
+    "reputation": {
+     "irondeep": 300
+    }
+   }
+  },
+  {
+   "id": "rq_id_tunnel",
+   "name": "The Ancient Tunnel",
+   "category": "regional",
+   "region": "irondeep",
+   "description": "Old maps mention a tunnel between the galleries and the deep mines.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "discover",
+     "discovery": "dwarven_tunnel"
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 40
+    },
+    "reputation": {
+     "irondeep": 250
+    }
+   }
+  },
+  {
+   "id": "rq_id_outpost",
+   "name": "A Foothold in the Mountains",
+   "category": "regional",
+   "region": "irondeep",
+   "description": "Establish an outpost in Irondeep Hold.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_irondeep",
+     "level": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 500
+    },
+    "reputation": {
+     "irondeep": 300
+    }
+   }
+  },
+  {
+   "id": "rq_ww_planks",
+   "name": "Timber for the Grove",
+   "category": "regional",
+   "region": "whisperwood",
+   "description": "The druids need maple planks to repair the grove halls.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "maple_plank",
+     "qty": 40
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1200
+    },
+    "reputation": {
+     "whisperwood": 250
+    }
+   }
+  },
+  {
+   "id": "rq_ww_treants",
+   "name": "The Rotting Heart",
+   "category": "regional",
+   "region": "whisperwood",
+   "description": "Fell the corrupted treants before the rot spreads.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "corrupted_treant",
+     "qty": 10
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1500
+    },
+    "reputation": {
+     "whisperwood": 300
+    }
+   }
+  },
+  {
+   "id": "rq_ww_circle",
+   "name": "The Druid Circle",
+   "category": "regional",
+   "region": "whisperwood",
+   "description": "Find the druids' lost standing stones.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "discover",
+     "discovery": "druid_circle"
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 50
+    },
+    "reputation": {
+     "whisperwood": 250
+    }
+   }
+  },
+  {
+   "id": "rq_ww_outpost",
+   "name": "Roots in the Grove",
+   "category": "regional",
+   "region": "whisperwood",
+   "description": "Establish an outpost in the Druid Grove.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_whisperwood",
+     "level": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1000
+    },
+    "reputation": {
+     "whisperwood": 300
+    }
+   }
+  },
+  {
+   "id": "rq_ad_carp",
+   "name": "Feeding the Oasis",
+   "category": "regional",
+   "region": "ashen_desert",
+   "description": "Sunwell's caravans need food for the crossing.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "cooked_carp",
+     "qty": 40
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2000
+    },
+    "reputation": {
+     "ashen_desert": 250
+    }
+   }
+  },
+  {
+   "id": "rq_ad_raiders",
+   "name": "Raiders of the Dunes",
+   "category": "regional",
+   "region": "ashen_desert",
+   "description": "Drive the raiders away from the ruins.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "desert_raider",
+     "qty": 25
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2500
+    },
+    "reputation": {
+     "ashen_desert": 300
+    }
+   }
+  },
+  {
+   "id": "rq_ad_wreck",
+   "name": "The Lost Caravan",
+   "category": "regional",
+   "region": "ashen_desert",
+   "description": "A caravan vanished in the southern dunes.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "discover",
+     "discovery": "caravan_wreck"
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 60
+    },
+    "reputation": {
+     "ashen_desert": 250
+    }
+   }
+  },
+  {
+   "id": "rq_ad_outpost",
+   "name": "Shade at Sunwell",
+   "category": "regional",
+   "region": "ashen_desert",
+   "description": "Establish an outpost at the Sunwell Oasis.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_ashen",
+     "level": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2000
+    },
+    "reputation": {
+     "ashen_desert": 300
+    }
+   }
+  },
+  {
+   "id": "ct_gv_ore",
+   "name": "Ore Contract",
+   "category": "contract",
+   "region": "greenvale",
+   "description": "A repeatable contract from the Greenvale notice board.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "copper_ore",
+     "qty": 100
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 250
+    },
+    "reputation": {
+     "greenvale": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_gv_fish",
+   "name": "Fish Contract",
+   "category": "contract",
+   "region": "greenvale",
+   "description": "A repeatable contract from the Greenvale notice board.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "raw_minnow",
+     "qty": 80
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 200
+    },
+    "reputation": {
+     "greenvale": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_gv_goblins",
+   "name": "Goblin Bounty",
+   "category": "contract",
+   "region": "greenvale",
+   "description": "A repeatable contract from the Greenvale notice board.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "kill_tag",
+     "tag": "goblin",
+     "qty": 20
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 300
+    },
+    "reputation": {
+     "greenvale": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_gv_bars",
+   "name": "Smithing Order",
+   "category": "contract",
+   "region": "greenvale",
+   "description": "A repeatable contract from the Greenvale notice board.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "bronze_bar",
+     "qty": 40
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 300
+    },
+    "reputation": {
+     "greenvale": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_id_coal",
+   "name": "Coal Contract",
+   "category": "contract",
+   "region": "irondeep",
+   "description": "A repeatable contract from the Irondeep notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "coal_ore",
+     "qty": 120
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 900
+    },
+    "reputation": {
+     "irondeep": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_id_bats",
+   "name": "Bat Bounty",
+   "category": "contract",
+   "region": "irondeep",
+   "description": "A repeatable contract from the Irondeep notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "cave_bat",
+     "qty": 30
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 700
+    },
+    "reputation": {
+     "irondeep": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_id_mithril",
+   "name": "Mithril Delivery",
+   "category": "contract",
+   "region": "irondeep",
+   "description": "A repeatable contract from the Irondeep notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "irondeep"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "mithril_bar",
+     "qty": 10
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2500
+    },
+    "reputation": {
+     "irondeep": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ww_maple",
+   "name": "Maple Contract",
+   "category": "contract",
+   "region": "whisperwood",
+   "description": "A repeatable contract from the Whisperwood notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "maple_log",
+     "qty": 120
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1400
+    },
+    "reputation": {
+     "whisperwood": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ww_spirits",
+   "name": "Spirit Banishing",
+   "category": "contract",
+   "region": "whisperwood",
+   "description": "A repeatable contract from the Whisperwood notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "forest_spirit",
+     "qty": 20
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1200
+    },
+    "reputation": {
+     "whisperwood": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ww_planks",
+   "name": "Plank Order",
+   "category": "contract",
+   "region": "whisperwood",
+   "description": "A repeatable contract from the Whisperwood notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "whisperwood"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "maple_plank",
+     "qty": 60
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 1500
+    },
+    "reputation": {
+     "whisperwood": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ad_dig",
+   "name": "Excavation Contract",
+   "category": "contract",
+   "region": "ashen_desert",
+   "description": "A repeatable contract from the Ashen Desert notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "pottery_shard",
+     "qty": 60
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2200
+    },
+    "reputation": {
+     "ashen_desert": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ad_raiders",
+   "name": "Raider Bounty",
+   "category": "contract",
+   "region": "ashen_desert",
+   "description": "A repeatable contract from the Ashen Desert notice board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "ashen_desert"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "desert_raider",
+     "qty": 20
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 2600
+    },
+    "reputation": {
+     "ashen_desert": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_any_expedition",
+   "name": "Expedition Contract",
+   "category": "contract",
+   "region": "greenvale",
+   "description": "A repeatable contract from the Greenvale notice board.",
+   "prerequisites": [],
+   "objectives": [
+    {
+     "type": "expedition",
+     "qty": 2
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 600,
+     "recruitment_tokens": 2
+    },
+    "reputation": {
+     "greenvale": 75
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  }
+ ]
+}

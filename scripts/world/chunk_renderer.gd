@@ -16,6 +16,8 @@ var _active := {}  # Vector2i chunk -> TileMapLayer
 var _pool: Array[TileMapLayer] = []
 var _atlas_cache := {}
 var _last_rect := Rect2i(-1, -1, 0, 0)
+## Tiles drawn with another terrain symbol than the map rows (revealed secrets).
+var overrides := {}  # Vector2i -> String symbol
 
 
 func setup(p_registry: DataRegistry, p_region: Dictionary) -> void:
@@ -59,6 +61,13 @@ func update_visible(view: Rect2) -> void:
 				_build_chunk(c)
 
 
+## Redraws every visible chunk (after `overrides` changed).
+func invalidate() -> void:
+	for c in _active.keys():
+		_release(c)
+	_last_rect = Rect2i(-1, -1, 0, 0)
+
+
 func active_chunk_count() -> int:
 	return _active.size()
 
@@ -80,7 +89,8 @@ func _build_chunk(c: Vector2i) -> void:
 			var x := c.x * chunk_size + lx
 			if x >= w:
 				break
-			layer.set_cell(Vector2i(lx, ly), TilesetFactory.SOURCE_ID, _atlas_cache.get(row[x], Vector2i.ZERO))
+			var sym: String = overrides.get(Vector2i(x, y), row[x])
+			layer.set_cell(Vector2i(lx, ly), TilesetFactory.SOURCE_ID, _atlas_cache.get(sym, Vector2i.ZERO))
 	if layer.get_parent() == null:
 		add_child(layer)
 	layer.visible = true

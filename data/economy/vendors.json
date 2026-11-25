@@ -1,0 +1,117 @@
+{
+ "schema_version": 1,
+ "vendors": [
+  {
+   "id": "greenvale_store",
+   "name": "Hollow General Store",
+   "region": "greenvale",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "cooked_trout",
+     "price": 30,
+     "tier": 0
+    },
+    {
+     "item": "trowel",
+     "price": 400,
+     "tier": 1
+    },
+    {
+     "item": "iron_pickaxe",
+     "price": 900,
+     "tier": 2
+    },
+    {
+     "item": "leather_backpack",
+     "price": 1200,
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "irondeep_quartermaster",
+   "name": "Hold Quartermaster",
+   "region": "irondeep",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "coal_ore",
+     "price": 30,
+     "tier": 0
+    },
+    {
+     "item": "steel_bar",
+     "price": 140,
+     "tier": 1
+    },
+    {
+     "item": "mithril_pickaxe",
+     "price": 2600,
+     "tier": 2
+    },
+    {
+     "item": "sapphire_amulet",
+     "price": 3500,
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "druid_trader",
+   "name": "Druid Trader",
+   "region": "whisperwood",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "ranarr",
+     "price": 110,
+     "tier": 0
+    },
+    {
+     "item": "restoration_draught",
+     "price": 450,
+     "tier": 1
+    },
+    {
+     "item": "maple_shortbow",
+     "price": 2600,
+     "tier": 2
+    },
+    {
+     "item": "explorers_compass",
+     "price": 3000,
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "oasis_bazaar",
+   "name": "Oasis Bazaar",
+   "region": "ashen_desert",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "cooked_carp",
+     "price": 70,
+     "tier": 0
+    },
+    {
+     "item": "trowel",
+     "price": 300,
+     "tier": 0
+    },
+    {
+     "item": "adamantite_pickaxe",
+     "price": 6000,
+     "tier": 3
+    },
+    {
+     "item": "sunstone",
+     "price": 9000,
+     "tier": 4
+    }
+   ]
+  }
+ ]
+}

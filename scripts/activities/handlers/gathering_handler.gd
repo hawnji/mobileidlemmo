@@ -92,8 +92,9 @@ func perform(e: ActivityEngine, ch: Adventurer, t: float) -> float:
 		return t
 	var ntype: Dictionary = e.registry.node_types[node.type_id]
 	var skill := String(ntype.skill)
-	var duration := float(ntype.gather_seconds) / ch.gather_speed_multiplier(skill, int(ntype.get("required_level", 1)), e.world.is_night())
-	var need := duration - ch.action_elapsed
+	var duration: float = float(ntype.gather_seconds) / ch.gather_speed_multiplier(skill, int(ntype.get("required_level", 1)), e.world.is_night()) \
+		/ e.world.local_multiplier(node.tile, "gather_speed")
+	var need: float = duration - ch.action_elapsed
 	if t < need:
 		ch.action_elapsed += t
 		return 0.0
@@ -116,6 +117,7 @@ func complete_gather(e: ActivityEngine, ch: Adventurer, node: ResourceNodeState,
 	var bonus := ch.stat("yield_bonus_chance", skill)
 	if bonus > 0.0 and world.rng.randf() < bonus:
 		qty += 1
+	qty = int(floor(qty * world.encounters.yield_multiplier_at(node.tile)))
 	qty = mini(qty, ch.inventory.can_add(item_id, qty))
 	if qty <= 0:
 		return  # no room: nothing consumed, nothing granted
@@ -134,7 +136,7 @@ func complete_gather(e: ActivityEngine, ch: Adventurer, node: ResourceNodeState,
 	var tool: Dictionary = ch.equipment.get("tool", {})
 	if not tool.is_empty() and String(e.registry.items.get(tool.item_id, {}).get("tool_skill", "")) == skill:
 		EquipmentService.wear(world, ch, "tool", int(e.registry.get_config("equipment.durability_per_gather", 1)))
-	e.grant_xp(ch, skill, float(ntype.get("xp", 0.0)))
+	e.grant_xp(ch, skill, float(ntype.get("xp", 0.0)) * world.local_multiplier(node.tile, "xp"))
 	for rd in ntype.get("rare_drops", []):
 		var chance := float(rd.get("chance", 0.0)) * ch.rare_drop_multiplier(skill)
 		if world.rng.randf() < chance:

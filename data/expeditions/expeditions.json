@@ -1,0 +1,643 @@
+{
+ "schema_version": 1,
+ "base_success": 0.1,
+ "power_weight": 0.6,
+ "min_success": 0.05,
+ "max_success": 0.97,
+ "failure_reward_fraction": 0.25,
+ "supplies_bonus": 0.08,
+ "injury_seconds": 600.0,
+ "expeditions": [
+  {
+   "id": "greenvale_survey",
+   "name": "Survey the Valley",
+   "region": "greenvale",
+   "duration_seconds": 1800,
+   "team_size": 1,
+   "risk": "low",
+   "description": "A short scouting trip around Greenvale.",
+   "requirements": [
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 1
+    }
+   ],
+   "recommended_power": 45,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      60,
+      140
+     ]
+    },
+    "items": [
+     {
+      "item": "oak_log",
+      "min": 5,
+      "max": 15,
+      "chance": 1.0
+     },
+     {
+      "item": "copper_ore",
+      "min": 5,
+      "max": 15,
+      "chance": 1.0
+     },
+     {
+      "item": "uncut_quartz",
+      "min": 1,
+      "max": 1,
+      "chance": 0.2
+     }
+    ],
+    "xp": {
+     "exploration": 300
+    },
+    "fragments": {
+     "chance": 0.1,
+     "amount": 3
+    }
+   },
+   "events": [
+    {
+     "id": "hidden_glade",
+     "name": "Hidden glade",
+     "chance": 0.25,
+     "reward_mult": 0.3,
+     "message": "Found a hidden glade full of herbs."
+    }
+   ],
+   "stages": []
+  },
+  {
+   "id": "goblin_warrens_raid",
+   "name": "Goblin Warrens Raid",
+   "region": "greenvale",
+   "duration_seconds": 3600,
+   "team_size": 2,
+   "risk": "medium",
+   "description": "Raid the goblins' supply tunnels.",
+   "requirements": [
+    {
+     "type": "combat_level",
+     "level": 10
+    }
+   ],
+   "recommended_power": 160,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      200,
+      400
+     ]
+    },
+    "items": [
+     {
+      "item": "goblin_trinket",
+      "min": 3,
+      "max": 8,
+      "chance": 1.0
+     },
+     {
+      "item": "bronze_bar",
+      "min": 5,
+      "max": 12,
+      "chance": 0.8
+     }
+    ],
+    "xp": {
+     "attack": 400,
+     "strength": 400,
+     "defense": 300
+    },
+    "fragments": {
+     "chance": 0.25,
+     "amount": 5
+    }
+   },
+   "events": [
+    {
+     "id": "ambush",
+     "name": "Monster ambush",
+     "chance": 0.3,
+     "kind": "ambush",
+     "power_check": 1.0,
+     "fail_reward_mult": -0.3,
+     "injury": true,
+     "message": "Goblins ambushed the team!"
+    },
+    {
+     "id": "extra_loot",
+     "name": "Additional treasure",
+     "chance": 0.2,
+     "reward_mult": 0.4,
+     "message": "A goblin stash!"
+    }
+   ],
+   "stages": [
+    {
+     "id": "chieftains_tent",
+     "name": "The Chieftain's Tent",
+     "requires": [
+      {
+       "type": "skill",
+       "skill": "strength",
+       "level": 15
+      }
+     ],
+     "reward_mult": 0.5,
+     "extra_items": [
+      {
+       "item": "iron_bar",
+       "min": 2,
+       "max": 5,
+       "chance": 1.0
+      }
+     ],
+     "message": "The team pushed on to the chieftain's tent."
+    }
+   ]
+  },
+  {
+   "id": "lost_dwarven_vault",
+   "name": "The Lost Dwarven Vault",
+   "region": "irondeep",
+   "duration_seconds": 14400,
+   "team_size": 3,
+   "risk": "medium",
+   "description": "A vault sealed during the Collapse. Rumoured to hold ancient ore and dwarven artifacts.",
+   "requirements": [
+    {
+     "type": "skill",
+     "skill": "mining",
+     "level": 30
+    },
+    {
+     "type": "combat_level",
+     "level": 25
+    },
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 20
+    }
+   ],
+   "recommended_power": 750,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      1500,
+      3000
+     ],
+     "gems": [
+      10,
+      30
+     ]
+    },
+    "items": [
+     {
+      "item": "mithril_ore",
+      "min": 20,
+      "max": 40,
+      "chance": 1.0
+     },
+     {
+      "item": "adamantite_ore",
+      "min": 3,
+      "max": 8,
+      "chance": 0.6
+     },
+     {
+      "item": "dwarven_artifact",
+      "min": 1,
+      "max": 2,
+      "chance": 0.7
+     },
+     {
+      "item": "mithril_pickaxe",
+      "min": 1,
+      "max": 1,
+      "chance": 0.25
+     }
+    ],
+    "xp": {
+     "mining": 4000,
+     "exploration": 3000,
+     "defense": 1500
+    },
+    "fragments": {
+     "chance": 0.6,
+     "amount": 10
+    }
+   },
+   "events": [
+    {
+     "id": "cave_in",
+     "name": "Cave-in",
+     "chance": 0.25,
+     "kind": "hazard",
+     "skill_check": {
+      "skill": "mining",
+      "level": 40
+     },
+     "fail_reward_mult": -0.2,
+     "injury": true,
+     "message": "A tunnel collapsed!",
+     "pass_message": "The miners shored up the tunnel just in time."
+    },
+    {
+     "id": "monster_ambush",
+     "name": "Monster ambush",
+     "chance": 0.3,
+     "kind": "ambush",
+     "power_check": 1.1,
+     "fail_reward_mult": -0.3,
+     "injury": true,
+     "message": "Stone trolls attacked!"
+    },
+    {
+     "id": "hidden_chamber",
+     "name": "Hidden chamber",
+     "chance": 0.2,
+     "skill_check": {
+      "skill": "exploration",
+      "level": 25
+     },
+     "reward_mult": 0.5,
+     "extra_items": [
+      {
+       "item": "uncut_ruby",
+       "min": 1,
+       "max": 3,
+       "chance": 1.0
+      }
+     ],
+     "message": "The scouts found a hidden chamber!"
+    },
+    {
+     "id": "extra_treasure",
+     "name": "Additional treasure",
+     "chance": 0.2,
+     "reward_mult": 0.3,
+     "message": "More treasure than expected."
+    },
+    {
+     "id": "dwarf_spirit",
+     "name": "Special NPC",
+     "chance": 0.05,
+     "fragments": 20,
+     "message": "A dwarven spirit blessed the team."
+    }
+   ],
+   "stages": [
+    {
+     "id": "deep_vault",
+     "name": "The Deep Vault",
+     "requires": [
+      {
+       "type": "skill",
+       "skill": "mining",
+       "level": 45
+      }
+     ],
+     "reward_mult": 0.6,
+     "extra_items": [
+      {
+       "item": "golem_core",
+       "min": 1,
+       "max": 2,
+       "chance": 1.0
+      }
+     ],
+     "message": "The team broke into the deep vault."
+    },
+    {
+     "id": "safe_route",
+     "name": "The Survey Route",
+     "requires": [
+      {
+       "type": "skill",
+       "skill": "exploration",
+       "level": 35
+      }
+     ],
+     "risk_mult": 0.5,
+     "message": "A scout found a safer way through."
+    }
+   ]
+  },
+  {
+   "id": "moonlit_glade",
+   "name": "The Moonlit Glade",
+   "region": "whisperwood",
+   "duration_seconds": 7200,
+   "team_size": 2,
+   "risk": "low",
+   "description": "Gather rare herbs in a glade that only appears under the full moon.",
+   "requirements": [
+    {
+     "type": "skill",
+     "skill": "foraging",
+     "level": 30
+    },
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 25
+    }
+   ],
+   "recommended_power": 500,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      600,
+      1200
+     ]
+    },
+    "items": [
+     {
+      "item": "ranarr",
+      "min": 10,
+      "max": 20,
+      "chance": 1.0
+     },
+     {
+      "item": "glowcap",
+      "min": 3,
+      "max": 8,
+      "chance": 0.6
+     },
+     {
+      "item": "spirit_essence",
+      "min": 2,
+      "max": 5,
+      "chance": 0.8
+     }
+    ],
+    "xp": {
+     "foraging": 3000,
+     "exploration": 2000
+    },
+    "fragments": {
+     "chance": 0.3,
+     "amount": 8
+    }
+   },
+   "events": [
+    {
+     "id": "spirit_guide",
+     "name": "Spirit guide",
+     "chance": 0.2,
+     "reward_mult": 0.4,
+     "message": "A spirit guided the team to more herbs."
+    }
+   ],
+   "stages": []
+  },
+  {
+   "id": "heart_of_the_wood",
+   "name": "Heart of the Wood",
+   "region": "whisperwood",
+   "duration_seconds": 21600,
+   "team_size": 3,
+   "risk": "high",
+   "description": "Push into the Rotting Heart to harvest heartwood.",
+   "requirements": [
+    {
+     "type": "combat_level",
+     "level": 40
+    },
+    {
+     "type": "skill",
+     "skill": "woodcutting",
+     "level": 45
+    }
+   ],
+   "recommended_power": 1050,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      3000,
+      5000
+     ],
+     "gems": [
+      20,
+      40
+     ]
+    },
+    "items": [
+     {
+      "item": "yew_log",
+      "min": 30,
+      "max": 60,
+      "chance": 1.0
+     },
+     {
+      "item": "heartwood",
+      "min": 1,
+      "max": 3,
+      "chance": 0.6
+     }
+    ],
+    "xp": {
+     "woodcutting": 8000,
+     "attack": 3000,
+     "defense": 3000
+    },
+    "fragments": {
+     "chance": 0.5,
+     "amount": 12
+    }
+   },
+   "events": [
+    {
+     "id": "treant_ambush",
+     "name": "Treant ambush",
+     "chance": 0.35,
+     "kind": "ambush",
+     "power_check": 1.15,
+     "fail_reward_mult": -0.35,
+     "injury": true,
+     "message": "Corrupted treants rose from the soil!"
+    }
+   ],
+   "stages": []
+  },
+  {
+   "id": "desert_caravan",
+   "name": "Guard the Caravan",
+   "region": "ashen_desert",
+   "duration_seconds": 10800,
+   "team_size": 2,
+   "risk": "medium",
+   "description": "Escort a caravan from the oasis to the ruins and dig while you are there.",
+   "requirements": [
+    {
+     "type": "combat_level",
+     "level": 35
+    },
+    {
+     "type": "skill",
+     "skill": "archaeology",
+     "level": 20
+    }
+   ],
+   "recommended_power": 560,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      3000,
+      6000
+     ]
+    },
+    "items": [
+     {
+      "item": "ancient_coin",
+      "min": 5,
+      "max": 12,
+      "chance": 1.0
+     },
+     {
+      "item": "cooked_carp",
+      "min": 10,
+      "max": 20,
+      "chance": 1.0
+     }
+    ],
+    "xp": {
+     "archaeology": 5000,
+     "defense": 2000
+    },
+    "fragments": {
+     "chance": 0.4,
+     "amount": 10
+    }
+   },
+   "events": [
+    {
+     "id": "raiders",
+     "name": "Raider attack",
+     "chance": 0.35,
+     "kind": "ambush",
+     "power_check": 1.1,
+     "fail_reward_mult": -0.3,
+     "injury": true,
+     "message": "Raiders attacked the caravan!"
+    },
+    {
+     "id": "sandstorm",
+     "name": "Sandstorm",
+     "chance": 0.2,
+     "kind": "hazard",
+     "skill_check": {
+      "skill": "exploration",
+      "level": 35
+     },
+     "fail_reward_mult": -0.15,
+     "message": "A sandstorm scattered the caravan.",
+     "pass_message": "A scout led the caravan around the storm."
+    }
+   ],
+   "stages": []
+  },
+  {
+   "id": "tomb_survey",
+   "name": "Survey the Royal Tombs",
+   "region": "ashen_desert",
+   "duration_seconds": 28800,
+   "team_size": 4,
+   "risk": "high",
+   "description": "Map the outer tombs of the buried kingdom.",
+   "requirements": [
+    {
+     "type": "skill",
+     "skill": "archaeology",
+     "level": 45
+    },
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 40
+    },
+    {
+     "type": "combat_level",
+     "level": 50
+    }
+   ],
+   "recommended_power": 1600,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      8000,
+      14000
+     ],
+     "gems": [
+      40,
+      80
+     ],
+     "recruitment_tokens": [
+      2,
+      5
+     ]
+    },
+    "items": [
+     {
+      "item": "royal_tablet",
+      "min": 2,
+      "max": 5,
+      "chance": 1.0
+     },
+     {
+      "item": "golden_idol",
+      "min": 1,
+      "max": 1,
+      "chance": 0.3
+     },
+     {
+      "item": "sunstone",
+      "min": 1,
+      "max": 1,
+      "chance": 0.15
+     }
+    ],
+    "xp": {
+     "archaeology": 15000,
+     "exploration": 10000
+    },
+    "fragments": {
+     "chance": 0.7,
+     "amount": 15
+    }
+   },
+   "events": [
+    {
+     "id": "curse",
+     "name": "Tomb curse",
+     "chance": 0.3,
+     "kind": "hazard",
+     "skill_check": {
+      "skill": "magic",
+      "level": 45
+     },
+     "fail_reward_mult": -0.25,
+     "injury": true,
+     "message": "A curse fell on the team.",
+     "pass_message": "A mage broke the tomb's curse."
+    },
+    {
+     "id": "secret_vault",
+     "name": "Hidden chamber",
+     "chance": 0.2,
+     "skill_check": {
+      "skill": "exploration",
+      "level": 50
+     },
+     "reward_mult": 0.6,
+     "message": "A sealed royal vault!"
+    }
+   ],
+   "stages": []
+  }
+ ]
+}

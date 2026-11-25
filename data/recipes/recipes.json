@@ -574,6 +574,660 @@
    },
    "seconds": 5.0,
    "xp": 55.0
+  },
+  {
+   "id": "smelt_steel",
+   "name": "Steel Bar",
+   "skill": "smithing",
+   "required_level": 25,
+   "station": "furnace",
+   "inputs": {
+    "iron_ore": 1,
+    "coal_ore": 2
+   },
+   "outputs": {
+    "steel_bar": 1
+   },
+   "seconds": 5.5,
+   "xp": 20.0
+  },
+  {
+   "id": "smelt_silver",
+   "name": "Silver Bar",
+   "skill": "smithing",
+   "required_level": 30,
+   "station": "furnace",
+   "inputs": {
+    "silver_ore": 1
+   },
+   "outputs": {
+    "silver_bar": 1
+   },
+   "seconds": 5.0,
+   "xp": 22.0
+  },
+  {
+   "id": "smelt_mithril",
+   "name": "Mithril Bar",
+   "skill": "smithing",
+   "required_level": 40,
+   "station": "furnace",
+   "inputs": {
+    "mithril_ore": 1,
+    "coal_ore": 3
+   },
+   "outputs": {
+    "mithril_bar": 1
+   },
+   "seconds": 6.0,
+   "xp": 35.0
+  },
+  {
+   "id": "smelt_adamantite",
+   "name": "Adamantite Bar",
+   "skill": "smithing",
+   "required_level": 55,
+   "station": "furnace",
+   "inputs": {
+    "adamantite_ore": 1,
+    "coal_ore": 4
+   },
+   "outputs": {
+    "adamantite_bar": 1
+   },
+   "seconds": 7.0,
+   "xp": 55.0
+  },
+  {
+   "id": "saw_maple",
+   "name": "Maple Plank",
+   "skill": "crafting",
+   "required_level": 30,
+   "station": "workbench",
+   "inputs": {
+    "maple_log": 1
+   },
+   "outputs": {
+    "maple_plank": 1
+   },
+   "seconds": 4.0,
+   "xp": 22.0
+  },
+  {
+   "id": "saw_yew",
+   "name": "Yew Plank",
+   "skill": "crafting",
+   "required_level": 45,
+   "station": "workbench",
+   "inputs": {
+    "yew_log": 1
+   },
+   "outputs": {
+    "yew_plank": 1
+   },
+   "seconds": 4.5,
+   "xp": 38.0
+  },
+  {
+   "id": "cook_cave_eel",
+   "name": "Cooked Cave Eel",
+   "skill": "cooking",
+   "required_level": 35,
+   "station": "range",
+   "inputs": {
+    "raw_cave_eel": 1
+   },
+   "outputs": {
+    "cooked_cave_eel": 1
+   },
+   "seconds": 3.5,
+   "xp": 70.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.35,
+    "stop_level": 60
+   }
+  },
+  {
+   "id": "cook_carp",
+   "name": "Cooked Carp",
+   "skill": "cooking",
+   "required_level": 30,
+   "station": "range",
+   "inputs": {
+    "raw_carp": 1
+   },
+   "outputs": {
+    "cooked_carp": 1
+   },
+   "seconds": 3.0,
+   "xp": 55.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.35,
+    "stop_level": 55
+   }
+  },
+  {
+   "id": "cook_moonfish",
+   "name": "Cooked Moonfish",
+   "skill": "cooking",
+   "required_level": 50,
+   "station": "range",
+   "inputs": {
+    "raw_moonfish": 1
+   },
+   "outputs": {
+    "moonfish": 1
+   },
+   "seconds": 4.0,
+   "xp": 110.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.3,
+    "stop_level": 75
+   }
+  },
+  {
+   "id": "brew_restoration",
+   "name": "Restoration Draught",
+   "skill": "herblore",
+   "required_level": 30,
+   "station": "alchemy_table",
+   "inputs": {
+    "ranarr": 2,
+    "spirit_essence": 1
+   },
+   "outputs": {
+    "restoration_draught": 1
+   },
+   "seconds": 5.0,
+   "xp": 90.0,
+   "requires_reputation": {
+    "whisperwood": 1
+   }
+  },
+  {
+   "id": "brew_glowcap",
+   "name": "Glowcap Elixir",
+   "skill": "herblore",
+   "required_level": 45,
+   "station": "alchemy_table",
+   "inputs": {
+    "glowcap": 2,
+    "ranarr": 1
+   },
+   "outputs": {
+    "glowcap_elixir": 1
+   },
+   "seconds": 6.0,
+   "xp": 140.0,
+   "requires_reputation": {
+    "whisperwood": 2
+   }
+  },
+  {
+   "id": "craft_silver_ring",
+   "name": "Silver Ring",
+   "skill": "crafting",
+   "required_level": 30,
+   "station": "workbench",
+   "inputs": {
+    "silver_bar": 1,
+    "uncut_sapphire": 1
+   },
+   "outputs": {
+    "silver_ring": 1
+   },
+   "seconds": 6.0,
+   "xp": 110.0
+  },
+  {
+   "id": "craft_sapphire_amulet",
+   "name": "Sapphire Amulet",
+   "skill": "crafting",
+   "required_level": 38,
+   "station": "workbench",
+   "inputs": {
+    "silver_bar": 2,
+    "uncut_sapphire": 2
+   },
+   "outputs": {
+    "sapphire_amulet": 1
+   },
+   "seconds": 7.0,
+   "xp": 160.0,
+   "requires_reputation": {
+    "irondeep": 2
+   }
+  },
+  {
+   "id": "craft_explorers_compass",
+   "name": "Explorer's Compass",
+   "skill": "crafting",
+   "required_level": 28,
+   "station": "workbench",
+   "inputs": {
+    "silver_bar": 1,
+    "ancient_coin": 2
+   },
+   "outputs": {
+    "explorers_compass": 1
+   },
+   "seconds": 7.0,
+   "xp": 120.0
+  },
+  {
+   "id": "craft_trowel",
+   "name": "Archaeologist's Trowel",
+   "skill": "smithing",
+   "required_level": 10,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 1,
+    "oak_plank": 1
+   },
+   "outputs": {
+    "trowel": 1
+   },
+   "seconds": 4.0,
+   "xp": 30.0
+  },
+  {
+   "id": "forge_mithril_pickaxe",
+   "name": "Mithril Pickaxe",
+   "skill": "smithing",
+   "required_level": 40,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 2
+   },
+   "outputs": {
+    "mithril_pickaxe": 1
+   },
+   "seconds": 7.0,
+   "xp": 150.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_axe",
+   "name": "Mithril Axe",
+   "skill": "smithing",
+   "required_level": 41,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 2
+   },
+   "outputs": {
+    "mithril_axe": 1
+   },
+   "seconds": 7.0,
+   "xp": 150.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_sword",
+   "name": "Mithril Sword",
+   "skill": "smithing",
+   "required_level": 42,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 2
+   },
+   "outputs": {
+    "mithril_sword": 1
+   },
+   "seconds": 7.0,
+   "xp": 150.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_helm",
+   "name": "Mithril Helm",
+   "skill": "smithing",
+   "required_level": 43,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 2
+   },
+   "outputs": {
+    "mithril_helm": 1
+   },
+   "seconds": 7.0,
+   "xp": 150.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_gloves",
+   "name": "Mithril Gloves",
+   "skill": "smithing",
+   "required_level": 42,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 1
+   },
+   "outputs": {
+    "mithril_gloves": 1
+   },
+   "seconds": 6.0,
+   "xp": 75.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_boots",
+   "name": "Mithril Boots",
+   "skill": "smithing",
+   "required_level": 44,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 1
+   },
+   "outputs": {
+    "mithril_boots": 1
+   },
+   "seconds": 6.0,
+   "xp": 75.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_platelegs",
+   "name": "Mithril Platelegs",
+   "skill": "smithing",
+   "required_level": 46,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 3
+   },
+   "outputs": {
+    "mithril_platelegs": 1
+   },
+   "seconds": 8.0,
+   "xp": 225.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_mithril_platebody",
+   "name": "Mithril Platebody",
+   "skill": "smithing",
+   "required_level": 48,
+   "station": "anvil",
+   "inputs": {
+    "mithril_bar": 5
+   },
+   "outputs": {
+    "mithril_platebody": 1
+   },
+   "seconds": 10.0,
+   "xp": 375.0,
+   "requires_building": {
+    "blacksmith": 3
+   }
+  },
+  {
+   "id": "forge_adamantite_pickaxe",
+   "name": "Adamantite Pickaxe",
+   "skill": "smithing",
+   "required_level": 55,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 2
+   },
+   "outputs": {
+    "adamantite_pickaxe": 1
+   },
+   "seconds": 7.0,
+   "xp": 200.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_axe",
+   "name": "Adamantite Axe",
+   "skill": "smithing",
+   "required_level": 56,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 2
+   },
+   "outputs": {
+    "adamantite_axe": 1
+   },
+   "seconds": 7.0,
+   "xp": 200.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_sword",
+   "name": "Adamantite Sword",
+   "skill": "smithing",
+   "required_level": 57,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 2
+   },
+   "outputs": {
+    "adamantite_sword": 1
+   },
+   "seconds": 7.0,
+   "xp": 200.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_helm",
+   "name": "Adamantite Helm",
+   "skill": "smithing",
+   "required_level": 58,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 2
+   },
+   "outputs": {
+    "adamantite_helm": 1
+   },
+   "seconds": 7.0,
+   "xp": 200.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_gloves",
+   "name": "Adamantite Gloves",
+   "skill": "smithing",
+   "required_level": 57,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 1
+   },
+   "outputs": {
+    "adamantite_gloves": 1
+   },
+   "seconds": 6.0,
+   "xp": 100.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_boots",
+   "name": "Adamantite Boots",
+   "skill": "smithing",
+   "required_level": 59,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 1
+   },
+   "outputs": {
+    "adamantite_boots": 1
+   },
+   "seconds": 6.0,
+   "xp": 100.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_platelegs",
+   "name": "Adamantite Platelegs",
+   "skill": "smithing",
+   "required_level": 61,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 3
+   },
+   "outputs": {
+    "adamantite_platelegs": 1
+   },
+   "seconds": 8.0,
+   "xp": 300.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "forge_adamantite_platebody",
+   "name": "Adamantite Platebody",
+   "skill": "smithing",
+   "required_level": 63,
+   "station": "anvil",
+   "inputs": {
+    "adamantite_bar": 5
+   },
+   "outputs": {
+    "adamantite_platebody": 1
+   },
+   "seconds": 10.0,
+   "xp": 500.0,
+   "requires_building": {
+    "blacksmith": 4
+   }
+  },
+  {
+   "id": "craft_maple_bow",
+   "name": "Maple Shortbow",
+   "skill": "crafting",
+   "required_level": 32,
+   "station": "workbench",
+   "inputs": {
+    "maple_plank": 3
+   },
+   "outputs": {
+    "maple_shortbow": 1
+   },
+   "seconds": 6.0,
+   "xp": 192.0
+  },
+  {
+   "id": "craft_maple_staff",
+   "name": "Maple Staff",
+   "skill": "crafting",
+   "required_level": 34,
+   "station": "workbench",
+   "inputs": {
+    "maple_plank": 2,
+    "uncut_sapphire": 1
+   },
+   "outputs": {
+    "maple_staff": 1
+   },
+   "seconds": 6.0,
+   "xp": 217.6
+  },
+  {
+   "id": "craft_maple_rod",
+   "name": "Maple Fishing Rod",
+   "skill": "crafting",
+   "required_level": 30,
+   "station": "workbench",
+   "inputs": {
+    "maple_plank": 2
+   },
+   "outputs": {
+    "maple_fishing_rod": 1
+   },
+   "seconds": 5.0,
+   "xp": 128.0
+  },
+  {
+   "id": "craft_yew_bow",
+   "name": "Yew Shortbow",
+   "skill": "crafting",
+   "required_level": 48,
+   "station": "workbench",
+   "inputs": {
+    "yew_plank": 3
+   },
+   "outputs": {
+    "yew_shortbow": 1
+   },
+   "seconds": 6.0,
+   "xp": 288.0
+  },
+  {
+   "id": "craft_yew_staff",
+   "name": "Yew Staff",
+   "skill": "crafting",
+   "required_level": 50,
+   "station": "workbench",
+   "inputs": {
+    "yew_plank": 2,
+    "uncut_ruby": 1
+   },
+   "outputs": {
+    "yew_staff": 1
+   },
+   "seconds": 6.0,
+   "xp": 326.4
+  },
+  {
+   "id": "craft_yew_rod",
+   "name": "Yew Fishing Rod",
+   "skill": "crafting",
+   "required_level": 46,
+   "station": "workbench",
+   "inputs": {
+    "yew_plank": 2
+   },
+   "outputs": {
+    "yew_fishing_rod": 1
+   },
+   "seconds": 5.0,
+   "xp": 192.0
+  },
+  {
+   "id": "pack_rations",
+   "name": "Expedition Rations",
+   "skill": "cooking",
+   "required_level": 20,
+   "station": "range",
+   "inputs": {
+    "cooked_trout": 1,
+    "baked_potato": 1
+   },
+   "outputs": {
+    "expedition_rations": 2
+   },
+   "seconds": 3.0,
+   "xp": 30.0
   }
  ]
 }

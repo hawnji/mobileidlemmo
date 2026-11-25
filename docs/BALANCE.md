@@ -169,3 +169,49 @@ Tests: `test_base_rates_chi_square_one_million_rolls` (chi-square must stay unde
 99.9% critical value for 5 degrees of freedom), exact pity behaviour (pulls 10/20/30 forced rare,
 higher tier wins, lower tiers reset), mythic by pull 200, featured share within ±3%, and pity and
 history persisting through save/load.
+
+## World expansion (Phase 3)
+
+Measured with `godot --headless --path . -s res://tools/balance_report.gd` (reference members
+have every combat and gathering skill and the character level set to the column level, and wear
+the gear tier for it: bronze below 15, iron 15+, mithril 30+, adamantite 45+). Dungeon runs use
+the three starters only, so they are one member short of the 4-member maximum.
+
+| Region | Explorer time to 35% / 98% explored (one starter, fresh world) |
+|---|---|
+| Greenvale | 35m 00s / 1h 48m |
+
+| Reference member (geared) | Level 10 | 20 | 30 | 40 | 50 | 60 |
+|---|---|---|---|---|---|---|
+| Power | 81 | 166 | 249 | 309 | 400 | 460 |
+
+| Expedition | Recommended power | Chance at level 20 | 40 | 60 |
+|---|---|---|---|---|
+| Survey the Valley | 45 | 97% | 97% | 97% |
+| Goblin Warrens Raid | 160 | 97% | 97% | 97% |
+| The Lost Dwarven Vault | 750 | 58% | 92% | 97% |
+| The Moonlit Glade | 500 | 58% | 92% | 97% |
+| Heart of the Wood | 1050 | 47% | 71% | 97% |
+| Guard the Caravan | 560 | 54% | 84% | 97% |
+| Survey the Royal Tombs | 1600 | 43% | 64% | 87% |
+
+| Dungeon | Party | Result at level 20 | 40 | 60 |
+|---|---|---|---|---|
+| Goblin Warren | 3 | cleared 1m 22s | cleared 55s | cleared 34s |
+| Deepforge Vault | 4 | failed 7m 14s | cleared 5m 37s | cleared 2m 55s |
+| Heartrot Hollow | 4 | failed 6m 27s | failed 7m 07s | cleared 3m 51s |
+| Tomb of the Sand King | 4 | failed 6m 54s | failed 8m 31s | cleared 5m 54s |
+
+### Knobs and intent
+
+| Knob | Value | Intent |
+|---|---|---|
+| `exploration.survey_seconds` | 60 | A first region takes about 2 hours for one explorer; faster with level and gear |
+| `exploration.walk_reveal_radius` | 1 | Gatherers reveal their own paths without exploring for free |
+| `exploration.xp_per_tile` | 4 | Roughly 5-6k Exploration XP/h, below gathering, plus discovery rewards |
+| Region unlock | quest + mining 20, woodcutting 30 or character level 30 + 30-50% of the previous region explored + 500/2000/6000 gold | Each region is a multi-hour goal |
+| Expedition success | `0.10 + 0.60 x min(power/recommended, 1.45)`, +8% supplies | About 70% at the recommended power, the 97% cap needs about 1.45x |
+| Expedition recommended power | team size x a geared member at the intended level (5, 10, 30, 30, 45, 35, 50) | Odds rise as the team outlevels the content |
+| Dungeon bosses | 320 / 1500 / 1900 / 2600 HP, enrage at 3-5 min | Intended at about level 10 / 40 / 50 / 60 with the matching gear |
+| Encounters | one roll every 10-25 min, at most 2 active | Something to notice on most sessions without flooding the map |
+

@@ -230,7 +230,8 @@ func _recipe_list(act: Dictionary) -> void:
 	body.add_child(UiTheme.label("Recipe", 22, UiTheme.ACCENT))
 	for rid in reg.recipes_for_station(String(act.station)):
 		var r: Dictionary = reg.recipes[rid]
-		var ok := character.skills.get_level(String(r.skill)) >= int(r.required_level) and world.town.meets(r.get("requires_building", {}))
+		var rep_gap: String = world.quests.recipe_gap(r)
+		var ok := character.skills.get_level(String(r.skill)) >= int(r.required_level) and world.town.meets(r.get("requires_building", {})) and rep_gap.is_empty()
 		var ins := []
 		for it in r.inputs:
 			ins.append("%d %s (%d)" % [int(r.inputs[it]), reg.get_item_name(it), world.storage.get_quantity(it)])
@@ -244,6 +245,8 @@ func _recipe_list(act: Dictionary) -> void:
 			var need := "%s %d" % [reg.skills[r.skill].name, int(r.required_level)]
 			for bid in r.get("requires_building", {}):
 				need += ", %s %d" % [reg.buildings[bid].name, int(r.requires_building[bid])]
+			if not rep_gap.is_empty():
+				need += ", " + rep_gap
 			b.text = "%s  -  needs %s" % [r.name, need]
 		b.pressed.connect(func() -> void:
 			_recipe = rid
