@@ -108,11 +108,47 @@ equipment and town loops all run unattended, online and offline, and are covered
 | Audio | Out of scope so far | Audio bus layout and SFX per activity |
 | Crafting and cooking XP/hour is high at low levels | Tier 1 recipes are quick | Tune `seconds`/`xp` in recipes.json after playtesting (see BALANCE.md) |
 
-## Phase 3: World expansion
+## Phase 3: World expansion (complete)
 
-Multiple regions with transitions, fog of war, exploration discoveries, dungeons, bosses,
-expeditions, regional quests and reputation, outposts, tier 2 to 4 resources, dynamic encounters,
-hierarchical navigation.
+Acceptance (spec): players can progress through several distinct regions with meaningful
+exploration and skill requirements. **Met**: four regions on one map, each gated by quests,
+skill levels, exploration of the previous region and gold; exploring a region takes hours, not
+minutes (Greenvale: about 35 minutes to 35% and 1 h 48 m to 98% for one starter, see
+BALANCE.md); every system below runs online and offline and is covered by tests.
+
+### Phase 3 feature checklist
+
+| Feature | Status | Where | Tests |
+|---|---|---|---|
+| Multiple regions, transitions (gates), unlock requirements and cost | Done (4 regions) | `data/regions/world_map.json`, `SimulationWorld.unlock_region` | `test_world_expansion` (regions, gates) |
+| Fog of war, exploration skill, survey activity | Done | `exploration_state.gd`, `handlers/exploration_handler.gd`, `fog_overlay.gd` | fog, survey, explorer tests |
+| Discoveries with specialty/affinity requirements, secrets | Done (20 + 2 secrets) | `world_map.json`, `SimulationWorld.try_discover/reveal_secret` | discovery and secret tests |
+| Hierarchical navigation and fast travel | Done | `region_navigator.gd`, `ActivityEngine._pathfind` | route, teleport and reachability tests |
+| Outposts: depot, stations, waystone, local bonuses | Done (3) | `data/town/buildings.json` (kind outpost) | outpost test |
+| Tier 2 to 4 resources and gear | Done | items, nodes, recipes data | registry validation, loops |
+| Regional and main quests, contracts, reputation, vendors | Done (37 quests, 4 vendors) | `quest_state.gd`, `data/quests/quests.json`, `data/economy/vendors.json` | quest, reputation, vendor tests |
+| Dungeons with bosses (phases, abilities, summons, enrage) | Done (4) | `dungeon_run.gd`, `data/dungeons/dungeons.json` | `test_adventures` (clear, wipe, save mid-fight) |
+| Character active abilities | Done, in dungeons only | `data/characters/abilities.json` | dungeon tests |
+| Expeditions with requirements, stages, events, deterministic results | Done (7) | `expedition_state.gd` | slot, requirement, determinism tests |
+| Dynamic encounters (5 kinds) | Done | `encounter_director.gd`, `data/world/encounters.json` | encounter tests incl. offline |
+| Notification categories and inbox | Done (in-game) | `notification_center.gd`, `data/config/notifications.json` | notification tests |
+| Mailbox for rewards when storage is full | Done | `SimulationWorld._store_or_mail` | mailbox test |
+| Offline report: exploration, discoveries, expeditions, dungeons, quests | Done | `offline_report.gd` | offline suite |
+| Save format 3 with migration from format 1 and 2 | Done | `SimulationWorld._load_phase3` | save round-trip tests |
+| UI: World Map, Quests and Vendors, Journeys, Notifications, fog overlay | Done | `scripts/ui/*` | screenshots `17` to `24` |
+
+### Phase 3 known gaps (honest list)
+
+| Gap | Why | Plan |
+|---|---|---|
+| Phone (OS) notifications are not delivered | Godot has no built-in mobile notification API; it needs an Android plugin and an iOS plugin | `LocalNotifier` forwards to a `LocalNotification` singleton when one is installed and already schedules expedition returns on backgrounding; add the plugins at export time |
+| Remote push (server to phone) | Needs a backend and Apple/Google credentials | Phase 4 |
+| Active abilities are used only in dungeons | Open-world combat stays simple and cheap for offline simulation | Revisit with the Phase 5 combat pass |
+| Bosses exist only inside dungeons; no open-world boss | Co-op world bosses belong to multiplayer | Phase 4 |
+| Expedition and dungeon results are decided on the device | No server yet | Phase 4 services own rewards |
+| One map file holds all regions | Fine at 128x96 (12k tiles) | Split into region chunks if the world grows past ~512x512 |
+| Balance is first-pass | Measured with `tools/balance_report.gd`, not playtested | Tune after playtests (BALANCE.md lists the knobs) |
+| Art is placeholder | By design | Artist pass |
 
 ## Phase 4: Multiplayer
 

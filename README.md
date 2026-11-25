@@ -5,11 +5,16 @@ You collect adventurers, give them jobs, and they travel the world on their own 
 fish, fight and craft, and they keep working while you are offline. Automation is the
 gameplay, not a shortcut around it.
 
-**Current status: Phase 2 (RPG progression) complete, on top of the Phase 1 prototype.** See
+**Current status: Phase 3 (world expansion) complete, on top of Phases 1 and 2.** See
 [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) for what is done, the known gaps and
 what comes next.
 
+![Phase 3 screenshots](docs/screenshots/phase3_overview.png)
+
+<details><summary>Phase 2 screenshots</summary>
+
 ![Phase 2 screenshots](docs/screenshots/phase2_overview.png)
+</details>
 
 <details><summary>Phase 1 screenshots</summary>
 
@@ -41,7 +46,7 @@ what comes next.
   tools and particles.
 - Saves locally with atomic writes. Saves on autosave, on quit and when the app is backgrounded
   on mobile.
-- 148 automated tests plus a headless boot smoke test.
+- 189 automated tests plus a headless boot smoke test.
 
 ### Added in Phase 2
 - **23 adventurers** across six rarities (3 starters, 18 recruitable, 1 quest, 1 exploration),
@@ -68,6 +73,31 @@ what comes next.
   them; save routes as templates.
 - **NPC shop**: sell from storage, lock and favourite items.
 - An item conservation ledger (sources minus sinks) that the tests check across every system.
+
+### Added in Phase 3
+- **One 128x96 world with four regions**: Greenvale, the Irondeep Mountains, Whisperwood and the
+  Ashen Desert. Regions unlock through quests, skill levels, exploration and gold; gates between
+  them open once both sides are unlocked. Two secret passages open through discoveries.
+- **Fog of war and exploration**: walking lifts a narrow line of sight; the Explore activity walks
+  to the unknown and surveys it (Exploration level and gear make surveys faster and wider).
+  20 authored discoveries, some needing a specialty (assassin, mage) or an affinity.
+- **Hierarchical navigation**: characters route region to region through gates and fast-travel
+  between waystones (home storage and built outposts).
+- **Outposts** in the three new regions: a storage depot (characters deposit there instead of
+  walking home), crafting stations, a waystone and local gathering bonuses.
+- **Quests and reputation**: 8 main story quests, 16 regional quests, 13 repeatable contracts;
+  reputation tiers (Neutral to Exalted) per region unlock vendor stock, recipes and a character.
+- **Dungeons** (4) with floors, bosses with phases, abilities, summons and enrage, character
+  active abilities, a food pool and a time limit. Parties leave the map while inside.
+- **Expeditions** (7): long timed journeys with team requirements, success odds from team power
+  and supplies, optional stages, random events and injuries, resolved deterministically.
+- **Dynamic encounters**: treasure goblins, bountiful harvests, travelling merchants, monster
+  surges and wandering heroes who join you, also during offline time.
+- **Notifications**: an in-game inbox with per-category switches and merged repeats. Phone
+  notifications need a mobile plugin that is not in this build (see known gaps).
+- 120 items, 72 recipes, 21 enemy types including 4 bosses, 48 activities, 24 characters.
+- New screens: World Map, Quests and Vendors, Journeys (expeditions, dungeons, events) and
+  Notifications; a fog overlay, outposts and dungeon entrances on the map.
 
 ## Running the game
 
@@ -101,8 +131,9 @@ Other tools:
 
 ```bash
 python3 tools/generate_greenvale_map.py      # regenerate + validate the starter map
+python3 tools/generate_world_map.py          # compose + validate the 4-region world map (run after the above)
 python3 tools/generate_placeholder_art.py    # regenerate placeholder art
-godot --headless --path . -s res://tools/balance_report.gd   # gathering, combat and crafting rates
+godot --headless --path . -s res://tools/balance_report.gd   # gathering, combat, crafting, exploration, expedition and dungeon numbers
 godot --headless --path . -s res://tools/gacha_report.gd     # base and effective gacha rates
 xvfb-run godot --path . --rendering-method gl_compatibility \
   -s res://tools/capture_screenshots.gd -- --out=/tmp/shots  # visual smoke test + screenshots
@@ -115,14 +146,18 @@ project.godot          Godot project (main scene: scenes/main/Main.tscn, autoloa
 data/                  All balance and content as JSON (skills, items, nodes, activities, characters, map, config)
 scripts/core/          Game autoload, DataRegistry, SimulationWorld, StatBlock, AccountEffects, time source
 scripts/activities/    ActivityEngine (state machine driver), Assignment, ActivityEstimator,
-                       handlers/ (gathering, crafting, combat, construction)
+                       handlers/ (gathering, crafting, combat, construction, exploration)
 scripts/characters/    Adventurer (runtime state), CharacterStates, CharacterView
-scripts/pathfinding/   GridPathfinder (A* on AStarGrid2D, cached), PathResult
-scripts/world/         WorldGrid, ResourceNodeState, chunk renderer, camera, views, day/night
+scripts/pathfinding/   GridPathfinder (A* on AStarGrid2D, cached), PathResult, RegionNavigator (gates, waystones)
+scripts/world/         WorldGrid, ResourceNodeState, ExplorationState (fog, discoveries), EncounterDirector,
+                       chunk renderer, fog overlay, camera, views, day/night
 scripts/skills/        XpTable, SkillSet
 scripts/inventory/     Inventory (bags and storage)
-scripts/progression/   Offline progression interface, local simulator, offline report
-scripts/combat/        EnemyState, CombatRules
+scripts/progression/   Offline progression interface, local simulator, offline report, Objectives (conditions)
+scripts/combat/        EnemyState, CombatRules, DungeonRun (party vs floors and boss)
+scripts/quests/        QuestState (quests, contracts, reputation)
+scripts/expeditions/   ExpeditionState (slots, odds, deterministic resolution)
+scripts/notifications/ NotificationCenter (inbox), LocalNotifier (OS bridge, needs a plugin)
 scripts/economy/       Wallet
 scripts/equipment/     EquipmentService (equip, wear, repair, upgrade)
 scripts/recruitment/   RecruitmentState (rolls, pity, effective rates)
@@ -137,8 +172,7 @@ tools/                 Map/art generators, test runner script, balance report, s
 docs/                  Design, architecture, roadmap, systems, data schema, balance, changelog
 ```
 
-Folders for later phases (quests and others) already exist and each has a README describing what
-goes there.
+Folders for later phases already exist and each has a README describing what goes there.
 
 ## Documentation
 

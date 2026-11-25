@@ -176,7 +176,32 @@ templates, and safety rules for health, supplies, enemy level, consumables and r
 - Rolling the clock back grants nothing, and reopening the game immediately does not grant the
   same time twice.
 
-## 8. Later systems (summary)
+## 8. World expansion [P3]
+
+The world opens in stages. Greenvale is the home valley; the **Irondeep Mountains** (mining,
+smithing, dwarven ruins), **Whisperwood** (ancient trees, herbs, spirits) and the **Ashen Desert**
+(archaeology, sandstone, the Sand King's tomb) each unlock through a main-story quest, a skill
+level, how much of the previous region you have explored, and gold. That makes every region a
+goal that uses what the player built before: skills, exploration and an economy.
+
+- **Exploration is an activity.** Fog hides the map. Any character lifts a little fog as they
+  travel; an explorer surveys the unknown and finds discoveries. Some discoveries need a certain
+  kind of hero (an assassin to find the smugglers' cache, a mage to read the river stone, a
+  miner to recognise an old shaft), which gives collecting a reason beyond stats.
+- **Outposts** turn a frontier into a second home: a depot so gatherers stop walking back to the
+  village, crafting stations, a waystone for fast travel and a local gathering bonus.
+- **Quests and reputation** give direction. Main quests tell the story of the Collapse and open
+  regions; regional quests and repeatable contracts earn reputation, which unlocks vendor stock,
+  recipes and a dwarven hero.
+- **Dungeons** are short, intense party fights with bosses that change phase, summon help and
+  enrage. Each hero brings an active ability decided by their specialty (guard, volley, cleave,
+  healing, ...), so party composition matters.
+- **Expeditions** are long journeys the team takes off-screen. Requirements decide who may go,
+  team power and supplies decide the odds, and the story of what happened is told on return.
+- **The world surprises you**: treasure goblins, bountiful veins, travelling merchants, monster
+  surges and wandering heroes who may join you, also while you are away.
+
+## 9. Later systems (summary)
 
 | System | Phase | Notes |
 |---|---|---|
@@ -195,7 +220,7 @@ templates, and safety rules for health, supplies, enemy level, consumables and r
 | Daily, weekly and seasonal | P4/P5 | Never mandatory for competitive progression |
 | Notifications | P2 | Rare finds, completed jobs and full bags only. No spam for routine gathering |
 
-## 9. Monetisation principles
+## 10. Monetisation principles
 
 Monetisation must not be pay-to-win. It focuses on cosmetics (skins, town decorations, pet and
 mount skins), optional convenience and optional premium recruitment. Gacha probabilities and pity
@@ -203,7 +228,7 @@ are always visible. Maximum-rarity characters are never required for normal prog
 Currencies are Gold, Gems, Recruitment Tokens, Guild Coins, Ascension Points and Relic Dust
 **[P2+]**.
 
-## 10. Design decisions made in Phase 1
+## 11. Design decisions made in Phase 1
 
 | Decision | Why |
 |---|---|

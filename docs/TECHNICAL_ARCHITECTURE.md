@@ -103,6 +103,25 @@ the account-wide `AccountEffects` block (buildings; later relics, pets, guild pe
 `AccountEffects.current()` rebuilds only when a source's `version` changes, and each character
 re-folds only when its own sources or the account version change; individual lookups are memoised.
 
+### World expansion (Phase 3)
+
+- **One map, many regions.** `world_map.json` is a single tile grid; regions are rectangles over
+  it, so pathfinding, rendering and saves did not need a second coordinate system. Gates are
+  ordinary tiles toggled with `WorldGrid.set_object_blocked`.
+- **Hierarchical navigation.** `RegionNavigator` plans over regions and gates (BFS) and the engine
+  runs A* only for the current leg. Long trips become a few short cached searches, and waystone
+  teleports remove the longest walks.
+- **AWAY state.** Characters on expeditions or in dungeons are off the map: they hold no nodes or
+  tiles and are skipped by the engine; `expeditions.tick` and `DungeonRun.tick` run their timers.
+- **Separate random streams.** The world RNG drives gathering, loot and combat. Recruitment
+  (`seed ^ 0x5EED`), encounters (`seed ^ 0xE7C0`) and each expedition (seed drawn at start) have
+  their own streams, so adding a system or an encounter does not shift every later roll; this is
+  what keeps coarse-step and fine-step simulations, and save/load round trips, identical.
+- **No item is ever destroyed.** Rewards that do not fit in storage go to the mailbox, which is
+  part of `held_totals()`, as are dungeon food pools while a run is in progress.
+- **Conditions in data.** Every gate (quest, region, outpost, expedition, discovery) is a list of
+  condition objects evaluated by `Objectives`, so new content rarely needs code.
+
 ## 3. Pathfinding
 
 `GridPathfinder` wraps Godot's native `AStarGrid2D`:
@@ -233,8 +252,8 @@ slower than export templates):
 
 | Scenario | Time |
 |---|---|
-| 148-test suite | ~19 s (about 2 s of it is the 10^6-roll chi-square test) |
-| 8 h offline, 3 working characters (`test_eight_hour_simulation_is_fast_enough`) | ~3.4 s (was 2.7 s in Phase 1; stat lookups now go through StatBlock) |
+| 189-test suite | ~33 s (about 2 s of it is the 10^6-roll chi-square test) |
+| 8 h offline, 3 working characters (`test_eight_hour_simulation_is_fast_enough`) | ~5.5 s (2.7 s in Phase 1, 3.4 s in Phase 2; Phase 3 adds region checks, fog reveals, quest refreshes and encounters per tick; not yet profiled) |
 | One gather cycle (check, perform, grant, events) | ~60-100 µs |
 | Cached path lookup | ~4 µs |
 
