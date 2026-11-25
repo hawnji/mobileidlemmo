@@ -3,13 +3,14 @@ extends ModalPanel
 ## Recruitment banners: published base and effective rates, pity progress,
 ## 1x / 10x pulls and the results.
 ##
-## In this local build the pull runs in SimulationWorld (dev only). Online,
-## the same screen calls the server's Recruitment Service.
+## Offline the pull runs in SimulationWorld. Online, the server rolls and
+## charges it (OnlineService.recruit) and keeps the pity counters.
 
 var world: SimulationWorld
 var _banner := "standard"
 var _results: Array = []
 var _msg: Label
+var _busy := false
 static var _effective_cache := {}
 
 
@@ -50,8 +51,19 @@ func refresh() -> void:
 		var b := UiTheme.button(label, 20)
 		b.custom_minimum_size = Vector2(0, 80)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.disabled = cost.is_empty()
+		b.disabled = cost.is_empty() or _busy
 		b.pressed.connect(func() -> void:
+			var online: OnlineService = Game.online
+			if online and online.is_online():
+				# The server rolls and charges the pull.
+				_busy = true
+				refresh()
+				online.recruit(_banner, n, func(res: Dictionary) -> void:
+					_busy = false
+					_results = res.results
+					refresh()
+					_msg.text = res.error)
+				return
 			var res := world.recruit(_banner, n)
 			_results = res.results
 			refresh()
@@ -90,4 +102,6 @@ func refresh() -> void:
 		body.add_child(UiTheme.label("Featured: %s (%d%% of %s results)" % [reg.characters[feat.character_id].name, int(float(feat.share) * 100),
 			reg.characters[feat.character_id].rarity], 16, UiTheme.ACCENT))
 	body.add_child(UiTheme.label("Duplicates become fragments for star upgrades. Pity is kept per banner and never expires.", 15, UiTheme.TEXT_DIM))
-	body.add_child(UiTheme.label("Local build: pulls are simulated on this device. Online, the server rolls them.", 15, UiTheme.TEXT_DIM))
+	var on: OnlineService = Game.online
+	body.add_child(UiTheme.label("Online: the server rolls each pull and keeps your pity." if on and on.is_online()
+		else "Offline: pulls are rolled on this device. When you play online, the server rolls them.", 15, UiTheme.TEXT_DIM))

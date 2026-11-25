@@ -1,0 +1,52 @@
+# Worldbound server stack: PostgreSQL + Nakama 3.22 with the Worldbound
+# module (server/nakama/modules/index.js, built by tools/build_server_module.py).
+#
+#   python3 tools/build_server_module.py
+#   WB_SERVER_KEY=... WB_HTTP_KEY=... WB_CONSOLE_PASSWORD=... WB_DB_PASSWORD=... docker compose up -d
+#
+# NOTE: written for Phase 4 but NOT run yet - the build machine had no Docker
+# daemon. The same Nakama version and module were tested with
+# server/run_local.sh (see server/README.md).
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: nakama
+      POSTGRES_PASSWORD: ${WB_DB_PASSWORD:?set WB_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "nakama"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  nakama:
+    image: registry.heroiclabs.com/heroiclabs/nakama:3.22.0
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint:
+      - /bin/sh
+      - -ecx
+      - >
+        /nakama/nakama migrate up --database.address postgres:${WB_DB_PASSWORD}@postgres:5432/nakama &&
+        exec /nakama/nakama --name worldbound --database.address postgres:${WB_DB_PASSWORD}@postgres:5432/nakama
+        --runtime.path /nakama/data/modules
+        --socket.server_key ${WB_SERVER_KEY:?set WB_SERVER_KEY}
+        --runtime.http_key ${WB_HTTP_KEY:?set WB_HTTP_KEY}
+        --console.password ${WB_CONSOLE_PASSWORD:?set WB_CONSOLE_PASSWORD}
+        --session.token_expiry_sec 86400 --logger.level INFO
+    volumes:
+      - ./server/nakama/modules:/nakama/data/modules:ro
+    ports:
+      - "7350:7350"   # client API + realtime socket
+      - "7351:7351"   # admin console (firewall this in production)
+    healthcheck:
+      test: ["CMD", "/nakama/nakama", "healthcheck"]
+      interval: 10s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  pgdata:

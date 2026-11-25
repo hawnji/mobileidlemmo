@@ -83,6 +83,19 @@ func _record(currency: String, delta: int, reason: String) -> void:
 	changed.emit()
 
 
+## Online build: the server owns some balances. Sets one without touching
+## the earned / spent totals (the server already counted those).
+func set_balance_from_server(currency: String, amount: int) -> void:
+	if not _valid(currency):
+		return
+	var nb := clampi(amount, 0, MAX_BALANCE)
+	if nb == get_balance(currency):
+		return
+	var delta := nb - get_balance(currency)
+	balances[currency] = nb
+	_record(currency, delta, "server_sync")
+
+
 func to_dict() -> Dictionary:
 	return {"balances": balances.duplicate(), "earned": totals_earned.duplicate(), "spent": totals_spent.duplicate()}
 

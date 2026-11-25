@@ -123,8 +123,9 @@ Bars → Bronze Bar*. He walks to the chest, takes ore, walks to the furnace and
 ## Recruitment (Phase 2)
 **Files:** `scripts/recruitment/recruitment_state.gd`, `SimulationWorld.recruit`,
 `scripts/ui/recruit_panel.gd`. Rules and rates are in BALANCE.md. Rolls use their own RNG so
-recruiting never changes the world RNG sequence. **Local rolls are development-only**; the Phase 4
-server owns them.
+recruiting never changes the world RNG sequence. Offline the pull runs on the device; online
+(Phase 4) the server rolls and charges it and the client only adds the results
+(`OnlineSync.apply_recruit`).
 
 **Manual test:** tap **Recruit**, then **Recruit x10** (uses the 10 starting tokens). New heroes
 appear in the roster bar; the rates list shows pity progress (for example `3 / 10`).
@@ -247,6 +248,45 @@ inside the cooldown. `LocalNotifier` hands entries to a `LocalNotification` engi
 plugin provides one; otherwise nothing reaches the OS (honest gap). Rewards that do not fit in
 storage go to the mailbox (`claim_mailbox`), never destroyed.
 
+## Online play (Phase 4)
+**Files:** `scripts/multiplayer/` (`nakama_client.gd`, `nakama_socket.gd`, `online_service.gd`,
+`online_sync.gd`, `nakama_game_backend.gd`, `wb_server_data.gd`), `scripts/ui/social_panel.gd`,
+`scripts/world/presence_layer.gd`, and the server in `server/` (see server/README.md).
+
+- **Going online.** Social > Account takes a server address, key and player name, saves them to
+  `user://online.cfg` and restarts the session on `NakamaGameBackend`. Start-up signs in with a
+  per-install device id, loads the cloud save if it is further along than the device save, and
+  falls back to the device save if the server is unreachable. Play offline clears the setting.
+- **Cloud sync.** Saves upload at most once a minute and right after server-side actions. A
+  refused upload (validation or another device) shows a toast and the reason in Social > Account,
+  which also has Sync now, Load cloud save and Collect deliveries.
+- **Recruitment** online goes through the server; pity counters on the banner screen are the
+  server's.
+- **Friends**: add by player name, accept, remove, visit their town (buildings, heroes, regions),
+  start a private trade.
+- **Guild**: browse, join, create, leave; donate gold to level the guild; members get its perks
+  (shown as "Member bonus"); realtime guild chat.
+- **Market**: list tradeable storage items for a total price (optionally for one friend), browse
+  sorted by unit price, buy, cancel. Payments, purchases and returns arrive as deliveries,
+  collected automatically every two minutes and after each purchase.
+- **World**: active world events with time left, the world boss with shared HP, cooldown and top
+  damage, and the players whose heroes share your region. Their heroes appear on the map as blue
+  markers with the player's name.
+- Speed-up and the developer time skip are off while online (the server only accepts real time).
+
+**Tests:** `tests/unit/test_online_sync.gd` (11, no server: wallet cache, server pulls, escrow,
+deliveries, cloud vs local, guild and event effects, settings). With a server running:
+`server/run_tests.sh` runs `server/tests/test_server.mjs` (20) and `tests/online/` (9: real save
+round trip and public town, honest progress accepted and gems credited, impossible progress and a
+fast clock rejected, second-device conflict, a new device starting from the cloud save, server
+recruitment, a market sale settling on both saves, guild donations and perks, guild chat and
+region presence over the socket).
+
+**Manual test:** start a server (`server/run_local.sh`), go online from Social > Account on two
+devices (or a desktop and a phone), add each other as friends, create and join a guild, chat,
+list ore on one and buy it on the other, then attack the world boss from both.
+`tools/capture_online_screenshots.gd` scripts a second player and captures screens 25 to 31.
+
 ## Offline progression
 **Files:** `scripts/progression/*.gd`, `scripts/multiplayer/*.gd`, `scripts/save/save_service.gd`,
 `scripts/core/time_source.gd`, `scripts/ui/offline_report_panel.gd`
@@ -283,10 +323,13 @@ seed and state, sim time, and the ledger. Characters added to data after a save 
 | HUD | `scripts/ui/hud.gd` | Top bar (clock, storage, speed, dev), character panel, roster, bottom nav, toasts |
 | Panels | `scripts/ui/*_panel.gd` | Activity (with XP/h estimate), Inventory/Storage, Skills, Offline report |
 
+| SocialPanel | `scripts/ui/social_panel.gd` | Account, Friends, Guild (chat), Market, World (events, boss, players nearby) |
+| PresenceLayer | `scripts/world/presence_layer.gd` | Other players' heroes as named blue markers, interpolated |
+
 **Visual test:** `tools/capture_screenshots.gd` renders 24 screenshots of the key screens (requires
 a display or Xvfb).
 
-## Test inventory (189 tests)
+## Test inventory (200 offline tests, plus 29 against a live server)
 
 | Suite | File | Tests | Covers |
 |---|---|---|---|
@@ -304,6 +347,7 @@ a display or Xvfb).
 | unit | test_recruitment | 14 | gacha probabilities (chi-square), pity, costs, fragments, stars |
 | unit | test_equipment | 11 | equip, wear, repair, upgrade |
 | unit | test_progression | 6 | traits, milestones, specializations |
+| unit | test_online_sync | 11 | Phase 4 client rules without a server |
 | integration | test_gathering_loop | 10 | Phase 1 acceptance loop |
 | integration | test_crafting_loop | 7 | crafting requirements and loop |
 | integration | test_combat_loop | 9 | combat, injury, retreat, variants |
@@ -315,3 +359,5 @@ a display or Xvfb).
 | simulation | test_conservation | 6 | item ledger across every system |
 | simulation | test_offline_progress | 8 | offline simulation and reports |
 | smoke | Main.tscn headless boot (in run_tests.sh) | 1 | scenes, UI, autoload |
+| online | tests/online/test_online_client (needs `WB_NAKAMA_URL`) | 9 | Godot client against Nakama |
+| server | server/tests/test_server.mjs (Node, needs a server) | 20 | every RPC, validation, races, socket chat and presence, world boss |

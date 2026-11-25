@@ -12,6 +12,8 @@ signal selection_changed(character_id: String)
 
 var registry: DataRegistry
 var backend: GameBackend
+## Set when the session runs on NakamaGameBackend (online play).
+var online: OnlineService
 var world: SimulationWorld
 var time_scale := 1.0
 var tick_seconds := 0.1
@@ -55,6 +57,7 @@ func start_session(p_backend: GameBackend = null) -> void:
 		var elapsed: float = backend.now_unix() - float(loaded.saved_at_unix)
 		pending_report = backend.get_offline_provider().apply_offline_progress(world, elapsed)
 	world.event_emitted.connect(_on_world_event)
+	_attach_online()
 	running = true
 	set_process(true)
 	session_started.emit(world)
@@ -80,6 +83,29 @@ func _process(delta: float) -> void:
 		save_now()
 
 
+func _attach_online() -> void:
+	if online and online.get_parent() == self:
+		remove_child(online)
+		online.queue_free()
+	online = null
+	if backend is NakamaGameBackend:
+		online = (backend as NakamaGameBackend).service
+		time_scale = 1.0  # the server only accepts real elapsed time
+		add_child(online)
+		online.attach_world(world)
+
+
+## Swaps in a world loaded from the cloud (Social screen, after a conflict).
+func replace_world(new_world: SimulationWorld) -> void:
+	world.event_emitted.disconnect(_on_world_event)
+	world = new_world
+	world.event_emitted.connect(_on_world_event)
+	if online:
+		online.attach_world(world)
+	session_started.emit(world)
+	backend.save_world(world)
+
+
 func save_now() -> void:
 	_since_save = 0.0
 	if world and backend:
@@ -100,6 +126,8 @@ func reset_progress() -> void:
 	world.event_emitted.disconnect(_on_world_event)
 	world = SimulationWorld.create_new(registry)
 	world.event_emitted.connect(_on_world_event)
+	if online:
+		online.attach_world(world)
 	session_started.emit(world)
 	save_now()
 
@@ -121,6 +149,8 @@ func _notification(what: int) -> void:
 				_paused_at_unix = backend.now_unix()
 				set_process(false)
 				save_now()
+				if online:
+					online.queue_upload(true)
 				LocalNotifier.enabled = true
 				LocalNotifier.schedule_for_world(world)
 		NOTIFICATION_APPLICATION_RESUMED:

@@ -174,9 +174,9 @@ become portal edges between region grids.
   runs the same rules from the last authoritative timestamp, and applies the returned state. The
   client clock is never trusted. `TimeSource` is the seam for that.
 
-## 6. Backend and multiplayer architecture (planned, P4)
+## 6. Backend and multiplayer architecture (Phase 4)
 
-`GameBackend` is the only boundary between gameplay and persistence or authority:
+Game code talks only to `GameBackend`:
 
 ```
 load_world(registry) -> {world, saved_at_unix}
@@ -185,30 +185,60 @@ now_unix()
 get_offline_provider()
 ```
 
-Phase 4 adds `NakamaGameBackend`.
+`LocalGameBackend` (offline, the default) saves to the device. `NakamaGameBackend` extends it:
+the device save stays the working copy, and the Nakama server holds the cloud copy and the shared
+systems. `scripts/core/main.gd` picks Nakama when `user://online.cfg` has a server address (set in
+Social > Account). If the server cannot be reached at start-up the session runs on the local
+save and the Social screen says so.
 
-| Service | Responsibility | Tech |
+```
+ Godot client                                         Nakama 3.22 + PostgreSQL
+ ───────────────────────────────────────────          ─────────────────────────────────────
+ SimulationWorld (device simulation, as offline)      server/nakama/modules/index.js
+ NakamaGameBackend ── boot: auth, bootstrap,          (built from server/nakama/src/*.js +
+                     download, pick newer save  ───▶   game data via tools/build_server_module.py)
+ OnlineService (Node, owned by Game)                   10_profile  cloud save + validation, wallet
+   NakamaClient   REST, blocking, on WorkerThreadPool  20_recruit  rolls, pity, cost
+   NakamaSocket   realtime JSON over WebSocketPeer     30_market   listings, escrow, deliveries
+   OnlineSync     applies answers to the world         40_guild    donations, levels, perks
+   Effects        guild perks + events (AccountEffects) 50_boss    shared world boss
+ SocialPanel, RecruitPanel, PresenceLayer             60_world    events, region presence match
+```
+
+**Threading.** `NakamaClient` uses `HTTPClient` and blocks, so `OnlineService.run()` executes
+each call on `WorkerThreadPool` and runs its callback on the main thread (`call_deferred`). Only
+the main thread touches the world. Tests set `OnlineService.synchronous` to run calls inline.
+
+**Sync cycle.** Every local save queues an upload (at most one per minute, plus one immediately
+after recruitment, market and guild actions, and on backgrounding). The server validates the
+upload against the previous accepted save (see server/README.md for the rules), credits capped
+premium earnings, and returns the wallet. The client sets its premium balances to the server's,
+plus whatever changed locally while the request was in flight. Uploads carry the cloud version;
+if another device saved in between, the upload is refused and the player can load the cloud
+save from Social > Account.
+
+**Authority split.**
+
+| State | Owner | How the other side learns it |
 |---|---|---|
-| Authentication | Device, Apple and Google login, sessions | Nakama |
-| Player / Character | Profile, roster, ownership | Authoritative Go/TS service + PostgreSQL |
-| Activity Engine + Offline Simulation | Runs `SimulationWorld` rules server-side, periodically and on login | Headless Godot or a port of the rules (see below) |
-| Inventory / Economy / Crafting | Items, currency, recipes, sinks | Service + PostgreSQL (transactions) |
-| Recruitment | Gacha rolls, pity per banner, history | Service + PostgreSQL. **Never client-side** |
-| Marketplace / Trading | Listings, escrow, fees, price history | Service + PostgreSQL + Redis cache |
-| World / Events | Shared town state, world events, community projects | Service + Redis (live) + PostgreSQL |
-| Guild / Social / Chat | Guilds, friends, DMs | Nakama social + storage |
-| Notification | Push for rare finds, completed jobs and full bags | Nakama + FCM/APNs |
+| Gems, recruitment and festival tokens | Server (Nakama wallet) | Returned on bootstrap, upload, recruit |
+| Recruitment results, pity | Server | `OnlineSync.apply_recruit` adds the heroes; `profile/granted` lets later saves keep them |
+| Market escrow, purchases, guild donations | Server (ledger ops with sequence numbers) | `OnlineSync.apply_debit` / `apply_deliveries`; the save's `server_ledger_seq` says which ops it reflects |
+| Guild level and perks, world events | Server | `OnlineSync.Effects`, an `AccountEffects` source |
+| World boss HP and damage | Server (damage from the synced save) | `wb_boss_status` |
+| Region presence | Server match (1 tick/s) | `OP_STATE` broadcasts, drawn by `PresenceLayer` |
+| Characters, skills, items, gold, activities, offline progress | **Device**, validated per upload | Save upload |
 
-**Command model.** The client sends *intents* such as "assign Brom to mine_copper with these
-rules". The server validates ownership, levels and destinations, which is the same
-`validate_assignment` logic, and returns authoritative state. The client keeps simulating locally
-for presentation, and reconciles whenever authoritative snapshots arrive.
+**Not done: server-side simulation.** The simulation is pure GDScript with no Node dependencies,
+so it can run in a headless Godot server build as the Activity and Offline service; the
+alternative is a port checked against the deterministic test vectors in `tests/simulation`. Until
+then the server bounds what a modified client can claim (per-hour caps on items and gold, a
+clock that may not run ahead of real time, characters only from server pulls or a capped
+encounter allowance) instead of recomputing it. Expedition, dungeon and quest rewards are also
+decided on the device for now.
 
-**Rules on the server.** The simulation is deliberately pure GDScript with no Node dependencies, so
-it can run in a headless Godot server build (`godot --headless`) as the Activity and Offline
-service. The alternative is to port it to Go/TypeScript and keep both in sync using the
-deterministic test vectors from `tests/simulation`. **This is an open decision for Phase 4** (see
-the roadmap).
+**Not done: platform services.** Apple / Google sign-in, FCM/APNs push, chat moderation and rate
+limits.
 
 ## 7. Asset pipeline
 
@@ -252,7 +282,7 @@ slower than export templates):
 
 | Scenario | Time |
 |---|---|
-| 189-test suite | ~33 s (about 2 s of it is the 10^6-roll chi-square test) |
+| 200-test suite | ~34 s (about 2 s of it is the 10^6-roll chi-square test) |
 | 8 h offline, 3 working characters (`test_eight_hour_simulation_is_fast_enough`) | ~5.5 s (2.7 s in Phase 1, 3.4 s in Phase 2; Phase 3 adds region checks, fog reveals, quest refreshes and encounters per tick; not yet profiled) |
 | One gather cycle (check, perform, grant, events) | ~60-100 µs |
 | Cached path lookup | ~4 µs |

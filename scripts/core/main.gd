@@ -27,7 +27,11 @@ func _ready() -> void:
 			Game.world.assign_activity(cid, Assignment.create(cid, registry.activities[act]))
 		Game.time_scale = 20.0
 	else:
-		Game.start_session()
+		var settings := OnlineService.load_settings()
+		if settings.is_empty():
+			Game.start_session()
+		else:
+			Game.start_session(NakamaGameBackend.new(DataRegistry.get_default(), settings))
 
 
 func _process(delta: float) -> void:

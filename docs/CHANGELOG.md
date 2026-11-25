@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.4.0 (2026-11-25): Phase 4, multiplayer
+
+### Added
+- **Server**: a Nakama 3.22 JavaScript module (`server/nakama`) with cloud saves, upload
+  validation, a server-owned premium wallet, server-side recruitment, a marketplace with escrow
+  and fees, private trades, deliveries, guild progression, a co-op world boss, recurring world
+  events and per-region presence matches. `server/run_local.sh`, `server/run_tests.sh`,
+  `docker-compose.yml` (not yet run) and `tools/build_server_module.py`.
+- **Client**: `NakamaClient` (REST), `NakamaSocket` (realtime), `OnlineService` (requests on
+  worker threads, sync cycle, chat, presence), `OnlineSync` (applies server answers),
+  `NakamaGameBackend` (cloud save with device-save fallback).
+- **Social screen** (new nav button): Account and sync, Friends (add, accept, visit town, trade),
+  Guild (join, create, donate, perks, chat), Market (sell, browse, buy, cancel), World (events,
+  world boss, players nearby). Other players' heroes appear on the map as blue markers.
+- Guild perks and world events apply to every hero as account effects.
+- `data/server/server_config.json` with the validation caps, market, guild, boss and event
+  settings.
+- `server_ledger_seq` in saves.
+- 11 new offline tests (200 total), 9 Godot client tests and 20 server tests against a live
+  server, `tools/capture_online_screenshots.gd` and screenshots 25 to 31.
+
+### Changed
+- Recruitment online is rolled by the server; the banner screen shows the server's pity.
+- Speed-up and developer time skips are disabled while online.
+- `SimulationWorld.apply_recruit_results` split out of `recruit`; `Wallet.set_balance_from_server`.
+
+### Not done (see the roadmap)
+- Server-side simulation and offline progress (the server validates uploads instead).
+- Apple / Google sign-in, push notifications, chat moderation, rate limits.
+
 ## 0.3.0 (2026-11-25): Phase 3, world expansion
 
 ### Added

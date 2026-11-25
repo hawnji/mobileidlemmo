@@ -4,8 +4,8 @@ extends CanvasLayer
 ## navigation, toasts and modal screens. Reads simulation state; the only
 ## writes go through SimulationWorld's command API (assign / cancel).
 
-const NAV := [["World", "world"], ["Heroes", "heroes"], ["Map", "map"], ["Quests", "quests"],
-	["Journeys", "journeys"], ["Town", "town"], ["Recruit", "recruit"], ["Storage", "storage"]]
+const NAV := [["World", "world"], ["Heroes", "heroes"], ["Map", "map"], ["Quests", "quests"], ["Journeys", "journeys"],
+	["Town", "town"], ["Recruit", "recruit"], ["Storage", "storage"], ["Social", "social"]]
 
 var world: SimulationWorld
 var _root: Control
@@ -113,12 +113,12 @@ func _build_bottom() -> void:
 	_card_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_card_row)
 	var nav := GridContainer.new()
-	nav.columns = 4
+	nav.columns = 5
 	nav.add_theme_constant_override("h_separation", 4)
 	nav.add_theme_constant_override("v_separation", 4)
 	v.add_child(nav)
 	for spec in NAV:
-		var b := UiTheme.button(spec[0], 18)
+		var b := UiTheme.button(spec[0], 17)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.custom_minimum_size = Vector2(0, 56)
 		var key: String = spec[1]
@@ -132,6 +132,8 @@ func _build_bottom() -> void:
 
 func _on_session_started(w: SimulationWorld) -> void:
 	world = w
+	if Game.online and not Game.online.synced.is_connected(_on_synced):
+		Game.online.synced.connect(_on_synced)
 	for c in _card_row.get_children():
 		c.queue_free()
 	_cards.clear()
@@ -284,6 +286,10 @@ func _on_nav(key: String) -> void:
 			var pq := QuestsPanel.new()
 			_open_modal(pq)
 			pq.setup(world)
+		"social":
+			var ps := SocialPanel.new()
+			_open_modal(ps)
+			ps.setup(world)
 		"journeys":
 			var pj := JourneysPanel.new()
 			_open_modal(pj)
@@ -358,7 +364,18 @@ func toast(text: String, color := UiTheme.TEXT) -> void:
 
 # ---------------------------------------------------------------- dev ----
 
+func _on_synced(r: Dictionary) -> void:
+	if not r.ok:
+		toast(String(r.message), UiTheme.BAD)
+
+
 func _cycle_speed() -> void:
+	if Game.online:
+		# The server rejects saves whose clock runs ahead of real time.
+		Game.time_scale = 1.0
+		_speed_btn.text = "x1"
+		toast("Speed-up is for offline play only", UiTheme.TEXT_DIM)
+		return
 	var i := (_speeds.find(Game.time_scale) + 1) % _speeds.size()
 	Game.time_scale = _speeds[i]
 	_speed_btn.text = "x%d" % int(Game.time_scale)
@@ -369,7 +386,9 @@ func _open_dev_menu() -> void:
 	_open_modal(p)
 	p.set_title("Developer tools")
 	p.body.add_child(UiTheme.label("Prototype-only helpers for testing automation and offline progression.", 18, UiTheme.TEXT_DIM))
-	for spec in [["Simulate 10 minutes away", 600.0], ["Simulate 1 hour away", 3600.0], ["Simulate 8 hours away", 28800.0], ["Simulate 2 days away (cap test)", 172800.0]]:
+	if Game.online:
+		p.body.add_child(UiTheme.label("Online: time skips are off, because the server only accepts real elapsed time.", 16, UiTheme.BAD))
+	for spec in ([] if Game.online else [["Simulate 10 minutes away", 600.0], ["Simulate 1 hour away", 3600.0], ["Simulate 8 hours away", 28800.0], ["Simulate 2 days away (cap test)", 172800.0]]):
 		var b := UiTheme.button(spec[0])
 		var secs: float = spec[1]
 		b.pressed.connect(func() -> void:

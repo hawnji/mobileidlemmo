@@ -125,6 +125,11 @@ character_level, combat_level, quest, region, reputation`.
 
 ## Save format (`user://worldbound_save.json`)
 
+**Phase 4** adds `server_ledger_seq` (int, default 0) to `world`: the highest server ledger op
+(market escrow, guild donation, delivery) already applied to this save. Older saves load with 0.
+The format number stays 3. The same `{save_version, world}` object is what the client uploads to
+the server.
+
 **Format 3 (Phase 3)** adds to `world`: `unlocked_regions[]`, `exploration {fog (deflate +
 base64, one byte per tile), fog_size, discovered {id: {time, by}}}`, `revealed_secrets`,
 `counters`, `mailbox`, `quests {active {id: {baseline, started}}, completed,
@@ -166,9 +171,53 @@ continue_mode: REPEAT|UNTIL_QUANTITY|SINGLE_TRIP, target_quantity, preferred_nod
 safety: {return_below_health_ratio, avoid_enemies_above_level}, deposited_primary,
 trips_completed, started_at_sim_time}`
 
-## Planned server entities (Phase 4, PostgreSQL)
-This maps the spec's entity list onto tables. Columns are indicative.
+## Phase 4 data files
 
+`data/server/server_config.json` (read by the server module, and by `WbServerData` on the client
+for display):
+
+| Key | Meaning |
+|---|---|
+| `validation.items_per_character_hour`, `gold_per_character_hour`, `gold_slack` | Maximum gains between two accepted uploads: rate × characters × hours (+ slack) |
+| `validation.clock_slack_seconds` | How far the save's sim clock may run ahead of real elapsed time |
+| `validation.hours_per_encounter_hero` | One non-recruited gacha hero is allowed per this many hours (wandering-hero encounters) |
+| `validation.premium_per_hour {currency: n}` | Cap on premium currency credited from the simulation |
+| `validation.max_save_bytes` | Upload size limit |
+| `market.fee`, `market.max_listings` | Sale fee (0.05) and listings per player (20) |
+| `guild.level_xp[]`, `guild.perks {level: effects}` | Guild XP per level (1 gold donated = 1 XP) and member effects |
+| `world_boss.cooldown_seconds`, `gems_reward`, `bosses[] {id, name, hp, rewards {gold, items}}` | World boss rotation |
+| `world_events[] {id, name, description, effects, epoch, period, duration}` | Recurring events: active for `duration` seconds of every `period`, counted from `epoch` (unix) |
+| `presence.max_per_match`, `presence.empty_seconds_before_close` | Region presence match limits |
+
+`tools/build_server_module.py` embeds this file plus the game data the server needs (banners,
+character rarities, item ids and `untradeable` flags, region ids, the character XP table and the
+starting wallet from `currencies.json`) as `WB_DATA` in `server/nakama/modules/index.js`.
+
+`user://online.cfg` (client): `[server] url, server_key`, `[account] username, device_id`. An
+empty url means offline play.
+
+## Server storage (Nakama, Phase 4)
+
+Nakama keeps accounts, friends, groups, chat history and wallets in its own tables. The module
+stores the rest as storage objects (`collection / key`, owner):
+
+| Collection / key | Owner | Read | Value |
+|---|---|---|---|
+| `saves/main` | player | owner | `{saved_at, summary {sim_time, gold, earned, spent, items, characters}, save}` |
+| `profile/init`, `profile/granted` | player | owner | starting wallet granted; `{ids[]}` of characters the server gave |
+| `ledger/pending` | player | server | `{seq, ops[] {seq, kind: debit|credit, item, qty}}` |
+| `recruitment/state` | player | owner | `{pity {banner: {rarity: n}}, total {banner: n}, history[]}` |
+| `town/public` | player | public | `{username, updated, buildings, regions, roster[] {id, stars, xp}}` |
+| `market/<id>` | seller | public | `{id, seller, seller_name, item, qty, price, buyer, created}` |
+| `market_index/<id>` | system | public | `{seller, item, buyer}` (deleted with a version check when bought) |
+| `deliveries/<id>` | player | owner | `{id, items {id: qty}, reason, at}` |
+| `guild/<group_id>` | system | public | `{xp, donations {user_id: gold}}` |
+| `world_boss/current` | system | public | `{index, id, name, hp, max_hp, spawned, hits {user_id: {name, damage}}, rewards}` |
+| `presence/<region>` | system | server | `{match_id}` of the region's live presence match |
+
+## Future relational schema (not built)
+When the simulation moves to the server, these entities replace the save blob. Columns are
+indicative.
 ```sql
 player(id uuid pk, account_level int, settings jsonb, created_at, last_sim_at timestamptz)
 currency_balance(player_id fk, currency text, amount bigint, pk(player_id,currency))
