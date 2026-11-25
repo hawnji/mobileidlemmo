@@ -12,6 +12,7 @@ var _title_base := ""
 var world: SimulationWorld
 var _actions: VBoxContainer
 var _selected_item := ""
+var _mail_btn: Button
 
 
 func setup(p_registry: DataRegistry, p_inventory: Inventory, title: String, p_is_storage := false, p_world: SimulationWorld = null) -> void:
@@ -42,6 +43,12 @@ func setup(p_registry: DataRegistry, p_inventory: Inventory, title: String, p_is
 			refresh())
 		tools.add_child(sort)
 		body.add_child(tools)
+	if is_storage and world:
+		_mail_btn = UiTheme.button("", 18)
+		_mail_btn.pressed.connect(func() -> void:
+			world.claim_mailbox()
+			refresh())
+		body.add_child(_mail_btn)
 	_actions = VBoxContainer.new()
 	body.add_child(_actions)
 	_grid = ItemGrid.new()
@@ -67,6 +74,12 @@ func refresh() -> void:
 		_summary.text = "%d / %d carried" % [inventory.total_units(), inventory.max_units]
 	if shown == 0:
 		_summary.text += "   (empty)" if inventory.is_empty() else "   (no matches)"
+	if _mail_btn:
+		var mail := 0
+		for it in world.mailbox:
+			mail += int(world.mailbox[it])
+		_mail_btn.visible = mail > 0
+		_mail_btn.text = "Mailbox: %d reward items waiting (storage was full). Move to storage" % mail
 
 
 ## Sell / lock / favourite / equip actions for the tapped storage item.

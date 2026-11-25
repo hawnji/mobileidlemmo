@@ -645,9 +645,10 @@ station("alchemy_table", lambda d: (d.rectangle([3, 14, 29, 18], fill=hexrgb("#6
 # --- buildings: one sprite per building sized to its plot, plus a site sprite
 ROOFS = {"town_hall": "#a83232", "bank": "#3d6fb0", "tavern": "#b5651d", "blacksmith": "#4a4f56", "workshop": "#8a6239",
          "academy": "#6a4a9a", "farm": "#c9a030", "housing": "#9a5a3a", "marketplace": "#3a8a5a", "barracks": "#7a3030",
-         "guild_hall": "#2a5a8a", "expedition_center": "#5a7a3a"}
-region = json.loads((ROOT / "data/regions/greenvale_start.json").read_text())
-for plot in region.get("building_plots", []):
+         "guild_hall": "#2a5a8a", "expedition_center": "#5a7a3a",
+         "outpost_irondeep": "#5a5f6a", "outpost_whisperwood": "#3a6a4a", "outpost_ashen": "#c08a40"}
+region = json.loads((ROOT / "data/regions/world_map.json").read_text())
+for plot in region.get("building_plots", []) + region.get("outposts", []):
     bid = plot["building"]
     w, h = plot["rect"][2] * T, plot["rect"][3] * T
     im = Image.new("RGBA", (w, h), (0, 0, 0, 0))

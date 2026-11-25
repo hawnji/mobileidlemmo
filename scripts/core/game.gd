@@ -121,11 +121,15 @@ func _notification(what: int) -> void:
 				_paused_at_unix = backend.now_unix()
 				set_process(false)
 				save_now()
+				LocalNotifier.enabled = true
+				LocalNotifier.schedule_for_world(world)
 		NOTIFICATION_APPLICATION_RESUMED:
 			if _paused_at_unix >= 0.0:
 				var away := backend.now_unix() - _paused_at_unix
 				_paused_at_unix = -1.0
 				_accumulator = 0.0
+				LocalNotifier.enabled = false
+				LocalNotifier.cancel_all()
 				set_process(true)
 				var report := backend.get_offline_provider().apply_offline_progress(world, away)
 				if report.simulated_seconds > 0.0:

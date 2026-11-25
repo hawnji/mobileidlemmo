@@ -468,6 +468,9 @@ func start_construction(building_id: String) -> String:
 	if not err.is_empty():
 		return err
 	var ld := town.level_def(registry, building_id, town.level_of(building_id) + 1)
+	for req in ld.get("requires", []):
+		if not Objectives.is_met(self, req):
+			return "Needs: %s" % Objectives.describe(registry, req)
 	var cost: Dictionary = ld.get("cost", {})
 	var items: Dictionary = cost.get("items", {})
 	for it in items:

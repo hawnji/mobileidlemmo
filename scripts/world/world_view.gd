@@ -15,6 +15,9 @@ var _day_night: DayNight
 var _char_views := {}  # id -> CharacterView
 var _enemy_views := {}  # spawn id -> EnemyView
 var _vis_accum := 0.0
+var _fog: FogOverlay
+var _encounter_marks: Node2D
+var _encounter_key := ""
 
 
 func _ready() -> void:
@@ -31,6 +34,13 @@ func _ready() -> void:
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
 	add_child(_entities)
+	_fog = FogOverlay.new()
+	_fog.name = "Fog"
+	add_child(_fog)
+	_encounter_marks = Node2D.new()
+	_encounter_marks.name = "Encounters"
+	_encounter_marks.z_index = 6
+	add_child(_encounter_marks)
 	_floating = FloatingTextPool.new()
 	add_child(_floating)
 	_camera = WorldCamera.new()
@@ -55,6 +65,9 @@ func _on_session_started(w: SimulationWorld) -> void:
 	_enemy_views.clear()
 	_day_night.world = world
 	_terrain.setup(world.registry, world.region)
+	_apply_secrets()
+	_fog.setup(world, tile_px)
+	_encounter_key = ""
 	_camera.set_map_size(Vector2(world.grid.width, world.grid.height) * tile_px)
 	_camera.global_position = (Vector2(world.spawn_tile) + Vector2(0.5, -2.0)) * tile_px
 	_camera.reset_smoothing()
@@ -89,6 +102,27 @@ func _on_session_started(w: SimulationWorld) -> void:
 		bv.name = "plot_" + bid
 		_entities.add_child(bv)
 		bv.setup(world, bid, world.plots[bid], tile_px)
+	for bid in world.outposts:
+		var ov := BuildingView.new()
+		ov.name = "outpost_" + bid
+		_entities.add_child(ov)
+		ov.setup(world, bid, world.outposts[bid], tile_px)
+		var depot := Sprite2D.new()
+		depot.name = "depot_" + bid
+		depot.texture = UiTheme.texture("res://assets/environments/props/outpost_depot.png")
+		depot.position = Vector2(world.outposts[bid].depot_tile * tile_px) + Vector2(tile_px, tile_px) * 0.5
+		depot.offset = Vector2(0, -4)
+		_entities.add_child(depot)
+	for did in world.dungeon_entrances:
+		var de := Sprite2D.new()
+		de.name = "dungeon_" + did
+		de.texture = UiTheme.texture("res://assets/environments/props/dungeon_entrance.png")
+		de.position = Vector2(world.dungeon_entrances[did] * tile_px) + Vector2(tile_px, tile_px) * 0.5
+		de.offset = Vector2(0, -6)
+		_entities.add_child(de)
+		var dl := _map_label(String(world.registry.dungeons.get(did, {}).get("name", did)), Color(1, 0.75, 0.6, 0.9))
+		dl.position = Vector2(world.dungeon_entrances[did]) * tile_px + Vector2(-80, -40)
+		_labels.add_child(dl)
 	for lid in world.locations:
 		var loc: Dictionary = world.locations[lid]
 		var l := Label.new()
@@ -105,6 +139,51 @@ func _on_session_started(w: SimulationWorld) -> void:
 	for cid in world.character_order:
 		_add_character_view(cid)
 	_on_selection_changed(Game.selected_character_id)
+
+
+func _map_label(text: String, color: Color) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_color_override("font_color", color)
+	l.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	l.add_theme_constant_override("outline_size", 4)
+	l.custom_minimum_size = Vector2(160, 0)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	return l
+
+
+## Revealed secret passages are drawn with their real terrain.
+func _apply_secrets() -> void:
+	_terrain.overrides.clear()
+	for sid in world.revealed_secrets:
+		var sec: Dictionary = world.secrets.get(sid, {})
+		for t in sec.get("tiles", []):
+			_terrain.overrides[t] = String(sec.reveals_as)
+	_terrain.invalidate()
+
+
+## Markers above active dynamic encounters (merchant, hero, bonus areas).
+func _refresh_encounters() -> void:
+	var key := ""
+	for enc in world.encounters.active:
+		key += "%d," % int(enc.uid)
+	if key == _encounter_key:
+		return
+	_encounter_key = key
+	for c in _encounter_marks.get_children():
+		c.queue_free()
+	for enc in world.encounters.active:
+		var loc: Dictionary = world.locations.get(enc.location, {})
+		if loc.is_empty():
+			continue
+		var r: Rect2i = loc.rect
+		var at := Vector2(r.position.x + r.size.x * 0.5, r.position.y - 0.6) * tile_px
+		if enc.has("tile"):
+			at = (Vector2(enc.tile) + Vector2(0.5, -1.2)) * tile_px
+		var l := _map_label("! %s" % enc.name, UiTheme.rarity_color("epic"))
+		l.position = at - Vector2(80, 0)
+		_encounter_marks.add_child(l)
 
 
 func _add_character_view(cid: String) -> void:
@@ -126,8 +205,9 @@ func _process(delta: float) -> void:
 		var grown := view.grow(tile_px * 2.0)
 		for cid in _char_views:
 			var cv: CharacterView = _char_views[cid]
-			cv.on_screen = grown.has_point(cv.position)
+			cv.on_screen = grown.has_point(cv.position) and cv.character.state != CharacterStates.State.AWAY
 			cv.visible = cv.on_screen
+		_refresh_encounters()
 	if Game.follow_selected and _char_views.has(Game.selected_character_id):
 		_camera.follow_target = _char_views[Game.selected_character_id]
 	else:
@@ -151,8 +231,24 @@ func _on_tapped(world_pos: Vector2) -> void:
 
 
 func _on_world_event(ev: Dictionary) -> void:
-	if ev.type == "recruited" and ev.get("new", false) and not _char_views.has(ev.character_id) and world.characters.has(ev.character_id):
+	var joined: bool = (ev.type == "recruited" and ev.get("new", false)) or ev.type == "character_joined"
+	if joined and not _char_views.has(ev.character_id) and world.characters.has(ev.character_id):
 		_add_character_view(String(ev.character_id))
+	if ev.type == "secret_revealed":
+		_apply_secrets()
+	if ev.type == "encounter_started" and ev.kind == "spawn_enemy":
+		for eid in world.enemies:
+			if not _enemy_views.has(eid):
+				var env := EnemyView.new()
+				env.name = eid
+				_entities.add_child(env)
+				env.setup(world.enemies[eid], tile_px)
+				_enemy_views[eid] = env
+	if ev.type == "encounter_ended":
+		for eid in _enemy_views.keys():
+			if not world.enemies.has(eid):
+				_enemy_views[eid].queue_free()
+				_enemy_views.erase(eid)
 	var cv: CharacterView = _char_views.get(ev.get("character_id", ""))
 	if cv == null or not cv.on_screen:
 		return

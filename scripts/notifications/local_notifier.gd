@@ -46,3 +46,22 @@ static func _record(entry: Dictionary) -> void:
 	pending.append(entry)
 	if pending.size() > 50:
 		pending.remove_at(0)
+
+
+static func status_text() -> String:
+	if Engine.has_singleton(SINGLETON):
+		return "on (device plugin found)."
+	return "not available in this build. A mobile notification plugin is needed (see the roadmap); in-game notifications work."
+
+
+## Schedules OS reminders for things that finish while the app is closed.
+static func schedule_for_world(world) -> void:
+	cancel_all()
+	for run in world.expeditions.active:
+		var x: Dictionary = world.registry.expeditions.get(run.expedition_id, {})
+		schedule("exp_%d" % int(run.uid), "Expedition returning", "%s is back." % x.get("name", "An expedition"),
+			maxf(float(run.ends_at) - world.sim_time, 1.0))
+	for qid in world.quests.cooldowns:
+		var left: float = float(world.quests.cooldowns[qid]) - world.sim_time
+		if left > 0.0:
+			schedule("contract_%s" % qid, "Contract available", "%s can be taken again." % world.registry.quests[qid].name, left)

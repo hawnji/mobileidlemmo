@@ -36,7 +36,10 @@ func refresh() -> void:
 	body.add_child(_msg)
 	for bid in reg.building_order:
 		var b: Dictionary = reg.buildings[bid]
-		if int(b.get("phase", 2)) > 2:
+		if int(b.get("phase", 2)) > 3:
+			continue
+		var is_outpost := String(b.get("kind", "")) == "outpost"
+		if is_outpost and not world.is_region_unlocked(String(b.get("region", ""))) and town.level_of(bid) == 0:
 			continue
 		var lvl := town.level_of(bid)
 		var box := VBoxContainer.new()
@@ -60,6 +63,17 @@ func refresh() -> void:
 			nl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			box.add_child(nl)
 			var err := town.can_start(reg, bid)
+			for req in next.get("requires", []):
+				if err.is_empty() and not Objectives.is_met(world, req):
+					err = "Needs: %s" % Objectives.describe(reg, req)
+			if not err.is_empty():
+				var el := UiTheme.label(err, 14, UiTheme.BAD)
+				el.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				box.add_child(el)
+			if next.has("local_effects"):
+				var le := UiTheme.label("In %s: %s" % [reg.region_name(String(b.get("region", ""))), _effects(next.local_effects)], 15, UiTheme.GOOD)
+				le.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				box.add_child(le)
 			var btn := UiTheme.button("Build" if lvl == 0 else "Upgrade to %d" % (lvl + 1), 18)
 			btn.disabled = not err.is_empty()
 			btn.tooltip_text = err
