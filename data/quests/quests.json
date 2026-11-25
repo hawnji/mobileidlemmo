@@ -6,7 +6,9 @@
    "greenvale",
    "irondeep",
    "whisperwood",
-   "ashen_desert"
+   "ashen_desert",
+   "shadowlands",
+   "celestial_isles"
   ],
   "tiers": [
    {
@@ -1083,6 +1085,671 @@
    },
    "repeatable": true,
    "cooldown_seconds": 14400
+  },
+  {
+   "id": "mq_09_the_dark_beyond",
+   "name": "The Dark Beyond",
+   "category": "main",
+   "region": "whisperwood",
+   "description": "Beyond the Rotting Heart, the forest turns black. Forge the gear to survive what lies past it.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_08_the_sand_king"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "adamantite_platebody",
+     "qty": 2
+    },
+    {
+     "type": "combat_level",
+     "level": 60
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 10000,
+     "gems": 200
+    },
+    "reputation": {
+     "whisperwood": 500
+    }
+   }
+  },
+  {
+   "id": "mq_10_the_hollow_king",
+   "name": "The Hollow King",
+   "category": "main",
+   "region": "shadowlands",
+   "description": "The Shadowlands answer to a king without a heart. Break his citadel and the dark will lift.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "dungeon",
+     "dungeon": "dread_citadel",
+     "qty": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 400,
+     "recruitment_tokens": 25
+    },
+    "items": {
+     "mount_griffin": 1
+    },
+    "reputation": {
+     "shadowlands": 800
+    }
+   }
+  },
+  {
+   "id": "mq_11_the_sky_road",
+   "name": "The Sky Road",
+   "category": "main",
+   "region": "shadowlands",
+   "description": "A griffin can carry you to the islands above the world. Prepare supplies for the climb.",
+   "prerequisites": [
+    {
+     "type": "quest",
+     "quest": "mq_10_the_hollow_king"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "deliver",
+     "item": "voidsteel_bar",
+     "qty": 40
+    },
+    {
+     "type": "deliver",
+     "item": "cooked_gloom_eel",
+     "qty": 100
+    },
+    {
+     "type": "mount",
+     "tag": "flying"
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 30000,
+     "gems": 300
+    },
+    "reputation": {
+     "shadowlands": 600
+    }
+   }
+  },
+  {
+   "id": "mq_12_starfall",
+   "name": "Starfall",
+   "category": "main",
+   "region": "celestial_isles",
+   "description": "The Astral Wyrm sleeps where the first star fell. Wake it, defeat it, and the world itself can begin again.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "dungeon",
+     "dungeon": "starfall_sanctum",
+     "qty": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gems": 1000,
+     "recruitment_tokens": 40,
+     "ascension_points": 0
+    },
+    "reputation": {
+     "celestial_isles": 1000
+    }
+   }
+  },
+  {
+   "id": "rq_sl_gloomhold",
+   "name": "Light in Gloomhold",
+   "category": "regional",
+   "region": "shadowlands",
+   "description": "Build an outpost at Gloomhold so your heroes can rest in the dark.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_shadowlands",
+     "level": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 8000
+    },
+    "reputation": {
+     "shadowlands": 400
+    }
+   }
+  },
+  {
+   "id": "rq_sl_wraiths",
+   "name": "Laying Wraiths to Rest",
+   "category": "regional",
+   "region": "shadowlands",
+   "description": "The wraiths will not rest on their own.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "wraith",
+     "qty": 40
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 6000,
+     "relic_dust": 40
+    },
+    "reputation": {
+     "shadowlands": 350
+    }
+   }
+  },
+  {
+   "id": "rq_sl_voidsteel",
+   "name": "Voidsteel",
+   "category": "regional",
+   "region": "shadowlands",
+   "description": "Learn to smelt the black ore of the pits.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "voidsteel_bar",
+     "qty": 30
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 7000
+    },
+    "items": {
+     "pet_egg_ember_salamander": 1
+    },
+    "reputation": {
+     "shadowlands": 350
+    }
+   }
+  },
+  {
+   "id": "rq_ci_skyreach",
+   "name": "Skyreach",
+   "category": "regional",
+   "region": "celestial_isles",
+   "description": "Anchor an outpost to the landing island.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "build",
+     "building": "outpost_celestial",
+     "level": 1
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 15000
+    },
+    "reputation": {
+     "celestial_isles": 400
+    }
+   }
+  },
+  {
+   "id": "rq_ci_starmetal",
+   "name": "Star-Forged",
+   "category": "regional",
+   "region": "celestial_isles",
+   "description": "Smelt starmetal for the archivists.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "starmetal_bar",
+     "qty": 25
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 12000,
+     "relic_dust": 80
+    },
+    "reputation": {
+     "celestial_isles": 350
+    }
+   }
+  },
+  {
+   "id": "rq_ci_sentinels",
+   "name": "Trial of the Sentinels",
+   "category": "regional",
+   "region": "celestial_isles",
+   "description": "Prove yourselves to the sentinels of the terrace.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "celestial_sentinel",
+     "qty": 25
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 10000
+    },
+    "items": {
+     "relic_pathfinders_compass": 1
+    },
+    "reputation": {
+     "celestial_isles": 400
+    }
+   }
+  },
+  {
+   "id": "ct_sl_eels",
+   "name": "Marsh Contract",
+   "category": "contract",
+   "region": "shadowlands",
+   "description": "A repeatable contract from the Gloomhold board.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "raw_gloom_eel",
+     "qty": 120
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 3000,
+     "relic_dust": 10
+    },
+    "reputation": {
+     "shadowlands": 90
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_sl_knights",
+   "name": "Barrow Watch",
+   "category": "contract",
+   "region": "shadowlands",
+   "description": "Keep the barrow knights down.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "shadowlands"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "shadow_knight",
+     "qty": 15
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 3500,
+     "relic_dust": 15
+    },
+    "reputation": {
+     "shadowlands": 100
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ci_skywood",
+   "name": "Skywood Order",
+   "category": "contract",
+   "region": "celestial_isles",
+   "description": "The archivists always need skywood.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "skywood_log",
+     "qty": 80
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 5000,
+     "relic_dust": 15
+    },
+    "reputation": {
+     "celestial_isles": 100
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "ct_ci_golems",
+   "name": "Golem Patrol",
+   "category": "contract",
+   "region": "celestial_isles",
+   "description": "Thin out the star golems.",
+   "prerequisites": [
+    {
+     "type": "region",
+     "region": "celestial_isles"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill",
+     "enemy": "star_golem",
+     "qty": 12
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "gold": 6000,
+     "relic_dust": 20
+    },
+    "reputation": {
+     "celestial_isles": 110
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 14400
+  },
+  {
+   "id": "sq_bloomtide_1",
+   "name": "Spring Planting",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "bloomtide"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "potato",
+     "qty": 150
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 25,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "bloomtide"
+  },
+  {
+   "id": "sq_bloomtide_2",
+   "name": "Bloom Gathering",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "bloomtide"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "ranarr",
+     "qty": 60
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 35,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "bloomtide"
+  },
+  {
+   "id": "sq_sunfire_regatta_1",
+   "name": "Regatta Catch",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "sunfire_regatta"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "raw_trout",
+     "qty": 150
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 25,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "sunfire_regatta"
+  },
+  {
+   "id": "sq_sunfire_regatta_2",
+   "name": "Fish Fry",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "sunfire_regatta"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "cooked_carp",
+     "qty": 80
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 35,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "sunfire_regatta"
+  },
+  {
+   "id": "sq_harvest_moon_1",
+   "name": "Harvest Haul",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "harvest_moon"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "potato",
+     "qty": 200
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 25,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "harvest_moon"
+  },
+  {
+   "id": "sq_harvest_moon_2",
+   "name": "Moonlit Hunt",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "harvest_moon"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "kill_tag",
+     "tag": "beast",
+     "qty": 40
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 35,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "harvest_moon"
+  },
+  {
+   "id": "sq_frostfall_1",
+   "name": "Winter Fuel",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "frostfall"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "gather",
+     "item": "coal_ore",
+     "qty": 200
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 25,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "frostfall"
+  },
+  {
+   "id": "sq_frostfall_2",
+   "name": "Hearth Feast",
+   "category": "seasonal",
+   "region": "greenvale",
+   "description": "A festival contract, only during this season.",
+   "prerequisites": [
+    {
+     "type": "season",
+     "season": "frostfall"
+    }
+   ],
+   "objectives": [
+    {
+     "type": "craft",
+     "item": "cooked_trout",
+     "qty": 120
+    }
+   ],
+   "rewards": {
+    "currencies": {
+     "event_tokens": 35,
+     "gold": 1500
+    }
+   },
+   "repeatable": true,
+   "cooldown_seconds": 21600,
+   "season": "frostfall"
   }
  ]
 }

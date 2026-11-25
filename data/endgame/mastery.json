@@ -1,0 +1,50 @@
+{
+ "schema_version": 1,
+ "description": "Skill XP past level 99 earns mastery levels. Each level gives the character a bonus in that skill.",
+ "xp_per_level": 1000000,
+ "max_level": 20,
+ "effects_per_level": {
+  "gathering": {
+   "gather_speed": 1.01,
+   "yield_bonus_chance": 0.005
+  },
+  "production": {
+   "craft_speed": 1.01,
+   "preserve_chance": 0.004
+  },
+  "combat": {
+   "damage": 1.006
+  },
+  "utility": {
+   "xp": 1.005
+  }
+ },
+ "milestones": [
+  {
+   "level": 5,
+   "reward": {
+    "currencies": {
+     "relic_dust": 50
+    }
+   }
+  },
+  {
+   "level": 10,
+   "reward": {
+    "currencies": {
+     "relic_dust": 120,
+     "gems": 100
+    }
+   }
+  },
+  {
+   "level": 20,
+   "reward": {
+    "currencies": {
+     "relic_dust": 400,
+     "gems": 300
+    }
+   }
+  }
+ ]
+}

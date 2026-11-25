@@ -122,6 +122,43 @@ re-folds only when its own sources or the account version change; individual loo
 - **Conditions in data.** Every gate (quest, region, outpost, expedition, discovery) is a list of
   condition objects evaluated by `Objectives`, so new content rarely needs code.
 
+### Endgame (Phase 5)
+
+- **One object for the legacy.** `EndgameState` (`scripts/endgame`) holds everything that
+  survives a World Ascension:
+  - relics, pets and mounts;
+  - ascension count and perks;
+  - mythic dungeon records.
+
+  It is also an `AccountEffects` source. Its `effects` block (equipped relics, perks, the
+  current season) and its `version` change together, so heroes' cached stats rebuild only after
+  a real change.
+- **Per-hero effects** (pet, mount, mastery) are applied by `Adventurer.stat_block()` through
+  `EndgameState.apply_character_effects()`. They change only through commands that call
+  `invalidate_stats()`.
+- **Mastery and pet XP hook into the single XP path.** `ActivityEngine.grant_xp` calls
+  `EndgameState.on_xp`:
+  - the hero's pet gets `xp_share` of every grant;
+  - a skill that was already at its maximum level adds the grant, times the `mastery_xp`
+    stat, to that skill's mastery.
+- **Mythic tiers live in `DungeonRun`.** The tier is set at creation and saved with the run.
+  It scales enemy health when each foe spawns, scales damage on every hit and stretches the
+  enrage timer, so a run that is saved and reloaded halfway keeps the same numbers.
+  `SimulationWorld._mythic_rewards` pays scaled clear rewards, relic dust and maybe a relic, and
+  records the tier.
+- **The season comes from the device clock, never from inside the simulation.**
+  `EndgameState.calendar_unix` is 0 (no season) unless `Game` sets it. Game sets it when a world
+  loads, before offline catch-up, and once a second after that. Tests and the offline simulator
+  stay deterministic.
+- **World Ascension builds a new world** from a filtered copy of the save (`SimulationWorld.ascend`).
+  - Kept: heroes (skills, levels, gear, traits, stars, mastery), armory, fragments, recruitment
+    pity, every currency except gold, route templates, the item ledger and `endgame`.
+  - Everything else starts fresh.
+  - Items that did not carry over are booked as an `ascension` sink, so
+    `held_totals() == ledger_totals()` still holds.
+  - The caller swaps the world in (`Game.replace_world`), which also re-attaches the online
+    service.
+
 ## 3. Pathfinding
 
 `GridPathfinder` wraps Godot's native `AStarGrid2D`:
@@ -169,7 +206,8 @@ become portal edges between region grids.
   [0, cap] and ignores anything under 60 s. It snapshots the world, advances it in 1 s steps with
   chatty events suppressed (`world.quiet`), snapshots again, and builds an `OfflineReport` from the
   difference plus the rare-find and interruption events. Because the report is a diff of real
-  state, it cannot over-report.
+  state, it cannot over-report. The cap is `offline.base_cap_hours` plus the account's
+  `offline_cap_hours` stat (Celestial Hourglass relic, Long Rest perk).
 - **Server replacement [P4]**: a `ServerOfflineProvider` asks the Offline Simulation Service, which
   runs the same rules from the last authoritative timestamp, and applies the returned state. The
   client clock is never trusted. `TimeSource` is the seam for that.

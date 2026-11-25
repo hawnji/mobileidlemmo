@@ -505,6 +505,174 @@
    "region": "ashen_desert",
    "animation": "walk",
    "description": "Walk the unexplored parts of the Ashen Desert, lifting the fog and searching for discoveries."
+  },
+  {
+   "id": "mine_voidstone",
+   "name": "Mine Voidstone",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 80,
+   "node_type": "voidstone_rock",
+   "default_destination": "voidstone_pits",
+   "animation": "mine",
+   "description": "Mine voidstone in the Voidstone Pits."
+  },
+  {
+   "id": "chop_shadowbark",
+   "name": "Chop Shadowbark",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 70,
+   "node_type": "shadowbark_tree",
+   "default_destination": "shadowbark_wood",
+   "animation": "chop",
+   "description": "Chop the twisted shadowbark trees."
+  },
+  {
+   "id": "fish_gloom_eel",
+   "name": "Fish Gloom Eels",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 70,
+   "node_type": "gloom_eel_spot",
+   "default_destination": "black_marsh",
+   "animation": "fish",
+   "description": "Fish eels in the Black Marsh."
+  },
+  {
+   "id": "forage_nightshade",
+   "name": "Forage Nightshade",
+   "type": "gathering",
+   "skill": "foraging",
+   "required_level": 70,
+   "node_type": "nightshade_patch",
+   "default_destination": "black_marsh",
+   "animation": "forage",
+   "description": "Pick nightshade around the Black Marsh."
+  },
+  {
+   "id": "mine_starmetal",
+   "name": "Mine Starmetal",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 90,
+   "node_type": "starmetal_rock",
+   "default_destination": "starfall_isle",
+   "animation": "mine",
+   "description": "Mine starmetal on Starfall Isle."
+  },
+  {
+   "id": "chop_skywood",
+   "name": "Chop Skywood",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 85,
+   "node_type": "skywood_tree",
+   "default_destination": "skywood_grove",
+   "animation": "chop",
+   "description": "Chop skywood in the floating grove."
+  },
+  {
+   "id": "fish_cloud_koi",
+   "name": "Fish Cloud Koi",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 85,
+   "node_type": "cloud_koi_spot",
+   "default_destination": "aether_gardens",
+   "animation": "fish",
+   "description": "Fish the misty ponds of the Aether Gardens."
+  },
+  {
+   "id": "forage_aether",
+   "name": "Gather Aether Blooms",
+   "type": "gathering",
+   "skill": "foraging",
+   "required_level": 85,
+   "node_type": "aether_bloom_patch",
+   "default_destination": "aether_gardens",
+   "animation": "forage",
+   "description": "Pick aether blooms in the Aether Gardens."
+  },
+  {
+   "id": "hunt_wraiths",
+   "name": "Hunt Wraiths",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "wraith_fields",
+   "animation": "fight",
+   "description": "Wraiths drift over the Wraith Fields."
+  },
+  {
+   "id": "fight_shadow_knights",
+   "name": "Fight Shadow Knights",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "knights_barrow",
+   "animation": "fight",
+   "description": "Fallen knights still guard their barrow."
+  },
+  {
+   "id": "slay_void_horrors",
+   "name": "Slay Void Horrors",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "void_rift",
+   "animation": "fight",
+   "description": "Horrors crawl out of the Void Rift."
+  },
+  {
+   "id": "hunt_sky_serpents",
+   "name": "Hunt Sky Serpents",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "serpent_reach",
+   "animation": "fight",
+   "description": "Serpents circle the outer islands."
+  },
+  {
+   "id": "fight_star_golems",
+   "name": "Fight Star Golems",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "golem_isle",
+   "animation": "fight",
+   "description": "Golems of starmetal guard their isle."
+  },
+  {
+   "id": "challenge_sentinels",
+   "name": "Challenge the Sentinels",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "sentinel_terrace",
+   "animation": "fight",
+   "description": "The sentinels test anyone who reaches the terrace."
+  },
+  {
+   "id": "explore_shadowlands",
+   "name": "Explore the Shadowlands",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "shadowlands",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of the Shadowlands, lifting the fog and searching for discoveries."
+  },
+  {
+   "id": "explore_celestial_isles",
+   "name": "Explore the Celestial Isles",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "celestial_isles",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of the Celestial Isles, lifting the fog and searching for discoveries."
   }
  ]
 }

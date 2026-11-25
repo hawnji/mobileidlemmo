@@ -467,6 +467,8 @@ func grant_xp(ch: Adventurer, skill: String, base_xp: float) -> float:
 	var xp := base_xp * ch.xp_multiplier(skill)
 	var before := ch.skills.get_level(skill)
 	var levels := ch.skills.add_xp(skill, xp)
+	if world.endgame:
+		world.endgame.on_xp(world, ch, skill, xp, before >= ch.skills.table.max_level)
 	var char_before := ch.character_level()
 	ch.character_xp = minf(ch.character_xp + xp * character_xp_share, registry.character_xp_table.max_xp)
 	if world.wants_event("xp_gained"):

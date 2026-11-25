@@ -112,6 +112,190 @@
      "tier": 4
     }
    ]
+  },
+  {
+   "id": "greenvale_stables",
+   "name": "Hollow Stables",
+   "region": "greenvale",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "mount_pack_pony",
+     "price": 8000,
+     "tier": 0
+    },
+    {
+     "item": "mount_mountain_goat",
+     "price": 30000,
+     "tier": 2
+    },
+    {
+     "item": "pet_egg_study_owl",
+     "price": 60000,
+     "tier": 3
+    }
+   ]
+  },
+  {
+   "id": "oasis_stables",
+   "name": "Oasis Stables",
+   "region": "ashen_desert",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "mount_sand_strider",
+     "price": 60000,
+     "tier": 1
+    },
+    {
+     "item": "pet_egg_golden_toad",
+     "price": 400000,
+     "tier": 4
+    }
+   ]
+  },
+  {
+   "id": "gloomhold_quartermaster",
+   "name": "Gloomhold Quartermaster",
+   "region": "shadowlands",
+   "currency": "gold",
+   "stock": [
+    {
+     "item": "cooked_gloom_eel",
+     "price": 160,
+     "tier": 0
+    },
+    {
+     "item": "voidsteel_pickaxe",
+     "price": 40000,
+     "tier": 1
+    },
+    {
+     "item": "relic_warlords_banner",
+     "price": 150000,
+     "tier": 2
+    },
+    {
+     "item": "mount_shadow_steed",
+     "price": 200000,
+     "tier": 3
+    },
+    {
+     "item": "relic_forge_heart",
+     "price": 250000,
+     "tier": 4
+    }
+   ]
+  },
+  {
+   "id": "skyreach_archivist",
+   "name": "Skyreach Archivist",
+   "region": "celestial_isles",
+   "currency": "relic_dust",
+   "stock": [
+    {
+     "item": "relic_miners_lantern",
+     "price": 400,
+     "tier": 0
+    },
+    {
+     "item": "relic_woodsmans_charm",
+     "price": 400,
+     "tier": 0
+    },
+    {
+     "item": "relic_anglers_pearl",
+     "price": 400,
+     "tier": 0
+    },
+    {
+     "item": "relic_herbalists_satchel",
+     "price": 400,
+     "tier": 1
+    },
+    {
+     "item": "relic_scholars_tome",
+     "price": 900,
+     "tier": 2
+    },
+    {
+     "item": "relic_fortunes_coin",
+     "price": 1600,
+     "tier": 3
+    },
+    {
+     "item": "pet_egg_cloud_sprite",
+     "price": 1200,
+     "tier": 3
+    },
+    {
+     "item": "relic_celestial_hourglass",
+     "price": 2500,
+     "tier": 4
+    }
+   ]
+  },
+  {
+   "id": "festival_merchant",
+   "name": "Festival Merchant",
+   "region": "greenvale",
+   "currency": "event_tokens",
+   "seasonal": true,
+   "stock": [
+    {
+     "item": "pet_egg_sapling",
+     "price": 120,
+     "tier": 0,
+     "season": "bloomtide"
+    },
+    {
+     "item": "relic_herbalists_satchel",
+     "price": 300,
+     "tier": 0,
+     "season": "bloomtide"
+    },
+    {
+     "item": "pet_egg_river_otter",
+     "price": 120,
+     "tier": 0,
+     "season": "sunfire_regatta"
+    },
+    {
+     "item": "relic_anglers_pearl",
+     "price": 300,
+     "tier": 0,
+     "season": "sunfire_regatta"
+    },
+    {
+     "item": "pet_egg_study_owl",
+     "price": 200,
+     "tier": 0,
+     "season": "harvest_moon"
+    },
+    {
+     "item": "relic_fortunes_coin",
+     "price": 450,
+     "tier": 0,
+     "season": "harvest_moon"
+    },
+    {
+     "item": "mount_frost_elk",
+     "price": 400,
+     "tier": 0,
+     "season": "frostfall"
+    },
+    {
+     "item": "pet_egg_ember_salamander",
+     "price": 160,
+     "tier": 0,
+     "season": "frostfall"
+    },
+    {
+     "item": "cooked_trout",
+     "price": 1,
+     "tier": 0
+    }
+   ]
   }
  ]
 }

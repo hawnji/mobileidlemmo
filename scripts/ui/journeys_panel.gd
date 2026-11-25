@@ -10,6 +10,7 @@ var _team: Array = []
 var _supplies := true
 var _msg: Label
 var _accum := 0.0
+var _tiers := {}  # dungeon_id -> chosen mythic tier (Phase 5)
 
 
 func setup(p_world: SimulationWorld, tab := "expeditions") -> void:
@@ -189,10 +190,45 @@ func _dungeons() -> void:
 		else:
 			box.add_child(UiTheme.label("First clear: %s" % QuestsPanel.describe_rewards(reg, d.get("first_clear", {})), 14, UiTheme.ACCENT))
 		box.add_child(UiTheme.label("Food: up to %d per member is taken from storage; leftovers come back." % int(d.get("food_per_member", 10)), 13, UiTheme.TEXT_DIM))
-		var b := UiTheme.button("Enter with team", 17)
+		var max_tier := world.endgame.max_unlocked_tier(world, did)
+		var tier := clampi(int(_tiers.get(did, 0)), 0, max_tier)
+		if max_tier > 0:
+			var trow := HBoxContainer.new()
+			var minus := UiTheme.button("-", 18)
+			minus.custom_minimum_size = Vector2(56, 48)
+			minus.disabled = tier <= 0
+			minus.pressed.connect(func() -> void:
+				_tiers[did] = tier - 1
+				refresh())
+			trow.add_child(minus)
+			var best := int(world.endgame.mythic_records.get(did, 0))
+			var tl := UiTheme.label("Normal" if tier == 0 else "Mythic tier %d" % tier, 18, UiTheme.rarity_color("mythic") if tier > 0 else UiTheme.TEXT)
+			tl.custom_minimum_size = Vector2(170, 0)
+			tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			trow.add_child(tl)
+			var plus := UiTheme.button("+", 18)
+			plus.custom_minimum_size = Vector2(56, 48)
+			plus.disabled = tier >= max_tier
+			plus.pressed.connect(func() -> void:
+				_tiers[did] = tier + 1
+				refresh())
+			trow.add_child(plus)
+			trow.add_child(UiTheme.label("  best tier %d" % best, 14, UiTheme.TEXT_DIM))
+			box.add_child(trow)
+			if tier > 0:
+				var cfg := reg.dungeon_mythic
+				var names := []
+				for a in world.endgame.affixes_for(tier):
+					names.append(String(a.name))
+				box.add_child(UiTheme.label("Enemies +%d%% health, +%d%% damage. Rewards x%s, %d relic dust, %d%% relic chance.%s" % [
+					int(float(cfg.get("enemy_health_per_tier", 0.25)) * tier * 100), int(float(cfg.get("enemy_damage_per_tier", 0.12)) * tier * 100),
+					String.num(1.0 + float(cfg.get("reward_mult_per_tier", 0.25)) * tier, 2), int(cfg.get("relic_dust_per_tier", 15)) * tier,
+					int(minf(float(cfg.get("relic_chance_per_tier", 0.04)) * tier, float(cfg.get("relic_chance_max", 0.4))) * 100),
+					"  Affixes: %s." % ", ".join(names) if not names.is_empty() else ""], 14, UiTheme.rarity_color("mythic")))
+		var b := UiTheme.button("Enter with team" if tier == 0 else "Enter tier %d with team" % tier, 17)
 		b.disabled = not open or _team.size() < int(d.party_min) or _team.size() > int(d.party_max)
 		b.pressed.connect(func() -> void:
-			var e := world.start_dungeon(did, _team.duplicate())
+			var e := world.start_dungeon(did, _team.duplicate(), tier)
 			if e.is_empty():
 				_team.clear()
 			refresh()
@@ -203,8 +239,8 @@ func _dungeons() -> void:
 
 
 func _run_card(run: DungeonRun) -> void:
-	body.add_child(UiTheme.label("%s  -  %s  (%s)" % [run.def.get("name", run.dungeon_id), run.stage_label(),
-		OfflineReport.format_duration(run.elapsed)], 20, UiTheme.GOOD))
+	body.add_child(UiTheme.label("%s%s  -  %s  (%s)" % [run.def.get("name", run.dungeon_id), "  (mythic %d)" % run.tier if run.tier > 0 else "",
+		run.stage_label(), OfflineReport.format_duration(run.elapsed)], 20, UiTheme.GOOD))
 	var boss := run.boss_foe()
 	if not boss.is_empty() and boss.enemy.is_alive():
 		body.add_child(UiTheme.label("%s%s" % [boss.enemy.display_name(), "  ENRAGED" if run.enraged else ""], 16, UiTheme.BAD))

@@ -423,7 +423,11 @@ MAT = {"bronze": "#c08a4a", "iron": "#9aa3ab", "oak": "#a0703a", "willow": "#8a9
        "quartz": "#dfe3f5", "pearl": "#efe8f2", "leather": "#8a5a2b",
        # Phase 3
        "steel": "#7f8a94", "silver": "#d8dde3", "mithril": "#6a8fd0", "adamantite": "#3f8a62", "maple": "#c0884a", "yew": "#6a4a3a",
-       "sapphire": "#3a6ad0", "sunstone": "#f0a030", "deepforge": "#c0502a", "heartwood": "#7a3a2a", "explorers": "#c0a060", "trowel": "#9aa3ab"}
+       "sapphire": "#3a6ad0", "sunstone": "#f0a030", "deepforge": "#c0502a", "heartwood": "#7a3a2a", "explorers": "#c0a060", "trowel": "#9aa3ab",
+       # Phase 5
+       "voidstone": "#4a3a6a", "voidsteel": "#5a4a8a", "starmetal": "#d8e0ff", "shadowbark": "#3a2a3a", "skywood": "#bfe0f0",
+       "raw_gloom": "#3a4a5a", "cooked_gloom": "#5a4a3a", "raw_cloud": "#f0a0b0", "cooked_cloud": "#d08060", "hollow": "#2a2030", "astral": "#a0c0ff",
+       "celestial": "#ffe0a0", "nightshade": "#4a2a6a", "aether": "#a0e0ff", "shadow_draught": "#5a3a8a"}
 
 
 def mat_of(item_id):
@@ -811,3 +815,114 @@ for boss, body, acc in (("deepforge_colossus", "#7a3a2a", "#f08a30"), ("heartrot
 for name, col in (("map", "#3d6fb0"), ("quest", "#c9a030"), ("expedition", "#5a7a3a"), ("bell", "#e0b030"), ("dungeon", "#7a3030")):
     icon(lambda d, col=col: (d.rounded_rectangle([3, 3, 29, 29], 6, fill=shade(hexrgb(col), 0.7), outline=hexrgb(col), width=2)), f"assets/ui/icons/{name}.png")
 print("phase 3 placeholder art generated")
+
+
+# ======================================================= Phase 5 content ====
+# Terrain row 4: blight ground, void, cloud, starstone, shadow spires.
+atlas = Image.open(ROOT / "assets/environments/tiles/greenvale_tiles.png").convert("RGBA")
+if atlas.size[1] < T * 5:
+    bigger = Image.new("RGBA", (T * 8, T * 5), (0, 0, 0, 0))
+    bigger.paste(atlas, (0, 0))
+    atlas = bigger
+put_tile(noise_tile(hexrgb("#4a4252"), 0.07, hexrgb("#6a5a7a"), 18), 0, 4)
+void = noise_tile(hexrgb("#0c0a1a"), 0.03, hexrgb("#e0e0ff"), 5)
+put_tile(void, 1, 4)
+cloud = noise_tile(hexrgb("#e6eef8"), 0.03)
+d = ImageDraw.Draw(cloud)
+for (cx, cy, r) in [(8, 10, 7), (22, 8, 6), (16, 22, 8)]:
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=hexrgb("#f8fbff"))
+put_tile(cloud, 2, 4)
+star = noise_tile(hexrgb("#c8c0e0"), 0.04)
+d = ImageDraw.Draw(star)
+for y in range(0, T, 8):
+    d.line([(0, y), (T, y)], fill=hexrgb("#a8a0c8"))
+for (x, y) in [(6, 4), (20, 13), (12, 27)]:
+    d.point([(x, y), (x + 1, y), (x, y + 1)], fill=hexrgb("#fff6c0"))
+put_tile(star, 3, 4)
+spires = noise_tile(hexrgb("#2a2232"), 0.04)
+d = ImageDraw.Draw(spires)
+for (x, h) in [(6, 22), (16, 30), (26, 18)]:
+    d.polygon([(x - 5, T), (x, T - h), (x + 5, T)], fill=hexrgb("#1a1420"), outline=hexrgb("#5a4a6a"))
+put_tile(spires, 4, 4)
+save(atlas, "assets/environments/tiles/greenvale_tiles.png")
+
+# Resource nodes
+save(rock(hexrgb("#3a3248"), hexrgb("#a070ff")), "assets/resources/nodes/voidstone_rock.png")
+save(rock(hexrgb("#8a90a8"), hexrgb("#fff6c0")), "assets/resources/nodes/starmetal_rock.png")
+for name, leaf, trunk in (("shadowbark_tree", ["#2a1a30", "#3a2a44", "#4a3a5a"], "#1a1018"), ("skywood_tree", ["#a0d8f0", "#c0e8f8", "#e0f6ff"], "#d0c0a0")):
+    im = Image.new("RGBA", (T, 48), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([5, 40, 27, 47], fill=(0, 0, 0, 80))
+    d.rectangle([13, 28, 18, 44], fill=hexrgb(trunk))
+    for (cx, cy, r, i) in [(16, 18, 13, 0), (10, 14, 8, 1), (21, 12, 8, 1), (15, 8, 7, 2)]:
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=hexrgb(leaf[i]))
+    save(im, f"assets/resources/nodes/{name}.png")
+for name, leaf, bloom in (("nightshade_patch", "#2a3a30", "#7a3ab0"), ("aether_bloom_patch", "#7ab0c0", "#c0f0ff")):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([4, 24, 28, 31], fill=(0, 0, 0, 60))
+    d.ellipse([5, 8, 27, 28], fill=hexrgb(leaf))
+    for (x, y) in ((10, 12), (18, 10), (21, 19), (12, 20)):
+        d.ellipse([x, y, x + 4, y + 4], fill=hexrgb(bloom))
+    save(im, f"assets/resources/nodes/{name}.png")
+
+
+# Collectibles: eggs, mount whistles, relics and sigils
+def collectible_icon(it):
+    iid = it["id"]
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    h = sum(ord(ch) for ch in iid)
+    hue = ["#e06a6a", "#6ab0e0", "#7ad07a", "#e0c040", "#b07ae0", "#e09a4a", "#4ad0c0", "#d06ab0"][h % 8]
+    if iid.startswith("pet_egg_"):
+        d.ellipse([8, 4, 24, 28], fill=hexrgb("#f4ecd8"), outline=hexrgb("#8a7a5a"))
+        for (x, y) in ((12, 10), (18, 16), (13, 21)):
+            d.ellipse([x, y, x + 3, y + 3], fill=hexrgb(hue))
+    elif iid.startswith("mount_"):
+        d.ellipse([4, 4, 28, 28], fill=shade(hexrgb(hue), 0.5), outline=hexrgb(hue), width=2)
+        d.arc([9, 8, 23, 26], 30, 330, fill=hexrgb("#e8e2cf"), width=4)
+    elif iid.startswith("relic_"):
+        d.polygon([(16, 2), (28, 12), (24, 28), (8, 28), (4, 12)], fill=hexrgb(hue), outline=shade(hexrgb(hue), 0.5))
+        d.polygon([(16, 7), (22, 13), (16, 20), (10, 13)], fill=shade(hexrgb(hue), 1.4))
+    else:  # sigil
+        d.ellipse([3, 3, 29, 29], fill=hexrgb("#3a1a2a"), outline=hexrgb("#e04a6a"), width=3)
+        d.polygon([(16, 7), (19, 14), (26, 14), (20, 19), (22, 26), (16, 22), (10, 26), (12, 19), (6, 14), (13, 14)], fill=hexrgb("#ffd060"))
+    save(im, it["icon"].replace("res://", ""))
+
+
+for it in json.loads((ROOT / "data/items/items.json").read_text())["items"]:
+    if it["category"] == "collectible":
+        collectible_icon(it)
+
+# Enemies and bosses
+enemy("wraith", T, lambda d, s: (d.ellipse([8, 3, 24, 19], fill=(120, 110, 150, 210)), d.polygon([(8, 12), (24, 12), (22, 30), (16, 25), (10, 30)], fill=(90, 80, 130, 180)),
+      d.point([(13, 10), (19, 10)], fill=(140, 255, 220, 255))))
+enemy("shadow_knight", T, lambda d, s: (humanoid("#3a3448")(d, s), d.rectangle([11, 3, 21, 8], fill=hexrgb("#5a5470")), d.line([(24, 28), (28, 6)], fill=hexrgb("#a0a0c0"), width=2)))
+enemy("void_horror", 48, lambda d, s: (d.ellipse([8, 10, 40, 40], fill=hexrgb("#2a1a3a")), d.ellipse([18, 18, 30, 30], fill=hexrgb("#a070ff")),
+      d.ellipse([22, 22, 26, 26], fill=hexrgb("#0a0010")), *[d.line([(12 + i * 6, 38), (8 + i * 8, 47)], fill=hexrgb("#3a2a4a"), width=3) for i in range(5)]))
+enemy("sky_serpent", 48, lambda d, s: (d.arc([4, 6, 44, 42], 160, 380, fill=hexrgb("#60b0e0"), width=8), d.ellipse([34, 6, 46, 18], fill=hexrgb("#80d0f0")),
+      d.point([(41, 10)], fill=(250, 250, 120, 255)), d.polygon([(10, 20), (2, 12), (14, 16)], fill=hexrgb("#e0f0ff"))))
+enemy("star_golem", 48, lambda d, s: (d.rectangle([12, 14, 36, 38], fill=hexrgb("#a8b0d0")), d.rectangle([16, 4, 32, 16], fill=hexrgb("#c0c8e8")),
+      d.rectangle([4, 16, 12, 34], fill=hexrgb("#9098b8")), d.rectangle([36, 16, 44, 34], fill=hexrgb("#9098b8")),
+      d.point([(20, 9), (28, 9)], fill=(255, 240, 150, 255)), d.rectangle([20, 22, 28, 30], fill=hexrgb("#fff6c0"))))
+enemy("celestial_sentinel", 48, lambda d, s: (d.rectangle([14, 12, 34, 40], fill=hexrgb("#e8e0c0")), d.rectangle([17, 2, 31, 14], fill=hexrgb("#f8f0d0")),
+      d.point([(21, 7), (27, 7)], fill=(80, 160, 255, 255)), d.line([(38, 44), (40, 2)], fill=hexrgb("#d0b050"), width=3),
+      d.polygon([(2, 14), (12, 18), (12, 32)], fill=hexrgb("#f0f6ff")), d.polygon([(46, 14), (36, 18), (36, 32)], fill=hexrgb("#f0f6ff"))))
+for boss, body, acc in (("the_hollow_king", "#2a2236", "#a070ff"), ("astral_wyrm", "#5a70b0", "#fff0a0")):
+    im = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([8, 54, 56, 63], fill=(0, 0, 0, 90))
+    d.rectangle([18, 20, 46, 54], fill=hexrgb(body))
+    d.ellipse([20, 2, 44, 26], fill=shade(hexrgb(body), 1.2))
+    d.rectangle([6, 22, 18, 46], fill=hexrgb(body))
+    d.rectangle([46, 22, 58, 46], fill=hexrgb(body))
+    d.point([(27, 13), (28, 13), (36, 13), (37, 13)], fill=hexrgb(acc))
+    d.rectangle([22, 30, 42, 36], fill=hexrgb(acc))
+    if boss == "the_hollow_king":
+        d.polygon([(20, 4), (24, -2), (28, 3), (32, -3), (36, 3), (40, -2), (44, 4)], fill=hexrgb("#8a7a9a"))
+    save(im, f"assets/enemies/{boss}.png")
+
+# Legacy (endgame) UI icons
+for name, col in (("relic", "#c08030"), ("pet", "#7ad07a"), ("mount", "#6ab0e0"), ("ascension", "#e04a6a"), ("season", "#e0c040")):
+    icon(lambda d, col=col: (d.rounded_rectangle([3, 3, 29, 29], 6, fill=shade(hexrgb(col), 0.7), outline=hexrgb(col), width=2)), f"assets/ui/icons/{name}.png")
+print("phase 5 placeholder art generated")

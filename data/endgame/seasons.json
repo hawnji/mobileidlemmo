@@ -1,0 +1,62 @@
+{
+ "schema_version": 1,
+ "description": "Seasons follow the calendar (northern hemisphere months, UTC). Each season gives a bonus, seasonal contracts that pay festival tokens, and stock at the Festival Merchant.",
+ "seasons": [
+  {
+   "id": "bloomtide",
+   "name": "Bloomtide",
+   "months": [
+    3,
+    4,
+    5
+   ],
+   "effects": {
+    "gather_speed.foraging": 1.1,
+    "gather_speed.farming": 1.1
+   },
+   "description": "Spring: +10% foraging and farming speed."
+  },
+  {
+   "id": "sunfire_regatta",
+   "name": "Sunfire Regatta",
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "effects": {
+    "gather_speed.fishing": 1.1,
+    "xp.fishing": 1.05
+   },
+   "description": "Summer: +10% fishing speed and +5% fishing XP."
+  },
+  {
+   "id": "harvest_moon",
+   "name": "Harvest Moon",
+   "months": [
+    9,
+    10,
+    11
+   ],
+   "effects": {
+    "xp.all": 1.05,
+    "sell_price": 1.05
+   },
+   "description": "Autumn: +5% XP in every skill and +5% sell prices."
+  },
+  {
+   "id": "frostfall",
+   "name": "Frostfall",
+   "months": [
+    12,
+    1,
+    2
+   ],
+   "effects": {
+    "gather_speed.mining": 1.1,
+    "craft_speed.cooking": 1.1
+   },
+   "description": "Winter: +10% mining and cooking speed."
+  }
+ ]
+}

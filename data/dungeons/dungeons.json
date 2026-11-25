@@ -211,6 +211,171 @@
      "ashen_desert": 120
     }
    }
+  },
+  {
+   "id": "dread_citadel",
+   "name": "The Dread Citadel",
+   "region": "shadowlands",
+   "party_min": 3,
+   "party_max": 4,
+   "recommended_power": 2200,
+   "description": "The Hollow King's fortress, where the knights of a fallen order still stand guard.",
+   "entry_seconds": 25.0,
+   "time_limit_seconds": 1200.0,
+   "food_per_member": 15,
+   "floors": [
+    {
+     "enemies": [
+      "wraith",
+      "wraith",
+      "wraith"
+     ]
+    },
+    {
+     "enemies": [
+      "shadow_knight",
+      "shadow_knight"
+     ]
+    },
+    {
+     "enemies": [
+      "void_horror",
+      "wraith"
+     ]
+    }
+   ],
+   "boss": "the_hollow_king",
+   "first_clear": {
+    "currencies": {
+     "gems": 500,
+     "recruitment_tokens": 25,
+     "relic_dust": 150
+    },
+    "items": {
+     "sigil_nyx_voidwalker": 1
+    },
+    "reputation": {
+     "shadowlands": 800
+    }
+   },
+   "clear_rewards": {
+    "currencies": {
+     "gold": 4000,
+     "relic_dust": 20
+    },
+    "reputation": {
+     "shadowlands": 120
+    }
+   }
+  },
+  {
+   "id": "starfall_sanctum",
+   "name": "Starfall Sanctum",
+   "region": "celestial_isles",
+   "party_min": 3,
+   "party_max": 4,
+   "recommended_power": 2900,
+   "description": "A temple built where the first star fell. The Astral Wyrm sleeps on its altar.",
+   "entry_seconds": 30.0,
+   "time_limit_seconds": 1500.0,
+   "food_per_member": 18,
+   "floors": [
+    {
+     "enemies": [
+      "sky_serpent",
+      "sky_serpent"
+     ]
+    },
+    {
+     "enemies": [
+      "star_golem",
+      "star_golem"
+     ]
+    },
+    {
+     "enemies": [
+      "celestial_sentinel",
+      "sky_serpent"
+     ]
+    }
+   ],
+   "boss": "astral_wyrm",
+   "first_clear": {
+    "currencies": {
+     "gems": 800,
+     "recruitment_tokens": 40,
+     "relic_dust": 300
+    },
+    "items": {
+     "sigil_kaelen_stormforge": 1,
+     "relic_celestial_hourglass": 1
+    },
+    "reputation": {
+     "celestial_isles": 1000
+    }
+   },
+   "clear_rewards": {
+    "currencies": {
+     "gold": 7000,
+     "relic_dust": 35
+    },
+    "reputation": {
+     "celestial_isles": 150
+    }
+   }
   }
- ]
+ ],
+ "mythic": {
+  "description": "Mythic tiers: any dungeon you have cleared can be run again at tier 1 and up. Clearing tier N opens tier N+1.",
+  "max_tier": 10,
+  "enemy_health_per_tier": 0.15,
+  "enemy_damage_per_tier": 0.08,
+  "reward_mult_per_tier": 0.25,
+  "relic_dust_per_tier": 15,
+  "relic_chance_per_tier": 0.04,
+  "relic_chance_max": 0.4,
+  "relic_pool": [
+   "miners_lantern",
+   "woodsmans_charm",
+   "anglers_pearl",
+   "herbalists_satchel",
+   "forge_heart",
+   "scholars_tome",
+   "warlords_banner",
+   "aegis_shard",
+   "fortunes_coin",
+   "pathfinders_compass"
+  ],
+  "affixes": [
+   {
+    "id": "fortified",
+    "name": "Fortified",
+    "min_tier": 2,
+    "description": "Floor enemies have 20% more health.",
+    "trash_health_mult": 1.2
+   },
+   {
+    "id": "tyrannical",
+    "name": "Tyrannical",
+    "min_tier": 4,
+    "description": "The boss has 30% more health and hits 15% harder.",
+    "boss_health_mult": 1.3,
+    "boss_damage_mult": 1.15
+   },
+   {
+    "id": "frenzied",
+    "name": "Frenzied",
+    "min_tier": 6,
+    "description": "The boss enrages 25% sooner.",
+    "enrage_mult": 0.75
+   },
+   {
+    "id": "famished",
+    "name": "Famished",
+    "min_tier": 8,
+    "description": "The party brings half as much food.",
+    "food_mult": 0.5
+   }
+  ]
+ }
 }

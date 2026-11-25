@@ -54,6 +54,11 @@ var expedition_order: Array[String] = []
 var expedition_config := {}
 var encounter_config := {}
 var notification_config := {}
+# --- Phase 5: endgame -----------------------------------------------------
+## data/endgame/*.json by file name: relics, pets, mounts, mastery, ascension, seasons.
+var endgame := {}
+## The "mythic" block of dungeons.json (tiers and affixes).
+var dungeon_mythic := {}
 var skill_xp_table: XpTable
 var character_xp_table: XpTable
 var load_errors := PackedStringArray()
@@ -154,6 +159,9 @@ func load_from(p_root: String) -> bool:
 		expedition_order.append(String(e.id))
 	encounter_config = _load_dict("world/encounters.json")
 	notification_config = _load_dict("config/notifications.json")
+	dungeon_mythic = _load_dict("dungeons/dungeons.json").get("mythic", {})
+	for f in ["relics", "pets", "mounts", "mastery", "ascension", "seasons"]:
+		endgame[f] = _load_dict("endgame/%s.json" % f)
 	return load_errors.is_empty()
 
 
@@ -327,6 +335,62 @@ func validate() -> PackedStringArray:
 	for r_id in regions:
 		errors.append_array(_validate_region(regions[r_id]))
 	errors.append_array(_validate_phase3())
+	errors.append_array(_validate_phase5())
+	return errors
+
+
+func _validate_phase5() -> PackedStringArray:
+	var errors := PackedStringArray()
+	var ids := {"relic": {}, "pet": {}, "mount": {}, "character": characters}
+	for f in [["relics", "relic", "effects_per_level"], ["pets", "pet", "effects_per_level"], ["mounts", "mount", "effects"]]:
+		for e in endgame.get(f[0], {}).get(f[0], []):
+			ids[f[1]][e.id] = true
+			for k in e.get(f[2], {}):
+				if not stat_families.has(String(k).get_slice(".", 0)):
+					errors.append("%s %s unknown stat family %s" % [f[1], e.id, k])
+	for p in endgame.get("ascension", {}).get("perks", []):
+		for k in p.get("effects_per_rank", {}):
+			if not stat_families.has(String(k).get_slice(".", 0)):
+				errors.append("Perk %s unknown stat family %s" % [p.id, k])
+		if (p.get("cost", []) as Array).size() < int(p.get("max_rank", 1)):
+			errors.append("Perk %s needs a cost per rank" % p.id)
+	for s in endgame.get("seasons", {}).get("seasons", []):
+		for k in s.get("effects", {}):
+			if not stat_families.has(String(k).get_slice(".", 0)):
+				errors.append("Season %s unknown stat family %s" % [s.id, k])
+	var months := {}
+	for s in endgame.get("seasons", {}).get("seasons", []):
+		for m in s.get("months", []):
+			if months.has(int(m)):
+				errors.append("Month %d is in two seasons" % int(m))
+			months[int(m)] = true
+	for cat in endgame.get("mastery", {}).get("effects_per_level", {}):
+		for fam in endgame.mastery.effects_per_level[cat]:
+			if not stat_families.has(String(fam)):
+				errors.append("Mastery %s unknown stat family %s" % [cat, fam])
+	for it_id in items:
+		var un: Variant = items[it_id].get("unlocks")
+		if un is Dictionary:
+			var kind := String(un.get("type", ""))
+			if not ids.has(kind) or not ids[kind].has(un.get("id", "")):
+				errors.append("Item %s unlocks unknown %s %s" % [it_id, kind, un.get("id")])
+	for rid in dungeon_mythic.get("relic_pool", []):
+		if not ids.relic.has(rid):
+			errors.append("Mythic relic pool has unknown relic %s" % rid)
+	for v_id in vendors:
+		var cur := String(vendors[v_id].get("currency", "gold"))
+		if not currencies.has(cur):
+			errors.append("Vendor %s unknown currency %s" % [v_id, cur])
+	for q_id in quests:
+		var season := String(quests[q_id].get("season", ""))
+		if not season.is_empty() and not endgame.get("seasons", {}).get("seasons", []).any(func(s): return s.id == season):
+			errors.append("Quest %s unknown season %s" % [q_id, season])
+	for c in endgame.get("ascension", {}).get("requirements", []):
+		if not Objectives.KNOWN_TYPES.has(String(c.get("type", ""))):
+			errors.append("Ascension requirement unknown type %s" % c.get("type"))
+	for it in endgame.get("ascension", {}).get("first_ascension_rewards", {}).get("items", {}):
+		if not items.has(it):
+			errors.append("Ascension reward unknown item %s" % it)
 	return errors
 
 

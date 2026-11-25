@@ -638,6 +638,167 @@
     }
    ],
    "stages": []
+  },
+  {
+   "id": "barrow_descent",
+   "name": "Descend into the Barrows",
+   "region": "shadowlands",
+   "duration_seconds": 36000,
+   "team_size": 4,
+   "risk": "high",
+   "description": "Search the knights' barrows for relics of the fallen order.",
+   "requirements": [
+    {
+     "type": "combat_level",
+     "level": 70
+    },
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 60
+    }
+   ],
+   "recommended_power": 2300,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      15000,
+      25000
+     ],
+     "gems": [
+      60,
+      120
+     ],
+     "relic_dust": [
+      30,
+      80
+     ]
+    },
+    "items": [
+     {
+      "item": "voidsteel_bar",
+      "min": 3,
+      "max": 8,
+      "chance": 1.0
+     },
+     {
+      "item": "pet_egg_shadow_cat",
+      "min": 1,
+      "max": 1,
+      "chance": 0.05
+     },
+     {
+      "item": "relic_aegis_shard",
+      "min": 1,
+      "max": 1,
+      "chance": 0.06
+     }
+    ],
+    "xp": {
+     "exploration": 25000,
+     "defense": 15000
+    },
+    "fragments": {
+     "chance": 0.8,
+     "amount": 20
+    }
+   },
+   "events": [
+    {
+     "id": "dread",
+     "name": "Dread",
+     "chance": 0.3,
+     "kind": "hazard",
+     "skill_check": {
+      "skill": "prayer",
+      "level": 50
+     },
+     "fail_reward_mult": -0.25,
+     "injury": true,
+     "message": "Dread fell on the team.",
+     "pass_message": "A prayer kept the dread at bay."
+    }
+   ],
+   "stages": []
+  },
+  {
+   "id": "star_chart",
+   "name": "Chart the Star Isles",
+   "region": "celestial_isles",
+   "duration_seconds": 43200,
+   "team_size": 4,
+   "risk": "high",
+   "description": "Fly to the outer islands and map where the stars fell.",
+   "requirements": [
+    {
+     "type": "combat_level",
+     "level": 80
+    },
+    {
+     "type": "skill",
+     "skill": "exploration",
+     "level": 75
+    }
+   ],
+   "recommended_power": 3000,
+   "rewards": {
+    "currencies": {
+     "gold": [
+      25000,
+      40000
+     ],
+     "gems": [
+      100,
+      200
+     ],
+     "relic_dust": [
+      60,
+      140
+     ]
+    },
+    "items": [
+     {
+      "item": "star_fragment",
+      "min": 1,
+      "max": 2,
+      "chance": 0.6
+     },
+     {
+      "item": "pet_egg_cloud_sprite",
+      "min": 1,
+      "max": 1,
+      "chance": 0.05
+     },
+     {
+      "item": "relic_pathfinders_compass",
+      "min": 1,
+      "max": 1,
+      "chance": 0.06
+     }
+    ],
+    "xp": {
+     "exploration": 40000,
+     "magic": 20000
+    },
+    "fragments": {
+     "chance": 0.9,
+     "amount": 25
+    }
+   },
+   "events": [
+    {
+     "id": "starstorm",
+     "name": "Starstorm",
+     "chance": 0.25,
+     "skill_check": {
+      "skill": "magic",
+      "level": 70
+     },
+     "reward_mult": 0.5,
+     "message": "A starstorm showered the team with fragments!"
+    }
+   ],
+   "stages": []
   }
  ]
 }

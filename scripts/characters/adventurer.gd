@@ -74,6 +74,10 @@ var _stat_cache_key := -1
 var _own_version := 0
 var account: AccountEffects
 var _stat_memo := {}
+## Phase 5: mastery XP per skill (earned at the skill's maximum level) and
+## the account's endgame state (pet, mount and mastery effects).
+var mastery_xp := {}
+var endgame: EndgameState
 
 
 static func create(def: Dictionary, p_registry: DataRegistry) -> Adventurer:
@@ -133,6 +137,8 @@ func stat_block() -> StatBlock:
 			else:
 				v = 1.0 + (v - 1.0) * (1.0 + bonus_per_upgrade * up)
 			sb.apply({k: v})
+	if endgame:
+		endgame.apply_character_effects(self, sb)
 	if acct:
 		sb = sb.merged_with(acct)
 	_stat_cache = sb
@@ -284,6 +290,7 @@ func to_dict() -> Dictionary:
 		"on_waypoint": on_waypoint,
 		"deposit_tile": [deposit_tile.x, deposit_tile.y],
 		"stats": stats.duplicate(true),
+		"mastery_xp": mastery_xp.duplicate(),
 	}
 
 
@@ -292,6 +299,13 @@ func load_dict(d: Dictionary) -> void:
 	facing = JsonData.to_vec2i(d.get("facing"), Vector2i.DOWN)
 	skills.load_dict(d.get("skills", {}))
 	character_xp = maxf(float(d.get("character_xp", 0.0)), 0.0)
+	mastery_xp.clear()
+	var mx: Variant = d.get("mastery_xp", {})
+	if mx is Dictionary:
+		for k in mx:
+			if registry.skills.has(k) and float(mx[k]) > 0.0:
+				mastery_xp[String(k)] = float(mx[k])
+	invalidate_stats()
 	stars = clampi(int(d.get("stars", 1)), 1, int(registry.get_config("progression.max_stars", 6)))
 	traits.clear()
 	for t in d.get("traits", []):

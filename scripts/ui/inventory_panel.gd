@@ -126,6 +126,16 @@ func _show_actions() -> void:
 		_show_actions())
 	row.add_child(fav)
 	_actions.add_child(row)
+	if item.get("unlocks") is Dictionary:
+		var use := UiTheme.button("Use (%s)" % String(item.unlocks.get("type", "")).capitalize(), 17)
+		use.disabled = world.locked_items.has(id)
+		use.pressed.connect(func() -> void:
+			var r: Dictionary = world.use_item(id)
+			refresh()
+			_show_actions()
+			if _actions.get_child_count() > 0:
+				(_actions.get_child(0) as Label).text = String(r.get("error", "")) if not String(r.get("error", "")).is_empty() else String(r.get("message", "")))
+		_actions.add_child(use)
 	if not String(item.get("equip_slot", "")).is_empty() and world.characters.has(Game.selected_character_id):
 		var ch: Adventurer = world.characters[Game.selected_character_id]
 		var eq := UiTheme.button("Equip on %s" % ch.display_name.split(" ")[0], 17)

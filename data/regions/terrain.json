@@ -242,6 +242,56 @@
     4,
     3
    ]
+  },
+  {
+   "symbol": "u",
+   "id": "blight_ground",
+   "walkable": true,
+   "move_cost": 1.1,
+   "atlas": [
+    0,
+    4
+   ]
+  },
+  {
+   "symbol": "v",
+   "id": "void",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    1,
+    4
+   ]
+  },
+  {
+   "symbol": "l",
+   "id": "cloud",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    2,
+    4
+   ]
+  },
+  {
+   "symbol": "a",
+   "id": "starstone",
+   "walkable": true,
+   "move_cost": 0.7,
+   "atlas": [
+    3,
+    4
+   ]
+  },
+  {
+   "symbol": "z",
+   "id": "shadow_spires",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    4,
+    4
+   ]
   }
  ]
 }

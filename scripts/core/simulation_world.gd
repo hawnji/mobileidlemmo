@@ -10,7 +10,7 @@ extends RefCounted
 
 signal event_emitted(event: Dictionary)
 
-const SAVE_FORMAT := 3
+const SAVE_FORMAT := 4
 const MAX_EVENT_LOG := 200
 
 var registry: DataRegistry
@@ -100,6 +100,10 @@ var dungeon_records := {}  # dungeon_id -> {clears, best_time}
 var encounters: EncounterDirector
 var notifications: NotificationCenter
 var _last_reveal := {}  # character_id -> Vector2i
+# --- Phase 5: endgame -------------------------------------------------------
+## Relics, pets, mounts, ascension perks, mythic records, season. Survives
+## World Ascension. Also an AccountEffects source.
+var endgame: EndgameState
 
 
 ## Builds a brand-new world from data: map, nodes, enemies, storage, wallet
@@ -137,6 +141,9 @@ func _setup(p_registry: DataRegistry) -> void:
 	town = TownState.new()
 	town.setup(registry)
 	account = AccountEffects.new(registry, town)
+	endgame = EndgameState.new()
+	endgame.setup(registry)
+	account.extra_sources.append(endgame)
 	recruitment = RecruitmentState.new()
 	for loc in region.get("locations", []):
 		var r: Array = loc.get("rect", [0, 0, 0, 0])
@@ -224,6 +231,7 @@ func add_character(character_id: String, at_tile := Vector2i(-1, -1)) -> Adventu
 		return null
 	var ch := Adventurer.create(def, registry)
 	ch.account = account
+	ch.endgame = endgame
 	ch.tile = at_tile if at_tile.x >= 0 else free_tile_near(spawn_tile, character_order.size())
 	sync_traits(ch)
 	ch.refresh_capacity()
@@ -671,6 +679,9 @@ func claim_quest(quest_id: String) -> String:
 
 func vendor_unlocked(vendor_id: String, entry: Dictionary) -> bool:
 	var v: Dictionary = registry.vendors.get(vendor_id, {})
+	var season := String(entry.get("season", ""))
+	if not season.is_empty() and season != endgame.current_season():
+		return false
 	return is_region_unlocked(String(v.get("region", ""))) and quests.reputation_tier(String(v.get("region", ""))) >= int(entry.get("tier", 0))
 
 
@@ -681,6 +692,8 @@ func buy_from_vendor(vendor_id: String, item_id: String, qty: int) -> String:
 	for entry in v.get("stock", []):
 		if String(entry.item) != item_id:
 			continue
+		if not String(entry.get("season", "")).is_empty() and String(entry.season) != endgame.current_season():
+			return "Only sold during %s" % endgame.season_def(String(entry.season)).get("name", entry.season)
 		if not vendor_unlocked(vendor_id, entry):
 			return "Needs %s reputation with %s" % [registry.reputation_tiers()[int(entry.get("tier", 0))].name, registry.region_name(String(v.region))]
 		if storage.can_add(item_id, qty) < qty:
@@ -712,14 +725,136 @@ func claim_mailbox() -> int:
 	return moved
 
 
+# ==========================================================================
+# Phase 5 commands: collectibles, relics, pets, mounts, perks, ascension
+# ==========================================================================
+
+## Uses one collectible item from storage (pet egg, mount whistle, relic,
+## mythic sigil). Returns {"error": "", "message": ...}.
+func use_item(item_id: String) -> Dictionary:
+	var it: Dictionary = registry.items.get(item_id, {})
+	var un: Variant = it.get("unlocks")
+	if not (un is Dictionary):
+		return {"error": "This item cannot be used"}
+	if storage.get_quantity(item_id) <= 0:
+		return {"error": "None in storage"}
+	if locked_items.has(item_id):
+		return {"error": "The item is locked"}
+	storage.remove(item_id, 1)
+	record_sink(item_id, 1, "used")
+	var msg := endgame.unlock(self, un)
+	emit_event("item_used", {"item_id": item_id, "message": msg})
+	return {"error": "", "message": msg}
+
+
+func equip_relic(relic_id: String) -> String:
+	return endgame.equip_relic(relic_id)
+
+
+func unequip_relic(relic_id: String) -> String:
+	return endgame.unequip_relic(relic_id)
+
+
+func upgrade_relic(relic_id: String) -> String:
+	return endgame.upgrade_relic(self, relic_id)
+
+
+func assign_pet(character_id: String, pet_id: String) -> String:
+	return endgame.assign_pet(self, character_id, pet_id)
+
+
+func assign_mount(character_id: String, mount_id: String) -> String:
+	return endgame.assign_mount(self, character_id, mount_id)
+
+
+func buy_perk(perk_id: String) -> String:
+	return endgame.buy_perk(self, perk_id)
+
+
+## "" when World Ascension is possible now, else the first missing requirement.
+func ascension_gap() -> String:
+	for c in registry.endgame.get("ascension", {}).get("requirements", []):
+		if not Objectives.is_met(self, c):
+			return Objectives.describe(registry, c)
+	if not dungeon_runs.is_empty() or not expeditions.to_dict().get("active", []).is_empty():
+		return "Every hero must be home (no dungeon runs or expeditions)"
+	return ""
+
+
+## World Ascension: builds the next world from this one. Kept: heroes (skills,
+## levels, gear, traits, stars, mastery), armory, fragments, recruitment pity,
+## every currency except gold, route templates and the endgame state.
+## Reset: storage, mailbox, gold, town, regions, quests, reputation,
+## exploration, counters, dungeon clears, encounters, nodes and enemies.
+## Returns {"error", "world", "points"}; the caller swaps in the new world.
+func ascend() -> Dictionary:
+	var gap := ascension_gap()
+	if not gap.is_empty():
+		return {"error": gap}
+	var points := endgame.points_preview(self)
+	var sc := endgame.score(self)
+	var d := to_dict()
+	var keep := {}
+	for k in ["format", "region_id", "sim_time", "rng_seed", "rng_state", "locked_items", "favorite_items", "character_order",
+			"recruitment", "fragments", "armory", "next_uid", "route_templates", "token_progress", "notifications",
+			"item_sources", "item_sinks",
+			"server_ledger_seq", "endgame"]:
+		if d.has(k):
+			keep[k] = d[k]
+	var chars := {}
+	for cid in character_order:
+		var cd: Dictionary = d.characters[cid].duplicate(true)
+		for k in ["inventory", "assignment", "path", "path_index", "move_progress", "action_elapsed", "target_node_id",
+				"target_enemy_id", "target_station_id", "target_key", "travel_purpose", "away", "on_waypoint", "deposit_tile",
+				"wait_remaining", "injured_remaining", "attack_timer", "status_message"]:
+			cd.erase(k)
+		cd.state = "IDLE"
+		cd.erase("tile")
+		chars[cid] = cd
+	keep["characters"] = chars
+	var wd: Dictionary = wallet.to_dict()
+	var start_gold := 0
+	for c in registry.currency_list:
+		if String(c.id) == "gold":
+			start_gold = int(c.get("starting", 0))
+	var bal: Dictionary = wd.get("balances", {}).duplicate()
+	bal["gold"] = start_gold + endgame.head_start_gold()
+	wd["balances"] = bal
+	keep["wallet"] = wd
+	var nw := SimulationWorld.from_dict(registry, keep)
+	for i in nw.character_order.size():
+		var ch: Adventurer = nw.characters[nw.character_order[i]]
+		ch.tile = nw.free_tile_near(nw.spawn_tile, i)
+		ch.health = ch.max_health()
+	nw.exploration.reveal(nw.spawn_tile, 8)
+	# Item ledger: everything that did not carry over left the world here.
+	var old_held := held_totals()
+	var new_held := nw.held_totals()
+	for it in old_held:
+		var gone := int(old_held[it]) - int(new_held.get(it, 0))
+		if gone > 0:
+			nw.record_sink(it, gone, "ascension")
+	var eg := nw.endgame
+	eg.ascensions += 1
+	eg.best_score = maxi(eg.best_score, sc)
+	eg.lifetime_points += points
+	nw.wallet.earn("ascension_points", points, "ascension")
+	if eg.ascensions == 1:
+		nw.grant_rewards(registry.endgame.get("ascension", {}).get("first_ascension_rewards", {}), [], "ascension")
+	nw.emit_event("ascended", {"count": eg.ascensions, "points": points, "score": sc})
+	return {"error": "", "world": nw, "points": points}
+
+
 func start_expedition(expedition_id: String, team: Array, use_supplies := true) -> String:
 	return expeditions.start(self, expedition_id, team, use_supplies)
 
 
-func start_dungeon(dungeon_id: String, team: Array) -> String:
+func start_dungeon(dungeon_id: String, team: Array, tier := 0) -> String:
 	var d: Dictionary = registry.dungeons.get(dungeon_id, {})
 	if d.is_empty():
 		return "Unknown dungeon"
+	if tier < 0 or tier > endgame.max_unlocked_tier(self, dungeon_id):
+		return "Mythic tier %d is locked (clear tier %d first)" % [tier, tier - 1] if tier > 1 else "Clear the dungeon once to open mythic tiers"
 	if not is_region_unlocked(String(d.region)):
 		return "Unlock %s first" % registry.region_name(String(d.region))
 	if team.size() < int(d.get("party_min", 1)) or team.size() > int(d.get("party_max", 4)):
@@ -730,11 +865,11 @@ func start_dungeon(dungeon_id: String, team: Array) -> String:
 	var err := _check_team_available(team)
 	if not err.is_empty():
 		return err
-	var run := DungeonRun.create(self, dungeon_id, team)
+	var run := DungeonRun.create(self, dungeon_id, team, tier)
 	for cid in team:
 		_send_away(characters[cid], "dungeon:%s" % dungeon_id)
 	dungeon_runs.append(run)
-	emit_event("dungeon_started", {"dungeon": dungeon_id, "team": team.duplicate()})
+	emit_event("dungeon_started", {"dungeon": dungeon_id, "team": team.duplicate(), "tier": tier})
 	return ""
 
 
@@ -816,8 +951,11 @@ func _finish_dungeon(run: DungeonRun) -> void:
 		rec.best_time = run.elapsed if float(rec.best_time) <= 0.0 else minf(float(rec.best_time), run.elapsed)
 		dungeon_records[run.dungeon_id] = rec
 		counters["dungeon:%s" % run.dungeon_id] = int(counters.get("dungeon:%s" % run.dungeon_id, 0)) + 1
-		summary = grant_rewards(d.get("clear_rewards", {}), [], "dungeon:%s" % run.dungeon_id)
-		if first:
+		if run.tier > 0:
+			summary = _mythic_rewards(run, d)
+		else:
+			summary = grant_rewards(d.get("clear_rewards", {}), [], "dungeon:%s" % run.dungeon_id)
+		if first and run.tier == 0:
 			var fs := grant_rewards(d.get("first_clear", {}), [], "dungeon_first:%s" % run.dungeon_id)
 			summary["first_clear"] = fs
 	var near: Vector2i = dungeon_entrances.get(run.dungeon_id, storage_tile)
@@ -829,7 +967,32 @@ func _finish_dungeon(run: DungeonRun) -> void:
 		ch.health = clampf(float(m.hp), 0.0, ch.max_health())
 		return_from_away(ch, injury if float(m.hp) <= 0.0 else 0.0, near)
 	emit_event("dungeon_completed", {"dungeon": run.dungeon_id, "name": d.get("name", run.dungeon_id), "result": run.result,
-		"loot": run.loot.duplicate(), "gold": run.gold, "elapsed": run.elapsed, "rewards": summary, "log": run.log_lines.duplicate()})
+		"loot": run.loot.duplicate(), "gold": run.gold, "elapsed": run.elapsed, "rewards": summary, "log": run.log_lines.duplicate(),
+		"tier": run.tier})
+
+
+## Mythic clear: scaled clear rewards, relic dust and a chance at a relic.
+## Records the tier, which opens the next one.
+func _mythic_rewards(run: DungeonRun, d: Dictionary) -> Dictionary:
+	var cfg := registry.dungeon_mythic
+	var tier := run.tier
+	var summary := grant_rewards(d.get("clear_rewards", {}), [], "mythic:%s:%d" % [run.dungeon_id, tier], null,
+		1.0 + float(cfg.get("reward_mult_per_tier", 0.25)) * tier)
+	var dust := int(cfg.get("relic_dust_per_tier", 15)) * tier
+	wallet.earn("relic_dust", dust, "mythic:%s" % run.dungeon_id)
+	summary.currencies["relic_dust"] = int(summary.currencies.get("relic_dust", 0)) + dust
+	var chance := minf(float(cfg.get("relic_chance_per_tier", 0.04)) * tier, float(cfg.get("relic_chance_max", 0.4)))
+	var pool: Array = cfg.get("relic_pool", [])
+	if not pool.is_empty() and rng.randf() < chance:
+		var item := "relic_%s" % pool[rng.randi_range(0, pool.size() - 1)]
+		if registry.items.has(item):
+			_store_or_mail(item, 1)
+			record_source(item, 1, "mythic")
+			summary.items[item] = int(summary.items.get(item, 0)) + 1
+	if tier > int(endgame.mythic_records.get(run.dungeon_id, 0)):
+		endgame.mythic_records[run.dungeon_id] = tier
+		emit_event("mythic_record", {"dungeon": run.dungeon_id, "tier": tier})
+	return summary
 
 
 ## Adds to storage, overflowing into the mailbox. Never destroys items.
@@ -1402,6 +1565,8 @@ func to_dict() -> Dictionary:
 		"encounters": encounters.to_dict(self),
 		"notifications": notifications.to_dict(),
 		"server_ledger_seq": server_ledger_seq,
+		# Phase 5
+		"endgame": endgame.to_dict(),
 		"last_reveal": _last_reveal.keys().map(func(k): return [k, _last_reveal[k].x, _last_reveal[k].y]),
 	}
 
@@ -1504,6 +1669,8 @@ static func from_dict(p_registry: DataRegistry, d: Dictionary) -> SimulationWorl
 		for k in d.get("item_sinks", {}):
 			w.item_sinks[String(k)] = int(d.item_sinks[k])
 	w._load_phase3(d, fmt)
+	if d.get("endgame") is Dictionary:
+		w.endgame.load_dict(w, d.endgame)
 	return w
 
 

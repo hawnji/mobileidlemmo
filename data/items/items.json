@@ -1711,6 +1711,1033 @@
    "icon": "res://assets/resources/items/expedition_rations.png",
    "description": "Hard tack and dried fish. Heals 10. Improves expedition odds.",
    "heal": 10
+  },
+  {
+   "id": "voidstone_ore",
+   "name": "Voidstone Ore",
+   "category": "ore",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 140,
+   "icon": "res://assets/resources/items/voidstone_ore.png",
+   "description": "Black ore that drinks the light."
+  },
+  {
+   "id": "voidsteel_bar",
+   "name": "Voidsteel Bar",
+   "category": "bar",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 420,
+   "icon": "res://assets/resources/items/voidsteel_bar.png",
+   "description": "Forged from voidstone; cold to the touch."
+  },
+  {
+   "id": "shadowbark_log",
+   "name": "Shadowbark Log",
+   "category": "log",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/shadowbark_log.png",
+   "description": "Wood from the twisted trees of the Shadowlands."
+  },
+  {
+   "id": "shadowbark_plank",
+   "name": "Shadowbark Plank",
+   "category": "plank",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 200,
+   "icon": "res://assets/resources/items/shadowbark_plank.png",
+   "description": "A dark, dense plank."
+  },
+  {
+   "id": "raw_gloom_eel",
+   "name": "Raw Gloom Eel",
+   "category": "fish",
+   "tier": 5,
+   "rarity": "uncommon",
+   "sell_price": 40,
+   "icon": "res://assets/resources/items/raw_gloom_eel.png",
+   "description": "An eel from the black marsh."
+  },
+  {
+   "id": "cooked_gloom_eel",
+   "name": "Cooked Gloom Eel",
+   "category": "food",
+   "tier": 5,
+   "rarity": "common",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/cooked_gloom_eel.png",
+   "description": "Rich and strange. Heals 18.",
+   "heal": 28
+  },
+  {
+   "id": "nightshade",
+   "name": "Nightshade",
+   "category": "herb",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 90,
+   "icon": "res://assets/resources/items/nightshade.png",
+   "description": "A poisonous herb that brews powerful draughts."
+  },
+  {
+   "id": "shadow_draught",
+   "name": "Shadow Draught",
+   "category": "potion",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 320,
+   "icon": "res://assets/resources/items/shadow_draught.png",
+   "description": "Heals 80.",
+   "heal": 80
+  },
+  {
+   "id": "wraith_essence",
+   "name": "Wraith Essence",
+   "category": "misc",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/wraith_essence.png",
+   "description": "What is left of a wraith."
+  },
+  {
+   "id": "void_shard",
+   "name": "Void Shard",
+   "category": "gem",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/void_shard.png",
+   "description": "A splinter of nothing, set in stone."
+  },
+  {
+   "id": "hollow_crown",
+   "name": "Hollow Crown",
+   "category": "artifact",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 4000,
+   "icon": "res://assets/resources/items/hollow_crown.png",
+   "description": "The Hollow King's broken crown."
+  },
+  {
+   "id": "starmetal_ore",
+   "name": "Starmetal Ore",
+   "category": "ore",
+   "tier": 6,
+   "rarity": "legendary",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/starmetal_ore.png",
+   "description": "Ore from a fallen star."
+  },
+  {
+   "id": "starmetal_bar",
+   "name": "Starmetal Bar",
+   "category": "bar",
+   "tier": 6,
+   "rarity": "legendary",
+   "sell_price": 800,
+   "icon": "res://assets/resources/items/starmetal_bar.png",
+   "description": "Light as a feather, hard as a mountain."
+  },
+  {
+   "id": "skywood_log",
+   "name": "Skywood Log",
+   "category": "log",
+   "tier": 6,
+   "rarity": "epic",
+   "sell_price": 220,
+   "icon": "res://assets/resources/items/skywood_log.png",
+   "description": "Wood that wants to float."
+  },
+  {
+   "id": "skywood_plank",
+   "name": "Skywood Plank",
+   "category": "plank",
+   "tier": 6,
+   "rarity": "epic",
+   "sell_price": 360,
+   "icon": "res://assets/resources/items/skywood_plank.png",
+   "description": "A plank of skywood."
+  },
+  {
+   "id": "raw_cloud_koi",
+   "name": "Raw Cloud Koi",
+   "category": "fish",
+   "tier": 6,
+   "rarity": "rare",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/raw_cloud_koi.png",
+   "description": "A koi that swims in mist."
+  },
+  {
+   "id": "cooked_cloud_koi",
+   "name": "Cooked Cloud Koi",
+   "category": "food",
+   "tier": 6,
+   "rarity": "uncommon",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/cooked_cloud_koi.png",
+   "description": "Light and restoring. Heals 24.",
+   "heal": 36
+  },
+  {
+   "id": "aether_bloom",
+   "name": "Aether Bloom",
+   "category": "herb",
+   "tier": 6,
+   "rarity": "epic",
+   "sell_price": 160,
+   "icon": "res://assets/resources/items/aether_bloom.png",
+   "description": "A flower that grows on clouds."
+  },
+  {
+   "id": "star_fragment",
+   "name": "Star Fragment",
+   "category": "gem",
+   "tier": 6,
+   "rarity": "legendary",
+   "sell_price": 1600,
+   "icon": "res://assets/resources/items/star_fragment.png",
+   "description": "Still warm from the sky."
+  },
+  {
+   "id": "celestial_core",
+   "name": "Celestial Core",
+   "category": "artifact",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 9000,
+   "icon": "res://assets/resources/items/celestial_core.png",
+   "description": "The heart of the Astral Wyrm."
+  },
+  {
+   "id": "voidsteel_pickaxe",
+   "name": "Voidsteel Pickaxe",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/voidsteel_pickaxe.png",
+   "description": "Mines 62% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 60
+   },
+   "stats": {
+    "gather_speed.mining": 1.62
+   },
+   "max_durability": 2500,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "voidsteel_axe",
+   "name": "Voidsteel Axe",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/voidsteel_axe.png",
+   "description": "Chops 62% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 60
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.62
+   },
+   "max_durability": 2500,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "voidsteel_sword",
+   "name": "Voidsteel Sword",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 1000,
+   "icon": "res://assets/resources/items/voidsteel_sword.png",
+   "description": "A voidsteel blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 60
+   },
+   "stats": {
+    "accuracy": 30,
+    "weapon_power": 16
+   },
+   "max_durability": 2500,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "voidsteel_helm",
+   "name": "Voidsteel Helm",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/voidsteel_helm.png",
+   "description": "Voidsteel armour.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 60
+   },
+   "stats": {
+    "armor": 17,
+    "max_health": 12
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "voidsteel_platebody",
+   "name": "Voidsteel Platebody",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 1800,
+   "icon": "res://assets/resources/items/voidsteel_platebody.png",
+   "description": "Voidsteel armour.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 60
+   },
+   "stats": {
+    "armor": 35,
+    "max_health": 24
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "voidsteel_platelegs",
+   "name": "Voidsteel Platelegs",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 1200,
+   "icon": "res://assets/resources/items/voidsteel_platelegs.png",
+   "description": "Voidsteel armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 60
+   },
+   "stats": {
+    "armor": 26,
+    "max_health": 17
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "starmetal_pickaxe",
+   "name": "Starmetal Pickaxe",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1600,
+   "icon": "res://assets/resources/items/starmetal_pickaxe.png",
+   "description": "Mines 80% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 75
+   },
+   "stats": {
+    "gather_speed.mining": 1.8
+   },
+   "max_durability": 2500,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "starmetal_axe",
+   "name": "Starmetal Axe",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1600,
+   "icon": "res://assets/resources/items/starmetal_axe.png",
+   "description": "Chops 80% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 75
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.8
+   },
+   "max_durability": 2500,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "starmetal_sword",
+   "name": "Starmetal Sword",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1700,
+   "icon": "res://assets/resources/items/starmetal_sword.png",
+   "description": "A starmetal blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 75
+   },
+   "stats": {
+    "accuracy": 39,
+    "weapon_power": 20
+   },
+   "max_durability": 2500,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "starmetal_helm",
+   "name": "Starmetal Helm",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1600,
+   "icon": "res://assets/resources/items/starmetal_helm.png",
+   "description": "Starmetal armour.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 75
+   },
+   "stats": {
+    "armor": 22,
+    "max_health": 15
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "starmetal_platebody",
+   "name": "Starmetal Platebody",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 3200,
+   "icon": "res://assets/resources/items/starmetal_platebody.png",
+   "description": "Starmetal armour.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 75
+   },
+   "stats": {
+    "armor": 45,
+    "max_health": 31
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "starmetal_platelegs",
+   "name": "Starmetal Platelegs",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1900,
+   "icon": "res://assets/resources/items/starmetal_platelegs.png",
+   "description": "Starmetal armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 75
+   },
+   "stats": {
+    "armor": 33,
+    "max_health": 22
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "shadowbark_bow",
+   "name": "Shadowbark Bow",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 850,
+   "icon": "res://assets/resources/items/shadowbark_bow.png",
+   "description": "A shadowbark bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 60
+   },
+   "stats": {
+    "accuracy": 30,
+    "weapon_power": 16
+   },
+   "max_durability": 2000,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "shadowbark_staff",
+   "name": "Shadowbark Staff",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/shadowbark_staff.png",
+   "description": "A shadowbark staff.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 60
+   },
+   "stats": {
+    "accuracy": 30,
+    "weapon_power": 17
+   },
+   "max_durability": 2000,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "shadowbark_fishing_rod",
+   "name": "Shadowbark Fishing Rod",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 650,
+   "icon": "res://assets/resources/items/shadowbark_fishing_rod.png",
+   "description": "Fishes 62% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 60
+   },
+   "stats": {
+    "gather_speed.fishing": 1.62
+   },
+   "max_durability": 2000,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "skywood_bow",
+   "name": "Skywood Bow",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1500,
+   "icon": "res://assets/resources/items/skywood_bow.png",
+   "description": "A skywood bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 75
+   },
+   "stats": {
+    "accuracy": 36,
+    "weapon_power": 19
+   },
+   "max_durability": 2000,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "skywood_staff",
+   "name": "Skywood Staff",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1550,
+   "icon": "res://assets/resources/items/skywood_staff.png",
+   "description": "A skywood staff.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 75
+   },
+   "stats": {
+    "accuracy": 36,
+    "weapon_power": 20
+   },
+   "max_durability": 2000,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "skywood_fishing_rod",
+   "name": "Skywood Fishing Rod",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 1300,
+   "icon": "res://assets/resources/items/skywood_fishing_rod.png",
+   "description": "Fishes 80% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 75
+   },
+   "stats": {
+    "gather_speed.fishing": 1.8
+   },
+   "max_durability": 2000,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "hollow_kings_mantle",
+   "name": "Hollow King's Mantle",
+   "category": "equipment",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 5000,
+   "icon": "res://assets/resources/items/hollow_kings_mantle.png",
+   "description": "+15% damage, +30 health.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 70
+   },
+   "stats": {
+    "armor": 40,
+    "max_health": 30,
+    "damage": 1.15
+   },
+   "max_durability": 3000
+  },
+  {
+   "id": "astral_band",
+   "name": "Astral Band",
+   "category": "equipment",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 8000,
+   "icon": "res://assets/resources/items/astral_band.png",
+   "description": "+10% XP and +10% gathering speed.",
+   "equip_slot": "accessory",
+   "requirements": {
+    "exploration": 60
+   },
+   "stats": {
+    "xp.all": 1.1,
+    "gather_speed.all": 1.1
+   },
+   "max_durability": 3000
+  },
+  {
+   "id": "pet_egg_rock_crab",
+   "name": "Rock Crab Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "uncommon",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_rock_crab.png",
+   "description": "Hatches Pebble the Rock Crab. Mining speed for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "rock_crab"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_sapling",
+   "name": "Sapling Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "uncommon",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_sapling.png",
+   "description": "Hatches Mossy the Sapling. Woodcutting speed for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "sapling"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_river_otter",
+   "name": "Otter Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "uncommon",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_river_otter.png",
+   "description": "Hatches Bubbles the Otter. Fishing speed for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "river_otter"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_ember_salamander",
+   "name": "Salamander Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_ember_salamander.png",
+   "description": "Hatches Ember the Salamander. Smithing and cooking speed for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "ember_salamander"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_study_owl",
+   "name": "Owl Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_study_owl.png",
+   "description": "Hatches Whisper the Owl. XP in every skill for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "study_owl"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_shadow_cat",
+   "name": "Shadow Cat Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_shadow_cat.png",
+   "description": "Hatches Shade the Shadow Cat. Damage and rare drops for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "shadow_cat"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_cloud_sprite",
+   "name": "Cloud Sprite Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_cloud_sprite.png",
+   "description": "Hatches Nimbus the Cloud Sprite. Travel speed and discovery for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "cloud_sprite"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "pet_egg_golden_toad",
+   "name": "Golden Toad Egg",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/pet_egg_golden_toad.png",
+   "description": "Hatches Lucky the Golden Toad. Rare drops for its owner.",
+   "unlocks": {
+    "type": "pet",
+    "id": "golden_toad"
+   },
+   "untradeable": false
+  },
+  {
+   "id": "mount_pack_pony",
+   "name": "Pack Pony Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "uncommon",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_pack_pony.png",
+   "description": "Adds a Pack Pony to your stable. Steady and strong. +15% travel speed, +4 carry.",
+   "unlocks": {
+    "type": "mount",
+    "id": "pack_pony"
+   }
+  },
+  {
+   "id": "mount_mountain_goat",
+   "name": "Mountain Goat Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_mountain_goat.png",
+   "description": "Adds a Mountain Goat to your stable. Sure-footed in the mountains. +20% travel speed.",
+   "unlocks": {
+    "type": "mount",
+    "id": "mountain_goat"
+   }
+  },
+  {
+   "id": "mount_sand_strider",
+   "name": "Sand Strider Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_sand_strider.png",
+   "description": "Adds a Sand Strider to your stable. A long-legged desert bird. +25% travel speed.",
+   "unlocks": {
+    "type": "mount",
+    "id": "sand_strider"
+   }
+  },
+  {
+   "id": "mount_shadow_steed",
+   "name": "Shadow Steed Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_shadow_steed.png",
+   "description": "Adds a Shadow Steed to your stable. Fast and fearsome. +30% travel speed, +3% damage.",
+   "unlocks": {
+    "type": "mount",
+    "id": "shadow_steed"
+   }
+  },
+  {
+   "id": "mount_griffin",
+   "name": "Griffin Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_griffin.png",
+   "description": "Adds a Griffin to your stable. A flying mount: reaches the Celestial Isles. +35% travel speed.",
+   "unlocks": {
+    "type": "mount",
+    "id": "griffin"
+   }
+  },
+  {
+   "id": "mount_frost_elk",
+   "name": "Frost Elk Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_frost_elk.png",
+   "description": "Adds a Frost Elk to your stable. A seasonal mount. +25% travel speed, +3% gathering.",
+   "unlocks": {
+    "type": "mount",
+    "id": "frost_elk"
+   }
+  },
+  {
+   "id": "mount_celestial_drake",
+   "name": "Celestial Drake Whistle",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "mythic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/mount_celestial_drake.png",
+   "description": "Adds a Celestial Drake to your stable. A flying mythic mount. +50% travel speed, +3% XP.",
+   "unlocks": {
+    "type": "mount",
+    "id": "celestial_drake"
+   }
+  },
+  {
+   "id": "relic_celestial_hourglass",
+   "name": "Celestial Hourglass",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_celestial_hourglass.png",
+   "description": "A relic. +2 hours of offline progress per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "celestial_hourglass"
+   }
+  },
+  {
+   "id": "relic_miners_lantern",
+   "name": "Miner's Lantern",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_miners_lantern.png",
+   "description": "A relic. +4% mining speed per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "miners_lantern"
+   }
+  },
+  {
+   "id": "relic_woodsmans_charm",
+   "name": "Woodsman's Charm",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_woodsmans_charm.png",
+   "description": "A relic. +4% woodcutting speed per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "woodsmans_charm"
+   }
+  },
+  {
+   "id": "relic_anglers_pearl",
+   "name": "Angler's Pearl",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_anglers_pearl.png",
+   "description": "A relic. +4% fishing speed per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "anglers_pearl"
+   }
+  },
+  {
+   "id": "relic_herbalists_satchel",
+   "name": "Herbalist's Satchel",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_herbalists_satchel.png",
+   "description": "A relic. +4% foraging and farming speed per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "herbalists_satchel"
+   }
+  },
+  {
+   "id": "relic_forge_heart",
+   "name": "Forge Heart",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_forge_heart.png",
+   "description": "A relic. +3% crafting speed in every skill per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "forge_heart"
+   }
+  },
+  {
+   "id": "relic_scholars_tome",
+   "name": "Scholar's Tome",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_scholars_tome.png",
+   "description": "A relic. +3% XP in every skill per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "scholars_tome"
+   }
+  },
+  {
+   "id": "relic_warlords_banner",
+   "name": "Warlord's Banner",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_warlords_banner.png",
+   "description": "A relic. +4% damage per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "warlords_banner"
+   }
+  },
+  {
+   "id": "relic_aegis_shard",
+   "name": "Aegis Shard",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "epic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_aegis_shard.png",
+   "description": "A relic. +3 armour and +5 health per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "aegis_shard"
+   }
+  },
+  {
+   "id": "relic_fortunes_coin",
+   "name": "Fortune's Coin",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "legendary",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_fortunes_coin.png",
+   "description": "A relic. +5% sell prices and rare drops per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "fortunes_coin"
+   }
+  },
+  {
+   "id": "relic_pathfinders_compass",
+   "name": "Pathfinder's Compass",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "rare",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_pathfinders_compass.png",
+   "description": "A relic. +3% travel speed and +5% discovery per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "pathfinders_compass"
+   }
+  },
+  {
+   "id": "relic_void_prism",
+   "name": "Void Prism",
+   "category": "collectible",
+   "tier": 5,
+   "rarity": "mythic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/relic_void_prism.png",
+   "description": "A relic. +5% dungeon damage and +2% XP per level. Duplicates become relic dust.",
+   "unlocks": {
+    "type": "relic",
+    "id": "void_prism"
+   }
+  },
+  {
+   "id": "sigil_nyx_voidwalker",
+   "name": "Sigil of Nyx",
+   "category": "collectible",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/sigil_nyx_voidwalker.png",
+   "description": "Use it to call Nyx Voidwalker to your side.",
+   "unlocks": {
+    "type": "character",
+    "id": "nyx_voidwalker"
+   },
+   "untradeable": true
+  },
+  {
+   "id": "sigil_kaelen_stormforge",
+   "name": "Sigil of Kaelen",
+   "category": "collectible",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/sigil_kaelen_stormforge.png",
+   "description": "Use it to call Kaelen Stormforge to your side.",
+   "unlocks": {
+    "type": "character",
+    "id": "kaelen_stormforge"
+   },
+   "untradeable": true
+  },
+  {
+   "id": "sigil_astraea_skyborn",
+   "name": "Sigil of Astraea",
+   "category": "collectible",
+   "tier": 6,
+   "rarity": "mythic",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/sigil_astraea_skyborn.png",
+   "description": "Use it to call Astraea Skyborn to your side.",
+   "unlocks": {
+    "type": "character",
+    "id": "astraea_skyborn"
+   },
+   "untradeable": true
   }
  ]
 }

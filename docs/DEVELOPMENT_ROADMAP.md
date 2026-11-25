@@ -197,7 +197,64 @@ authority (see the gaps). Everything below was tested against a real Nakama 3.22
 | Presence shows heroes only in the region where most of your heroes are | Keeps one realtime match per player | Per-region subscriptions if needed |
 | Balance of the market fee, boss HP and guild levels is first-pass | No players yet | Tune with telemetry |
 
-## Phase 5: Endgame
+## Phase 5: Endgame (complete, with the gaps below)
 
-Mastery, mythic characters, relics, pets, mounts, World Ascension, seasonal events, advanced
-dungeons, endgame regions.
+Spec: mastery, mythic characters, relics, pets, mounts, World Ascension, seasonal events,
+advanced dungeons, endgame regions.
+
+**Decisions taken:**
+- **One state object.** All endgame state that survives an ascension lives in one
+  `EndgameState`, which is also an account-effects source.
+- **Season clock.** The season comes from the device clock, set by `Game`. The simulation
+  itself never reads the clock.
+- **Ascension rebuilds the world.** World Ascension builds a fresh world from a filtered save,
+  so every reset rule is a list of save keys that a test checks.
+
+Tests: 21 new endgame tests (221 offline in total), plus the 20 server and 9 online client
+tests re-run against Nakama.
+
+### Phase 5 feature checklist
+
+| Feature | Status | Where |
+|---|---|---|
+| Endgame regions: Shadowlands and Celestial Isles, with gates, outposts, discoveries, nodes, enemies | Done | `tools/generate_world_map.py`, `data/regions/world_map.json` |
+| Celestial Isles gated by a flying mount | Done | region unlock condition `{"type": "mount", "tag": "flying"}` |
+| Endgame gear, resources, recipes, vendors, quests (main 09 to 12, regional, contracts) | Done | `data/items`, `data/recipes`, `data/quests`, `data/economy/vendors.json` |
+| Advanced dungeons: Dread Citadel, Starfall Sanctum (multi-phase bosses with summons, heals, enrage) | Done | `data/dungeons/dungeons.json`, `data/enemies/enemies.json` |
+| Mythic dungeon tiers 1 to 10 with affixes, scaled rewards, relic drops | Done | `DungeonRun._set_tier`, `SimulationWorld._mythic_rewards`, Journeys tier picker |
+| Mythic characters (3) obtained outside the gacha | Done | sigil items, `EndgameState.unlock`, first-ascension reward |
+| Relics: 12, slots, levels, dust, duplicates | Done | `data/endgame/relics.json`, `EndgameState`, Legacy > Relics |
+| Pets: 8, assigned to a hero, level from owner XP | Done | `data/endgame/pets.json`, `EndgameState._feed_pet`, Legacy > Pets |
+| Mounts: 7, one rider each, travel speed, flying | Done | `data/endgame/mounts.json`, Legacy > Mounts |
+| Mastery past level 99, per hero and skill, milestones | Done | `data/endgame/mastery.json`, `EndgameState._add_mastery`, Legacy > Mastery |
+| World Ascension: requirements, reset, kept legacy, points, 9 perks, first-ascension rewards | Done | `SimulationWorld.ascend`, `data/endgame/ascension.json`, Legacy > Ascension |
+| Seasonal events: calendar seasons, bonuses, seasonal contracts, festival merchant | Done | `data/endgame/seasons.json`, `QuestState.refresh` (expiry), Legacy > Season |
+| Offline cap extended by relics and perks | Done | `LocalOfflineSimulator.apply_offline_progress` |
+| Collectible items used from Storage | Done | `SimulationWorld.use_item`, Storage > Use |
+| Save format 4 with fog migration for the taller map | Done | `SimulationWorld.to_dict`, `ExplorationState.load_dict` |
+
+### Phase 5 known gaps (honest list)
+
+| Gap | Why | Plan |
+|---|---|---|
+| The server does not validate endgame progress (relic levels, pet levels, mastery, mythic records, ascension points) | Phase 4 validation covers items, gold, premium currency and characters; endgame state is derived from those but not re-checked | Add per-hour caps for relic dust and mastery XP to `validateSave`, then move to the server-side simulation |
+| Seasonal events are a bonus, contracts and a merchant; no special event maps, bosses or leaderboards | Kept to what can be tested offline | Server-scheduled events with leaderboards on top of the Phase 4 world events |
+| A season changes on the device clock (UTC months); changing the clock changes the season | No trusted time offline | Online, take the season from the server clock |
+| Mythic tiers above about 3 in the Dread Citadel need relics and perks even at level 99 (see BALANCE.md) | Intended as a long ladder, but not playtested | Tune `mythic` and boss numbers after playtests |
+| Pets and mounts are not drawn on the map | Placeholder art budget | Add follower and rider sprites in the art pass |
+| Ascension needs every hero home; there is no "ascend after the current runs" queue | Simpler and safe for the item ledger | Add a queue if players ask |
+| Balance is first-pass | Measured with `tools/balance_report.gd`, not playtested | Tune after playtests |
+
+## After Phase 5: what is left before a public release
+
+These are the largest items from the gap lists above, in a suggested order:
+
+1. **Server authority.** Run `SimulationWorld` headless next to Nakama. Compute offline time
+   and rewards there (expeditions, dungeons, quests, endgame) instead of validating uploads.
+2. **Mobile builds.** Add the export presets with real signing keys and bundle IDs, a
+   notification plugin, and Apple and Google sign-in.
+3. **Art and audio pass.** Replace the placeholders at the same paths. Add pet and mount
+   sprites on the map and music.
+4. **Playtest balance.** Tune with telemetry. BALANCE.md lists every knob.
+5. **Live operations.** Add chat moderation, rate limits, server-scheduled seasonal events and
+   leaderboards.

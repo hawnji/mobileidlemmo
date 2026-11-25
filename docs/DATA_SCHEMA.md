@@ -121,9 +121,35 @@ Planned for P2: `active_ability`, `traits[]`, `specializations[]`, `star_rank`, 
 expedition requirements all share one shape, evaluated by `scripts/progression/objectives.gd`:
 `gather, kill, kill_tag, craft, dungeon, expedition` (counters since the quest started),
 `deliver` (consumed on claim), `explored, discover, discover_count, build, skill,
-character_level, combat_level, quest, region, reputation`.
+character_level, combat_level, quest, region, reputation`. Phase 5 adds `season {season}`,
+`mount {tag?}`, `ascension {count}`, `mythic_tier {tier, dungeon?}` and `mastery {level,
+skill?}`.
+
+## Phase 5 data files
+
+| File | Shape |
+|---|---|
+| `endgame/relics.json` | `base_slots, max_slots, max_level, upgrade_costs[]` (relic dust to go from level N to N+1), `duplicate_dust {rarity: dust}`, `relics[] {id, name, rarity, effects_per_level, description, icon}`. Effects stack per level (`mul` families as powers, `add` families times the level) |
+| `endgame/pets.json` | `max_level, xp_share` (fraction of the owner's XP), `level_xp[]` (cumulative pet XP for each level), `pets[] {id, name, rarity, description, effects_per_level, icon}` |
+| `endgame/mounts.json` | `mounts[] {id, name, rarity, effects, tags[]` (`"flying"` opens the Celestial Isles)`, description, icon}` |
+| `endgame/mastery.json` | `xp_per_level, max_level`, `effects_per_level {skill category: {family: value}}` (applied to `<family>.<skill>`), `milestones[] {level, reward}` |
+| `endgame/ascension.json` | `requirements[]` (conditions), `score {per_skill_level, per_mastery_level, per_mythic_tier, per_discovery}`, `points {scale, unit, minimum}` (points = scale x sqrt(score / unit), minus what the best earlier score already paid, at least `minimum`), `first_ascension_rewards`, `perks[] {id, name, max_rank, cost[], effects_per_rank, start_gold_per_rank?, description}` |
+| `endgame/seasons.json` | `seasons[] {id, name, months[] (1-12, UTC), effects, description}`; every month belongs to at most one season |
+| `dungeons/dungeons.json` | adds `mythic {max_tier, enemy_health_per_tier, enemy_damage_per_tier, reward_mult_per_tier, relic_dust_per_tier, relic_chance_per_tier, relic_chance_max, relic_pool[], affixes[] {id, name, min_tier, description, trash_health_mult?, boss_health_mult?, boss_damage_mult?, enrage_mult?, food_mult?}}` |
+| `items/items.json` | Collectibles: `category: "collectible"` with `unlocks {type: pet/mount/relic/character, id}`; using one consumes it |
+| `quests/quests.json` | `category: "seasonal"` quests carry `season` and a `season` prerequisite; active ones expire when the season ends |
+| `economy/vendors.json` | Stock entries may carry `season` (sold only then); vendors may use any currency (`relic_dust`, `event_tokens`) |
+| `regions/terrain.json` | Atlas row 4: `u` blight ground, `v` void (blocked), `l` cloud, `a` starstone, `z` shadow spires (blocked) |
 
 ## Save format (`user://worldbound_save.json`)
+
+**Format 4 (Phase 5)** adds `endgame {relics {id: level}, equipped_relics[], pets {id: {level,
+xp}}, pet_assign {character: pet}, mounts[], mount_assign {character: mount}, perks {id: rank},
+ascensions, best_score, lifetime_points, mythic_records {dungeon: tier}}` to `world`.
+Characters add `mastery_xp {skill: xp}`, and dungeon runs add `tier`. The map grew from 96 to
+144 rows. Older saves keep their fog for the first 96 rows (`ExplorationState.load_dict` pads
+it), and all their coordinates stay valid. The season is not saved: it comes from the device
+clock.
 
 **Phase 4** adds `server_ledger_seq` (int, default 0) to `world`: the highest server ledger op
 (market escrow, guild donation, delivery) already applied to this save. Older saves load with 0.

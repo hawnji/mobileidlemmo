@@ -1,0 +1,146 @@
+{
+ "schema_version": 1,
+ "base_slots": 3,
+ "max_slots": 6,
+ "max_level": 5,
+ "upgrade_costs": [
+  60,
+  150,
+  320,
+  640
+ ],
+ "duplicate_dust": {
+  "uncommon": 20,
+  "rare": 40,
+  "epic": 80,
+  "legendary": 160,
+  "mythic": 300
+ },
+ "relics": [
+  {
+   "id": "celestial_hourglass",
+   "name": "Celestial Hourglass",
+   "rarity": "legendary",
+   "effects_per_level": {
+    "offline_cap_hours": 2
+   },
+   "description": "+2 hours of offline progress per level.",
+   "icon": "res://assets/resources/items/relic_celestial_hourglass.png"
+  },
+  {
+   "id": "miners_lantern",
+   "name": "Miner's Lantern",
+   "rarity": "rare",
+   "effects_per_level": {
+    "gather_speed.mining": 1.04
+   },
+   "description": "+4% mining speed per level.",
+   "icon": "res://assets/resources/items/relic_miners_lantern.png"
+  },
+  {
+   "id": "woodsmans_charm",
+   "name": "Woodsman's Charm",
+   "rarity": "rare",
+   "effects_per_level": {
+    "gather_speed.woodcutting": 1.04
+   },
+   "description": "+4% woodcutting speed per level.",
+   "icon": "res://assets/resources/items/relic_woodsmans_charm.png"
+  },
+  {
+   "id": "anglers_pearl",
+   "name": "Angler's Pearl",
+   "rarity": "rare",
+   "effects_per_level": {
+    "gather_speed.fishing": 1.04
+   },
+   "description": "+4% fishing speed per level.",
+   "icon": "res://assets/resources/items/relic_anglers_pearl.png"
+  },
+  {
+   "id": "herbalists_satchel",
+   "name": "Herbalist's Satchel",
+   "rarity": "rare",
+   "effects_per_level": {
+    "gather_speed.foraging": 1.04,
+    "gather_speed.farming": 1.04
+   },
+   "description": "+4% foraging and farming speed per level.",
+   "icon": "res://assets/resources/items/relic_herbalists_satchel.png"
+  },
+  {
+   "id": "forge_heart",
+   "name": "Forge Heart",
+   "rarity": "epic",
+   "effects_per_level": {
+    "craft_speed.all": 1.03
+   },
+   "description": "+3% crafting speed in every skill per level.",
+   "icon": "res://assets/resources/items/relic_forge_heart.png"
+  },
+  {
+   "id": "scholars_tome",
+   "name": "Scholar's Tome",
+   "rarity": "epic",
+   "effects_per_level": {
+    "xp.all": 1.03
+   },
+   "description": "+3% XP in every skill per level.",
+   "icon": "res://assets/resources/items/relic_scholars_tome.png"
+  },
+  {
+   "id": "warlords_banner",
+   "name": "Warlord's Banner",
+   "rarity": "epic",
+   "effects_per_level": {
+    "damage": 1.04
+   },
+   "description": "+4% damage per level.",
+   "icon": "res://assets/resources/items/relic_warlords_banner.png"
+  },
+  {
+   "id": "aegis_shard",
+   "name": "Aegis Shard",
+   "rarity": "epic",
+   "effects_per_level": {
+    "armor": 3,
+    "max_health": 5
+   },
+   "description": "+3 armour and +5 health per level.",
+   "icon": "res://assets/resources/items/relic_aegis_shard.png"
+  },
+  {
+   "id": "fortunes_coin",
+   "name": "Fortune's Coin",
+   "rarity": "legendary",
+   "effects_per_level": {
+    "sell_price": 1.05,
+    "rare_drop.all": 1.05
+   },
+   "description": "+5% sell prices and rare drops per level.",
+   "icon": "res://assets/resources/items/relic_fortunes_coin.png"
+  },
+  {
+   "id": "pathfinders_compass",
+   "name": "Pathfinder's Compass",
+   "rarity": "rare",
+   "effects_per_level": {
+    "move_speed": 1.03,
+    "discovery": 1.05
+   },
+   "description": "+3% travel speed and +5% discovery per level.",
+   "icon": "res://assets/resources/items/relic_pathfinders_compass.png"
+  },
+  {
+   "id": "void_prism",
+   "name": "Void Prism",
+   "rarity": "mythic",
+   "effects_per_level": {
+    "dungeon_damage": 1.05,
+    "xp.all": 1.02
+   },
+   "description": "+5% dungeon damage and +2% XP per level.",
+   "icon": "res://assets/resources/items/relic_void_prism.png"
+  }
+ ]
+}
