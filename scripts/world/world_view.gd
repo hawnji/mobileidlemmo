@@ -18,6 +18,7 @@ var _vis_accum := 0.0
 var _fog: FogOverlay
 var _encounter_marks: Node2D
 var _encounter_key := ""
+var _presence: PresenceLayer
 
 
 func _ready() -> void:
@@ -41,6 +42,9 @@ func _ready() -> void:
 	_encounter_marks.name = "Encounters"
 	_encounter_marks.z_index = 6
 	add_child(_encounter_marks)
+	_presence = PresenceLayer.new()
+	_presence.name = "OtherPlayers"
+	add_child(_presence)
 	_floating = FloatingTextPool.new()
 	add_child(_floating)
 	_camera = WorldCamera.new()
@@ -64,6 +68,10 @@ func _on_session_started(w: SimulationWorld) -> void:
 	_char_views.clear()
 	_enemy_views.clear()
 	_day_night.world = world
+	_presence.tile_px = tile_px
+	_presence.set_players({})
+	if Game.online and not Game.online.presence_changed.is_connected(_presence.set_players):
+		Game.online.presence_changed.connect(_presence.set_players)
 	_terrain.setup(world.registry, world.region)
 	_apply_secrets()
 	_fog.setup(world, tile_px)

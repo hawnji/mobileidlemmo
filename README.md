@@ -5,11 +5,18 @@ You collect adventurers, give them jobs, and they travel the world on their own 
 fish, fight and craft, and they keep working while you are offline. Automation is the
 gameplay, not a shortcut around it.
 
-**Current status: Phase 3 (world expansion) complete, on top of Phases 1 and 2.** See
-[docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) for what is done, the known gaps and
-what comes next.
+**Current status: Phase 4 (multiplayer) complete, on top of Phases 1 to 3.** Online play
+needs the Nakama server in [server/](server/README.md); without one the game plays fully
+offline. The world simulation still runs on the device and the server validates it (see the
+roadmap's known gaps). See [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) for what
+is done, the known gaps and what comes next.
+
+![Phase 4 screenshots](docs/screenshots/phase4_overview.png)
+
+<details><summary>Phase 3 screenshots</summary>
 
 ![Phase 3 screenshots](docs/screenshots/phase3_overview.png)
+</details>
 
 <details><summary>Phase 2 screenshots</summary>
 
@@ -46,7 +53,7 @@ what comes next.
   tools and particles.
 - Saves locally with atomic writes. Saves on autosave, on quit and when the app is backgrounded
   on mobile.
-- 189 automated tests plus a headless boot smoke test.
+- 200 automated tests plus a headless boot smoke test, and 29 more against a live server.
 
 ### Added in Phase 2
 - **23 adventurers** across six rarities (3 starters, 18 recruitable, 1 quest, 1 exploration),
@@ -99,6 +106,15 @@ what comes next.
 - New screens: World Map, Quests and Vendors, Journeys (expeditions, dungeons, events) and
   Notifications; a fog overlay, outposts and dungeon entrances on the map.
 
+### Added in Phase 4
+- **Online play** through a Nakama server (opt-in in **Social > Account**): device sign-in,
+  cloud save with conflict protection, and server checks on every upload.
+- **Server-owned** gems and tokens, recruitment rolls and pity.
+- **Friends** and **shared towns** (visit a friend's town), **guilds** with levels, member perks
+  and realtime chat, a **marketplace** with escrow and a 5% fee, and **private trades**.
+- A **co-op world boss** shared by all players, **world events** (Weekend Bounty, Market Day),
+  and **player visibility**: other players' heroes in your region appear on the map.
+
 ## Running the game
 
 1. Install **Godot 4.3** or newer (the standard build, not .NET).
@@ -113,7 +129,9 @@ what comes next.
 5. Drag to pan and pinch or scroll to zoom. **Follow** locks the camera onto the selected character.
 6. The top bar's **x1** button changes simulation speed (x1, x5, x20) so you can watch whole loops
    quickly. **Dev** has "simulate time away" buttons for testing offline progression, plus Save and
-   Reset.
+   Reset. Both are offline-only.
+7. **Social** is the online hub. To play online, start a server (see
+   [server/README.md](server/README.md)) and enter its address in Social > Account.
 
 ## Running the tests
 
@@ -127,6 +145,9 @@ The run fails if any test fails **or** if any script or engine error is printed.
 `tests/unit`, `tests/integration` and `tests/simulation` and use a small dependency-free framework
 in `tests/framework`.
 
+With a Nakama server running, `server/run_tests.sh` runs the 20 server tests (Node) and the 9
+Godot client tests in `tests/online` against it.
+
 Other tools:
 
 ```bash
@@ -137,6 +158,9 @@ godot --headless --path . -s res://tools/balance_report.gd   # gathering, combat
 godot --headless --path . -s res://tools/gacha_report.gd     # base and effective gacha rates
 xvfb-run godot --path . --rendering-method gl_compatibility \
   -s res://tools/capture_screenshots.gd -- --out=/tmp/shots  # visual smoke test + screenshots
+WB_NAKAMA_URL=http://127.0.0.1:7350 xvfb-run godot --path . --rendering-method gl_compatibility \
+  -s res://tools/capture_online_screenshots.gd -- --out=/tmp/shots  # online screens (needs a server)
+python3 tools/build_server_module.py         # rebuild server/nakama/modules/index.js
 ```
 
 ## Project layout
@@ -162,12 +186,13 @@ scripts/economy/       Wallet
 scripts/equipment/     EquipmentService (equip, wear, repair, upgrade)
 scripts/recruitment/   RecruitmentState (rolls, pity, effective rates)
 scripts/town/          TownState (buildings, construction projects)
-scripts/multiplayer/   GameBackend interface + LocalGameBackend (Nakama backend goes here)
+scripts/multiplayer/   GameBackend + LocalGameBackend, NakamaGameBackend, NakamaClient/Socket, OnlineService, OnlineSync
 scripts/save/          SaveService
 scripts/ui/            HUD, panels, theme, pooled floating text
 scenes/                Main, WorldView, HUD scenes
 assets/                Placeholder art at final-art paths (see asset pipeline in docs)
-tests/                 Unit, integration and simulation tests + runner
+tests/                 Unit, integration, simulation and online (live server) tests + runner
+server/                Nakama module (src, built module), server tests, run scripts (see server/README.md)
 tools/                 Map/art generators, test runner script, balance report, screenshot capture
 docs/                  Design, architecture, roadmap, systems, data schema, balance, changelog
 ```
@@ -182,7 +207,8 @@ Folders for later phases already exist and each has a README describing what goe
 | [TECHNICAL_ARCHITECTURE.md](docs/TECHNICAL_ARCHITECTURE.md) | Layers, simulation model, backend plan, asset pipeline, coding conventions |
 | [DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) | Phases 1-5, the running implementation checklist |
 | [SYSTEMS.md](docs/SYSTEMS.md) | How each implemented system works and how to test it |
-| [DATA_SCHEMA.md](docs/DATA_SCHEMA.md) | Every data file's schema, the save format, planned server entities |
+| [DATA_SCHEMA.md](docs/DATA_SCHEMA.md) | Every data file's schema, the save format, server storage |
+| [server/README.md](server/README.md) | Running the Nakama server, what it owns, its limits |
 | [BALANCE.md](docs/BALANCE.md) | XP curve, gathering rates, offline caps, planned gacha rates |
 | [CHANGELOG.md](docs/CHANGELOG.md) | Version history |
 

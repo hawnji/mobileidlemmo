@@ -150,14 +150,52 @@ BALANCE.md); every system below runs online and offline and is covered by tests.
 | Balance is first-pass | Measured with `tools/balance_report.gd`, not playtested | Tune after playtests (BALANCE.md lists the knobs) |
 | Art is placeholder | By design | Artist pass |
 
-## Phase 4: Multiplayer
+## Phase 4: Multiplayer (complete, with the gaps below)
 
-Nakama auth, authoritative services (see TECHNICAL_ARCHITECTURE §6), server offline simulation,
-shared towns, player visibility, friends, guilds, trading, marketplace, co-op bosses, world events.
+Spec: Nakama auth, authoritative services, server offline simulation, shared towns, player
+visibility, friends, guilds, trading, marketplace, co-op bosses, world events.
 
-**Decision needed before starting:** run the simulation rules on the server in headless Godot
-(reuses this GDScript unchanged), or port them to Go/TypeScript (more conventional ops, but two
-implementations to keep in sync).
+**Decision taken:** the services are a Nakama JavaScript module (server/nakama). The world
+simulation stays in GDScript on the device and the server validates each save upload against
+per-hour caps. Running the same GDScript headless on the server remains the path to full
+authority (see the gaps). Everything below was tested against a real Nakama 3.22 + PostgreSQL 16
+(`server/run_tests.sh`: 20 server tests + 9 Godot client tests).
+
+### Phase 4 feature checklist
+
+| Feature | Status | Where |
+|---|---|---|
+| Nakama device authentication, sessions | Done | `NakamaClient.authenticate_device`, `OnlineService.connect_blocking` |
+| Cloud save with versioning (second device must load first) | Done | `wb_save_upload` / `wb_save_download`, `NakamaGameBackend` |
+| Save validation (clock, item and gold gains, granted characters, escrow) | Done | `server/nakama/src/10_profile.js` `validateSave` |
+| Server-owned premium wallet with capped crediting | Done | `premiumDelta`, `OnlineSync.apply_server_wallet` |
+| Server-side recruitment (rolls, pity, featured, cost) | Done | `20_recruit.js`, Recruit screen online path |
+| Friends (request, accept, remove) | Done | Nakama friends, Social > Friends |
+| Shared towns (visit a friend's town) | Done | `wb_visit_town`, Social > Friends > Visit town |
+| Guilds: create, join, leave, members, donations, 5 levels, member perks | Done | Nakama groups + `40_guild.js`, Social > Guild |
+| Guild chat (realtime) | Done | Nakama group channel over `NakamaSocket` |
+| Marketplace: list, browse, buy, cancel, 5% fee, escrow, race-safe buying | Done | `30_market.js`, Social > Market |
+| Direct trading (private listing for one friend) | Done | `buyer` field, Social > Friends > Trade |
+| Deliveries (purchases, sales, returns, boss loot) | Done | `wb_claim_deliveries`, `OnlineSync.apply_deliveries` |
+| Co-op world boss (shared HP, cooldown, damage from synced heroes, rewards for all fighters) | Done | `50_boss.js`, Social > World |
+| World events on the server clock, applied as account effects | Done | `60_world.js`, `OnlineSync.Effects` |
+| Player visibility: other players' heroes in your region | Done | `region_presence` match, `PresenceLayer` (blue markers) |
+| Offline play keeps working; online is opt-in per device | Done | `LocalGameBackend` fallback, Social > Account |
+| Server offline simulation | **Not done** | See gaps |
+| Docker deployment | Written, **not run** | `docker-compose.yml` |
+
+### Phase 4 known gaps (honest list)
+
+| Gap | Why | Plan |
+|---|---|---|
+| The simulation is not server-authoritative; offline progress is computed on the device | A headless-Godot simulation service is a large separate deployment; validation caps were the smallest step that makes cheating bounded | Run `SimulationWorld` in headless Godot behind Nakama (or port it), recompute offline time on the server |
+| Expedition, dungeon and quest rewards are decided on the device | Same as above | Move with the simulation service |
+| `docker-compose.yml` untested | The build machine had no Docker daemon | Run it once on a machine with Docker |
+| No Apple / Google sign-in, push notifications, chat moderation or rate limits | Need store accounts, FCM/APNs keys and a moderation policy | Before a public test |
+| Premium currency earned offline before the first sign-in is not carried over | The first upload is a trusted baseline; crediting unverified history would let anyone mint gems | Keep; explain in the first-sign-in screen |
+| A crash right after listing an item can let it reappear locally (within the hourly cap) | Escrow is applied to the local save on the next autosave | Server-authoritative inventory with the simulation service |
+| Presence shows heroes only in the region where most of your heroes are | Keeps one realtime match per player | Per-region subscriptions if needed |
+| Balance of the market fee, boss HP and guild levels is first-pass | No players yet | Tune with telemetry |
 
 ## Phase 5: Endgame
 

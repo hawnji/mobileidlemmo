@@ -15,6 +15,9 @@ func _initialize() -> void:
 	var files: Array[String] = []
 	for dir in SUITES:
 		_collect(dir, files)
+	# Client tests against a live Nakama server (server/run_tests.sh sets this).
+	if not OS.get_environment("WB_NAKAMA_URL").is_empty():
+		_collect("res://tests/online", files)
 	files.sort()
 	var total := 0
 	var failed := 0

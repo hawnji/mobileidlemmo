@@ -91,6 +91,8 @@ var temp_enemies := {}  # spawn_id -> true (encounter spawns, removed when kille
 var counters := {}
 ## Reward items that did not fit in storage wait here (claim from Storage).
 var mailbox := {}
+## Phase 4: highest server ledger op (market, guild) already applied here.
+var server_ledger_seq := 0
 var quests: QuestState
 var expeditions: ExpeditionState
 var dungeon_runs: Array[DungeonRun] = []
@@ -507,6 +509,13 @@ func recruit(banner_id: String, count: int) -> Dictionary:
 	if not wallet.spend_many(costs, "recruit:%s" % banner_id):
 		return {"error": "Not enough tokens or gems", "results": []}
 	var results := recruitment.pull(registry, banner, count)
+	apply_recruit_results(results)
+	return {"error": "", "results": results}
+
+
+## Adds pulled characters to the roster; duplicates become fragments. Used
+## by local pulls and by pulls the server rolled (online build).
+func apply_recruit_results(results: Array) -> void:
 	var dup_frags: Dictionary = registry.recruitment_config.get("duplicate_fragments", {})
 	for res in results:
 		var cid := String(res.character_id)
@@ -521,7 +530,6 @@ func recruit(banner_id: String, count: int) -> Dictionary:
 			add_character(cid)
 			res["new"] = true
 		emit_event("recruited", res)
-	return {"error": "", "results": results}
 
 
 ## The currency a pull would use: recruitment / event tokens first, gems
@@ -1393,6 +1401,7 @@ func to_dict() -> Dictionary:
 		"dungeon_records": dungeon_records.duplicate(true),
 		"encounters": encounters.to_dict(self),
 		"notifications": notifications.to_dict(),
+		"server_ledger_seq": server_ledger_seq,
 		"last_reveal": _last_reveal.keys().map(func(k): return [k, _last_reveal[k].x, _last_reveal[k].y]),
 	}
 
@@ -1530,6 +1539,7 @@ func _load_phase3(d: Dictionary, fmt: int) -> void:
 		for k in mb:
 			if registry.items.has(k) and int(mb[k]) > 0:
 				mailbox[String(k)] = int(mb[k])
+	server_ledger_seq = maxi(int(d.get("server_ledger_seq", 0)), 0)
 	if d.get("quests") is Dictionary:
 		quests.load_dict(registry, d.quests)
 	if d.get("expeditions") is Dictionary:

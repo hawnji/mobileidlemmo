@@ -1,0 +1,41 @@
+{
+ "schema_version": 1,
+ "description": "Settings for the Nakama server module (server/nakama). Embedded into server/nakama/modules/index.js by tools/build_server_module.py.",
+ "validation": {
+  "items_per_character_hour": 2500,
+  "gold_per_character_hour": 40000,
+  "gold_slack": 5000,
+  "clock_slack_seconds": 600,
+  "hours_per_encounter_hero": 6,
+  "premium_per_hour": {"gems": 200, "recruitment_tokens": 6, "event_tokens": 6},
+  "max_save_bytes": 4000000
+ },
+ "market": {"fee": 0.05, "max_listings": 20},
+ "guild": {
+  "level_xp": [0, 5000, 20000, 60000, 150000],
+  "perks": {
+   "1": {},
+   "2": {"xp.all": 1.02},
+   "3": {"xp.all": 1.03, "gather_speed.all": 1.02},
+   "4": {"xp.all": 1.04, "gather_speed.all": 1.03},
+   "5": {"xp.all": 1.05, "gather_speed.all": 1.05}
+  }
+ },
+ "world_boss": {
+  "cooldown_seconds": 600,
+  "gems_reward": 50,
+  "bosses": [
+   {"id": "hollow_titan", "name": "The Hollow Titan", "hp": 60000, "rewards": {"gold": 2500, "dwarven_artifact": 1}},
+   {"id": "ember_wyrm", "name": "Ember Wyrm", "hp": 90000, "rewards": {"gold": 4000, "uncut_ruby": 2}},
+   {"id": "sand_colossus", "name": "Sand Colossus", "hp": 120000, "rewards": {"gold": 6000, "ancient_coin": 5}}
+  ]
+ },
+ "world_events": [
+  {"id": "weekend_bounty", "name": "Weekend Bounty", "description": "All heroes earn 10% more XP.", "effects": {"xp.all": 1.1},
+   "epoch": 1795219200, "period": 604800, "duration": 172800},
+  {"id": "market_day", "name": "Market Day", "description": "Gathering is 5% faster for everyone.", "effects": {"gather_speed.all": 1.05},
+   "epoch": 1795132800, "period": 86400, "duration": 14400}
+ ],
+ "presence": {"max_per_match": 100, "empty_seconds_before_close": 60},
+ "starting_wallet": "from data/economy/currencies.json"
+}
