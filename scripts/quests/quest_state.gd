@@ -38,6 +38,13 @@ func tick(world, dt: float) -> void:
 
 ## Activates newly available quests and announces quests ready to claim.
 func refresh(world) -> void:
+	# Phase 5: seasonal quests leave the board when their season ends.
+	for qid in active.keys():
+		var season := String(registry.quests[qid].get("season", ""))
+		if not season.is_empty() and world.endgame and world.endgame.current_season() != season:
+			active.erase(qid)
+			_ready_announced.erase(qid)
+			world.emit_event("quest_expired", {"quest": qid, "name": registry.quests[qid].name})
 	for qid in registry.quest_order:
 		if not active.has(qid) and is_available(world, qid):
 			_activate(world, qid)

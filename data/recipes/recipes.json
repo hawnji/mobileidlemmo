@@ -1228,6 +1228,432 @@
    },
    "seconds": 3.0,
    "xp": 30.0
+  },
+  {
+   "id": "smelt_voidsteel",
+   "name": "Voidsteel Bar",
+   "skill": "smithing",
+   "required_level": 75,
+   "station": "furnace",
+   "inputs": {
+    "voidstone_ore": 1,
+    "coal_ore": 6
+   },
+   "outputs": {
+    "voidsteel_bar": 1
+   },
+   "seconds": 8.0,
+   "xp": 80.0
+  },
+  {
+   "id": "smelt_starmetal",
+   "name": "Starmetal Bar",
+   "skill": "smithing",
+   "required_level": 88,
+   "station": "furnace",
+   "inputs": {
+    "starmetal_ore": 1,
+    "coal_ore": 8
+   },
+   "outputs": {
+    "starmetal_bar": 1
+   },
+   "seconds": 9.0,
+   "xp": 120.0
+  },
+  {
+   "id": "saw_shadowbark",
+   "name": "Shadowbark Plank",
+   "skill": "crafting",
+   "required_level": 65,
+   "station": "workbench",
+   "inputs": {
+    "shadowbark_log": 1
+   },
+   "outputs": {
+    "shadowbark_plank": 1
+   },
+   "seconds": 5.0,
+   "xp": 55.0
+  },
+  {
+   "id": "saw_skywood",
+   "name": "Skywood Plank",
+   "skill": "crafting",
+   "required_level": 80,
+   "station": "workbench",
+   "inputs": {
+    "skywood_log": 1
+   },
+   "outputs": {
+    "skywood_plank": 1
+   },
+   "seconds": 5.5,
+   "xp": 75.0
+  },
+  {
+   "id": "cook_gloom_eel",
+   "name": "Cooked Gloom Eel",
+   "skill": "cooking",
+   "required_level": 70,
+   "station": "range",
+   "inputs": {
+    "raw_gloom_eel": 1
+   },
+   "outputs": {
+    "cooked_gloom_eel": 1
+   },
+   "seconds": 3.5,
+   "xp": 120.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.3,
+    "stop_level": 90
+   }
+  },
+  {
+   "id": "cook_cloud_koi",
+   "name": "Cooked Cloud Koi",
+   "skill": "cooking",
+   "required_level": 85,
+   "station": "range",
+   "inputs": {
+    "raw_cloud_koi": 1
+   },
+   "outputs": {
+    "cooked_cloud_koi": 1
+   },
+   "seconds": 3.5,
+   "xp": 170.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.25,
+    "stop_level": 99
+   }
+  },
+  {
+   "id": "brew_shadow_draught",
+   "name": "Shadow Draught",
+   "skill": "herblore",
+   "required_level": 75,
+   "station": "alchemy_table",
+   "inputs": {
+    "nightshade": 2,
+    "ranarr": 1
+   },
+   "outputs": {
+    "shadow_draught": 1
+   },
+   "seconds": 6.0,
+   "xp": 180.0
+  },
+  {
+   "id": "forge_voidsteel_pickaxe",
+   "name": "Voidsteel Pickaxe",
+   "skill": "smithing",
+   "required_level": 75,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 2
+   },
+   "outputs": {
+    "voidsteel_pickaxe": 1
+   },
+   "seconds": 9.0,
+   "xp": 320.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_voidsteel_axe",
+   "name": "Voidsteel Axe",
+   "skill": "smithing",
+   "required_level": 76,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 2
+   },
+   "outputs": {
+    "voidsteel_axe": 1
+   },
+   "seconds": 9.0,
+   "xp": 320.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_voidsteel_sword",
+   "name": "Voidsteel Sword",
+   "skill": "smithing",
+   "required_level": 77,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 2
+   },
+   "outputs": {
+    "voidsteel_sword": 1
+   },
+   "seconds": 9.0,
+   "xp": 320.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_voidsteel_helm",
+   "name": "Voidsteel Helm",
+   "skill": "smithing",
+   "required_level": 78,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 2
+   },
+   "outputs": {
+    "voidsteel_helm": 1
+   },
+   "seconds": 9.0,
+   "xp": 320.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_voidsteel_platelegs",
+   "name": "Voidsteel Platelegs",
+   "skill": "smithing",
+   "required_level": 80,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 3
+   },
+   "outputs": {
+    "voidsteel_platelegs": 1
+   },
+   "seconds": 9.0,
+   "xp": 480.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_voidsteel_platebody",
+   "name": "Voidsteel Platebody",
+   "skill": "smithing",
+   "required_level": 82,
+   "station": "anvil",
+   "inputs": {
+    "voidsteel_bar": 5
+   },
+   "outputs": {
+    "voidsteel_platebody": 1
+   },
+   "seconds": 9.0,
+   "xp": 800.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_pickaxe",
+   "name": "Starmetal Pickaxe",
+   "skill": "smithing",
+   "required_level": 88,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 2
+   },
+   "outputs": {
+    "starmetal_pickaxe": 1
+   },
+   "seconds": 9.0,
+   "xp": 480.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_axe",
+   "name": "Starmetal Axe",
+   "skill": "smithing",
+   "required_level": 89,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 2
+   },
+   "outputs": {
+    "starmetal_axe": 1
+   },
+   "seconds": 9.0,
+   "xp": 480.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_sword",
+   "name": "Starmetal Sword",
+   "skill": "smithing",
+   "required_level": 90,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 2
+   },
+   "outputs": {
+    "starmetal_sword": 1
+   },
+   "seconds": 9.0,
+   "xp": 480.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_helm",
+   "name": "Starmetal Helm",
+   "skill": "smithing",
+   "required_level": 91,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 2
+   },
+   "outputs": {
+    "starmetal_helm": 1
+   },
+   "seconds": 9.0,
+   "xp": 480.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_platelegs",
+   "name": "Starmetal Platelegs",
+   "skill": "smithing",
+   "required_level": 93,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 3
+   },
+   "outputs": {
+    "starmetal_platelegs": 1
+   },
+   "seconds": 9.0,
+   "xp": 720.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "forge_starmetal_platebody",
+   "name": "Starmetal Platebody",
+   "skill": "smithing",
+   "required_level": 95,
+   "station": "anvil",
+   "inputs": {
+    "starmetal_bar": 5
+   },
+   "outputs": {
+    "starmetal_platebody": 1
+   },
+   "seconds": 9.0,
+   "xp": 1200.0,
+   "requires_building": {
+    "blacksmith": 5
+   }
+  },
+  {
+   "id": "craft_shadowbark_bow",
+   "name": "Shadowbark Bow",
+   "skill": "crafting",
+   "required_level": 68,
+   "station": "workbench",
+   "inputs": {
+    "shadowbark_plank": 3
+   },
+   "outputs": {
+    "shadowbark_bow": 1
+   },
+   "seconds": 7.0,
+   "xp": 480.0
+  },
+  {
+   "id": "craft_shadowbark_staff",
+   "name": "Shadowbark Staff",
+   "skill": "crafting",
+   "required_level": 70,
+   "station": "workbench",
+   "inputs": {
+    "shadowbark_plank": 2,
+    "void_shard": 1
+   },
+   "outputs": {
+    "shadowbark_staff": 1
+   },
+   "seconds": 7.0,
+   "xp": 540.0
+  },
+  {
+   "id": "craft_shadowbark_rod",
+   "name": "Shadowbark Fishing Rod",
+   "skill": "crafting",
+   "required_level": 66,
+   "station": "workbench",
+   "inputs": {
+    "shadowbark_plank": 2
+   },
+   "outputs": {
+    "shadowbark_fishing_rod": 1
+   },
+   "seconds": 6.0,
+   "xp": 400.0
+  },
+  {
+   "id": "craft_skywood_bow",
+   "name": "Skywood Bow",
+   "skill": "crafting",
+   "required_level": 83,
+   "station": "workbench",
+   "inputs": {
+    "skywood_plank": 3
+   },
+   "outputs": {
+    "skywood_bow": 1
+   },
+   "seconds": 7.0,
+   "xp": 720.0
+  },
+  {
+   "id": "craft_skywood_staff",
+   "name": "Skywood Staff",
+   "skill": "crafting",
+   "required_level": 85,
+   "station": "workbench",
+   "inputs": {
+    "skywood_plank": 2,
+    "star_fragment": 1
+   },
+   "outputs": {
+    "skywood_staff": 1
+   },
+   "seconds": 7.0,
+   "xp": 810.0
+  },
+  {
+   "id": "craft_skywood_rod",
+   "name": "Skywood Fishing Rod",
+   "skill": "crafting",
+   "required_level": 81,
+   "station": "workbench",
+   "inputs": {
+    "skywood_plank": 2
+   },
+   "outputs": {
+    "skywood_fishing_rod": 1
+   },
+   "seconds": 6.0,
+   "xp": 600.0
   }
  ]
 }

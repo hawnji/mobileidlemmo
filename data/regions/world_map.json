@@ -2,9 +2,9 @@
  "schema_version": 3,
  "id": "world",
  "name": "Worldbound",
- "description": "The connected world: Greenvale, Irondeep Mountains, Whisperwood and the Ashen Desert.",
+ "description": "The connected world: Greenvale, Irondeep Mountains, Whisperwood, the Ashen Desert, the Shadowlands and the Celestial Isles.",
  "width": 128,
- "height": 96,
+ "height": 144,
  "rows": [
   "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
   "T........................s~~~s..........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
@@ -87,21 +87,69 @@
   "efffffff=fffffffefffffffffffffff=fffffffcccccccccccccccccccccffe^ddddddddddddddddddddd=dddddddddd=dddsssrrRrrrrRrrrrRrrrrRrrrrr^",
   "efffffff=fffffffeffeffffffffffff=fffffffcccccccccccccccccccccffe^ddddddddddddddddddsdd=dsdddddddd=ddddssrrRrrrrRrrrrRrrrrRrrrrr^",
   "efffffff=fffffffffffffffffffeeee===============================gg======================ssssdddddd=ddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "effffffe=fffffffffffffeffffffffeeeffffffcccccccccccccccccccccffe^dddddddddds=sdddddsdsssssssddddd=ddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "efffffeeeffffffffefffeeeefffffffefffffffcccccccccccccccccccccffe^ddddddddddd=dddddddddsssssdddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "effffefeffffffffeeefeeeeeeffffffffffffffccc^^^cccccccccccccccffe^dddkkkkkkkk=k^kkkkkkdddssssddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "eeefeeeffffffffffefffefeefffffffffffffffccccccc^^^cccccccccccffe^dddkkkkkkkkk^^^^kkkkdddddsdddddd========rrrrrrrrrrrrrrrrrrrrrr^",
-  "effffeffffffffffffffffeeefffffffffffffffcccccccccccccc^^^ccccffe^dddkkkk^kkk^k^^^^^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "effffffffffffffffffffffeffffffffffffffffcc^^^ccccccc^^^ccccccffe^dddkkk^^^k^^^kk^^^^kdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "efffffffffffffffffffffffffffffffffffffffcccccccccc^^^cc^^^cccffe^dddkkkk^kk^^^kkkk^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "effffefffffffffffffffffffffmmfffffffffffccccccccccccc^^^cccccffe^dddkkkkkkk^^^kkk^^^kdddddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "efffeeeffffffffffffffffffffeffffffffffffccccccccc^^^cccccccccffe^dddkkkkkkkk^kkkkk^kkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "effffeeeffffffffffffffffffffefffffffffffcccccccc^^^^^^^^cccccffe^dddkkkkkkk^^^kkkkkkkssssdddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "efffffeffffffffffffffffffffeeeefffffffffcccccccccccccccccccccffe^dddkkkkkkk^^kkkkkkkkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
-  "efffffffffffffffffffffffffffefffffffffffcccccccccccccccccccccefe^dddkkkkkk^^^kkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "effcfffffffffffffffffffffffffffffffffffffffffffffffffffffffeeeee^dddkkkkkkk^kkkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefe^ddddsssddddddddddddddddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
-  "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+  "effffffe=fffffffffffffeffffffffe=effffffcccccccccccccccccccccffe^dddddddddds=sdddddsdsssssssddddd=ddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffeeeffffffffefffeeeefffffff=fffffffcccccccccccccccccccccffe^ddddddddddd=dddddddddsssssdddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffefeffffffffeeefeeeeeeffffff=fffffffccc^^^cccccccccccccccffe^dddkkkkkkkk=k^kkkkkkdddssssddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "eeefeeeffffffffffefffefeefffffff=fffffffccccccc^^^cccccccccccffe^dddkkkkkkkkk^^^^kkkkdddddsdddddd========rrrrrrrrrrrrrrrrrrrrrr^",
+  "effffeffffffffffffffffeeefffffff=fffffffcccccccccccccc^^^ccccffe^dddkkkk^kkk^k^^^^^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffffffffffffffffffffeffffffff=fffffffcc^^^ccccccc^^^ccccccffe^dddkkk^^^k^^^kk^^^^kdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "efffffffffffffffffffffffffffffff=fffffffcccccccccc^^^cc^^^cccffe^dddkkkk^kk^^^kkkk^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffefffffffffffffffffffffmmfff=fffffffccccccccccccc^^^cccccffe^dddkkkkkkk^^^kkk^^^kdddddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffeeeffffffffffffffffffffeffff=fffffffccccccccc^^^cccccccccffe^dddkkkkkkkk^kkkkk^kkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "effffeeeffffffffffffffffffffefff=fffffffcccccccc^^^^^^^^cccccffe^dddkkkkkkk^^^kkkkkkkssssdddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffeffffffffffffffffffffeeeef=fffffffcccccccccccccccccccccffe^dddkkkkkkk^^kkkkkkkkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffffffffffffffffffffffffefff=fffffffcccccccccccccccccccccefe^dddkkkkkk^^^kkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effcffffffffffffffffffffffffffff=ffffffffffffffffffffffffffeeeee^dddkkkkkkk^kkkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "efffffffffffffffffffffffffffffff=ffffffffffffffffffffffffffffefe^ddddsssddddddddddddddddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeegeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzgzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu=uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuzuuz=uuuuuuuuuuuuuuuzzzuuuuuzzzuuzuzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvlllllllllllllllv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuzuuz=uuuuuuuuuuuuuuuuuuuuuuuuuuuuzuzvvvvlllllllllllllllllllvvvvvvvvvvvvvvvvvvvvvvvvvlllllllllllllllv",
+  "zuuuuuuuuuuuuuuuuuuuuuuupppppppppppppppppppuuzzzuuuuzzzuuuuzzzuzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuuuuuuuuuuuuuupHHHpppppppppppHHHpuuzzzuuzzzuzzzzzzzzzzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvlllllllllllllllv",
+  "zuuuuzuuuuuuuuuuuuuuuuuupHHHpppppppppppHHHpuuuuuuuuuuuuuuuuuuuuzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvlllllllllllllllv",
+  "zuuuzzzuuuuuuuuuuuuuuuuupHHHpppppppppppHHHpuzzzuuzzzzzzuuuzzzuuzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvlllllllllllllllv",
+  "zuuuuzuuuuuuuuuuuuuuuuuupppppppppppppppppppuuuuuuuuuuuuuuuuzzzuzvvvvlllllllllllllllllllvvvllllllllllllllllllaaaaallllllllllllllv",
+  "zuzuuuuuuuuu=u===========ppppppppppppppppp======zzzzzuuuuuuuuuuzvvvvlllllllllllllllllllvvvlllllllll~lllllllllvvvlllllllllllllllv",
+  "zzzzuuuuuuuu=uuuuzuuuuuupppppppppppppppppppuuuuuuuuuuuuuzuuuzzzzvvvvllllllllllllllllllaaaaallllll~~~~~lllllllvvvlllllllllllllllv",
+  "zuzuuuuuuuuu=uuuuzuuuuuupppppppppppppppppppuuuuuuuuuuuuzzzuuuuuzvvvvlllllllllllllllllllvvvllllll~~~~~~~llllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuu=uuuuzuuuuzupHHHpppppppppppppppuuuuzzzuuuuuzzzuuuuuzvvvvlllllllllllllllllllvvvlllll~~~~~~~~~lllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuu=uuuuuuuuuzupHHHpppppppppppppppuuuuuuuuuuuuuuuuzzzuzvvvvlllllllllllllllllllvvvllllll~~~~~~~llllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuu=uuuuuuuuuzupHHHppppp=pppppppppuuuuuuuuuuuuuzzzuuuuzvvvvlllllllllllllllllllvvvlllllll~~~~~lllllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuz=uuuuuuuuuuuuuuuzzzuu=uuuuuuuuuuuuuuuuuuuzzzuuzzzuuzvvvvlllllllllllllllllllvvvlllllllll~lllllllllvvvlllllllllllllllv",
+  "zuuuuuuuuuuu=uzuuuuuuuuuuuuzzzuuu=uuuuuuuuuuuuuuuuuuuuuuuuuuuuuzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvllllllallllllllv",
+  "zuuuuuuuzuuu=uzuuuuuuuuummmmmmmmm=mmmmmmmmmuuuuuuuzuuuuuuuuuuuuzvvvvlllllllllllllllllllvvvlllllllllllllllllllvvvvvvvvvavvvvvvvvv",
+  "zuukkkkkkkkk=kkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrrrrrrrrrrrrrrruzvvvvllllllllallllllllllvvvlllllllllllllllllllvvvvvvvvvavvvvvvvvv",
+  "zuuk^^^kkkkkkkkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrrrrrrrrrrrrrrruzvvvvvvvvvvvvavvvvvvvvvvvvvlllllllllllllllllllvvvvvvvvvavvvvvvvvv",
+  "zuukkkkkkkkkkkkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrrrRRrrrrrrrrrruzvvvvvvvvvvvvavvvvvvvvvvvvvlllllllllllllllllllvvvvvvvvvavvvvvvvvv",
+  "zuuk^^^kkkk^^^^^kkkkkkkummmmmmmmm~mmmmmmmmmurrrrrRRRRRrRRRRrrruzvvvvvvvvvvvvavvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvavvvvvvvvv",
+  "zuukkkkkk^^^kkkkkkkkkkkummmmmm~~~~~~~mmmmmmurrrrrRrrrRrrRRRRrruzvvvvvvvvvvvvavvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkakkkkkkkkv",
+  "zuukkkkkkkkkkkkkkkkkkkkzmmmmm~~~~~~~~~mmmmmurrrrrRrrrrrrrrRrRruzvvvvvvvvvvvvavvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuzkkkk^^^kkkkkkkkkkkkkzmmmm~~~~~~~~~~~mmm===rrrrRrrrrrrrRRrRruzvvvvvvvvvvvvavvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkv",
+  "zzzkkkkkkkkkkkkkkkkkkkkzmmmmm~~~~~~~~~mmmmmurrrrrrrrrrrrRRRrRruzvvvvvvvvvvvvavvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuzkkkkkkkkkkkk^^^kkkkkummmmmm~~~~~~~mmmmmmurrrrRrrrrrrrRRrrrruzvvllllllllllallllllllvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuukkkkkkkkkkkkkkkkkkkkummmmmmmmm~mmmmmmmmmurrrrRrrrrrrrRrrrrruzvvlHHHlllllllllllHHHlvvvvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuukkkkkkkkkkkkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrRrrrrrrrRrrrrruzvvlHHHlllllllllllHHHlvvvkkkkkkkkkkkkkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuuk^^^kkkkkkkkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrrrrrrRRrrrrrrruzvvlHHHlllllllllllHHHlvvvkkkkkkkkkkkkkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuukkkk^^^kkkkkkkkkkkkkummmmmmmmmmmmmmmmmmmurrrrRRRRRRRrrrrrrruzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkaaaaaaaaakkkkkkkkkkkkkkv",
+  "zuukkkkkkkkkk^^^kkkkkkkummmmmmmmm=mmmmmmmmmurrrrrrrr=Rrrrrrrrruzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuukkkkkkkkkkkkkkkkkkkkuuuuuuuuuu=uuuuzuuuuuuuuuuuuu=uuuuuuzuuuzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuzuuuuuu=uuuuzuuuuuuuuuuuuu=uuuuuuuuuuzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu=uuuuuuuuuuuuuuuuuu===========ggaalllppppppppppplllaaaaakkk^^^k^^^kkkkkkvvvvvvvkkkkkkkkkkkkkkkv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvvvvvvvvvvvvvvvvv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvvvvvvvvvvvvvvvvv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuzvvllllpppppppppppllllvvvkkkkkkkkkkkkkkkkkvvvvvvvvvvvvvvvvvvvvvvv",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvuuuuuuuuuuuuuuuuuuzuuuuuuuzvvllllpppppppppppllllvvvkkkkkkk^^^^^kkkkkvvvaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvuuuuuuuuuuuuuuuuzzzuzvvlHHHlllllllllllllllvvvkkkkkkkkkkkkkkkkkvvvaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuuuuzuuuuuuuuuuuuuuuuuvvvvvvvvvvvvvvvvvuuuuuuuuuuuuuuuzuuzvvlHHHlllllllllllllllvvvkkkkkkkkkkkkkkkkkvvvaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuuuuzuuuuuzuuuuuuuuuuuuuvvvvvvvvvvvvvuuuuuuuuuuuurrrrrrruzvvlHHHlllllllllllllllvvvkkk^^^kkkkkkkkkkaaaaaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuuuuzuuuuzzzuuuuuuuuuuuuuuuuuuvuuuuuuuuuuuuuuuuuurrrrrrruzvvlllllllllllllllllllvvvkkkkkkkkkkkkk^^^kvvvaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuuuzzzuuuuzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu==rrrrrruzvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkkkvvvaaaaaaaaaaaaaaaaaaav",
+  "zzzzuuuzuuzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuurrrrrrruzvvvvvvvvvvvvvvvvvvvvvvvvkkkkkkkkkkkkkkkkkvvvaaaaaaaaaaaaaaaaaaav",
+  "zzzzuuuzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuurrrrrrruzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvaaaaaaaaaaaaaaaaaaav",
+  "zuuuuuuzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuurrrrrrruzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvaaaaaaaaaaaaaaaaaaav",
+  "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
  ],
  "spawn_tile": [
   44,
@@ -279,6 +327,99 @@
     3,
     3
    ]
+  },
+  {
+   "id": "shadowlands",
+   "name": "Shadowlands",
+   "rect": [
+    0,
+    96,
+    64,
+    48
+   ],
+   "level_range": [
+    60,
+    90
+   ],
+   "color": "#5a4a78",
+   "description": "A blighted land under a dark sky: haunted fields, a black marsh and the Void Rift.",
+   "outpost": "outpost_shadowlands",
+   "unlock": {
+    "conditions": [
+     {
+      "type": "quest",
+      "quest": "mq_09_the_dark_beyond"
+     },
+     {
+      "type": "combat_level",
+      "level": 60
+     },
+     {
+      "type": "explored",
+      "region": "ashen_desert",
+      "pct": 0.3
+     }
+    ],
+    "cost": {
+     "gold": 20000
+    }
+   },
+   "outpost_depot": [
+    37,
+    106
+   ],
+   "outpost_rect": [
+    35,
+    101,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "celestial_isles",
+   "name": "Celestial Isles",
+   "rect": [
+    64,
+    96,
+    64,
+    48
+   ],
+   "level_range": [
+    80,
+    99
+   ],
+   "color": "#9fd3ff",
+   "description": "Floating islands above the world, reached only on a flying mount.",
+   "outpost": "outpost_celestial",
+   "unlock": {
+    "conditions": [
+     {
+      "type": "quest",
+      "quest": "mq_11_the_sky_road"
+     },
+     {
+      "type": "mount",
+      "tag": "flying"
+     },
+     {
+      "type": "character_level",
+      "level": 70
+     }
+    ],
+    "cost": {
+     "gold": 50000
+    }
+   },
+   "outpost_depot": [
+    76,
+    131
+   ],
+   "outpost_rect": [
+    74,
+    126,
+    4,
+    3
+   ]
   }
  ],
  "gates": [
@@ -344,6 +485,38 @@
    "regions": [
     "whisperwood",
     "ashen_desert"
+   ]
+  },
+  {
+   "id": "gate_shadowlands",
+   "name": "Blackroot Gate",
+   "a": [
+    32,
+    95
+   ],
+   "b": [
+    32,
+    96
+   ],
+   "regions": [
+    "whisperwood",
+    "shadowlands"
+   ]
+  },
+  {
+   "id": "gate_celestial",
+   "name": "Sky Stair",
+   "a": [
+    63,
+    130
+   ],
+   "b": [
+    64,
+    130
+   ],
+   "regions": [
+    "shadowlands",
+    "celestial_isles"
    ]
   }
  ],
@@ -731,6 +904,174 @@
     20
    ],
    "region": "ashen_desert"
+  },
+  {
+   "id": "gloomhold",
+   "name": "Gloomhold",
+   "kind": "village",
+   "rect": [
+    23,
+    99,
+    21,
+    13
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "wraith_fields",
+   "name": "Wraith Fields",
+   "kind": "hunting_ground",
+   "rect": [
+    1,
+    97,
+    21,
+    16
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_wood",
+   "name": "Shadowbark Wood",
+   "kind": "resource_area",
+   "rect": [
+    44,
+    97,
+    19,
+    16
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_pits",
+   "name": "Voidstone Pits",
+   "kind": "resource_area",
+   "rect": [
+    2,
+    113,
+    21,
+    16
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "black_marsh",
+   "name": "Black Marsh",
+   "kind": "resource_area",
+   "rect": [
+    23,
+    113,
+    21,
+    15
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "knights_barrow",
+   "name": "Knights' Barrow",
+   "kind": "hunting_ground",
+   "rect": [
+    44,
+    113,
+    19,
+    15
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_rift",
+   "name": "Void Rift",
+   "kind": "hunting_ground",
+   "rect": [
+    17,
+    129,
+    38,
+    14
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "skyreach",
+   "name": "Skyreach",
+   "kind": "village",
+   "rect": [
+    66,
+    121,
+    19,
+    18
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_grove",
+   "name": "Skywood Grove",
+   "kind": "resource_area",
+   "rect": [
+    67,
+    98,
+    21,
+    17
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_gardens",
+   "name": "Aether Gardens",
+   "kind": "resource_area",
+   "rect": [
+    89,
+    99,
+    21,
+    18
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starfall_isle",
+   "name": "Starfall Isle",
+   "kind": "resource_area",
+   "rect": [
+    87,
+    123,
+    19,
+    18
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "serpent_reach",
+   "name": "Serpent Reach",
+   "kind": "hunting_ground",
+   "rect": [
+    111,
+    97,
+    16,
+    16
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "golem_isle",
+   "name": "Golem Isle",
+   "kind": "hunting_ground",
+   "rect": [
+    111,
+    117,
+    16,
+    14
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "sentinel_terrace",
+   "name": "Sentinel Terrace",
+   "kind": "hunting_ground",
+   "rect": [
+    107,
+    133,
+    20,
+    10
+   ],
+   "region": "celestial_isles"
   }
  ],
  "resource_nodes": [
@@ -1877,6 +2218,412 @@
     62
    ],
    "region": "ashen_desert"
+  },
+  {
+   "id": "voidstone_rock_1",
+   "type": "voidstone_rock",
+   "tile": [
+    11,
+    122
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_2",
+   "type": "voidstone_rock",
+   "tile": [
+    18,
+    117
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_3",
+   "type": "voidstone_rock",
+   "tile": [
+    16,
+    115
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_4",
+   "type": "voidstone_rock",
+   "tile": [
+    13,
+    123
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_5",
+   "type": "voidstone_rock",
+   "tile": [
+    9,
+    117
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_6",
+   "type": "voidstone_rock",
+   "tile": [
+    11,
+    127
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_1",
+   "type": "shadowbark_tree",
+   "tile": [
+    49,
+    109
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_2",
+   "type": "shadowbark_tree",
+   "tile": [
+    55,
+    104
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_3",
+   "type": "shadowbark_tree",
+   "tile": [
+    51,
+    98
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_4",
+   "type": "shadowbark_tree",
+   "tile": [
+    57,
+    103
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_5",
+   "type": "shadowbark_tree",
+   "tile": [
+    53,
+    108
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_6",
+   "type": "shadowbark_tree",
+   "tile": [
+    47,
+    106
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_7",
+   "type": "shadowbark_tree",
+   "tile": [
+    58,
+    107
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadowbark_tree_8",
+   "type": "shadowbark_tree",
+   "tile": [
+    50,
+    111
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "gloom_eel_spot_1",
+   "type": "gloom_eel_spot",
+   "tile": [
+    27,
+    120
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "gloom_eel_spot_2",
+   "type": "gloom_eel_spot",
+   "tile": [
+    39,
+    120
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "gloom_eel_spot_3",
+   "type": "gloom_eel_spot",
+   "tile": [
+    33,
+    116
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "nightshade_patch_1",
+   "type": "nightshade_patch",
+   "tile": [
+    35,
+    127
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "nightshade_patch_2",
+   "type": "nightshade_patch",
+   "tile": [
+    28,
+    117
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "nightshade_patch_3",
+   "type": "nightshade_patch",
+   "tile": [
+    27,
+    126
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "nightshade_patch_4",
+   "type": "nightshade_patch",
+   "tile": [
+    24,
+    120
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "nightshade_patch_5",
+   "type": "nightshade_patch",
+   "tile": [
+    32,
+    127
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "voidstone_rock_7",
+   "type": "voidstone_rock",
+   "tile": [
+    21,
+    127
+   ],
+   "region": "shadowlands",
+   "hidden": true
+  },
+  {
+   "id": "starmetal_rock_1",
+   "type": "starmetal_rock",
+   "tile": [
+    100,
+    130
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starmetal_rock_2",
+   "type": "starmetal_rock",
+   "tile": [
+    99,
+    139
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starmetal_rock_3",
+   "type": "starmetal_rock",
+   "tile": [
+    93,
+    126
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starmetal_rock_4",
+   "type": "starmetal_rock",
+   "tile": [
+    91,
+    139
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starmetal_rock_5",
+   "type": "starmetal_rock",
+   "tile": [
+    97,
+    127
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "starmetal_rock_6",
+   "type": "starmetal_rock",
+   "tile": [
+    92,
+    132
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_1",
+   "type": "skywood_tree",
+   "tile": [
+    72,
+    106
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_2",
+   "type": "skywood_tree",
+   "tile": [
+    69,
+    113
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_3",
+   "type": "skywood_tree",
+   "tile": [
+    77,
+    108
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_4",
+   "type": "skywood_tree",
+   "tile": [
+    79,
+    113
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_5",
+   "type": "skywood_tree",
+   "tile": [
+    75,
+    105
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_6",
+   "type": "skywood_tree",
+   "tile": [
+    82,
+    100
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_7",
+   "type": "skywood_tree",
+   "tile": [
+    79,
+    101
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "skywood_tree_8",
+   "type": "skywood_tree",
+   "tile": [
+    83,
+    104
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "cloud_koi_spot_1",
+   "type": "cloud_koi_spot",
+   "tile": [
+    94,
+    108
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "cloud_koi_spot_2",
+   "type": "cloud_koi_spot",
+   "tile": [
+    104,
+    108
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "cloud_koi_spot_3",
+   "type": "cloud_koi_spot",
+   "tile": [
+    99,
+    104
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_bloom_patch_1",
+   "type": "aether_bloom_patch",
+   "tile": [
+    99,
+    114
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_bloom_patch_2",
+   "type": "aether_bloom_patch",
+   "tile": [
+    104,
+    108
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_bloom_patch_3",
+   "type": "aether_bloom_patch",
+   "tile": [
+    93,
+    108
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_bloom_patch_4",
+   "type": "aether_bloom_patch",
+   "tile": [
+    105,
+    103
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "aether_bloom_patch_5",
+   "type": "aether_bloom_patch",
+   "tile": [
+    96,
+    115
+   ],
+   "region": "celestial_isles"
   }
  ],
  "stations": [
@@ -1984,6 +2731,66 @@
     64
    ],
    "outpost": "outpost_ashen"
+  },
+  {
+   "id": "furnace_shadowlands",
+   "type": "furnace",
+   "name": "Gloom Furnace",
+   "tile": [
+    29,
+    105
+   ],
+   "outpost": "outpost_shadowlands"
+  },
+  {
+   "id": "anvil_shadowlands",
+   "type": "anvil",
+   "name": "Black Anvil",
+   "tile": [
+    31,
+    107
+   ],
+   "outpost": "outpost_shadowlands"
+  },
+  {
+   "id": "range_shadowlands",
+   "type": "range",
+   "name": "Gloomhold Hearth",
+   "tile": [
+    40,
+    107
+   ],
+   "outpost": "outpost_shadowlands"
+  },
+  {
+   "id": "furnace_celestial",
+   "type": "furnace",
+   "name": "Star Furnace",
+   "tile": [
+    71,
+    131
+   ],
+   "outpost": "outpost_celestial"
+  },
+  {
+   "id": "workbench_celestial",
+   "type": "workbench",
+   "name": "Skywright Bench",
+   "tile": [
+    79,
+    131
+   ],
+   "outpost": "outpost_celestial"
+  },
+  {
+   "id": "alchemy_celestial",
+   "type": "alchemy_table",
+   "name": "Aether Still",
+   "tile": [
+    73,
+    133
+   ],
+   "outpost": "outpost_celestial"
   }
  ],
  "enemy_spawns": [
@@ -2480,6 +3287,267 @@
     77
    ],
    "region": "ashen_desert"
+  },
+  {
+   "id": "wraith_1",
+   "enemy": "wraith",
+   "tile": [
+    13,
+    110
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "wraith_2",
+   "enemy": "wraith",
+   "tile": [
+    13,
+    98
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "wraith_3",
+   "enemy": "wraith",
+   "tile": [
+    11,
+    105
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "wraith_4",
+   "enemy": "wraith",
+   "tile": [
+    18,
+    99
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "wraith_5",
+   "enemy": "wraith",
+   "tile": [
+    8,
+    107
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadow_knight_1",
+   "enemy": "shadow_knight",
+   "tile": [
+    51,
+    125
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadow_knight_2",
+   "enemy": "shadow_knight",
+   "tile": [
+    54,
+    122
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadow_knight_3",
+   "enemy": "shadow_knight",
+   "tile": [
+    49,
+    115
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadow_knight_4",
+   "enemy": "shadow_knight",
+   "tile": [
+    59,
+    115
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "shadow_knight_5",
+   "enemy": "shadow_knight",
+   "tile": [
+    46,
+    122
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_horror_1",
+   "enemy": "void_horror",
+   "tile": [
+    48,
+    135
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_horror_2",
+   "enemy": "void_horror",
+   "tile": [
+    44,
+    139
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_horror_3",
+   "enemy": "void_horror",
+   "tile": [
+    47,
+    138
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_horror_4",
+   "enemy": "void_horror",
+   "tile": [
+    53,
+    138
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "void_horror_5",
+   "enemy": "void_horror",
+   "tile": [
+    20,
+    134
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "sky_serpent_1",
+   "enemy": "sky_serpent",
+   "tile": [
+    124,
+    99
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "sky_serpent_2",
+   "enemy": "sky_serpent",
+   "tile": [
+    114,
+    102
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "sky_serpent_3",
+   "enemy": "sky_serpent",
+   "tile": [
+    116,
+    101
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "sky_serpent_4",
+   "enemy": "sky_serpent",
+   "tile": [
+    120,
+    101
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "sky_serpent_5",
+   "enemy": "sky_serpent",
+   "tile": [
+    122,
+    103
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "star_golem_1",
+   "enemy": "star_golem",
+   "tile": [
+    114,
+    119
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "star_golem_2",
+   "enemy": "star_golem",
+   "tile": [
+    121,
+    122
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "star_golem_3",
+   "enemy": "star_golem",
+   "tile": [
+    124,
+    129
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "star_golem_4",
+   "enemy": "star_golem",
+   "tile": [
+    123,
+    121
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "star_golem_5",
+   "enemy": "star_golem",
+   "tile": [
+    114,
+    122
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "celestial_sentinel_1",
+   "enemy": "celestial_sentinel",
+   "tile": [
+    118,
+    135
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "celestial_sentinel_2",
+   "enemy": "celestial_sentinel",
+   "tile": [
+    122,
+    135
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "celestial_sentinel_3",
+   "enemy": "celestial_sentinel",
+   "tile": [
+    115,
+    137
+   ],
+   "region": "celestial_isles"
+  },
+  {
+   "id": "celestial_sentinel_4",
+   "enemy": "celestial_sentinel",
+   "tile": [
+    109,
+    136
+   ],
+   "region": "celestial_isles"
   }
  ],
  "building_plots": [
@@ -2677,6 +3745,32 @@
     91,
     62
    ]
+  },
+  {
+   "building": "outpost_shadowlands",
+   "rect": [
+    35,
+    101,
+    4,
+    3
+   ],
+   "work_tile": [
+    36,
+    104
+   ]
+  },
+  {
+   "building": "outpost_celestial",
+   "rect": [
+    74,
+    126,
+    4,
+    3
+   ],
+   "work_tile": [
+    75,
+    129
+   ]
   }
  ],
  "outposts": [
@@ -2790,6 +3884,98 @@
      ]
     }
    ]
+  },
+  {
+   "building": "outpost_shadowlands",
+   "rect": [
+    35,
+    101,
+    4,
+    3
+   ],
+   "work_tile": [
+    36,
+    104
+   ],
+   "depot_tile": [
+    37,
+    106
+   ],
+   "stations": [
+    {
+     "id": "furnace_shadowlands",
+     "type": "furnace",
+     "name": "Gloom Furnace",
+     "tile": [
+      29,
+      105
+     ]
+    },
+    {
+     "id": "anvil_shadowlands",
+     "type": "anvil",
+     "name": "Black Anvil",
+     "tile": [
+      31,
+      107
+     ]
+    },
+    {
+     "id": "range_shadowlands",
+     "type": "range",
+     "name": "Gloomhold Hearth",
+     "tile": [
+      40,
+      107
+     ]
+    }
+   ]
+  },
+  {
+   "building": "outpost_celestial",
+   "rect": [
+    74,
+    126,
+    4,
+    3
+   ],
+   "work_tile": [
+    75,
+    129
+   ],
+   "depot_tile": [
+    76,
+    131
+   ],
+   "stations": [
+    {
+     "id": "furnace_celestial",
+     "type": "furnace",
+     "name": "Star Furnace",
+     "tile": [
+      71,
+      131
+     ]
+    },
+    {
+     "id": "workbench_celestial",
+     "type": "workbench",
+     "name": "Skywright Bench",
+     "tile": [
+      79,
+      131
+     ]
+    },
+    {
+     "id": "alchemy_celestial",
+     "type": "alchemy_table",
+     "name": "Aether Still",
+     "tile": [
+      73,
+      133
+     ]
+    }
+   ]
   }
  ],
  "dungeon_entrances": [
@@ -2824,6 +4010,22 @@
     93
    ],
    "region": "ashen_desert"
+  },
+  {
+   "id": "dread_citadel",
+   "tile": [
+    58,
+    141
+   ],
+   "region": "shadowlands"
+  },
+  {
+   "id": "starfall_sanctum",
+   "tile": [
+    125,
+    141
+   ],
+   "region": "celestial_isles"
   }
  ],
  "discoveries": [
@@ -3288,6 +4490,238 @@
     }
    },
    "description": "Rogues leave marks for other rogues."
+  },
+  {
+   "id": "fallen_banner",
+   "name": "Fallen Banner",
+   "kind": "ruin",
+   "tile": [
+    10,
+    100
+   ],
+   "region": "shadowlands",
+   "requires": {
+    "exploration": 40
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 2000
+    },
+    "currencies": {
+     "gold": 6000
+    }
+   },
+   "description": "A torn banner from the last army that marched here."
+  },
+  {
+   "id": "drowned_lantern",
+   "name": "Drowned Lantern",
+   "kind": "magic",
+   "tile": [
+    33,
+    124
+   ],
+   "region": "shadowlands",
+   "requires": {
+    "exploration": 42,
+    "specialty": "mage"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 2200,
+     "magic": 3000
+    },
+    "items": {
+     "void_shard": 3
+    }
+   },
+   "description": "A lantern still burns under the marsh water."
+  },
+  {
+   "id": "barrow_vault",
+   "name": "Barrow Vault",
+   "kind": "chest",
+   "tile": [
+    60,
+    115
+   ],
+   "region": "shadowlands",
+   "requires": {
+    "exploration": 44,
+    "specialty": "assassin"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 2200
+    },
+    "items": {
+     "pet_egg_shadow_cat": 1
+    },
+    "currencies": {
+     "gems": 100
+    }
+   },
+   "description": "Something purrs inside the sealed vault."
+  },
+  {
+   "id": "deep_void_seam",
+   "name": "Deep Void Seam",
+   "kind": "hidden_node",
+   "tile": [
+    20,
+    127
+   ],
+   "region": "shadowlands",
+   "requires": {
+    "exploration": 45,
+    "affinity": "mining"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 2500,
+     "mining": 4000
+    },
+    "reveal_node": "voidstone_rock_7"
+   },
+   "description": "A miner hears the rock ring hollow."
+  },
+  {
+   "id": "hollow_throne",
+   "name": "The Hollow Throne",
+   "kind": "ruin",
+   "tile": [
+    46,
+    141
+   ],
+   "region": "shadowlands",
+   "requires": {
+    "exploration": 48
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 3000
+    },
+    "currencies": {
+     "recruitment_tokens": 10,
+     "relic_dust": 100
+    }
+   },
+   "description": "An empty throne at the edge of the rift."
+  },
+  {
+   "id": "cloud_shrine",
+   "name": "Cloud Shrine",
+   "kind": "shrine",
+   "tile": [
+    84,
+    100
+   ],
+   "region": "celestial_isles",
+   "requires": {
+    "exploration": 50
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 3000
+    },
+    "currencies": {
+     "recruitment_tokens": 10
+    }
+   },
+   "description": "Prayer flags snap in the high wind."
+  },
+  {
+   "id": "astral_observatory",
+   "name": "Astral Observatory",
+   "kind": "magic",
+   "tile": [
+    100,
+    139
+   ],
+   "region": "celestial_isles",
+   "requires": {
+    "exploration": 52,
+    "specialty": "mage"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 3200,
+     "magic": 5000
+    },
+    "items": {
+     "star_fragment": 5
+    }
+   },
+   "description": "Brass lenses still track the falling stars."
+  },
+  {
+   "id": "sky_wreck",
+   "name": "Sky Wreck",
+   "kind": "chest",
+   "tile": [
+    126,
+    110
+   ],
+   "region": "celestial_isles",
+   "requires": {
+    "exploration": 54,
+    "specialty": "assassin"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 3200
+    },
+    "currencies": {
+     "gems": 150,
+     "gold": 20000
+    }
+   },
+   "description": "An airship hull snagged on the island's edge."
+  },
+  {
+   "id": "sprite_nest",
+   "name": "Sprite Nest",
+   "kind": "npc",
+   "tile": [
+    70,
+    112
+   ],
+   "region": "celestial_isles",
+   "requires": {
+    "exploration": 55
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 3500
+    },
+    "items": {
+     "pet_egg_cloud_sprite": 1
+    }
+   },
+   "description": "A nest of warm, glowing eggs in the skywood."
+  },
+  {
+   "id": "star_map",
+   "name": "The Star Map",
+   "kind": "ruin",
+   "tile": [
+    118,
+    142
+   ],
+   "region": "celestial_isles",
+   "requires": {
+    "exploration": 58
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 4000
+    },
+    "currencies": {
+     "relic_dust": 200,
+     "recruitment_tokens": 15
+    }
+   },
+   "description": "Constellations carved into the terrace floor."
   }
  ],
  "secrets": [

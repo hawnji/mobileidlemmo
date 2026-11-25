@@ -26,9 +26,11 @@ func get_cap_seconds() -> float:
 func apply_offline_progress(world: SimulationWorld, elapsed_seconds: float) -> OfflineReport:
 	var report := OfflineReport.new()
 	report.elapsed_seconds = maxf(elapsed_seconds, 0.0)  # clock rollback => no progress
-	report.cap_seconds = cap_seconds
-	var to_simulate := minf(report.elapsed_seconds, cap_seconds)
-	report.capped = report.elapsed_seconds > cap_seconds
+	# Relics (Celestial Hourglass) and ascension perks (Long Rest) extend the cap.
+	var cap := cap_seconds + world.account_stats().get_stat("offline_cap_hours") * 3600.0
+	report.cap_seconds = cap
+	var to_simulate := minf(report.elapsed_seconds, cap)
+	report.capped = report.elapsed_seconds > cap
 	if to_simulate < minimum_elapsed:
 		return report
 	var events: Array[Dictionary] = []
@@ -48,5 +50,5 @@ func apply_offline_progress(world: SimulationWorld, elapsed_seconds: float) -> O
 	built.elapsed_seconds = report.elapsed_seconds
 	built.simulated_seconds = to_simulate
 	built.capped = report.capped
-	built.cap_seconds = cap_seconds
+	built.cap_seconds = cap
 	return built

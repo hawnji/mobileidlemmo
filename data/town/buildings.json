@@ -1225,6 +1225,168 @@
      }
     }
    ]
+  },
+  {
+   "id": "outpost_shadowlands",
+   "name": "Gloomhold Outpost",
+   "kind": "outpost",
+   "region": "shadowlands",
+   "max_level": 3,
+   "phase": 5,
+   "description": "Regional outpost: storage depot, supply station, crafting stations and a waystone for fast travel. Each level speeds up gathering in the region.",
+   "levels": [
+    {
+     "level": 1,
+     "cost": {
+      "gold": 20000,
+      "items": {
+       "yew_plank": 80,
+       "adamantite_bar": 40
+      }
+     },
+     "construction_level": 50,
+     "work_seconds": 600,
+     "requires": [
+      {
+       "type": "region",
+       "region": "shadowlands"
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.05
+     }
+    },
+    {
+     "level": 2,
+     "cost": {
+      "gold": 50000,
+      "items": {
+       "yew_plank": 160,
+       "adamantite_bar": 100
+      }
+     },
+     "construction_level": 65,
+     "work_seconds": 1200,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "shadowlands",
+       "tier": 1
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.1,
+      "xp": 1.03
+     }
+    },
+    {
+     "level": 3,
+     "cost": {
+      "gold": 120000,
+      "items": {
+       "yew_plank": 300,
+       "adamantite_bar": 200
+      }
+     },
+     "construction_level": 80,
+     "work_seconds": 2400,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "shadowlands",
+       "tier": 3
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.15,
+      "xp": 1.06
+     }
+    }
+   ]
+  },
+  {
+   "id": "outpost_celestial",
+   "name": "Skyreach Outpost",
+   "kind": "outpost",
+   "region": "celestial_isles",
+   "max_level": 3,
+   "phase": 5,
+   "description": "Regional outpost: storage depot, supply station, crafting stations and a waystone for fast travel. Each level speeds up gathering in the region.",
+   "levels": [
+    {
+     "level": 1,
+     "cost": {
+      "gold": 20000,
+      "items": {
+       "shadowbark_plank": 80,
+       "voidsteel_bar": 40
+      }
+     },
+     "construction_level": 50,
+     "work_seconds": 600,
+     "requires": [
+      {
+       "type": "region",
+       "region": "celestial_isles"
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.05
+     }
+    },
+    {
+     "level": 2,
+     "cost": {
+      "gold": 50000,
+      "items": {
+       "shadowbark_plank": 160,
+       "voidsteel_bar": 100
+      }
+     },
+     "construction_level": 65,
+     "work_seconds": 1200,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "celestial_isles",
+       "tier": 1
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.1,
+      "xp": 1.03
+     }
+    },
+    {
+     "level": 3,
+     "cost": {
+      "gold": 120000,
+      "items": {
+       "shadowbark_plank": 300,
+       "voidsteel_bar": 200
+      }
+     },
+     "construction_level": 80,
+     "work_seconds": 2400,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "celestial_isles",
+       "tier": 3
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.15,
+      "xp": 1.06
+     }
+    }
+   ]
   }
  ]
 }

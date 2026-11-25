@@ -19,6 +19,10 @@ extends RefCounted
 ##     a member at 0 health is knocked out for the rest of the run;
 ##   * the run fails if every member is knocked out or the time limit passes.
 ##
+## Phase 5 mythic tiers (dungeons.json "mythic"): tier N scales enemy health
+## and damage, adds affixes from tier 2 up (fortified, tyrannical, frenzied,
+## famished) and scales the clear rewards (SimulationWorld._mythic_rewards).
+##
 ## Loot is only created when the run ends (SimulationWorld._finish_dungeon),
 ## so a save made mid-run cannot duplicate items.
 
@@ -41,21 +45,55 @@ var result := ""  # "", "cleared", "failed", "timeout"
 var log_lines: Array[String] = []
 var _acc := 0.0
 var _foe_seq := 0
+## Mythic tier (0 = normal) and the affix multipliers it brings.
+var tier := 0
+var _mods := {}
 
 
-static func create(world, p_dungeon_id: String, team: Array) -> DungeonRun:
+static func create(world, p_dungeon_id: String, team: Array, p_tier := 0) -> DungeonRun:
 	var run := DungeonRun.new()
 	run.dungeon_id = p_dungeon_id
 	run.def = world.registry.dungeons[p_dungeon_id]
+	run._set_tier(world, p_tier)
 	run.entry_remaining = float(run.def.get("entry_seconds", 10.0))
 	for cid in team:
 		var ch: Adventurer = world.characters[cid]
 		var ab := ch.active_ability()
 		run.party.append({"id": String(cid), "hp": ch.health, "attack_timer": 0.0,
 			"ability_timer": float(ab.get("cooldown", 15.0)) * 0.5, "guard": 0.0, "buff": 0.0, "down": ch.health <= 0.0})
-	run._take_food(world, team.size() * int(run.def.get("food_per_member", 10)))
-	run._log("The party enters %s." % run.def.get("name", p_dungeon_id))
+	run._take_food(world, int(team.size() * int(run.def.get("food_per_member", 10)) * float(run._mods.food_mult)))
+	if run.tier > 0:
+		run._log("The party enters %s at mythic tier %d." % [run.def.get("name", p_dungeon_id), run.tier])
+	else:
+		run._log("The party enters %s." % run.def.get("name", p_dungeon_id))
 	return run
+
+
+func _set_tier(world, p_tier: int) -> void:
+	tier = maxi(p_tier, 0)
+	var cfg: Dictionary = world.registry.dungeon_mythic
+	_mods = {"health": 1.0 + float(cfg.get("enemy_health_per_tier", 0.25)) * tier,
+		"damage": 1.0 + float(cfg.get("enemy_damage_per_tier", 0.12)) * tier,
+		"trash_health": 1.0, "boss_health": 1.0, "boss_damage": 1.0, "enrage": 1.0, "food_mult": 1.0, "affixes": []}
+	if tier <= 0:
+		return
+	for a in cfg.get("affixes", []):
+		if tier < int(a.get("min_tier", 99)):
+			continue
+		_mods.affixes.append(String(a.get("name", a.get("id", ""))))
+		_mods.trash_health *= float(a.get("trash_health_mult", 1.0))
+		_mods.boss_health *= float(a.get("boss_health_mult", 1.0))
+		_mods.boss_damage *= float(a.get("boss_damage_mult", 1.0))
+		_mods.enrage *= float(a.get("enrage_mult", 1.0))
+		_mods.food_mult *= float(a.get("food_mult", 1.0))
+
+
+func affix_names() -> Array:
+	return _mods.get("affixes", [])
+
+
+func _foe_damage_mult(f: Dictionary) -> float:
+	return float(_mods.damage) * (float(_mods.boss_damage) if f.boss else 1.0)
 
 
 func has_member(cid: String) -> bool:
@@ -124,7 +162,7 @@ func _step(world, h: float) -> void:
 	if not boss.is_empty():
 		boss_elapsed += h
 		var bdef: Dictionary = boss.enemy.def.get("boss", {})
-		if not enraged and boss_elapsed >= float(bdef.get("enrage_seconds", INF)):
+		if not enraged and boss_elapsed >= float(bdef.get("enrage_seconds", INF)) * float(_mods.enrage):
 			enraged = true
 			_log("%s becomes enraged!" % boss.enemy.display_name())
 		_boss_abilities(world, boss, h)
@@ -188,6 +226,9 @@ func _spawn_foe(world, enemy_id: String, is_boss: bool) -> Dictionary:
 	_foe_seq += 1
 	var es := EnemyState.create("%s_%d" % [dungeon_id, _foe_seq], edef, Vector2i.ZERO)
 	es.spawn(world.rng, [])
+	if tier > 0:
+		es.max_health *= float(_mods.health) * (float(_mods.boss_health) if is_boss else float(_mods.trash_health))
+		es.health = es.max_health
 	var f := {"enemy": es, "attack_timer": 0.0, "boss": is_boss, "ability_timers": {}, "phase": -1, "special_ready": false,
 		"special_mult": 1.0, "special_name": "", "add": false}
 	if is_boss:
@@ -311,7 +352,7 @@ func _foe_attack(world, f: Dictionary, m: Dictionary, mult: float) -> void:
 	var reg: DataRegistry = world.registry
 	if world.rng.randf() >= CombatRules.enemy_hit_chance(ch, f.enemy, reg):
 		return
-	var raw: float = world.rng.randi_range(0, CombatRules.enemy_max_hit(f.enemy)) * mult * _phase_value(f, "damage_mult", 1.0)
+	var raw: float = world.rng.randi_range(0, CombatRules.enemy_max_hit(f.enemy)) * mult * _phase_value(f, "damage_mult", 1.0) * _foe_damage_mult(f)
 	if f.boss and enraged:
 		raw *= float(f.enemy.def.get("boss", {}).get("enrage_damage_mult", 2.0))
 	_hurt(world, m, ch, int(round(raw)))
@@ -383,7 +424,7 @@ func _boss_abilities(world, f: Dictionary, h: float) -> void:
 						continue
 					var ch: Adventurer = world.characters.get(m.id)
 					if ch:
-						var raw: float = world.rng.randi_range(int(rng_dmg[0]), int(rng_dmg[1])) * _phase_value(f, "damage_mult", 1.0)
+						var raw: float = world.rng.randi_range(int(rng_dmg[0]), int(rng_dmg[1])) * _phase_value(f, "damage_mult", 1.0) * _foe_damage_mult(f)
 						if enraged:
 							raw *= float(bdef.get("enrage_damage_mult", 2.0))
 						_hurt(world, m, ch, int(round(raw)))
@@ -454,7 +495,7 @@ func to_dict() -> Dictionary:
 			"special_mult": f.special_mult, "special_name": f.special_name, "add": f.get("add", false), "dead": f.get("dead", false)})
 	return {"dungeon_id": dungeon_id, "party": party.duplicate(true), "foes": fd, "floor_index": floor_index,
 		"entry_remaining": entry_remaining, "elapsed": elapsed, "boss_elapsed": boss_elapsed, "enraged": enraged,
-		"food": food.duplicate(), "loot": loot.duplicate(), "gold": gold, "result": result, "log": Array(log_lines), "acc": _acc, "seq": _foe_seq}
+		"food": food.duplicate(), "loot": loot.duplicate(), "gold": gold, "result": result, "log": Array(log_lines), "acc": _acc, "seq": _foe_seq, "tier": tier}
 
 
 static func from_dict(world, d: Dictionary) -> DungeonRun:
@@ -464,6 +505,7 @@ static func from_dict(world, d: Dictionary) -> DungeonRun:
 	var run := DungeonRun.new()
 	run.dungeon_id = did
 	run.def = world.registry.dungeons[did]
+	run._set_tier(world, clampi(int(d.get("tier", 0)), 0, int(world.registry.dungeon_mythic.get("max_tier", 10))))
 	for m in d.get("party", []):
 		if m is Dictionary and world.characters.has(m.get("id", "")):
 			run.party.append(m.duplicate(true))

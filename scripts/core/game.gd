@@ -54,9 +54,11 @@ func start_session(p_backend: GameBackend = null) -> void:
 		pending_report = null
 	else:
 		world = loaded.world
+		world.endgame.set_calendar(backend.now_unix())
 		var elapsed: float = backend.now_unix() - float(loaded.saved_at_unix)
 		pending_report = backend.get_offline_provider().apply_offline_progress(world, elapsed)
 	world.event_emitted.connect(_on_world_event)
+	world.endgame.set_calendar(backend.now_unix())
 	_attach_online()
 	running = true
 	set_process(true)
@@ -64,6 +66,9 @@ func start_session(p_backend: GameBackend = null) -> void:
 	if pending_report and pending_report.simulated_seconds > 0.0:
 		offline_report_ready.emit(pending_report)
 	save_now()
+
+
+var _calendar_timer := 0.0
 
 
 func _process(delta: float) -> void:
@@ -79,6 +84,10 @@ func _process(delta: float) -> void:
 	if steps >= max_steps:
 		_accumulator = 0.0  # drop backlog rather than spiral
 	_since_save += delta
+	_calendar_timer += delta
+	if _calendar_timer >= 1.0:
+		_calendar_timer = 0.0
+		world.endgame.set_calendar(Time.get_unix_time_from_system())
 	if _since_save >= _autosave_seconds:
 		save_now()
 
@@ -97,6 +106,7 @@ func _attach_online() -> void:
 
 ## Swaps in a world loaded from the cloud (Social screen, after a conflict).
 func replace_world(new_world: SimulationWorld) -> void:
+	new_world.endgame.set_calendar(Time.get_unix_time_from_system())
 	world.event_emitted.disconnect(_on_world_event)
 	world = new_world
 	world.event_emitted.connect(_on_world_event)
@@ -125,6 +135,7 @@ func reset_progress() -> void:
 	backend.delete_save()
 	world.event_emitted.disconnect(_on_world_event)
 	world = SimulationWorld.create_new(registry)
+	world.endgame.set_calendar(backend.now_unix())
 	world.event_emitted.connect(_on_world_event)
 	if online:
 		online.attach_world(world)
@@ -161,6 +172,7 @@ func _notification(what: int) -> void:
 				LocalNotifier.enabled = false
 				LocalNotifier.cancel_all()
 				set_process(true)
+				world.endgame.set_calendar(backend.now_unix())
 				var report := backend.get_offline_provider().apply_offline_progress(world, away)
 				if report.simulated_seconds > 0.0:
 					pending_report = report

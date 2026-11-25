@@ -58,6 +58,7 @@ func _initialize() -> void:
 			made += int(ch.stats.crafted[it])
 		print("| %s | %s | %d | %d -> %d |" % [ch.display_name, r.name, made, lv0, ch.skills.get_level(String(r.skill))])
 	_phase3(reg)
+	_phase5(reg)
 	quit()
 
 
@@ -134,8 +135,13 @@ func _leveled(ch: Adventurer, lv: int, w: SimulationWorld = null) -> Adventurer:
 	if w:
 		var tier: String = "adamantite" if lv >= 45 else ("mithril" if lv >= 30 else ("iron" if lv >= 15 else "bronze"))
 		var wood: String = "yew" if lv >= 45 else ("maple" if lv >= 30 else ("willow" if lv >= 15 else "oak"))
+		var bow := wood + "_shortbow"
+		if lv >= 70:  # Phase 5 gear
+			tier = "starmetal" if lv >= 90 else "voidsteel"
+			wood = "skywood" if lv >= 90 else "shadowbark"
+			bow = wood + "_bow"
 		var staff: String = wood + "_staff" if lv >= 15 else "apprentice_staff"
-		var weapon: String = {"melee": tier + "_sword", "ranged": wood + "_shortbow", "magic": staff}[ch.combat_style()]
+		var weapon: String = {"melee": tier + "_sword", "ranged": bow, "magic": staff}[ch.combat_style()]
 		for it in [weapon, tier + "_helm", tier + "_platebody", tier + "_platelegs", tier + "_gloves", tier + "_boots"]:
 			if w.registry.items.has(it):
 				w.storage.add(it, 1)
@@ -145,3 +151,67 @@ func _leveled(ch: Adventurer, lv: int, w: SimulationWorld = null) -> Adventurer:
 	ch.health = ch.max_health()
 	return ch
 
+
+## Phase 5: endgame dungeons and mythic tiers, mastery pace, ascension points.
+func _phase5(reg: DataRegistry) -> void:
+	print("")
+	print("| Endgame dungeon | Party | Result at level 70 | 85 | 99 |")
+	print("|---|---|---|---|---|")
+	for did in ["dread_citadel", "starfall_sanctum"]:
+		var d: Dictionary = reg.dungeons[did]
+		var cells := []
+		for lv in [70, 85, 99]:
+			cells.append(_run(reg, did, int(d.party_max), lv, 0))
+		print("| %s | %d | %s |" % [d.name, int(d.party_max), " | ".join(cells)])
+	print("")
+	print("| Mythic run (party of 4, level 99) | Tier 1 | 3 | 5 | 7 | 10 |")
+	print("|---|---|---|---|---|---|")
+	for did in ["goblin_warren", "tomb_of_the_sand_king", "dread_citadel"]:
+		var cells := []
+		for tier in [1, 3, 5, 7, 10]:
+			cells.append(_run(reg, did, mini(4, int(reg.dungeons[did].party_max)), 99, tier))
+		print("| %s | %s |" % [reg.dungeons[did].name, " | ".join(cells)])
+	print("")
+	var w := SimulationWorld.create_new(reg, 7)
+	var ch: Adventurer = w.characters["brom_stonefist"]
+	_leveled(ch, 99, w)
+	ch.skills.set_level("mining", 99)
+	for rid in reg.map_region_order:
+		w._set_region_unlocked(rid)
+	ch.tile = w.free_tile_near(w.locations["voidstone_pits"].rect.get_center())
+	w.quiet = true
+	w.assign_activity(ch.id, Assignment.create(ch.id, reg.activities["mine_voidstone"]))
+	w.advance(3600.0, 1.0)
+	var per := float(reg.endgame.mastery.get("xp_per_level", 2000000))
+	var mxp := float(ch.mastery_xp.get("mining", 0.0))
+	print("Mastery pace: Brom (mining 99, voidsteel gear) mining voidstone earns %d mastery XP/h, so a mastery level takes about %s." % [
+		int(mxp), OfflineReport.format_duration(per / maxf(mxp, 1.0) * 3600.0)])
+	var pc: Dictionary = reg.endgame.ascension.get("points", {})
+	var rows := []
+	for score in [1000, 2500, 4000, 6000]:
+		rows.append("score %d = %d points" % [score, int(floor(float(pc.get("scale", 30.0)) * sqrt(score / float(pc.get("unit", 100.0)))))])
+	print("Ascension points (first ascension): %s." % ", ".join(rows))
+
+
+func _run(reg: DataRegistry, did: String, size: int, lv: int, tier: int) -> String:
+	var w := SimulationWorld.create_new(reg, 7)
+	for rid in reg.map_region_order:
+		w._set_region_unlocked(rid)
+	w.storage.add("cooked_gloom_eel", 120)
+	w.record_source("cooked_gloom_eel", 120, "report")
+	var team := []
+	for cid in w.character_order:
+		if team.size() >= size:
+			break
+		_leveled(w.characters[cid], lv, w)
+		team.append(cid)
+	for extra in ["elowen_starweaver", "nyx_voidwalker", "kaelen_stormforge"]:
+		if team.size() >= size:
+			break
+		w.add_character(extra)
+		_leveled(w.characters[extra], lv, w)
+		team.append(extra)
+	var run := DungeonRun.create(w, did, team, tier)
+	while not run.tick(w, 1.0):
+		pass
+	return "%s %s" % [run.result, OfflineReport.format_duration(run.elapsed)]

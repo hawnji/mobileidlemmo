@@ -201,7 +201,42 @@ goal that uses what the player built before: skills, exploration and an economy.
 - **The world surprises you**: treasure goblins, bountiful veins, travelling merchants, monster
   surges and wandering heroes who may join you, also while you are away.
 
-## 9. Later systems (summary)
+## 9. Endgame [P5]
+
+The endgame gives long-term goals once the four starting regions are done, and it never asks
+the player to throw away what they built.
+
+- **Two last regions.** The **Shadowlands** sit beyond the Rotting Heart. The forest turns into
+  blight, and the Hollow King's knights still hold the Dread Citadel. The **Celestial Isles**
+  float above them, and only a flying mount reaches them. A griffin, the reward for defeating
+  the Hollow King, opens the sky road. Their resources (voidstone, shadowbark, starmetal,
+  skywood) make the best gear in the game.
+- **Relics** are rare objects with account-wide effects. You can equip only a few at a time
+  (3 slots, up to 6 with a perk), so choosing them is a real decision. Duplicates become relic
+  dust, which levels the relics you keep.
+- **Pets and mounts** belong to one hero each. A pet grows with its owner, so you put it on the
+  hero who does the work it helps. A mount is about travel, and a flying mount is about access.
+- **Mastery** means level 99 is not the end. XP keeps building into mastery levels with small
+  bonuses for that skill. The bonuses are deliberately slow, at about 15 hours a level at good
+  rates.
+- **Mythic tiers** turn every dungeon you have cleared into a ladder of ten steps. Each step
+  adds enemy health and damage, and from tier 2 an affix changes the fight (tougher trash,
+  harder bosses, earlier enrage, half the food). Each step also pays more and drops relic dust
+  and relics.
+- **Mythic heroes** come from mastering the content, not from the gacha. Nyx and Kaelen answer
+  sigils from the two endgame dungeons. Astraea comes with the first World Ascension.
+- **World Ascension** is the prestige loop. After the last main quest you may reset the world:
+  town, storage, gold, regions, quests, reputation and map. You keep your heroes, their skills
+  and gear, premium currency and the whole legacy. Ascension points buy permanent perks. Points
+  grow with the square root of an account score (skill levels, mastery, mythic tiers,
+  discoveries), and a repeat ascension pays only for growth since the best earlier one. That
+  gives diminishing returns without a hard cap.
+- **Seasons** follow the real calendar. Each one gives a gentle bonus (spring: foraging and
+  farming), contracts that pay festival tokens, and stock at the Festival Merchant. Nothing
+  seasonal is needed for competitive progression; seasonal pets and mounts come back every
+  year.
+
+## 10. Later systems (summary)
 
 | System | Phase | Notes |
 |---|---|---|
@@ -213,14 +248,14 @@ goal that uses what the player built before: skills, exploration and an economy.
 | Town and outposts | P2/P3 | 12 buildings. Outposts act as remote storage and fast-travel points for automation |
 | Expeditions | P3 | Multi-hour team missions with requirements, risk, events and branching discoveries |
 | Quests and reputation | P3 | Main, regional and repeatable contracts. Reputation per region |
-| Pets and mounts | P5 | Passive bonuses, travel speed and terrain access |
+| Pets and mounts | P5 (done) | Passive bonuses, travel speed and terrain access (see section 9) |
 | Multiplayer | P4 | Shared towns, friends, guilds, trading, marketplace, co-op bosses, world events |
 | Dynamic world | P4 | Server-side periodic simulation of shortages, merchants and community projects |
-| Relics and World Ascension | P5 | Account-wide bonuses and a prestige system with diminishing returns |
+| Relics and World Ascension | P5 (done) | Account-wide bonuses and a prestige system with diminishing returns (see section 9) |
 | Daily, weekly and seasonal | P4/P5 | Never mandatory for competitive progression |
 | Notifications | P2 | Rare finds, completed jobs and full bags only. No spam for routine gathering |
 
-## 10. Monetisation principles
+## 11. Monetisation principles
 
 Monetisation must not be pay-to-win. It focuses on cosmetics (skins, town decorations, pet and
 mount skins), optional convenience and optional premium recruitment. Gacha probabilities and pity
@@ -228,7 +263,7 @@ are always visible. Maximum-rarity characters are never required for normal prog
 Currencies are Gold, Gems, Recruitment Tokens, Guild Coins, Ascension Points and Relic Dust
 **[P2+]**.
 
-## 11. Design decisions made in Phase 1
+## 12. Design decisions made in Phase 1
 
 | Decision | Why |
 |---|---|

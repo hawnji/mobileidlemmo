@@ -1,0 +1,102 @@
+{
+ "schema_version": 1,
+ "max_level": 10,
+ "xp_share": 0.05,
+ "level_xp": [
+  0,
+  2000,
+  6000,
+  15000,
+  35000,
+  75000,
+  150000,
+  300000,
+  550000,
+  1000000
+ ],
+ "pets": [
+  {
+   "id": "rock_crab",
+   "name": "Pebble the Rock Crab",
+   "rarity": "uncommon",
+   "description": "Mining speed for its owner.",
+   "effects_per_level": {
+    "gather_speed.mining": 1.012
+   },
+   "icon": "res://assets/resources/items/pet_egg_rock_crab.png"
+  },
+  {
+   "id": "sapling",
+   "name": "Mossy the Sapling",
+   "rarity": "uncommon",
+   "description": "Woodcutting speed for its owner.",
+   "effects_per_level": {
+    "gather_speed.woodcutting": 1.012
+   },
+   "icon": "res://assets/resources/items/pet_egg_sapling.png"
+  },
+  {
+   "id": "river_otter",
+   "name": "Bubbles the Otter",
+   "rarity": "uncommon",
+   "description": "Fishing speed for its owner.",
+   "effects_per_level": {
+    "gather_speed.fishing": 1.012
+   },
+   "icon": "res://assets/resources/items/pet_egg_river_otter.png"
+  },
+  {
+   "id": "ember_salamander",
+   "name": "Ember the Salamander",
+   "rarity": "rare",
+   "description": "Smithing and cooking speed for its owner.",
+   "effects_per_level": {
+    "craft_speed.smithing": 1.012,
+    "craft_speed.cooking": 1.012
+   },
+   "icon": "res://assets/resources/items/pet_egg_ember_salamander.png"
+  },
+  {
+   "id": "study_owl",
+   "name": "Whisper the Owl",
+   "rarity": "rare",
+   "description": "XP in every skill for its owner.",
+   "effects_per_level": {
+    "xp.all": 1.008
+   },
+   "icon": "res://assets/resources/items/pet_egg_study_owl.png"
+  },
+  {
+   "id": "shadow_cat",
+   "name": "Shade the Shadow Cat",
+   "rarity": "epic",
+   "description": "Damage and rare drops for its owner.",
+   "effects_per_level": {
+    "damage": 1.01,
+    "rare_drop.all": 1.02
+   },
+   "icon": "res://assets/resources/items/pet_egg_shadow_cat.png"
+  },
+  {
+   "id": "cloud_sprite",
+   "name": "Nimbus the Cloud Sprite",
+   "rarity": "epic",
+   "description": "Travel speed and discovery for its owner.",
+   "effects_per_level": {
+    "move_speed": 1.01,
+    "discovery": 1.02
+   },
+   "icon": "res://assets/resources/items/pet_egg_cloud_sprite.png"
+  },
+  {
+   "id": "golden_toad",
+   "name": "Lucky the Golden Toad",
+   "rarity": "legendary",
+   "description": "Rare drops for its owner.",
+   "effects_per_level": {
+    "rare_drop.all": 1.03
+   },
+   "icon": "res://assets/resources/items/pet_egg_golden_toad.png"
+  }
+ ]
+}

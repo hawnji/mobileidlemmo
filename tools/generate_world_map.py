@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""Generates data/regions/world_map.json: the connected Phase 3 world.
+"""Generates data/regions/world_map.json: the connected world.
 
-The world is one seamless tile grid made of four regions laid out as a 2x2:
+The world is one seamless tile grid made of six regions (Phase 3 added the
+2x2 top part, Phase 5 the two endgame regions below it):
 
     +-------------------+--------------------+
     | Greenvale (start) | Irondeep Mountains |   y 0..47
     +-------------------+--------------------+
     | Whisperwood       | Ashen Desert       |   y 48..95
     +-------------------+--------------------+
+    | Shadowlands       | Celestial Isles    |   y 96..143
+    +-------------------+--------------------+
       x 0..63             x 64..127
+
+Rows 0..95 are unchanged by Phase 5 except a road and gate at x=32 on the
+south edge of Whisperwood, so Phase 3/4 saves keep valid coordinates.
 
 Greenvale is copied unchanged from data/regions/greenvale_start.json (made by
 tools/generate_greenvale_map.py), so Phase 1/2 saves keep valid tile
@@ -30,10 +36,10 @@ from collections import deque
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-W, H = 128, 96
+W, H = 128, 144
 rng = random.Random(4242)
 # Walkable terrain symbols (must match data/regions/terrain.json).
-WALKABLE = set(".,=fbcpsxgdrmkQq")
+WALKABLE = set(".,=fbcpsxgdrmkQqula")
 
 green = json.loads((ROOT / "data/regions/greenvale_start.json").read_text())
 g = [["^" for _ in range(W)] for _ in range(H)]
@@ -153,6 +159,8 @@ gates = [
     {"id": "gate_whisperwood", "name": "Whisperwood Trail", "a": [16, 47], "b": [16, 48], "regions": ["greenvale", "whisperwood"]},
     {"id": "gate_ashen_north", "name": "Scorched Stair", "a": [100, 47], "b": [100, 48], "regions": ["irondeep", "ashen_desert"]},
     {"id": "gate_ashen_west", "name": "Dune Gate", "a": [63, 80], "b": [64, 80], "regions": ["whisperwood", "ashen_desert"]},
+    {"id": "gate_shadowlands", "name": "Blackroot Gate", "a": [32, 95], "b": [32, 96], "regions": ["whisperwood", "shadowlands"]},
+    {"id": "gate_celestial", "name": "Sky Stair", "a": [63, 130], "b": [64, 130], "regions": ["shadowlands", "celestial_isles"]},
 ]
 
 # ======================================================================
@@ -352,6 +360,122 @@ for (x, y) in scatter(4, 105, 76, 125, 93, "r", 4, taken):
     enemy("ancient_guardian", x, y, R)
 
 # ======================================================================
+# Shadowlands (x 0..63, y 96..143)  - Phase 5
+# ======================================================================
+R = "shadowlands"
+line(32, 80, 32, 94, "=")                      # Blackroot road south from the Whisperwood trail
+rect(1, 97, 62, 142, "u")
+for _ in range(55):
+    blob(rng.randint(2, 61), rng.randint(98, 141), rng.randint(0, 1), rng.randint(0, 1), "z")
+line(32, 97, 32, 100, "=")
+rect(24, 100, 42, 110, "p")                    # Gloomhold
+for (x0, y0, x1, y1) in [(25, 101, 27, 103), (39, 101, 41, 103), (25, 108, 27, 110)]:
+    rect(x0, y0, x1, y1, "H")
+line(14, 105, 24, 105, "=")
+line(42, 105, 52, 105, "=")
+for _ in range(25):                            # shadowbark thickets
+    blob(rng.randint(45, 61), rng.randint(98, 111), 1, 0, "z")
+rect(3, 114, 22, 128, "k")                     # Voidstone Pits
+for _ in range(10):
+    blob(rng.randint(4, 21), rng.randint(115, 127), 1, 0, "^")
+line(12, 105, 12, 114, "=")
+rect(24, 113, 42, 127, "m")                    # Black Marsh
+blob(33, 120, 5, 3, "~")
+line(33, 110, 33, 113, "=")
+rect(44, 114, 61, 127, "r")                    # Knights' Barrow
+for _ in range(16):
+    x, y = rng.randint(45, 60), rng.randint(115, 126)
+    if rng.random() < 0.5:
+        line(x, y, x + rng.randint(1, 3), y, "R")
+    else:
+        line(x, y, x, y + rng.randint(1, 3), "R")
+line(42, 120, 44, 120, "=")
+rect(18, 130, 54, 142, "u")                    # Void Rift
+blob(36, 136, 8, 2, "v")
+line(33, 127, 33, 130, "=")
+line(52, 127, 52, 130, "=")
+line(52, 130, 62, 130, "=")
+rect(55, 137, 61, 142, "r")                    # Dread Citadel approach
+line(54, 139, 55, 139, "=")
+locations += [
+    {"id": "gloomhold", "name": "Gloomhold", "kind": "village", "rect": [23, 99, 21, 13], "region": R},
+    {"id": "wraith_fields", "name": "Wraith Fields", "kind": "hunting_ground", "rect": [1, 97, 21, 16], "region": R},
+    {"id": "shadowbark_wood", "name": "Shadowbark Wood", "kind": "resource_area", "rect": [44, 97, 19, 16], "region": R},
+    {"id": "voidstone_pits", "name": "Voidstone Pits", "kind": "resource_area", "rect": [2, 113, 21, 16], "region": R},
+    {"id": "black_marsh", "name": "Black Marsh", "kind": "resource_area", "rect": [23, 113, 21, 15], "region": R},
+    {"id": "knights_barrow", "name": "Knights' Barrow", "kind": "hunting_ground", "rect": [44, 113, 19, 15], "region": R},
+    {"id": "void_rift", "name": "Void Rift", "kind": "hunting_ground", "rect": [17, 129, 38, 14], "region": R},
+]
+taken += [(58, 141), (125, 141)]               # dungeon entrances (below)
+for (x, y) in scatter(6, 4, 115, 21, 127, "k", 3, taken):
+    node("voidstone_rock", x, y, R)
+for (x, y) in scatter(8, 45, 98, 61, 111, "u", 3, taken):
+    node("shadowbark_tree", x, y, R)
+for (x, y) in [(27, 120), (39, 120), (33, 116)]:
+    node("gloom_eel_spot", x, y, R)
+for (x, y) in scatter(5, 24, 113, 42, 127, "m", 3, taken):
+    node("nightshade_patch", x, y, R)
+hidden_void = node("voidstone_rock", 21, 127, R, hidden=True)
+put(21, 127, "k")
+for (x, y) in scatter(5, 3, 98, 20, 111, "u", 3, taken):
+    enemy("wraith", x, y, R)
+for (x, y) in scatter(5, 45, 115, 60, 126, "r", 3, taken):
+    enemy("shadow_knight", x, y, R)
+for (x, y) in scatter(5, 19, 131, 53, 141, "u", 4, taken):
+    enemy("void_horror", x, y, R)
+
+# ======================================================================
+# Celestial Isles (x 64..127, y 96..143)  - Phase 5
+# Islands of cloud and starstone in an impassable sky; bridges join them.
+# ======================================================================
+R = "celestial_isles"
+rect(65, 97, 126, 142, "v")
+rect(66, 122, 84, 138, "l")                    # Skyreach (landing island)
+rect(70, 126, 80, 134, "p")
+for (x0, y0, x1, y1) in [(67, 123, 69, 125), (81, 123, 83, 125), (67, 135, 69, 137)]:
+    rect(x0, y0, x1, y1, "H")
+line(65, 130, 66, 130, "a")
+rect(88, 124, 104, 140, "k")                   # Starfall Isle
+for _ in range(6):
+    blob(rng.randint(90, 102), rng.randint(126, 138), 1, 0, "^")
+line(84, 130, 88, 130, "a")
+rect(68, 99, 86, 114, "l")                     # Skywood Grove
+line(76, 114, 76, 122, "a")
+rect(90, 100, 108, 116, "l")                   # Aether Gardens
+blob(99, 108, 4, 3, "~")
+line(86, 106, 90, 106, "a")
+rect(112, 98, 126, 112, "l")                   # Serpent Reach
+line(108, 104, 112, 104, "a")
+rect(112, 118, 126, 130, "k")                  # Golem Isle
+line(104, 126, 112, 126, "a")
+line(118, 112, 118, 118, "a")
+rect(108, 134, 126, 142, "a")                  # Sentinel Terrace
+line(104, 137, 108, 137, "a")
+locations += [
+    {"id": "skyreach", "name": "Skyreach", "kind": "village", "rect": [66, 121, 19, 18], "region": R},
+    {"id": "skywood_grove", "name": "Skywood Grove", "kind": "resource_area", "rect": [67, 98, 21, 17], "region": R},
+    {"id": "aether_gardens", "name": "Aether Gardens", "kind": "resource_area", "rect": [89, 99, 21, 18], "region": R},
+    {"id": "starfall_isle", "name": "Starfall Isle", "kind": "resource_area", "rect": [87, 123, 19, 18], "region": R},
+    {"id": "serpent_reach", "name": "Serpent Reach", "kind": "hunting_ground", "rect": [111, 97, 16, 16], "region": R},
+    {"id": "golem_isle", "name": "Golem Isle", "kind": "hunting_ground", "rect": [111, 117, 16, 14], "region": R},
+    {"id": "sentinel_terrace", "name": "Sentinel Terrace", "kind": "hunting_ground", "rect": [107, 133, 20, 10], "region": R},
+]
+for (x, y) in scatter(6, 89, 125, 103, 139, "k", 3, taken):
+    node("starmetal_rock", x, y, R)
+for (x, y) in scatter(8, 69, 100, 85, 113, "l", 3, taken):
+    node("skywood_tree", x, y, R)
+for (x, y) in [(94, 108), (104, 108), (99, 104)]:
+    node("cloud_koi_spot", x, y, R)
+for (x, y) in scatter(5, 91, 101, 107, 115, "l", 3, taken):
+    node("aether_bloom_patch", x, y, R)
+for (x, y) in scatter(5, 113, 99, 125, 111, "l", 3, taken):
+    enemy("sky_serpent", x, y, R)
+for (x, y) in scatter(5, 113, 119, 125, 129, "k", 3, taken):
+    enemy("star_golem", x, y, R)
+for (x, y) in scatter(4, 109, 135, 125, 141, "a", 4, taken):
+    enemy("celestial_sentinel", x, y, R)
+
+# ======================================================================
 # Outposts, stations, dungeon entrances
 # ======================================================================
 outposts = [
@@ -364,6 +488,14 @@ outposts = [
     {"building": "outpost_ashen", "rect": [90, 59, 3, 3], "work_tile": [91, 62], "depot_tile": [92, 64],
      "stations": [{"id": "workbench_ashen", "type": "workbench", "name": "Oasis Workbench", "tile": [88, 64]},
                   {"id": "furnace_ashen", "type": "furnace", "name": "Sun Furnace", "tile": [95, 64]}]},
+    {"building": "outpost_shadowlands", "rect": [35, 101, 4, 3], "work_tile": [36, 104], "depot_tile": [37, 106],
+     "stations": [{"id": "furnace_shadowlands", "type": "furnace", "name": "Gloom Furnace", "tile": [29, 105]},
+                  {"id": "anvil_shadowlands", "type": "anvil", "name": "Black Anvil", "tile": [31, 107]},
+                  {"id": "range_shadowlands", "type": "range", "name": "Gloomhold Hearth", "tile": [40, 107]}]},
+    {"building": "outpost_celestial", "rect": [74, 126, 4, 3], "work_tile": [75, 129], "depot_tile": [76, 131],
+     "stations": [{"id": "furnace_celestial", "type": "furnace", "name": "Star Furnace", "tile": [71, 131]},
+                  {"id": "workbench_celestial", "type": "workbench", "name": "Skywright Bench", "tile": [79, 131]},
+                  {"id": "alchemy_celestial", "type": "alchemy_table", "name": "Aether Still", "tile": [73, 133]}]},
 ]
 for op in outposts:
     x, y, w, h = op["rect"]
@@ -378,11 +510,14 @@ dungeons = [
     {"id": "deepforge_vault", "tile": [124, 40], "region": "irondeep"},
     {"id": "heartrot_hollow", "tile": [3, 93], "region": "whisperwood"},
     {"id": "tomb_of_the_sand_king", "tile": [125, 93], "region": "ashen_desert"},
+    {"id": "dread_citadel", "tile": [58, 141], "region": "shadowlands"},
+    {"id": "starfall_sanctum", "tile": [125, 141], "region": "celestial_isles"},
 ]
+DUNGEON_FLOOR = {"irondeep": "c", "whisperwood": "c", "ashen_desert": "r", "shadowlands": "r", "celestial_isles": "a"}
 for dg in dungeons:
     x, y = dg["tile"]
     if dg["region"] != "greenvale":
-        put(x, y, "c" if dg["region"] != "ashen_desert" else "r")
+        put(x, y, DUNGEON_FLOOR[dg["region"]])
 
 # ======================================================================
 # Discoveries (fog of war rewards)
@@ -436,6 +571,28 @@ discoveries = [
      "rewards": {"xp": {"exploration": 1200, "archaeology": 1500}, "currencies": {"recruitment_tokens": 8}}, "description": "Paving stones lead to the buried city."},
     {"id": "tomb_robbers_stash", "name": "Tomb Robber's Stash", "kind": "chest", "tile": [124, 77], "region": "ashen_desert", "requires": {"exploration": 30, "specialty": "assassin"},
      "rewards": {"xp": {"exploration": 1000}, "currencies": {"gems": 80}, "items": {"golden_idol": 1}}, "description": "Rogues leave marks for other rogues."},
+    # Shadowlands (Phase 5)
+    {"id": "fallen_banner", "name": "Fallen Banner", "kind": "ruin", "tile": [10, 100], "region": "shadowlands", "requires": {"exploration": 40},
+     "rewards": {"xp": {"exploration": 2000}, "currencies": {"gold": 6000}}, "description": "A torn banner from the last army that marched here."},
+    {"id": "drowned_lantern", "name": "Drowned Lantern", "kind": "magic", "tile": [33, 124], "region": "shadowlands", "requires": {"exploration": 42, "specialty": "mage"},
+     "rewards": {"xp": {"exploration": 2200, "magic": 3000}, "items": {"void_shard": 3}}, "description": "A lantern still burns under the marsh water."},
+    {"id": "barrow_vault", "name": "Barrow Vault", "kind": "chest", "tile": [60, 115], "region": "shadowlands", "requires": {"exploration": 44, "specialty": "assassin"},
+     "rewards": {"xp": {"exploration": 2200}, "items": {"pet_egg_shadow_cat": 1}, "currencies": {"gems": 100}}, "description": "Something purrs inside the sealed vault."},
+    {"id": "deep_void_seam", "name": "Deep Void Seam", "kind": "hidden_node", "tile": [20, 127], "region": "shadowlands", "requires": {"exploration": 45, "affinity": "mining"},
+     "rewards": {"xp": {"exploration": 2500, "mining": 4000}, "reveal_node": hidden_void}, "description": "A miner hears the rock ring hollow."},
+    {"id": "hollow_throne", "name": "The Hollow Throne", "kind": "ruin", "tile": [46, 141], "region": "shadowlands", "requires": {"exploration": 48},
+     "rewards": {"xp": {"exploration": 3000}, "currencies": {"recruitment_tokens": 10, "relic_dust": 100}}, "description": "An empty throne at the edge of the rift."},
+    # Celestial Isles (Phase 5)
+    {"id": "cloud_shrine", "name": "Cloud Shrine", "kind": "shrine", "tile": [84, 100], "region": "celestial_isles", "requires": {"exploration": 50},
+     "rewards": {"xp": {"exploration": 3000}, "currencies": {"recruitment_tokens": 10}}, "description": "Prayer flags snap in the high wind."},
+    {"id": "astral_observatory", "name": "Astral Observatory", "kind": "magic", "tile": [100, 139], "region": "celestial_isles", "requires": {"exploration": 52, "specialty": "mage"},
+     "rewards": {"xp": {"exploration": 3200, "magic": 5000}, "items": {"star_fragment": 5}}, "description": "Brass lenses still track the falling stars."},
+    {"id": "sky_wreck", "name": "Sky Wreck", "kind": "chest", "tile": [126, 110], "region": "celestial_isles", "requires": {"exploration": 54, "specialty": "assassin"},
+     "rewards": {"xp": {"exploration": 3200}, "currencies": {"gems": 150, "gold": 20000}}, "description": "An airship hull snagged on the island's edge."},
+    {"id": "sprite_nest", "name": "Sprite Nest", "kind": "npc", "tile": [70, 112], "region": "celestial_isles", "requires": {"exploration": 55},
+     "rewards": {"xp": {"exploration": 3500}, "items": {"pet_egg_cloud_sprite": 1}}, "description": "A nest of warm, glowing eggs in the skywood."},
+    {"id": "star_map", "name": "The Star Map", "kind": "ruin", "tile": [118, 142], "region": "celestial_isles", "requires": {"exploration": 58},
+     "rewards": {"xp": {"exploration": 4000}, "currencies": {"relic_dust": 200, "recruitment_tokens": 15}}, "description": "Constellations carved into the terrace floor."},
 ]
 secrets = [
     {"id": "irondeep_tunnel", "tiles": [list(t) for t in secret_irondeep], "region": "irondeep", "reveals_as": "c"},
@@ -464,6 +621,16 @@ regions = [
      "outpost": "outpost_ashen",
      "unlock": {"conditions": [{"type": "quest", "quest": "mq_06_into_the_sands"}, {"type": "character_level", "level": 30},
                                {"type": "explored", "region": "irondeep", "pct": 0.3}], "cost": {"gold": 6000}}},
+    {"id": "shadowlands", "name": "Shadowlands", "rect": [0, 96, 64, 48], "level_range": [60, 90], "color": "#5a4a78",
+     "description": "A blighted land under a dark sky: haunted fields, a black marsh and the Void Rift.",
+     "outpost": "outpost_shadowlands",
+     "unlock": {"conditions": [{"type": "quest", "quest": "mq_09_the_dark_beyond"}, {"type": "combat_level", "level": 60},
+                               {"type": "explored", "region": "ashen_desert", "pct": 0.3}], "cost": {"gold": 20000}}},
+    {"id": "celestial_isles", "name": "Celestial Isles", "rect": [64, 96, 64, 48], "level_range": [80, 99], "color": "#9fd3ff",
+     "description": "Floating islands above the world, reached only on a flying mount.",
+     "outpost": "outpost_celestial",
+     "unlock": {"conditions": [{"type": "quest", "quest": "mq_11_the_sky_road"}, {"type": "mount", "tag": "flying"},
+                               {"type": "character_level", "level": 70}], "cost": {"gold": 50000}}},
 ]
 for op in outposts:
     for r in regions:
@@ -496,6 +663,17 @@ for y in range(H):
     put(127, y, "^")
     if y >= 48:
         put(0, y, "e")
+# Phase 5 borders: the southern band and its own edges.
+for x in range(W):
+    if (x, 96) not in gate_tiles:
+        put(x, 96, "z" if x < 64 else "v")
+    put(x, H - 1, "z" if x < 64 else "v")
+for y in range(96, H):
+    put(0, y, "z")
+    put(127, y, "v")
+    for x in (63, 64):
+        if (x, y) not in gate_tiles:
+            put(x, y, "z" if x == 63 else "v")
 # gate approaches must stay open after the border pass
 put(62, 80, "=")
 put(65, 80, "=")
@@ -503,6 +681,12 @@ put(65, 25, "=")
 put(16, 49, "=")
 put(100, 49, "=")
 put(100, 46, "=")
+put(32, 94, "=")
+for (x, y) in ((32, 95), (32, 96), (63, 130), (64, 130)):
+    put(x, y, "g")
+put(32, 97, "=")
+put(62, 130, "=")
+put(65, 130, "a")
 
 # ======================================================================
 # Validation
@@ -538,7 +722,7 @@ bad += [d for d in dungeons if not reachable_adjacent(tuple(d["tile"]))]
 bad += [op for op in outposts if not reachable_adjacent(tuple(op["depot_tile"])) or tuple(op["work_tile"]) not in seen]
 bad += [d for d in discoveries if not any(abs(d["tile"][0] - x) <= 2 and abs(d["tile"][1] - y) <= 2 for (x, y) in seen if abs(d["tile"][0] - x) <= 2)]
 bad += [p for p in plots if tuple(p["work_tile"]) not in seen]
-assert not bad, f"unreachable: {bad}"
+assert not bad, f"unreachable: {[b.get("id", b.get("building")) for b in bad]}"
 for gt in gates:
     for t in (gt["a"], gt["b"]):
         assert tuple(t) in seen, f"gate tile unreachable {gt}"
@@ -554,7 +738,7 @@ out = {
     "schema_version": 3,
     "id": "world",
     "name": "Worldbound",
-    "description": "The connected world: Greenvale, Irondeep Mountains, Whisperwood and the Ashen Desert.",
+    "description": "The connected world: Greenvale, Irondeep Mountains, Whisperwood, the Ashen Desert, the Shadowlands and the Celestial Isles.",
     "width": W,
     "height": H,
     "rows": ["".join(r) for r in g],

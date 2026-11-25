@@ -21,12 +21,18 @@ extends RefCounted
 ##   {"type": "quest", "quest": "mq_01_roots"}                  completed at least once
 ##   {"type": "region", "region": "irondeep"}                   unlocked
 ##   {"type": "reputation", "region": "irondeep", "tier": 2}
+##   {"type": "season", "season": "frostfall"}                  current calendar season (Phase 5)
+##   {"type": "mount", "tag": "flying"}                         own a mount (with the tag)
+##   {"type": "ascension", "count": 1}                          World Ascensions done
+##   {"type": "mythic_tier", "tier": 5, "dungeon": "..."}       highest mythic tier cleared (any dungeon if omitted)
+##   {"type": "mastery", "skill": "mining", "level": 5}         any hero's mastery (any skill if omitted)
 ##
 ## Counter objectives measure progress from a baseline snapshot taken when the
 ## quest became active, so old kills do not complete new quests.
 
 const KNOWN_TYPES := ["gather", "kill", "kill_tag", "craft", "dungeon", "expedition", "deliver", "explored", "discover",
-	"discover_count", "build", "skill", "character_level", "combat_level", "quest", "region", "reputation"]
+	"discover_count", "build", "skill", "character_level", "combat_level", "quest", "region", "reputation",
+	"season", "mount", "ascension", "mythic_tier", "mastery"]
 
 
 ## World counter key for counter-based objectives, or "" for state checks.
@@ -73,6 +79,26 @@ static func progress(world, obj: Dictionary, baseline := {}) -> Vector2i:
 			return Vector2i(1 if world.is_region_unlocked(String(obj.region)) else 0, 1)
 		"reputation":
 			return Vector2i(world.quests.reputation_tier(String(obj.region)), int(obj.get("tier", 1)))
+		"season":
+			return Vector2i(1 if world.endgame.current_season() == String(obj.season) else 0, 1)
+		"mount":
+			return Vector2i(1 if world.endgame.owns_mount_tag(String(obj.get("tag", ""))) else 0, 1)
+		"ascension":
+			return Vector2i(world.endgame.ascensions, int(obj.get("count", 1)))
+		"mythic_tier":
+			var best := 0
+			for did in world.endgame.mythic_records:
+				if not obj.has("dungeon") or did == String(obj.dungeon):
+					best = maxi(best, int(world.endgame.mythic_records[did]))
+			return Vector2i(best, int(obj.get("tier", 1)))
+		"mastery":
+			var best_m := 0
+			for cid in world.character_order:
+				var ch = world.characters[cid]
+				for sk in ch.mastery_xp:
+					if not obj.has("skill") or sk == String(obj.skill):
+						best_m = maxi(best_m, world.endgame.mastery_level(ch, String(sk)))
+			return Vector2i(best_m, int(obj.get("level", 1)))
 	return Vector2i(0, 1)
 
 
@@ -136,4 +162,20 @@ static func describe(registry: DataRegistry, obj: Dictionary) -> String:
 			var tiers := registry.reputation_tiers()
 			var tier := clampi(int(obj.get("tier", 1)), 0, tiers.size() - 1)
 			return "%s reputation: %s" % [registry.region_name(String(obj.region)), tiers[tier].name]
+		"season":
+			for se in registry.endgame.get("seasons", {}).get("seasons", []):
+				if se.id == obj.season:
+					return "During %s" % se.name
+			return "During %s" % obj.season
+		"mount":
+			return "Own a %s mount" % obj.tag if not String(obj.get("tag", "")).is_empty() else "Own a mount"
+		"ascension": return "Ascend the world %d time%s" % [int(obj.get("count", 1)), "" if int(obj.get("count", 1)) == 1 else "s"]
+		"mythic_tier":
+			if obj.has("dungeon"):
+				return "Clear %s at mythic tier %d" % [registry.dungeons.get(obj.dungeon, {}).get("name", obj.dungeon), int(obj.tier)]
+			return "Clear any dungeon at mythic tier %d" % int(obj.tier)
+		"mastery":
+			if obj.has("skill"):
+				return "%s mastery %d" % [registry.skills.get(obj.skill, {}).get("name", obj.skill), int(obj.level)]
+			return "Mastery level %d in any skill" % int(obj.level)
 	return t

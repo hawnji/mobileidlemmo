@@ -5,7 +5,7 @@ extends CanvasLayer
 ## writes go through SimulationWorld's command API (assign / cancel).
 
 const NAV := [["World", "world"], ["Heroes", "heroes"], ["Map", "map"], ["Quests", "quests"], ["Journeys", "journeys"],
-	["Town", "town"], ["Recruit", "recruit"], ["Storage", "storage"], ["Social", "social"]]
+	["Town", "town"], ["Recruit", "recruit"], ["Storage", "storage"], ["Social", "social"], ["Legacy", "legacy"]]
 
 var world: SimulationWorld
 var _root: Control
@@ -209,6 +209,20 @@ func _on_world_event(ev: Dictionary) -> void:
 			toast("A secret passage opened in %s" % world.registry.region_name(String(ev.region)), UiTheme.rarity_color("rare"))
 		"storage_full":
 			toast("Storage is full!", UiTheme.BAD)
+		# Phase 5
+		"item_used":
+			if not String(ev.get("message", "")).is_empty():
+				toast(String(ev.message), UiTheme.rarity_color("epic"))
+		"pet_level_up":
+			toast("%s reached pet level %d" % [ev.name, ev.level], UiTheme.GOOD)
+		"mastery_up":
+			toast("%s: %s mastery %d" % [_name(ev.character_id), world.registry.skills.get(ev.skill, {}).get("name", ev.skill), ev.level], UiTheme.rarity_color("legendary"))
+		"mythic_record":
+			toast("New record: %s mythic tier %d" % [world.registry.dungeons.get(ev.dungeon, {}).get("name", ev.dungeon), ev.tier], UiTheme.rarity_color("mythic"))
+		"quest_expired":
+			toast("The season ended: %s left the board" % ev.name, UiTheme.TEXT_DIM)
+		"ascended":
+			toast("World Ascension %d complete: +%d ascension points" % [ev.count, ev.points], UiTheme.rarity_color("mythic"))
 		"enemy_killed":
 			if not String(ev.get("variant", "")).is_empty():
 				toast("%s defeated a %s!" % [_name(ev.character_id), ev.name], UiTheme.rarity_color("epic"))
@@ -290,6 +304,10 @@ func _on_nav(key: String) -> void:
 			var ps := SocialPanel.new()
 			_open_modal(ps)
 			ps.setup(world)
+		"legacy":
+			var pl := LegacyPanel.new()
+			_open_modal(pl)
+			pl.setup(world)
 		"journeys":
 			var pj := JourneysPanel.new()
 			_open_modal(pj)

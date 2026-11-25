@@ -215,3 +215,43 @@ the three starters only, so they are one member short of the 4-member maximum.
 | Dungeon bosses | 320 / 1500 / 1900 / 2600 HP, enrage at 3-5 min | Intended at about level 10 / 40 / 50 / 60 with the matching gear |
 | Encounters | one roll every 10-25 min, at most 2 active | Something to notice on most sessions without flooding the map |
 
+## Endgame (Phase 5)
+
+Measured with `tools/balance_report.gd`. Reference parties are 4 members: the three starters
+plus Elowen, all at the column level. They wear voidsteel gear and shadowbark weapons from
+level 70, and starmetal and skywood from level 90. They carry 120 cooked gloom eels.
+
+| Endgame dungeon | Party | Result at level 70 | 85 | 99 |
+|---|---|---|---|---|
+| The Dread Citadel | 4 | cleared 5m 22s | cleared 4m 18s | cleared 3m 36s |
+| Starfall Sanctum | 4 | failed 9m 19s | cleared 6m 42s | cleared 5m 15s |
+
+| Mythic run (party of 4, level 99) | Tier 1 | 3 | 5 | 7 | 10 |
+|---|---|---|---|---|---|
+| Goblin Warren | cleared 34s | cleared 38s | cleared 49s | cleared 1m 02s | cleared 1m 02s |
+| Tomb of the Sand King | cleared 2m 51s | cleared 3m 45s | cleared 5m 18s | cleared 6m 37s | failed 6m 53s |
+| The Dread Citadel | cleared 4m 13s | failed 9m 02s | failed 9m 39s | failed 8m 24s | failed 8m 03s |
+
+These runs use no relics, pets, mounts or perks. High tiers of the endgame dungeons are meant to
+need them: Warlord's Banner, Void Prism, Warlord perk ranks and a Shadow Cat each add damage.
+
+- **Mastery pace:** Brom (mining 99, voidsteel gear) mining voidstone earns about 65,000
+  mastery XP an hour. A mastery level takes about 15 hours, and 20 levels in one skill take
+  about 300 hours.
+- **Ascension points (first ascension):** a score of 1,000 gives 94 points, 2,500 gives 150,
+  4,000 gives 189 and 6,000 gives 232. A full set of perks costs about 1,200 points, so it takes
+  several ascensions.
+
+### Endgame knobs and intent
+
+| Knob | Value | Intent |
+|---|---|---|
+| Endgame monsters | 280-770 HP, max hit 20-34 | The Shadowlands at level 60-90 with voidsteel, the Celestial Isles at 80-99 with starmetal |
+| Bosses | Hollow King 3,380 HP; Astral Wyrm 4,440 HP; enrage 5.5 and 6 min | Dread Citadel at about 70+, Starfall Sanctum at about 85+, with 4 heroes |
+| `mythic.enemy_health_per_tier` / `enemy_damage_per_tier` | 0.15 / 0.08 | Ten steps; the last ones need the endgame bonuses |
+| `mythic.reward_mult_per_tier`, `relic_dust_per_tier`, `relic_chance_per_tier` | 0.25, 15, 4% (max 40%) | A tier 10 clear pays 3.5x, 150 dust and a 40% relic chance |
+| `mastery.xp_per_level` | 1,000,000 | About 15 h per level at endgame rates; bonuses are small (+1% speed per level) |
+| `pets.xp_share`, `level_xp` | 5%, up to 1,000,000 | Level 5 needs 700k owner XP (about 5-6 h on an endgame hero at about 130k XP/h); level 10 needs 20M (about 150 h) |
+| `relics.upgrade_costs` | 60 / 150 / 320 / 640 dust | One relic to level 5 costs 1,170 dust: about 78 tier-1 clears, or 8 tier-10 clears |
+| Ascension points | 30 x sqrt(score / 100), at least 5, only growth since the best earlier score | Diminishing returns; repeat ascensions pay for real progress |
+| Season bonuses | +5-10% to two stats | Felt, but never required |

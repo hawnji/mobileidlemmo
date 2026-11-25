@@ -1002,6 +1002,436 @@
     "enrage_seconds": 180.0,
     "enrage_damage_mult": 1.8
    }
+  },
+  {
+   "id": "wraith",
+   "name": "Wraith",
+   "level": 70,
+   "health": 280,
+   "max_hit": 20,
+   "accuracy": 58,
+   "defense": 50,
+   "attack_speed": 3.0,
+   "weaknesses": {
+    "magic": 1.25,
+    "melee": 0.8
+   },
+   "loot": [
+    {
+     "item": "wraith_essence",
+     "chance": 0.25,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "nightshade",
+     "chance": 0.2,
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "gold": [
+    150,
+    320
+   ],
+   "tags": [
+    "undead",
+    "spirit"
+   ],
+   "respawn_seconds": 120,
+   "sprite": "res://assets/enemies/wraith.png"
+  },
+  {
+   "id": "shadow_knight",
+   "name": "Shadow Knight",
+   "level": 80,
+   "health": 390,
+   "max_hit": 25,
+   "accuracy": 66,
+   "defense": 66,
+   "attack_speed": 3.2,
+   "weaknesses": {
+    "magic": 1.15,
+    "ranged": 0.9
+   },
+   "loot": [
+    {
+     "item": "voidsteel_bar",
+     "chance": 0.12,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "mount_shadow_steed",
+     "chance": 0.0015,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    220,
+    420
+   ],
+   "tags": [
+    "undead",
+    "humanoid"
+   ],
+   "respawn_seconds": 120,
+   "sprite": "res://assets/enemies/shadow_knight.png"
+  },
+  {
+   "id": "void_horror",
+   "name": "Void Horror",
+   "level": 88,
+   "health": 520,
+   "max_hit": 29,
+   "accuracy": 72,
+   "defense": 70,
+   "attack_speed": 3.6,
+   "weaknesses": {
+    "ranged": 1.2,
+    "magic": 0.9
+   },
+   "loot": [
+    {
+     "item": "void_shard",
+     "chance": 0.03,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "pet_egg_shadow_cat",
+     "chance": 0.001,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    300,
+    600
+   ],
+   "tags": [
+    "aberration"
+   ],
+   "respawn_seconds": 150,
+   "sprite": "res://assets/enemies/void_horror.png"
+  },
+  {
+   "id": "sky_serpent",
+   "name": "Sky Serpent",
+   "level": 90,
+   "health": 530,
+   "max_hit": 27,
+   "accuracy": 78,
+   "defense": 70,
+   "attack_speed": 3.0,
+   "weaknesses": {
+    "ranged": 1.25,
+    "melee": 0.85
+   },
+   "loot": [
+    {
+     "item": "skywood_log",
+     "chance": 0.2,
+     "min": 1,
+     "max": 2
+    },
+    {
+     "item": "star_fragment",
+     "chance": 0.01,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    320,
+    640
+   ],
+   "tags": [
+    "beast",
+    "dragonkin"
+   ],
+   "respawn_seconds": 120,
+   "sprite": "res://assets/enemies/sky_serpent.png"
+  },
+  {
+   "id": "star_golem",
+   "name": "Star Golem",
+   "level": 95,
+   "health": 660,
+   "max_hit": 30,
+   "accuracy": 80,
+   "defense": 86,
+   "attack_speed": 3.6,
+   "weaknesses": {
+    "magic": 1.25,
+    "ranged": 0.85
+   },
+   "loot": [
+    {
+     "item": "starmetal_ore",
+     "chance": 0.25,
+     "min": 1,
+     "max": 2
+    },
+    {
+     "item": "relic_aegis_shard",
+     "chance": 0.0015,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    380,
+    760
+   ],
+   "tags": [
+    "construct"
+   ],
+   "respawn_seconds": 150,
+   "sprite": "res://assets/enemies/star_golem.png"
+  },
+  {
+   "id": "celestial_sentinel",
+   "name": "Celestial Sentinel",
+   "level": 99,
+   "health": 770,
+   "max_hit": 34,
+   "accuracy": 88,
+   "defense": 90,
+   "attack_speed": 3.4,
+   "weaknesses": {
+    "melee": 1.15,
+    "magic": 0.9
+   },
+   "loot": [
+    {
+     "item": "star_fragment",
+     "chance": 0.03,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "relic_scholars_tome",
+     "chance": 0.0015,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    450,
+    900
+   ],
+   "tags": [
+    "construct",
+    "celestial"
+   ],
+   "respawn_seconds": 180,
+   "sprite": "res://assets/enemies/celestial_sentinel.png"
+  },
+  {
+   "id": "the_hollow_king",
+   "name": "The Hollow King",
+   "level": 92,
+   "health": 3380,
+   "max_hit": 29,
+   "accuracy": 80,
+   "defense": 78,
+   "attack_speed": 3.4,
+   "weaknesses": {
+    "magic": 1.2,
+    "melee": 0.9
+   },
+   "loot": [
+    {
+     "item": "hollow_crown",
+     "chance": 0.5,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "voidsteel_bar",
+     "chance": 1.0,
+     "min": 4,
+     "max": 8
+    },
+    {
+     "item": "hollow_kings_mantle",
+     "chance": 0.06,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "relic_warlords_banner",
+     "chance": 0.05,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    3000,
+    6000
+   ],
+   "tags": [
+    "boss",
+    "undead"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/the_hollow_king.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.66,
+      "damage_mult": 1.25,
+      "message": "The Hollow King draws the dark around him!"
+     },
+     {
+      "below": 0.33,
+      "damage_mult": 1.6,
+      "attack_speed_mult": 0.7,
+      "message": "The Hollow King's crown shatters into shadow!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "night_wave",
+      "name": "Night Wave",
+      "kind": "area",
+      "every": 10.0,
+      "damage": [
+       10,
+       20
+      ]
+     },
+     {
+      "id": "dread_strike",
+      "name": "Dread Strike",
+      "kind": "special",
+      "every": 12.0,
+      "damage_mult": 2.6
+     },
+     {
+      "id": "knights_rise",
+      "name": "Knights, Rise",
+      "kind": "summon",
+      "every": 28.0,
+      "enemy": "shadow_knight",
+      "count": 1,
+      "max_adds": 2
+     },
+     {
+      "id": "drain",
+      "name": "Life Drain",
+      "kind": "heal",
+      "every": 35.0,
+      "pct": 0.05
+     }
+    ],
+    "enrage_seconds": 330.0,
+    "enrage_damage_mult": 2.4
+   }
+  },
+  {
+   "id": "astral_wyrm",
+   "name": "The Astral Wyrm",
+   "level": 99,
+   "health": 4440,
+   "max_hit": 33,
+   "accuracy": 90,
+   "defense": 88,
+   "attack_speed": 3.2,
+   "weaknesses": {
+    "ranged": 1.2,
+    "magic": 1.1,
+    "melee": 0.85
+   },
+   "loot": [
+    {
+     "item": "celestial_core",
+     "chance": 0.35,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "starmetal_bar",
+     "chance": 1.0,
+     "min": 4,
+     "max": 8
+    },
+    {
+     "item": "astral_band",
+     "chance": 0.05,
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "relic_void_prism",
+     "chance": 0.03,
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "gold": [
+    5000,
+    9000
+   ],
+   "tags": [
+    "boss",
+    "dragonkin",
+    "celestial"
+   ],
+   "respawn_seconds": 0,
+   "sprite": "res://assets/enemies/astral_wyrm.png",
+   "boss": {
+    "phases": [
+     {
+      "below": 0.7,
+      "damage_mult": 1.2,
+      "message": "The Astral Wyrm takes to the sky!"
+     },
+     {
+      "below": 0.4,
+      "damage_mult": 1.5,
+      "attack_speed_mult": 0.8,
+      "message": "Starfire rains down!"
+     },
+     {
+      "below": 0.15,
+      "damage_mult": 1.9,
+      "message": "The Astral Wyrm burns like a falling star!"
+     }
+    ],
+    "abilities": [
+     {
+      "id": "starfire",
+      "name": "Starfire",
+      "kind": "area",
+      "every": 9.0,
+      "damage": [
+       12,
+       24
+      ]
+     },
+     {
+      "id": "comet_bite",
+      "name": "Comet Bite",
+      "kind": "special",
+      "every": 11.0,
+      "damage_mult": 2.8
+     },
+     {
+      "id": "call_the_stars",
+      "name": "Call the Stars",
+      "kind": "summon",
+      "every": 30.0,
+      "enemy": "star_golem",
+      "count": 1,
+      "max_adds": 1
+     }
+    ],
+    "enrage_seconds": 360.0,
+    "enrage_damage_mult": 2.5
+   }
   }
  ],
  "variants": [

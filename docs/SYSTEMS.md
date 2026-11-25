@@ -1,4 +1,4 @@
-# Worldbound: Systems Reference (Phases 1 to 3)
+# Worldbound: Systems Reference (Phases 1 to 5)
 
 How each implemented system works, where it lives, and how to test it.
 
@@ -287,6 +287,41 @@ devices (or a desktop and a phone), add each other as friends, create and join a
 list ore on one and buy it on the other, then attack the world boss from both.
 `tools/capture_online_screenshots.gd` scripts a second player and captures screens 25 to 31.
 
+## Endgame (Phase 5)
+**Files:** `scripts/endgame/endgame_state.gd`, `data/endgame/*.json`, `scripts/ui/legacy_panel.gd`,
+the Phase 5 parts of `simulation_world.gd`, `dungeon_run.gd`, `objectives.gd` and
+`quest_state.gd`.
+
+| Part | How it works |
+|---|---|
+| Collectibles | Items with `unlocks {type, id}`. `SimulationWorld.use_item` consumes one (a ledger sink) and calls `EndgameState.unlock`: hatch a pet, unlock a mount, add a relic (auto-equipped if a slot is free) or bring a mythic hero. A duplicate pet, mount or relic pays relic dust by rarity. |
+| Relics | Owned relics have a level (1-5). Equipped relics (slots = `base_slots` + Relic Attunement ranks, max 6) feed the account effects. `upgrade_relic` costs relic dust. |
+| Pets | `assign_pet(hero, pet)`: one hero per pet and one pet per hero. Every XP grant to the hero gives the pet `xp_share` of it; `level_xp` decides levels. Effects scale with the level and apply only to the owner. |
+| Mounts | `assign_mount(hero, mount)`: one rider each. Effects (move speed, carry, ...) apply to the rider; any owned mount with a tag satisfies `{"type": "mount", "tag": ...}`. |
+| Mastery | `grant_xp` on a skill already at level 99 adds the XP (times `mastery_xp`) to `Adventurer.mastery_xp[skill]`. A level every `xp_per_level` (1,000,000), max 20. Effects come from the skill's category. Milestones pay rewards. |
+| Mythic tiers | `max_unlocked_tier`: 1 after a normal clear, then best + 1, up to 10. `start_dungeon(id, team, tier)`. Health and damage scale per tier; affixes from `min_tier`. A clear pays `clear_rewards` x (1 + 0.25 x tier), relic dust and possibly a relic from `relic_pool`, and records the tier. Mythic clears never pay `first_clear`. |
+| Seasons | `EndgameState.set_calendar(unix)` picks the season by UTC month; the season's effects are part of the account effects. Seasonal quests (prerequisite `season`) activate in season and expire when it ends; seasonal vendor stock is sold only then. |
+| World Ascension | `ascension_gap()` checks the requirements (mq_12) and that every hero is home. `ascend()` returns a new world built from a filtered save: heroes, armory, fragments, pity, non-gold currencies, routes, ledger and `endgame` are kept; the rest starts fresh with gold = starting + Head Start. It grants ascension points (`points_preview`) and, the first time, `first_ascension_rewards`. `buy_perk` spends points. |
+
+**Tests:** `tests/integration/test_endgame.gd` (21 tests):
+- regions and the flying gate, voidstone mining in the Shadowlands and fog migration;
+- eggs and duplicates, pet levelling and ownership, mounts, relic equip, upgrade and slots;
+- the hourglass offline cap and sigils;
+- mastery past 99, mythic tier unlocks, scaling, affixes, save/load and a cleared tier;
+- calendar seasons, seasonal quests and stock;
+- the ascension requirement, reset and kept legacy, the repeat-ascension minimum and perks;
+- endgame save/load.
+
+**Manual test:**
+1. Open **Dev** and add gold, or play to the endgame. In Storage, use a relic, an egg and a
+   mount whistle (the stables sell them).
+2. Open **Legacy** to equip and upgrade relics and to give the pet and mount to a hero. Check
+   the hero's travel speed on the character panel.
+3. In **Journeys > Dungeons**, after clearing a dungeon, use the tier picker to start tier 1.
+4. Legacy > Ascension shows the requirement, the score and the point preview.
+
+`tools/capture_endgame_screenshots.gd` builds a late-game account and captures screens 32 to 41.
+
 ## Offline progression
 **Files:** `scripts/progression/*.gd`, `scripts/multiplayer/*.gd`, `scripts/save/save_service.gd`,
 `scripts/core/time_source.gd`, `scripts/ui/offline_report_panel.gd`
@@ -300,7 +335,7 @@ nothing)
 **Manual test:**
 1. Assign all three characters.
 2. Open **Dev**, then **Simulate 1 hour away**. Check the report.
-3. Try **Simulate 2 days away**: the report shows the 8 h cap.
+3. Try **Simulate 2 days away**: the report shows the 8 h cap. Relics and perks raise it.
 4. For a real test, close the game, wait at least 1 minute, and reopen it.
 
 ## Save system
@@ -324,12 +359,13 @@ seed and state, sim time, and the ledger. Characters added to data after a save 
 | Panels | `scripts/ui/*_panel.gd` | Activity (with XP/h estimate), Inventory/Storage, Skills, Offline report |
 
 | SocialPanel | `scripts/ui/social_panel.gd` | Account, Friends, Guild (chat), Market, World (events, boss, players nearby) |
+| LegacyPanel | `scripts/ui/legacy_panel.gd` | Relics, Pets, Mounts, Mastery, Ascension (perks, confirm), Season (Festival Merchant) |
 | PresenceLayer | `scripts/world/presence_layer.gd` | Other players' heroes as named blue markers, interpolated |
 
 **Visual test:** `tools/capture_screenshots.gd` renders 24 screenshots of the key screens (requires
 a display or Xvfb).
 
-## Test inventory (200 offline tests, plus 29 against a live server)
+## Test inventory (221 offline tests, plus 29 against a live server)
 
 | Suite | File | Tests | Covers |
 |---|---|---|---|
@@ -356,6 +392,7 @@ a display or Xvfb).
 | integration | test_backend | 3 | save/offline with a fake clock |
 | integration | test_world_expansion | 23 | regions, gates, fog, surveys, discoveries, secrets, navigation, fast travel, outposts, quests, reputation, vendors, mailbox, save v3 |
 | integration | test_adventures | 16 | dungeons, bosses, expeditions, encounters, notifications |
+| integration | test_endgame | 21 | endgame regions, collectibles, relics, pets, mounts, mastery, mythic tiers, seasons, World Ascension, save v4 |
 | simulation | test_conservation | 6 | item ledger across every system |
 | simulation | test_offline_progress | 8 | offline simulation and reports |
 | smoke | Main.tscn headless boot (in run_tests.sh) | 1 | scenes, UI, autoload |

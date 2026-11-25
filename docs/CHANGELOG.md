@@ -1,5 +1,66 @@
 # Changelog
 
+## 0.5.0 (2026-11-25): Phase 5, endgame
+
+### Added
+- **Endgame regions** on a taller world map (128 x 144):
+  - The **Shadowlands** (level 60 to 90): Gloomhold, Wraith Fields, Shadowbark Wood, the
+    Voidstone Pits, the Black Marsh, the Knights' Barrow and the Void Rift.
+  - The **Celestial Isles** (level 80 to 99): Skyreach, Skywood Grove, the Aether Gardens,
+    Starfall Isle, Serpent Reach, Golem Isle and the Sentinel Terrace. The isles need a flying
+    mount.
+  - Both regions get outposts, 10 discoveries, 5 new terrain tiles and 2 new gates.
+- **Content**:
+  - voidsteel and starmetal gear; shadowbark and skywood bows, staves and rods;
+  - gloom eel and cloud koi;
+  - nightshade and aether bloom, with a shadow draught potion;
+  - 8 gathering nodes, 6 enemies, the Hollow King and Astral Wyrm bosses;
+  - the Dread Citadel and Starfall Sanctum dungeons;
+  - 2 expeditions, 4 main quests (09 to 12), 6 regional quests, 4 contracts and 8 seasonal
+    contracts;
+  - 5 vendors (two stables, the Gloomhold Quartermaster, the Skyreach Archivist and the
+    Festival Merchant).
+- **Mythic heroes**:
+  - Nyx Voidwalker (Dread Citadel sigil);
+  - Kaelen Stormforge (Starfall Sanctum sigil);
+  - Astraea Skyborn (first World Ascension).
+- **Relics** (12):
+  - account-wide bonuses in 3 slots, up to 6 with the Relic Attunement perk;
+  - levels 1 to 5, upgraded with relic dust;
+  - duplicates turn into dust.
+- **Pets** (8): each follows one hero and levels (to 10) from 5% of that hero's XP.
+- **Mounts** (7): travel speed and other bonuses, one rider each; flying mounts open the
+  Celestial Isles.
+- **Mastery**: XP earned at level 99 builds mastery levels (to 20) for that skill, with
+  milestone rewards at 5, 10 and 20.
+- **Mythic dungeon tiers** 1 to 10 for any cleared dungeon:
+  - enemy health +15% and damage +8% per tier;
+  - affixes Fortified (2), Tyrannical (4), Frenzied (6) and Famished (8);
+  - rewards x(1 + 0.25 x tier), relic dust and a relic chance.
+- **World Ascension** after the last main quest:
+  - resets the world and keeps the legacy;
+  - grants ascension points for 9 permanent perks;
+  - the first ascension also grants Astraea's sigil and the Celestial Drake.
+- **Seasons** from the calendar (Bloomtide, Sunfire Regatta, Harvest Moon, Frostfall): each has
+  a bonus, seasonal contracts that pay festival tokens, and seasonal stock.
+- **Legacy screen** (10th nav button), a mythic tier picker in Journeys, a **Use** button in
+  Storage, and toasts for endgame events.
+- **New conditions**: `season`, `mount`, `ascension`, `mythic_tier`, `mastery`.
+- **Tests and tools**:
+  - `tests/integration/test_endgame.gd` (21 tests, 221 offline tests in total);
+  - `tools/capture_endgame_screenshots.gd` and screenshots 32 to 41;
+  - endgame tables in `tools/balance_report.gd`.
+
+### Changed
+- **Save format 4.** Older saves keep their fog when the map grows.
+- **Offline cap** now adds the `offline_cap_hours` stat.
+- **The HUD navigation** has two rows of five buttons.
+
+### Not done (see the roadmap)
+- **Seasonal festivals** are contracts, a merchant and a bonus. There are no special festival
+  maps or events.
+- **Server-side checks** do not cover endgame progress (relic levels, mastery, mythic records).
+
 ## 0.4.0 (2026-11-25): Phase 4, multiplayer
 
 ### Added

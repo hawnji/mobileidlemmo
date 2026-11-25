@@ -5,13 +5,19 @@ You collect adventurers, give them jobs, and they travel the world on their own 
 fish, fight and craft, and they keep working while you are offline. Automation is the
 gameplay, not a shortcut around it.
 
-**Current status: Phase 4 (multiplayer) complete, on top of Phases 1 to 3.** Online play
-needs the Nakama server in [server/](server/README.md); without one the game plays fully
-offline. The world simulation still runs on the device and the server validates it (see the
-roadmap's known gaps). See [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) for what
-is done, the known gaps and what comes next.
+**Current status: all five phases are built.** Phase 5 (endgame) sits on top of Phases 1 to 4.
+Online play needs the Nakama server in [server/](server/README.md); without one, the game plays
+fully offline. The world simulation still runs on the device, and the server validates it (see
+the roadmap's known gaps). Balance is first-pass and the art is placeholder.
+[docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md) lists what is done, every known gap,
+and what comes next.
+
+![Phase 5 screenshots](docs/screenshots/phase5_overview.png)
+
+<details><summary>Phase 4 screenshots</summary>
 
 ![Phase 4 screenshots](docs/screenshots/phase4_overview.png)
+</details>
 
 <details><summary>Phase 3 screenshots</summary>
 
@@ -115,6 +121,35 @@ is done, the known gaps and what comes next.
 - A **co-op world boss** shared by all players, **world events** (Weekend Bounty, Market Day),
   and **player visibility**: other players' heroes in your region appear on the map.
 
+### Added in Phase 5
+- **Two endgame regions** below the old map: the **Shadowlands** (blight, a black marsh, the
+  Void Rift) and the **Celestial Isles** (floating islands joined by starstone bridges). The
+  Celestial Isles open only with a **flying mount**.
+- **New content**:
+  - voidsteel and starmetal gear, and shadowbark and skywood weapons;
+  - 8 new gathering nodes, 6 enemies and 2 bosses;
+  - 2 advanced dungeons, 2 expeditions, 4 main quests, 6 regional quests and 4 contracts.
+- **Mythic heroes**:
+  - Nyx Voidwalker and Kaelen Stormforge come from dungeon sigils.
+  - Astraea Skyborn comes from the first World Ascension.
+- **Relics** (12): account-wide bonuses in 3 to 6 slots. You level them with relic dust.
+- **Pets** (8): each pet follows one hero and levels from 5% of that hero's XP.
+- **Mounts** (7): faster travel, plus more carry space or other bonuses.
+- **Mastery**: skills at level 99 keep earning XP as mastery levels (up to 20), and each level
+  gives a bonus for that skill.
+- **Mythic dungeon tiers** 1 to 10:
+  - each tier makes enemies tougher;
+  - affixes (Fortified, Tyrannical, Frenzied, Famished) start at tier 2;
+  - rewards scale, with relic dust and a chance at a relic.
+- **World Ascension**: reset the world and keep your heroes and legacy, and earn points for 9
+  permanent perks.
+- **Seasons** follow the calendar. Each season gives a bonus, festival contracts that pay
+  festival tokens, and a Festival Merchant with seasonal stock.
+- A **Legacy** screen (new nav button), a mythic tier picker in Journeys, and a **Use** button in
+  Storage for eggs, mount whistles, relics and sigils.
+- Totals: 190 items, 97 recipes, 29 enemy types including 6 bosses, 64 activities, 27
+  characters, 59 quests and 6 regions.
+
 ## Running the game
 
 1. Install **Godot 4.3** or newer (the standard build, not .NET).
@@ -130,7 +165,9 @@ is done, the known gaps and what comes next.
 6. The top bar's **x1** button changes simulation speed (x1, x5, x20) so you can watch whole loops
    quickly. **Dev** has "simulate time away" buttons for testing offline progression, plus Save and
    Reset. Both are offline-only.
-7. **Social** is the online hub. To play online, start a server (see
+7. **Legacy** holds relics, pets, mounts, mastery, World Ascension and the current season. Use
+   eggs, mount whistles, relics and sigils from **Storage** first.
+8. **Social** is the online hub. To play online, start a server (see
    [server/README.md](server/README.md)) and enter its address in Social > Account.
 
 ## Running the tests
@@ -152,12 +189,14 @@ Other tools:
 
 ```bash
 python3 tools/generate_greenvale_map.py      # regenerate + validate the starter map
-python3 tools/generate_world_map.py          # compose + validate the 4-region world map (run after the above)
+python3 tools/generate_world_map.py          # compose + validate the 6-region world map (run after the above)
 python3 tools/generate_placeholder_art.py    # regenerate placeholder art
-godot --headless --path . -s res://tools/balance_report.gd   # gathering, combat, crafting, exploration, expedition and dungeon numbers
+godot --headless --path . -s res://tools/balance_report.gd   # gathering, combat, crafting, exploration, expedition, dungeon, mythic and mastery numbers
 godot --headless --path . -s res://tools/gacha_report.gd     # base and effective gacha rates
 xvfb-run godot --path . --rendering-method gl_compatibility \
   -s res://tools/capture_screenshots.gd -- --out=/tmp/shots  # visual smoke test + screenshots
+xvfb-run godot --path . --rendering-method gl_compatibility \
+  -s res://tools/capture_endgame_screenshots.gd -- --out=/tmp/shots  # endgame regions and Legacy screen
 WB_NAKAMA_URL=http://127.0.0.1:7350 xvfb-run godot --path . --rendering-method gl_compatibility \
   -s res://tools/capture_online_screenshots.gd -- --out=/tmp/shots  # online screens (needs a server)
 python3 tools/build_server_module.py         # rebuild server/nakama/modules/index.js
@@ -182,6 +221,7 @@ scripts/combat/        EnemyState, CombatRules, DungeonRun (party vs floors and 
 scripts/quests/        QuestState (quests, contracts, reputation)
 scripts/expeditions/   ExpeditionState (slots, odds, deterministic resolution)
 scripts/notifications/ NotificationCenter (inbox), LocalNotifier (OS bridge, needs a plugin)
+scripts/endgame/       EndgameState (relics, pets, mounts, mastery, ascension perks, mythic records, seasons)
 scripts/economy/       Wallet
 scripts/equipment/     EquipmentService (equip, wear, repair, upgrade)
 scripts/recruitment/   RecruitmentState (rolls, pity, effective rates)
@@ -197,7 +237,8 @@ tools/                 Map/art generators, test runner script, balance report, s
 docs/                  Design, architecture, roadmap, systems, data schema, balance, changelog
 ```
 
-Folders for later phases already exist and each has a README describing what goes there.
+Some folders (for example `assets/audio` and `scenes/combat`) carry a README that describes
+what goes there.
 
 ## Documentation
 

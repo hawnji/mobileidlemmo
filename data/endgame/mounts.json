@@ -1,0 +1,90 @@
+{
+ "schema_version": 1,
+ "mounts": [
+  {
+   "id": "pack_pony",
+   "name": "Pack Pony",
+   "rarity": "uncommon",
+   "effects": {
+    "move_speed": 1.15,
+    "carry_capacity": 4
+   },
+   "tags": [],
+   "description": "Steady and strong. +15% travel speed, +4 carry.",
+   "icon": "res://assets/resources/items/mount_pack_pony.png"
+  },
+  {
+   "id": "mountain_goat",
+   "name": "Mountain Goat",
+   "rarity": "rare",
+   "effects": {
+    "move_speed": 1.2
+   },
+   "tags": [],
+   "description": "Sure-footed in the mountains. +20% travel speed.",
+   "icon": "res://assets/resources/items/mount_mountain_goat.png"
+  },
+  {
+   "id": "sand_strider",
+   "name": "Sand Strider",
+   "rarity": "rare",
+   "effects": {
+    "move_speed": 1.25
+   },
+   "tags": [],
+   "description": "A long-legged desert bird. +25% travel speed.",
+   "icon": "res://assets/resources/items/mount_sand_strider.png"
+  },
+  {
+   "id": "shadow_steed",
+   "name": "Shadow Steed",
+   "rarity": "epic",
+   "effects": {
+    "move_speed": 1.3,
+    "damage": 1.03
+   },
+   "tags": [],
+   "description": "Fast and fearsome. +30% travel speed, +3% damage.",
+   "icon": "res://assets/resources/items/mount_shadow_steed.png"
+  },
+  {
+   "id": "griffin",
+   "name": "Griffin",
+   "rarity": "legendary",
+   "effects": {
+    "move_speed": 1.35
+   },
+   "tags": [
+    "flying"
+   ],
+   "description": "A flying mount: reaches the Celestial Isles. +35% travel speed.",
+   "icon": "res://assets/resources/items/mount_griffin.png"
+  },
+  {
+   "id": "frost_elk",
+   "name": "Frost Elk",
+   "rarity": "epic",
+   "effects": {
+    "move_speed": 1.25,
+    "gather_speed.all": 1.03
+   },
+   "tags": [],
+   "description": "A seasonal mount. +25% travel speed, +3% gathering.",
+   "icon": "res://assets/resources/items/mount_frost_elk.png"
+  },
+  {
+   "id": "celestial_drake",
+   "name": "Celestial Drake",
+   "rarity": "mythic",
+   "effects": {
+    "move_speed": 1.5,
+    "xp.all": 1.03
+   },
+   "tags": [
+    "flying"
+   ],
+   "description": "A flying mythic mount. +50% travel speed, +3% XP.",
+   "icon": "res://assets/resources/items/mount_celestial_drake.png"
+  }
+ ]
+}

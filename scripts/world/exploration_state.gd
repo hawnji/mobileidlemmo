@@ -217,6 +217,13 @@ func load_dict(d: Dictionary) -> void:
 		var bytes := Marshalls.base64_to_raw(raw).decompress(int(d.get("fog_size", 0)), FileAccess.COMPRESSION_DEFLATE)
 		if bytes.size() == revealed.size():
 			_rebuild_from(bytes)
+		elif bytes.size() < revealed.size() and width > 0 and bytes.size() % width == 0:
+			# The map grew taller (Phase 5 added rows below): keep the old fog.
+			var grown := PackedByteArray()
+			grown.resize(revealed.size())
+			for i in bytes.size():
+				grown[i] = bytes[i]
+			_rebuild_from(grown)
 	discovered.clear()
 	var disc: Variant = d.get("discovered", {})
 	if disc is Dictionary:

@@ -595,6 +595,192 @@
    "blocks_movement": true,
    "sprite": "res://assets/resources/nodes/royal_dig_site.png",
    "depleted_sprite": "res://assets/resources/nodes/dig_site_done.png"
+  },
+  {
+   "id": "voidstone_rock",
+   "name": "Voidstone Rock",
+   "skill": "mining",
+   "required_level": 80,
+   "gather_seconds": 13.0,
+   "xp": 210,
+   "yield": {
+    "item": "voidstone_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "void_shard",
+     "chance": 0.002
+    },
+    {
+     "item": "pet_egg_rock_crab",
+     "chance": 0.0004
+    }
+   ],
+   "charges": 2,
+   "respawn_seconds": 60,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/voidstone_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "shadowbark_tree",
+   "name": "Shadowbark Tree",
+   "skill": "woodcutting",
+   "required_level": 70,
+   "gather_seconds": 12.0,
+   "xp": 200,
+   "yield": {
+    "item": "shadowbark_log",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "pet_egg_sapling",
+     "chance": 0.0004
+    }
+   ],
+   "charges": 4,
+   "respawn_seconds": 50,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/shadowbark_tree.png",
+   "depleted_sprite": "res://assets/resources/nodes/tree_stump.png"
+  },
+  {
+   "id": "gloom_eel_spot",
+   "name": "Gloom Eel Spot",
+   "skill": "fishing",
+   "required_level": 70,
+   "gather_seconds": 9.0,
+   "xp": 120,
+   "yield": {
+    "item": "raw_gloom_eel",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "pet_egg_river_otter",
+     "chance": 0.0004
+    }
+   ],
+   "charges": 6,
+   "respawn_seconds": 20,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/fishing_spot.png",
+   "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+  },
+  {
+   "id": "nightshade_patch",
+   "name": "Nightshade Patch",
+   "skill": "foraging",
+   "required_level": 70,
+   "gather_seconds": 10.0,
+   "xp": 150,
+   "yield": {
+    "item": "nightshade",
+    "min": 1,
+    "max": 2
+   },
+   "rare_drops": [],
+   "charges": 3,
+   "respawn_seconds": 60,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/nightshade_patch.png",
+   "depleted_sprite": "res://assets/resources/nodes/herb_bush_picked.png"
+  },
+  {
+   "id": "starmetal_rock",
+   "name": "Starmetal Rock",
+   "skill": "mining",
+   "required_level": 90,
+   "gather_seconds": 15.0,
+   "xp": 300,
+   "yield": {
+    "item": "starmetal_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "star_fragment",
+     "chance": 0.002
+    }
+   ],
+   "charges": 2,
+   "respawn_seconds": 75,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/starmetal_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "skywood_tree",
+   "name": "Skywood Tree",
+   "skill": "woodcutting",
+   "required_level": 85,
+   "gather_seconds": 14.0,
+   "xp": 280,
+   "yield": {
+    "item": "skywood_log",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "pet_egg_cloud_sprite",
+     "chance": 0.0003
+    }
+   ],
+   "charges": 4,
+   "respawn_seconds": 60,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/skywood_tree.png",
+   "depleted_sprite": "res://assets/resources/nodes/tree_stump.png"
+  },
+  {
+   "id": "cloud_koi_spot",
+   "name": "Cloud Koi Pond",
+   "skill": "fishing",
+   "required_level": 85,
+   "gather_seconds": 10.0,
+   "xp": 170,
+   "yield": {
+    "item": "raw_cloud_koi",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "pet_egg_golden_toad",
+     "chance": 0.0002
+    }
+   ],
+   "charges": 6,
+   "respawn_seconds": 25,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/fishing_spot.png",
+   "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+  },
+  {
+   "id": "aether_bloom_patch",
+   "name": "Aether Bloom",
+   "skill": "foraging",
+   "required_level": 85,
+   "gather_seconds": 12.0,
+   "xp": 220,
+   "yield": {
+    "item": "aether_bloom",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [],
+   "charges": 3,
+   "respawn_seconds": 70,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/aether_bloom_patch.png",
+   "depleted_sprite": "res://assets/resources/nodes/herb_bush_picked.png"
   }
  ]
 }

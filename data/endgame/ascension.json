@@ -1,0 +1,167 @@
+{
+ "schema_version": 1,
+ "description": "World Ascension resets the world (gold, storage, town, regions, quests, reputation, exploration) and keeps heroes, skills, gear, premium currency, relics, pets, mounts and mastery. It grants ascension points for permanent perks.",
+ "requirements": [
+  {
+   "type": "quest",
+   "quest": "mq_12_starfall"
+  }
+ ],
+ "score": {
+  "per_skill_level": 1,
+  "per_mastery_level": 5,
+  "per_mythic_tier": 40,
+  "per_discovery": 2
+ },
+ "points": {
+  "scale": 30.0,
+  "unit": 100.0,
+  "minimum": 5
+ },
+ "first_ascension_rewards": {
+  "items": {
+   "sigil_astraea_skyborn": 1,
+   "mount_celestial_drake": 1
+  }
+ },
+ "perks": [
+  {
+   "id": "insight",
+   "name": "Ascended Insight",
+   "max_rank": 5,
+   "cost": [
+    10,
+    20,
+    30,
+    40,
+    50
+   ],
+   "effects_per_rank": {
+    "xp.all": 1.05
+   },
+   "description": "+5% XP in every skill per rank."
+  },
+  {
+   "id": "swift_hands",
+   "name": "Swift Hands",
+   "max_rank": 5,
+   "cost": [
+    10,
+    20,
+    30,
+    40,
+    50
+   ],
+   "effects_per_rank": {
+    "gather_speed.all": 1.05
+   },
+   "description": "+5% gathering speed per rank."
+  },
+  {
+   "id": "artisan",
+   "name": "Master Artisan",
+   "max_rank": 5,
+   "cost": [
+    10,
+    20,
+    30,
+    40,
+    50
+   ],
+   "effects_per_rank": {
+    "craft_speed.all": 1.05
+   },
+   "description": "+5% crafting speed per rank."
+  },
+  {
+   "id": "warlord",
+   "name": "Warlord",
+   "max_rank": 5,
+   "cost": [
+    10,
+    20,
+    30,
+    40,
+    50
+   ],
+   "effects_per_rank": {
+    "damage": 1.05
+   },
+   "description": "+5% damage per rank."
+  },
+  {
+   "id": "long_rest",
+   "name": "Long Rest",
+   "max_rank": 4,
+   "cost": [
+    15,
+    30,
+    45,
+    60
+   ],
+   "effects_per_rank": {
+    "offline_cap_hours": 2
+   },
+   "description": "+2 hours of offline progress per rank."
+  },
+  {
+   "id": "attunement",
+   "name": "Relic Attunement",
+   "max_rank": 3,
+   "cost": [
+    25,
+    50,
+    75
+   ],
+   "effects_per_rank": {
+    "relic_slots": 1
+   },
+   "description": "+1 relic slot per rank."
+  },
+  {
+   "id": "pathfinder",
+   "name": "Pathfinder",
+   "max_rank": 5,
+   "cost": [
+    8,
+    16,
+    24,
+    32,
+    40
+   ],
+   "effects_per_rank": {
+    "move_speed": 1.04
+   },
+   "description": "+4% travel speed per rank."
+  },
+  {
+   "id": "fortune",
+   "name": "Fortune",
+   "max_rank": 3,
+   "cost": [
+    20,
+    40,
+    60
+   ],
+   "effects_per_rank": {
+    "rare_drop.all": 1.1
+   },
+   "description": "+10% rare drop chance per rank."
+  },
+  {
+   "id": "head_start",
+   "name": "Head Start",
+   "max_rank": 5,
+   "cost": [
+    5,
+    10,
+    15,
+    20,
+    25
+   ],
+   "start_gold_per_rank": 5000,
+   "effects_per_rank": {},
+   "description": "Start each ascension with 5,000 more gold per rank."
+  }
+ ]
+}
