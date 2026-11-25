@@ -6,6 +6,7 @@ extends PanelContainer
 signal assign_requested
 signal bag_requested
 signal skills_requested
+signal gear_requested
 
 var world: SimulationWorld
 var character: Adventurer
@@ -71,7 +72,7 @@ func _init() -> void:
 	bars.add_child(skbox)
 	var buttons := HBoxContainer.new()
 	v.add_child(buttons)
-	for spec in [["Assign", "assign"], ["Bag", "bag"], ["Skills", "skills"], ["Stop", "stop"], ["Follow", "follow"]]:
+	for spec in [["Assign", "assign"], ["Bag", "bag"], ["Gear", "gear"], ["Skills", "skills"], ["Stop", "stop"], ["Follow", "follow"]]:
 		var b := UiTheme.button(spec[0], 19)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.custom_minimum_size = Vector2(0, 58)
@@ -80,6 +81,7 @@ func _init() -> void:
 			"assign": b.pressed.connect(func() -> void: assign_requested.emit())
 			"bag": b.pressed.connect(func() -> void: bag_requested.emit())
 			"skills": b.pressed.connect(func() -> void: skills_requested.emit())
+			"gear": b.pressed.connect(func() -> void: gear_requested.emit())
 			"stop":
 				_stop_btn = b
 				b.pressed.connect(func() -> void:
@@ -101,7 +103,7 @@ func show_character(p_world: SimulationWorld, p_character: Adventurer) -> void:
 	_name.text = character.display_name
 	_name.add_theme_color_override("font_color", UiTheme.rarity_color(character.rarity))
 	var d := character.definition
-	_sub.text = "%s %s  |  %s  |  %s" % [String(character.rarity).capitalize(), d.get("title", ""), String(d.get("combat_specialty", "")).capitalize(), d.get("passive", {}).get("name", "")]
+	_sub.text = "%s %s %s  |  %s  |  %s" % ["*".repeat(character.stars), String(character.rarity).capitalize(), d.get("title", ""), String(d.get("combat_specialty", "")).capitalize(), d.get("passive", {}).get("name", "")]
 	_follow_btn.set_pressed_no_signal(Game.follow_selected)
 	refresh()
 
@@ -110,15 +112,15 @@ func refresh() -> void:
 	if character == null:
 		return
 	var reg := world.registry
-	_state.text = "%s  -  %s" % [CharacterStates.label_of(character.state), world.location_name_at(character.tile)]
+	_state.text = "%s  -  %s  |  HP %d/%d" % [CharacterStates.label_of(character.state), world.location_name_at(character.tile), int(character.health), int(character.max_health())]
 	var asg := character.assignment
 	_stop_btn.disabled = asg == null or not character.is_busy()
 	if asg:
 		var act: Dictionary = reg.activities.get(asg.activity_id, {})
-		var skill := String(act.get("skill", ""))
-		var rate := _rate(asg.activity_id, asg.return_fill_ratio)
+		var rate := _rate(asg)
+		var skill := String(rate.get("skill", act.get("skill", "")))
 		_activity.text = "%s  |  ~%s XP/h  |  %s" % [act.get("name", "?"), ActivityPanel._n(rate.get("xp_per_hour", 0.0)), character.status_message]
-		_rules.text = "%s.  %s.  Trips: %d" % [asg.describe_return_rule(), asg.describe_continue_rule(), asg.trips_completed]
+		_rules.text = "%s.  %s.  Trips: %d  %s" % [asg.describe_return_rule(), asg.describe_continue_rule(), asg.trips_completed, asg.describe_route()]
 		var xp := character.skills.get_xp(skill)
 		_skill_label.text = "%s %d" % [reg.skills.get(skill, {}).get("name", skill), character.skills.get_level(skill)]
 		_skill_bar.value = reg.skill_xp_table.progress_to_next(xp)
@@ -131,8 +133,9 @@ func refresh() -> void:
 	_bag.value = character.inventory.fill_ratio()
 
 
-func _rate(activity_id: String, ratio: float) -> Dictionary:
-	var key := "%s:%s:%d" % [activity_id, ratio, character.skills.get_level(String(world.registry.activities[activity_id].skill))]
+func _rate(asg: Assignment) -> Dictionary:
+	var key := "%s:%s:%s:%d" % [asg.activity_id, asg.recipe_id, asg.return_fill_ratio, character.character_level()]
 	if not _rate_cache.has(key):
-		_rate_cache[key] = ActivityEstimator.estimate(world, character, activity_id, ratio)
+		_rate_cache.clear()
+		_rate_cache[key] = ActivityEstimator.estimate(world, character, asg.activity_id, asg.return_fill_ratio, asg)
 	return _rate_cache[key]

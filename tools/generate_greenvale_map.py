@@ -140,6 +140,9 @@ for (x, y) in [(48, 5), (51, 4), (55, 5), (58, 8), (49, 9), (57, 11)]:
 for (x, y) in [(53, 7), (59, 4), (47, 7)]:
     put(x, y, "c")
     add_node("tin_rock", x, y, "tin_rock")
+for (x, y) in [(56, 12), (59, 12), (60, 9)]:   # deep gallery: iron
+    put(x, y, "c")
+    add_node("iron_rock", x, y, "iron_rock")
 
 oak_spots = []
 tries = 0
@@ -154,16 +157,92 @@ while len(oak_spots) < 12 and tries < 5000:
 for (x, y) in oak_spots:
     add_node("oak_tree", x, y, "oak_tree")
 
+herb_spots = []
+tries = 0
+while len(herb_spots) < 8 and tries < 5000:
+    tries += 1
+    x, y = rng.randrange(3, 19), rng.randrange(10, 38)
+    if g[y][x] != "f" or abs(y - bridge_y) <= 1:
+        continue
+    if any(abs(x - ox) + abs(y - oy) < 3 for ox, oy in oak_spots + herb_spots):
+        continue
+    herb_spots.append((x, y))
+for (x, y) in herb_spots:
+    add_node("herb_bush", x, y, "herb_bush")
+
 fish_spots = []
 for y in [34, 37, 40, 43]:
     cx = river_x[y]
     fish_spots.append((cx + 1, y))
 for (x, y) in fish_spots:
     add_node("minnow_spot", x, y, "minnow_spot")
+for y in [4, 8, 12]:          # upper river: trout
+    add_node("trout_spot", river_x[y] + 1, y, "trout_spot")
+for y in [18, 21, 24]:        # willow bend: willows on the east sand bank
+    x = river_x[y] + 2
+    put(x, y, "s")
+    add_node("willow_tree", x, y, "willow_tree")
 
+for (x, y) in [(38, 40), (41, 40), (44, 40), (47, 40)]:
+    add_node("potato_patch", x, y, "potato_patch")
+for (x, y) in [(38, 43), (42, 43), (46, 43)]:
+    add_node("marrentill_patch", x, y, "marrentill_patch")
+
+# --- Crafting stations in the village plaza -------------------------------
+stations = [
+    {"id": "furnace_1", "type": "furnace", "name": "Furnace", "tile": [37, 28]},
+    {"id": "anvil_1", "type": "anvil", "name": "Anvil", "tile": [39, 28]},
+    {"id": "workbench_1", "type": "workbench", "name": "Workbench", "tile": [48, 28]},
+    {"id": "range_1", "type": "range", "name": "Cooking Range", "tile": [50, 28]},
+    {"id": "alchemy_table_1", "type": "alchemy_table", "name": "Alchemy Table", "tile": [52, 30]},
+]
+
+# --- Enemy spawns ----------------------------------------------------------
+enemies = []
+
+
+def add_enemy(enemy, x, y):
+    if g[y][x] in "T^~Hw":
+        put(x, y, "." if g[y][x] != "T" else "f")
+    enemies.append({"id": f"{enemy}_{len([e for e in enemies if e['enemy'] == enemy]) + 1}", "enemy": enemy, "tile": [x, y]})
+
+
+for (x, y) in [(58, 19), (61, 22), (58, 26), (60, 30)]:
+    add_enemy("slime", x, y)
+for (x, y) in [(60, 18), (57, 23), (61, 27), (58, 33)]:
+    add_enemy("giant_rat", x, y)
+for (x, y) in [(4, 4), (7, 5), (5, 7), (9, 3)]:
+    add_enemy("wolf", x, y)
+for (x, y) in [(55, 41), (58, 40), (60, 43)]:
+    add_enemy("goblin", x, y)
+for (x, y) in [(57, 44), (61, 41)]:
+    add_enemy("goblin_archer", x, y)
+add_enemy("goblin_warrior", 59, 45)
+add_enemy("forest_troll", 5, 43)
+# clear space around the troll
+for dx in range(-2, 3):
+    for dy in range(-2, 3):
+        if g[43 + dy][5 + dx] == "T":
+            put(5 + dx, 43 + dy, "f")
+
+# --- Building plots ---------------------------------------------------------
+buildings = [
+    {"building": "town_hall", "rect": [37, 23, 4, 3], "work_tile": [38, 26]},
+    {"building": "bank", "rect": [44, 23, 5, 3], "work_tile": [46, 26]},
+    {"building": "tavern", "rect": [50, 23, 3, 4], "work_tile": [49, 25]},
+    {"building": "blacksmith", "rect": [37, 31, 4, 4], "work_tile": [38, 30]},
+    {"building": "workshop", "rect": [49, 31, 4, 4], "work_tile": [50, 30]},
+    {"building": "academy", "rect": [43, 33, 4, 3], "work_tile": [44, 32]},
+    {"building": "farm", "rect": [36, 39, 15, 6], "work_tile": [41, 37]},
+    {"building": "housing", "rect": [54, 23, 2, 2], "work_tile": [54, 25]},
+    {"building": "marketplace", "rect": [54, 27, 2, 2], "work_tile": [54, 29]},
+    {"building": "barracks", "rect": [54, 31, 2, 2], "work_tile": [54, 33]},
+    {"building": "guild_hall", "rect": [33, 23, 2, 2], "work_tile": [34, 25]},
+    {"building": "expedition_center", "rect": [33, 32, 2, 2], "work_tile": [34, 34]},
+]
 
 # --- Validation: everything reachable from spawn --------------------------
-node_tiles = {tuple(n["tile"]) for n in nodes} | {storage_tile}
+node_tiles = {tuple(n["tile"]) for n in nodes} | {storage_tile} | {tuple(st["tile"]) for st in stations} | {tuple(e["tile"]) for e in enemies}
 
 
 def walkable(x, y):
@@ -186,16 +265,24 @@ def reachable_adjacent(t):
     return any((x + dx, y + dy) in seen for dx in (-1, 0, 1) for dy in (-1, 0, 1) if dx or dy)
 
 
-bad = [n for n in nodes if not reachable_adjacent(tuple(n["tile"]))]
+bad = [n for n in nodes + stations + enemies if not reachable_adjacent(tuple(n["tile"]))]
 assert reachable_adjacent(storage_tile), "storage unreachable"
-assert not bad, f"unreachable nodes: {bad}"
+assert not bad, f"unreachable objects: {bad}"
+bad_work = [b for b in buildings if tuple(b["work_tile"]) not in seen]
+assert not bad_work, f"unreachable building work tiles: {bad_work}"
 
 locations = [
     {"id": "greenvale_hollow", "name": "Greenvale Hollow", "kind": "village", "rect": [35, 21, 18, 16]},
     {"id": "copper_mine", "name": "Greenvale Mine", "kind": "resource_area", "rect": [46, 2, 15, 15]},
     {"id": "oakwood_forest", "name": "Oakwood Forest", "kind": "resource_area", "rect": [1, 2, 21, 44]},
     {"id": "greenvale_river", "name": "Greenvale River", "kind": "resource_area", "rect": [24, 32, 10, 14]},
-    {"id": "hollow_farms", "name": "Hollow Farms", "kind": "farmland", "rect": [35, 38, 17, 8]},
+    {"id": "hollow_farms", "name": "Hollow Farms", "kind": "resource_area", "rect": [35, 38, 17, 8]},
+    {"id": "upper_river", "name": "Upper River", "kind": "resource_area", "rect": [22, 1, 12, 16]},
+    {"id": "willow_bend", "name": "Willow Bend", "kind": "resource_area", "rect": [26, 16, 8, 10]},
+    {"id": "east_meadows", "name": "East Meadows", "kind": "hunting_ground", "rect": [56, 17, 7, 20]},
+    {"id": "wolf_den", "name": "Wolf Den", "kind": "hunting_ground", "rect": [1, 1, 11, 9]},
+    {"id": "goblin_camp", "name": "Goblin Camp", "kind": "hunting_ground", "rect": [53, 38, 10, 9]},
+    {"id": "troll_hollow", "name": "Troll Hollow", "kind": "hunting_ground", "rect": [1, 39, 9, 8]},
 ]
 
 out = {
@@ -210,6 +297,9 @@ out = {
     "storage": {"id": "village_storage", "name": "Village Storage", "tile": list(storage_tile)},
     "locations": locations,
     "resource_nodes": nodes,
+    "stations": stations,
+    "enemy_spawns": enemies,
+    "building_plots": buildings,
 }
 path = Path(__file__).resolve().parent.parent / "data" / "regions" / "greenvale_start.json"
 path.write_text(json.dumps(out, indent=2))

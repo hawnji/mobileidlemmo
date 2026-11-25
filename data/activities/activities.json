@@ -1,17 +1,214 @@
 {
-  "schema_version": 1,
-  "activities": [
-    {"id": "mine_copper", "name": "Mine Copper", "type": "gathering", "skill": "mining", "required_level": 1,
-     "node_type": "copper_rock", "default_destination": "copper_mine", "animation": "mine",
-     "description": "Travel to the Greenvale mine, mine copper ore and bring it back to storage."},
-    {"id": "mine_tin", "name": "Mine Tin", "type": "gathering", "skill": "mining", "required_level": 1,
-     "node_type": "tin_rock", "default_destination": "copper_mine", "animation": "mine",
-     "description": "Mine tin ore in the Greenvale mine."},
-    {"id": "chop_oak", "name": "Chop Oak", "type": "gathering", "skill": "woodcutting", "required_level": 1,
-     "node_type": "oak_tree", "default_destination": "oakwood_forest", "animation": "chop",
-     "description": "Fell oak trees in Oakwood Forest."},
-    {"id": "fish_minnow", "name": "Fish Minnows", "type": "gathering", "skill": "fishing", "required_level": 1,
-     "node_type": "minnow_spot", "default_destination": "greenvale_river", "animation": "fish",
-     "description": "Catch minnows along the Greenvale river."}
-  ]
+ "schema_version": 2,
+ "activities": [
+  {
+   "id": "mine_copper",
+   "name": "Mine Copper",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 1,
+   "node_type": "copper_rock",
+   "default_destination": "copper_mine",
+   "animation": "mine",
+   "description": "Mine copper ore in the Greenvale Mine."
+  },
+  {
+   "id": "mine_tin",
+   "name": "Mine Tin",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 1,
+   "node_type": "tin_rock",
+   "default_destination": "copper_mine",
+   "animation": "mine",
+   "description": "Mine tin ore in the Greenvale Mine."
+  },
+  {
+   "id": "mine_iron",
+   "name": "Mine Iron",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 15,
+   "node_type": "iron_rock",
+   "default_destination": "copper_mine",
+   "animation": "mine",
+   "description": "Mine iron ore in the deep gallery."
+  },
+  {
+   "id": "chop_oak",
+   "name": "Chop Oak",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 1,
+   "node_type": "oak_tree",
+   "default_destination": "oakwood_forest",
+   "animation": "chop",
+   "description": "Fell oak trees in Oakwood Forest."
+  },
+  {
+   "id": "chop_willow",
+   "name": "Chop Willow",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 15,
+   "node_type": "willow_tree",
+   "default_destination": "willow_bend",
+   "animation": "chop",
+   "description": "Cut willows along the river bend."
+  },
+  {
+   "id": "fish_minnow",
+   "name": "Fish Minnows",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 1,
+   "node_type": "minnow_spot",
+   "default_destination": "greenvale_river",
+   "animation": "fish",
+   "description": "Catch minnows along the Greenvale river."
+  },
+  {
+   "id": "fish_trout",
+   "name": "Fish Trout",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 20,
+   "node_type": "trout_spot",
+   "default_destination": "upper_river",
+   "animation": "fish",
+   "description": "Catch trout in the upper river."
+  },
+  {
+   "id": "forage_herbs",
+   "name": "Forage Herbs",
+   "type": "gathering",
+   "skill": "foraging",
+   "required_level": 1,
+   "node_type": "herb_bush",
+   "default_destination": "oakwood_forest",
+   "animation": "forage",
+   "description": "Gather wild guam leaves in the forest."
+  },
+  {
+   "id": "farm_potatoes",
+   "name": "Farm Potatoes",
+   "type": "gathering",
+   "skill": "farming",
+   "required_level": 1,
+   "node_type": "potato_patch",
+   "default_destination": "hollow_farms",
+   "animation": "forage",
+   "description": "Tend and harvest potato patches."
+  },
+  {
+   "id": "farm_marrentill",
+   "name": "Farm Marrentill",
+   "type": "gathering",
+   "skill": "farming",
+   "required_level": 12,
+   "node_type": "marrentill_patch",
+   "default_destination": "hollow_farms",
+   "animation": "forage",
+   "description": "Grow and harvest marrentill herbs."
+  },
+  {
+   "id": "smelt",
+   "name": "Smelt Bars",
+   "type": "crafting",
+   "skill": "smithing",
+   "required_level": 1,
+   "station": "furnace",
+   "animation": "craft",
+   "description": "Smelt ore into bars at the furnace."
+  },
+  {
+   "id": "forge",
+   "name": "Forge Equipment",
+   "type": "crafting",
+   "skill": "smithing",
+   "required_level": 1,
+   "station": "anvil",
+   "animation": "craft",
+   "description": "Hammer bars into tools and armour."
+  },
+  {
+   "id": "craft",
+   "name": "Craft Goods",
+   "type": "crafting",
+   "skill": "crafting",
+   "required_level": 1,
+   "station": "workbench",
+   "animation": "craft",
+   "description": "Saw planks, fletch bows, make jewellery."
+  },
+  {
+   "id": "cook",
+   "name": "Cook Food",
+   "type": "crafting",
+   "skill": "cooking",
+   "required_level": 1,
+   "station": "range",
+   "animation": "craft",
+   "description": "Cook food for adventurers."
+  },
+  {
+   "id": "brew",
+   "name": "Brew Potions",
+   "type": "crafting",
+   "skill": "herblore",
+   "required_level": 1,
+   "station": "alchemy_table",
+   "animation": "craft",
+   "description": "Brew potions from herbs."
+  },
+  {
+   "id": "hunt_meadows",
+   "name": "Clear the East Meadows",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "east_meadows",
+   "animation": "fight",
+   "description": "Slimes and giant rats. Good for beginners."
+  },
+  {
+   "id": "hunt_wolves",
+   "name": "Hunt Wolves",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "wolf_den",
+   "animation": "fight",
+   "description": "Wolves in the north-west woods. Drop pelts."
+  },
+  {
+   "id": "raid_goblins",
+   "name": "Raid the Goblin Camp",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "goblin_camp",
+   "animation": "fight",
+   "description": "Goblins, archers and warriors. Drop trinkets and gold."
+  },
+  {
+   "id": "slay_troll",
+   "name": "Slay the Forest Troll",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "troll_hollow",
+   "animation": "fight",
+   "description": "A dangerous troll. Bring food."
+  },
+  {
+   "id": "construct",
+   "name": "Construct Buildings",
+   "type": "construction",
+   "skill": "construction",
+   "required_level": 1,
+   "animation": "build",
+   "description": "Work on the active town construction project."
+  }
+ ]
 }

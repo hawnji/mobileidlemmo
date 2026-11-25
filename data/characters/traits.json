@@ -1,0 +1,73 @@
+{
+ "schema_version": 1,
+ "traits": [
+  {
+   "id": "hard_worker",
+   "name": "Hard Worker",
+   "description": "+8% gathering speed.",
+   "effects": {
+    "gather_speed.all": 1.08
+   }
+  },
+  {
+   "id": "treasure_seeker",
+   "name": "Treasure Seeker",
+   "description": "+25% rare drops and +15% discovery.",
+   "effects": {
+    "rare_drop.all": 1.25,
+    "discovery": 1.15
+   }
+  },
+  {
+   "id": "battle_hardened",
+   "name": "Battle Hardened",
+   "description": "+10% combat damage.",
+   "effects": {
+    "damage": 1.1
+   }
+  },
+  {
+   "id": "efficient",
+   "name": "Efficient",
+   "description": "15% chance not to use up food; 5% chance to save crafting materials.",
+   "effects": {
+    "supply_saving_chance": 0.15,
+    "preserve_chance.all": 0.05
+   }
+  },
+  {
+   "id": "pack_mule",
+   "name": "Pack Mule",
+   "description": "Carry 6 more items.",
+   "effects": {
+    "carry_capacity": 6
+   }
+  },
+  {
+   "id": "night_owl",
+   "name": "Night Owl",
+   "description": "+15% gathering speed at night.",
+   "effects": {
+    "night_gather_speed": 1.15
+   }
+  },
+  {
+   "id": "perfectionist",
+   "name": "Perfectionist",
+   "description": "8% chance to craft an extra item; +5% crafting speed.",
+   "effects": {
+    "double_craft_chance.all": 0.08,
+    "craft_speed.all": 1.05
+   }
+  },
+  {
+   "id": "adventurous",
+   "name": "Adventurous",
+   "description": "+15% expedition rewards and +5% movement speed.",
+   "effects": {
+    "expedition_reward": 1.15,
+    "move_speed": 1.05
+   }
+  }
+ ]
+}

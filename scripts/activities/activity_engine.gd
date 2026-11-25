@@ -4,14 +4,19 @@ extends RefCounted
 ##
 ## tick() consumes a time budget by running state handlers until the budget
 ## is spent. Each handler returns the time it did NOT use, so a single large
-## step (e.g. 1 s during offline simulation) produces the same outcome as many
-## small ones (0.1 s while playing). That property is what lets online play and
-## offline simulation share one implementation.
+## step (1 s during offline simulation) produces the same outcome as many
+## small ones (0.1 s while playing). That property is what lets online play
+## and offline simulation share one implementation.
 ##
-## Gathering loop:
-##   ASSIGNED -> CHECKING_CONDITIONS -> PATHFINDING -> TRAVELING
-##   -> PERFORMING_ACTIVITY -> CHECKING_CONDITIONS -> ... (bag full)
-##   -> PATHFINDING -> RETURNING -> DEPOSITING -> CHECKING_CONDITIONS (resume)
+## The engine owns the shared parts of every loop: travel, pathfinding,
+## depositing, restocking, waiting, resting and injury. What a character
+## does at its work site is delegated to an ActivityHandler chosen by the
+## activity's "type" (gathering, crafting, combat, construction).
+##
+## Gathering:    CHECK -> PATHFINDING -> TRAVELING -> PERFORMING -> CHECK ... -> RETURNING -> DEPOSITING
+## Crafting:     CHECK -> (RETURNING -> DEPOSITING -> RESTOCKING) -> TRAVELING to station -> PERFORMING ...
+## Combat:       CHECK -> TRAVELING to enemy -> COMBAT -> CHECK ... (INJURED -> RESTING) (RETURNING -> DEPOSITING -> RESTING -> RESTOCKING)
+## Construction: CHECK -> TRAVELING to the building plot -> PERFORMING ... until the project completes
 
 const S := CharacterStates.State
 const TP := Adventurer.TravelPurpose
@@ -24,12 +29,17 @@ var world:
 		return _world_ref.get_ref()
 var _world_ref: WeakRef
 var registry: DataRegistry
+var handlers := {}  # activity type -> ActivityHandler
 var max_steps_per_tick := 32
 var waiting_retry_seconds := 2.0
+var materials_retry_seconds := 10.0
 var unreachable_cooldown := 30.0
 var max_path_failures := 5
 var deposit_seconds := 1.0
+var restock_seconds := 1.0
 var character_xp_share := 0.25
+var regen_per_second := 0.01
+var rest_regen_per_second := 0.08
 
 
 func _init(p_world, p_registry: DataRegistry) -> void:
@@ -37,10 +47,25 @@ func _init(p_world, p_registry: DataRegistry) -> void:
 	registry = p_registry
 	max_steps_per_tick = int(registry.get_config("simulation.max_state_steps_per_tick", 32))
 	waiting_retry_seconds = float(registry.get_config("simulation.waiting_retry_seconds", 2.0))
+	materials_retry_seconds = float(registry.get_config("simulation.materials_retry_seconds", 10.0))
 	unreachable_cooldown = float(registry.get_config("simulation.unreachable_node_cooldown_seconds", 30.0))
 	max_path_failures = int(registry.get_config("simulation.max_consecutive_path_failures", 5))
 	deposit_seconds = float(registry.get_config("simulation.deposit_seconds", 1.0))
+	restock_seconds = float(registry.get_config("simulation.restock_seconds", 1.0))
 	character_xp_share = float(registry.get_config("character_progression.character_xp_share", 0.25))
+	regen_per_second = float(registry.get_config("combat.regen_per_second", 0.01))
+	rest_regen_per_second = float(registry.get_config("combat.rest_regen_per_second", 0.08))
+	handlers = {
+		"gathering": GatheringHandler.new(),
+		"crafting": CraftingHandler.new(),
+		"combat": CombatHandler.new(),
+		"construction": ConstructionHandler.new(),
+	}
+
+
+func handler_for(activity_id: String) -> ActivityHandler:
+	var act: Dictionary = registry.activities.get(activity_id, {})
+	return handlers.get(String(act.get("type", "gathering")))
 
 
 # ==========================================================================
@@ -52,6 +77,8 @@ func assign(ch: Adventurer, asg: Assignment) -> String:
 	var err := validate_assignment(ch, asg)
 	if not err.is_empty():
 		return err
+	if ch.state == S.INJURED:
+		return "%s is recovering from an injury" % ch.display_name
 	cancel(ch, "")
 	asg.character_id = ch.id
 	asg.started_at_sim_time = world.sim_time
@@ -71,29 +98,37 @@ func validate_assignment(ch: Adventurer, asg: Assignment) -> String:
 		return "Unknown activity '%s'" % asg.activity_id
 	var skill := String(act.get("skill", ""))
 	var req := int(act.get("required_level", 1))
-	if ch.skills.get_level(skill) < req:
+	if not skill.is_empty() and ch.skills.get_level(skill) < req:
 		return "%s needs %s level %d" % [ch.display_name, registry.skills.get(skill, {}).get("name", skill), req]
 	if not asg.destination_id.is_empty() and not world.locations.has(asg.destination_id):
 		return "Unknown destination '%s'" % asg.destination_id
-	if world.nodes_of_type(String(act.get("node_type", "")), asg.destination_id).is_empty():
-		return "No %s at that destination" % registry.node_types.get(act.node_type, {}).get("name", act.node_type)
-	return ""
+	var h := handler_for(asg.activity_id)
+	if h == null:
+		return "Activity type '%s' is not supported" % act.get("type", "")
+	return h.validate(self, ch, asg, act)
 
 
 ## Stops the current assignment. The character keeps its bag contents.
+## An injured character keeps recovering.
 func cancel(ch: Adventurer, message := "Stopped") -> void:
-	_release_node(ch)
+	release_targets(ch)
 	ch.path.clear()
 	ch.path_index = 0
 	ch.move_progress = 0.0
 	ch.action_elapsed = 0.0
 	ch.travel_purpose = TP.NONE
+	ch.assignment = null
+	if ch.state == S.INJURED or ch.state == S.RESTING:
+		return
 	if ch.state != S.IDLE:
 		_set_state(ch, S.IDLE, message)
-	ch.assignment = null
 
 
 func tick(ch: Adventurer, dt: float) -> void:
+	if ch.state != S.COMBAT and ch.state != S.INJURED and ch.state != S.RESTING:
+		var mh := ch.max_health()
+		if ch.health < mh:
+			ch.health = minf(ch.health + regen_per_second * mh * dt, mh)
 	var remaining := dt
 	var steps := 0
 	while remaining > EPS and steps < max_steps_per_tick:
@@ -116,7 +151,7 @@ func _run_state(ch: Adventurer, t: float) -> float:
 		S.IDLE, S.COMPLETED:
 			return 0.0
 		S.ASSIGNED:
-			_set_state(ch, S.CHECKING_CONDITIONS)
+			set_state(ch, S.CHECKING_CONDITIONS)
 			return t
 		S.CHECKING_CONDITIONS:
 			_check_conditions(ch)
@@ -125,113 +160,95 @@ func _run_state(ch: Adventurer, t: float) -> float:
 			return _pathfind(ch, t)
 		S.TRAVELING, S.RETURNING:
 			return _move(ch, t)
-		S.PERFORMING_ACTIVITY:
-			return _perform(ch, t)
+		S.PERFORMING_ACTIVITY, S.COMBAT:
+			var h := _handler(ch)
+			if h == null:
+				interrupt(ch, "Activity no longer exists")
+				return t
+			return h.perform(self, ch, t)
 		S.DEPOSITING:
 			return _deposit(ch, t)
+		S.RESTOCKING:
+			return _restock(ch, t)
+		S.RESTING:
+			return _rest(ch, t)
+		S.INJURED:
+			ch.injured_remaining -= t
+			if ch.injured_remaining > 0.0:
+				return 0.0
+			var left := -ch.injured_remaining
+			ch.injured_remaining = 0.0
+			set_state(ch, S.RESTING, "Resting after injury")
+			return left
 		S.WAITING:
 			ch.wait_remaining -= t
 			if ch.wait_remaining > 0.0:
 				return 0.0
 			var left := -ch.wait_remaining
 			ch.wait_remaining = 0.0
-			_set_state(ch, S.CHECKING_CONDITIONS)
+			set_state(ch, S.CHECKING_CONDITIONS)
 			return left
-		_:
-			# Reserved Phase 2 states: hand control back to the decision step.
-			_set_state(ch, S.CHECKING_CONDITIONS)
-			return t
+	set_state(ch, S.CHECKING_CONDITIONS)
+	return t
 
 
-## The decision point of the loop. Decides whether to keep working, find a
-## new node, go home to deposit, or finish.
+func _handler(ch: Adventurer) -> ActivityHandler:
+	if ch.assignment == null:
+		return null
+	return handler_for(ch.assignment.activity_id)
+
+
+## The decision point of every loop.
 func _check_conditions(ch: Adventurer) -> void:
 	var asg := ch.assignment
 	if asg == null:
-		_set_state(ch, S.IDLE, "No assignment")
+		set_state(ch, S.IDLE, "No assignment")
 		return
-	# Full validation happens in assign(); per-cycle we only re-check what can
-	# change during play (data reloads, level requirements).
 	var act: Dictionary = registry.activities.get(asg.activity_id, {})
 	if act.is_empty():
-		_interrupt(ch, "Activity no longer exists")
+		interrupt(ch, "Activity no longer exists")
 		return
-	if ch.skills.get_level(String(act.skill)) < int(act.get("required_level", 1)):
-		_interrupt(ch, "Skill level too low for %s" % act.get("name", ""))
+	var skill := String(act.get("skill", ""))
+	if not skill.is_empty() and ch.skills.get_level(skill) < int(act.get("required_level", 1)):
+		interrupt(ch, "Skill level too low for %s" % act.get("name", ""))
 		return
-	var ntype: Dictionary = registry.node_types[act.node_type]
-	var yield_max := int(ntype.get("yield", {}).get("max", 1))
-
-	# 1. Finished? Deposit what we carry first, then complete.
-	if asg.is_quantity_reached():
-		if ch.inventory.is_empty():
-			_complete(ch)
-		else:
-			_begin_return(ch, "Target reached, returning")
-		return
-
-	# 2. Bag rule: return at the configured fill ratio, or when the next
-	#    gather could not fit.
-	var carrying_primary := ch.inventory.get_quantity(String(ntype.yield.item))
-	var quantity_in_bag_reached := asg.continue_mode == Assignment.ContinueMode.UNTIL_QUANTITY \
-		and asg.target_quantity > 0 and asg.deposited_primary + carrying_primary >= asg.target_quantity
-	if ch.inventory.fill_ratio() >= asg.return_fill_ratio - EPS \
-			or ch.inventory.free_units() < yield_max or quantity_in_bag_reached:
-		_begin_return(ch, "Bag full, returning" if ch.inventory.is_full() else "Returning to deposit")
-		return
-
-	# 3. Keep working the current node if still ours and available.
-	var current: ResourceNodeState = world.nodes.get(ch.target_node_id)
-	if current and current.is_available_for(ch.id) and current.type_id == String(act.node_type):
-		current.reserve(ch.id)
-		if WorldGrid.chebyshev(ch.tile, current.tile) == 1:
-			_start_action(ch)
-		else:
-			ch.travel_purpose = TP.TO_NODE
-			_set_state(ch, S.PATHFINDING)
-		return
-
-	# 4. Pick a new node.
-	_release_node(ch)
-	var node: ResourceNodeState = world.find_best_node(ch, String(act.node_type), asg.destination_id, asg.preferred_node_ids)
-	if node == null:
-		ch.wait_remaining = waiting_retry_seconds
-		_set_state(ch, S.WAITING, "Waiting for a free %s" % ntype.get("name", "node"))
-		return
-	node.reserve(ch.id)
-	ch.target_node_id = node.id
-	if WorldGrid.chebyshev(ch.tile, node.tile) == 1:
-		_start_action(ch)
-	else:
-		ch.travel_purpose = TP.TO_NODE
-		_set_state(ch, S.PATHFINDING, "Heading to %s" % ntype.get("name", "node"))
+	_handler(ch).decide(self, ch, asg, act)
 
 
 func _pathfind(ch: Adventurer, t: float) -> float:
 	if not world.take_path_budget():
 		return t  # no budget this tick; tick() will stop and retry next tick
-	var goal: Vector2i
-	if ch.travel_purpose == TP.TO_STORAGE:
-		goal = world.storage_tile
-	else:
-		var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
-		if node == null:
-			_set_state(ch, S.CHECKING_CONDITIONS)
-			return t
-		goal = node.tile
-	var result: PathResult = world.pathfinder.find_path_to_adjacent(ch.tile, goal)
+	var result: PathResult
+	var target_id := ""
+	match ch.travel_purpose:
+		TP.TO_STORAGE:
+			result = world.pathfinder.find_path_to_adjacent(ch.tile, world.storage_tile)
+		TP.TO_NODE:
+			var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
+			if node == null:
+				set_state(ch, S.CHECKING_CONDITIONS)
+				return t
+			target_id = node.id
+			result = world.pathfinder.find_path_to_adjacent(ch.tile, node.tile)
+		_:
+			target_id = ch.target_enemy_id if not ch.target_enemy_id.is_empty() else ch.target_station_id
+			if ch.target_adjacent:
+				result = world.pathfinder.find_path_to_adjacent(ch.tile, ch.target_tile)
+			else:
+				result = world.pathfinder.find_path(ch.tile, ch.target_tile)
 	if not result.reachable:
 		ch.path_failures += 1
 		if ch.path_failures >= max_path_failures:
-			_interrupt(ch, "Stuck: no route found")
+			interrupt(ch, "Stuck: no route found")
 			return t
-		if ch.travel_purpose == TP.TO_NODE:
-			ch.unreachable_until[ch.target_node_id] = world.sim_time + unreachable_cooldown
-			_release_node(ch)
-			_set_state(ch, S.CHECKING_CONDITIONS, "Route blocked, trying another spot")
-		else:
+		if ch.travel_purpose == TP.TO_STORAGE:
 			ch.wait_remaining = waiting_retry_seconds
-			_set_state(ch, S.WAITING, "Cannot reach storage, retrying")
+			set_state(ch, S.WAITING, "Cannot reach storage, retrying")
+		else:
+			if not target_id.is_empty():
+				ch.unreachable_until[target_id] = world.sim_time + unreachable_cooldown
+			release_targets(ch)
+			set_state(ch, S.CHECKING_CONDITIONS, "Route blocked, trying another spot")
 		return t
 	ch.path_failures = 0
 	ch.path = result.path
@@ -240,9 +257,9 @@ func _pathfind(ch: Adventurer, t: float) -> float:
 	if ch.path.is_empty():
 		_arrive(ch)
 	elif ch.travel_purpose == TP.TO_STORAGE:
-		_set_state(ch, S.RETURNING)
+		set_state(ch, S.RETURNING)
 	else:
-		_set_state(ch, S.TRAVELING)
+		set_state(ch, S.TRAVELING)
 	return t
 
 
@@ -253,7 +270,7 @@ func _move(ch: Adventurer, t: float) -> float:
 		if not world.grid.is_walkable(next):
 			# Terrain changed under us: re-plan from the current tile.
 			ch.move_progress = 0.0
-			_set_state(ch, S.PATHFINDING)
+			set_state(ch, S.PATHFINDING)
 			return t
 		var step_len := 1.41421356 if (next.x != ch.tile.x and next.y != ch.tile.y) else 1.0
 		var full_time: float = step_len * world.grid.move_cost(next) / speed
@@ -279,88 +296,13 @@ func _arrive(ch: Adventurer) -> void:
 	if ch.travel_purpose == TP.TO_STORAGE:
 		ch.action_elapsed = 0.0
 		ch.facing = (world.storage_tile - ch.tile).sign()
-		_set_state(ch, S.DEPOSITING, "Depositing")
-	else:
-		var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
-		if node and node.is_available_for(ch.id) and WorldGrid.chebyshev(ch.tile, node.tile) == 1:
-			_start_action(ch)
-		else:
-			_set_state(ch, S.CHECKING_CONDITIONS)
-
-
-func _start_action(ch: Adventurer) -> void:
-	var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
-	ch.action_elapsed = 0.0
-	ch.travel_purpose = TP.NONE
-	if node:
-		ch.facing = (node.tile - ch.tile).sign()
-	var act: Dictionary = registry.activities[ch.assignment.activity_id]
-	_set_state(ch, S.PERFORMING_ACTIVITY, String(act.get("name", "Working")))
-
-
-func _perform(ch: Adventurer, t: float) -> float:
-	var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
-	if node == null or node.reserved_by != ch.id or node.is_depleted():
-		_set_state(ch, S.CHECKING_CONDITIONS, "Resource depleted")
-		return t
-	var ntype: Dictionary = registry.node_types[node.type_id]
-	var skill := String(ntype.skill)
-	var duration := float(ntype.gather_seconds) / ch.gather_speed_multiplier(skill, int(ntype.get("required_level", 1)))
-	var need := duration - ch.action_elapsed
-	if t < need:
-		ch.action_elapsed += t
-		return 0.0
-	t -= need
-	ch.action_elapsed = 0.0
-	_complete_gather(ch, node, ntype)
-	_set_state(ch, S.CHECKING_CONDITIONS)
-	return t
-
-
-## Resolves one successful gather. Order matters for exploit safety: the node
-## charge is consumed first, and the item is only granted if the charge was
-## real. Items that cannot fit are never created.
-func _complete_gather(ch: Adventurer, node: ResourceNodeState, ntype: Dictionary) -> void:
-	var y: Dictionary = ntype.get("yield", {})
-	var item_id := String(y.get("item", ""))
-	var qty: int = world.rng.randi_range(int(y.get("min", 1)), int(y.get("max", 1)))
-	qty = mini(qty, ch.inventory.can_add(item_id, qty))
-	if qty <= 0:
-		return  # no room: nothing consumed, nothing granted
-	if not node.consume():
+		set_state(ch, S.DEPOSITING, "Depositing")
 		return
-	if node.is_depleted():
-		world.mark_depleted(node)
-	var added := ch.inventory.add(item_id, qty)
-	world.record_production(item_id, added)
-	ch.record("gathered", item_id, added)
-	ch.stats.actions = int(ch.stats.actions) + 1
-	if node.is_depleted():
-		world.emit_event("node_depleted", {"node_id": node.id})
-	if world.wants_event("item_gathered"):
-		world.emit_event("item_gathered", {"character_id": ch.id, "item_id": item_id, "qty": added, "node_id": node.id})
-
-	var skill := String(ntype.skill)
-	var xp := float(ntype.get("xp", 0.0)) * ch.xp_multiplier(skill)
-	var levels := ch.skills.add_xp(skill, xp)
-	var char_before := ch.character_level(registry)
-	ch.character_xp = minf(ch.character_xp + xp * character_xp_share, registry.character_xp_table.max_xp)
-	if world.wants_event("xp_gained"):
-		world.emit_event("xp_gained", {"character_id": ch.id, "skill": skill, "xp": xp})
-	if levels > 0:
-		world.emit_event("level_up", {"character_id": ch.id, "skill": skill, "level": ch.skills.get_level(skill)})
-	if ch.character_level(registry) > char_before:
-		world.emit_event("character_level_up", {"character_id": ch.id, "level": ch.character_level(registry)})
-
-	for rd in ntype.get("rare_drops", []):
-		var chance := float(rd.get("chance", 0.0)) * ch.rare_drop_multiplier(skill)
-		if world.rng.randf() < chance:
-			var rid := String(rd.item)
-			var got := ch.inventory.add(rid, 1)
-			if got > 0:
-				world.record_production(rid, got)
-				ch.record("gathered", rid, got)
-				world.emit_event("rare_drop", {"character_id": ch.id, "item_id": rid})
+	var h := _handler(ch)
+	if h == null:
+		set_state(ch, S.CHECKING_CONDITIONS)
+		return
+	h.on_arrive(self, ch)
 
 
 func _deposit(ch: Adventurer, t: float) -> float:
@@ -371,73 +313,205 @@ func _deposit(ch: Adventurer, t: float) -> float:
 	t -= need
 	ch.action_elapsed = 0.0
 	var asg := ch.assignment
-	var primary := ""
-	if asg:
-		var act: Dictionary = registry.activities.get(asg.activity_id, {})
-		primary = String(registry.node_types.get(act.get("node_type", ""), {}).get("yield", {}).get("item", ""))
-	var moved: Dictionary = ch.inventory.transfer_all_to(world.storage)
+	var h := _handler(ch)
+	var keep: Dictionary = h.keep_on_deposit(self, ch, asg) if h and asg else {}
+	var primary := h.primary_item(self, asg) if h and asg else ""
+	var moved := {}
+	for item_id in ch.inventory.items():
+		var qty := ch.inventory.get_quantity(item_id) - int(keep.get(item_id, 0))
+		if qty <= 0:
+			continue
+		var fit: int = world.storage.can_add(item_id, qty)
+		if fit > 0:
+			ch.inventory.remove(item_id, fit)
+			world.storage.add(item_id, fit)
+			moved[item_id] = fit
 	var total := 0
 	for item_id in moved:
 		total += int(moved[item_id])
 		ch.record("deposited", item_id, int(moved[item_id]))
-		if item_id == primary and asg:
+		if item_id == primary and asg and h.counts_deposits():
 			asg.deposited_primary += int(moved[item_id])
 	if total > 0:
 		ch.stats.trips = int(ch.stats.trips) + 1
 		if asg:
 			asg.trips_completed += 1
-	world.emit_event("deposited", {"character_id": ch.id, "items": moved, "total": total})
-	if not ch.inventory.is_empty():
+		world.emit_event("deposited", {"character_id": ch.id, "items": moved, "total": total})
+	if asg and asg.auto_repair:
+		var spent := EquipmentService.repair_all(world, ch)
+		if spent > 0:
+			ch.status_message = "Repaired equipment (%d gold)" % spent
+	var leftover := 0
+	for item_id in ch.inventory.items():
+		leftover += ch.inventory.get_quantity(item_id) - int(keep.get(item_id, 0))
+	if leftover > 0:
 		# Storage is full. Never drop or duplicate items: wait and retry.
 		ch.wait_remaining = waiting_retry_seconds * 5.0
-		_set_state(ch, S.WAITING, "Storage full")
+		set_state(ch, S.WAITING, "Storage full")
 		world.emit_event("interrupted", {"character_id": ch.id, "reason": "Storage full"})
 		ch.stats.interruptions = int(ch.stats.interruptions) + 1
 		return t
-	if asg == null or asg.continue_mode == Assignment.ContinueMode.SINGLE_TRIP or asg.is_quantity_reached():
-		_complete(ch)
+	if asg == null:
+		complete(ch)
 		return t
-	_set_state(ch, S.CHECKING_CONDITIONS, "Resuming %s" % registry.activities[asg.activity_id].get("name", ""))
+	if asg.is_quantity_reached() or (asg.continue_mode == Assignment.ContinueMode.SINGLE_TRIP and h.single_trip_done(self, ch, asg)):
+		complete(ch)
+		return t
+	h.after_deposit(self, ch, asg)
 	return t
 
 
+func _restock(ch: Adventurer, t: float) -> float:
+	var need := restock_seconds - ch.action_elapsed
+	if t < need:
+		ch.action_elapsed += t
+		return 0.0
+	t -= need
+	ch.action_elapsed = 0.0
+	var h := _handler(ch)
+	if h == null or ch.assignment == null:
+		set_state(ch, S.IDLE, "No assignment")
+		return t
+	h.restock(self, ch, ch.assignment)
+	return t
+
+
+func _rest(ch: Adventurer, t: float) -> float:
+	var mh := ch.max_health()
+	var rate := rest_regen_per_second * mh * ch.stat("healing")
+	var missing := mh - ch.health
+	if missing <= EPS:
+		ch.health = mh
+		_after_rest(ch)
+		return t
+	var need := missing / maxf(rate, 0.0001)
+	if t < need:
+		ch.health += rate * t
+		return 0.0
+	ch.health = mh
+	_after_rest(ch)
+	return t - need
+
+
+func _after_rest(ch: Adventurer) -> void:
+	if ch.assignment == null:
+		set_state(ch, S.IDLE, "Rested")
+		return
+	var h := _handler(ch)
+	if h and h.wants_restock(self, ch, ch.assignment) and WorldGrid.chebyshev(ch.tile, world.storage_tile) == 1:
+		ch.action_elapsed = 0.0
+		set_state(ch, S.RESTOCKING, "Restocking")
+	else:
+		set_state(ch, S.CHECKING_CONDITIONS, "Rested")
+
+
 # ==========================================================================
-# Helpers
+# Helpers shared by handlers
 # ==========================================================================
 
-func _begin_return(ch: Adventurer, message: String) -> void:
-	_release_node(ch)
+## Grants skill XP (with the character's multipliers) plus character XP,
+## and fires level-up, milestone and trait hooks.
+func grant_xp(ch: Adventurer, skill: String, base_xp: float) -> float:
+	if base_xp <= 0.0 or skill.is_empty():
+		return 0.0
+	var xp := base_xp * ch.xp_multiplier(skill)
+	var before := ch.skills.get_level(skill)
+	var levels := ch.skills.add_xp(skill, xp)
+	var char_before := ch.character_level()
+	ch.character_xp = minf(ch.character_xp + xp * character_xp_share, registry.character_xp_table.max_xp)
+	if world.wants_event("xp_gained"):
+		world.emit_event("xp_gained", {"character_id": ch.id, "skill": skill, "xp": xp})
+	if levels > 0:
+		var after := ch.skills.get_level(skill)
+		world.emit_event("level_up", {"character_id": ch.id, "skill": skill, "level": after})
+		world.on_skill_level_up(ch, skill, before, after)
+	var char_after := ch.character_level()
+	if char_after > char_before:
+		world.emit_event("character_level_up", {"character_id": ch.id, "level": char_after})
+		world.on_character_level_up(ch)
+	return xp
+
+
+func begin_return(ch: Adventurer, message: String) -> void:
+	release_targets(ch)
 	ch.travel_purpose = TP.TO_STORAGE
 	# PATHFINDING resolves "already next to storage" instantly with an empty path.
-	_set_state(ch, S.PATHFINDING, message)
+	set_state(ch, S.PATHFINDING, message)
 
 
-func _complete(ch: Adventurer) -> void:
-	_release_node(ch)
+## Sends the character to a tile (adjacent to it when `adjacent`).
+func travel_to(ch: Adventurer, tile: Vector2i, adjacent: bool, message: String) -> void:
+	ch.travel_purpose = TP.TO_TARGET
+	ch.target_tile = tile
+	ch.target_adjacent = adjacent
+	set_state(ch, S.PATHFINDING, message)
+
+
+func wait(ch: Adventurer, seconds: float, message: String) -> void:
+	ch.wait_remaining = seconds
+	set_state(ch, S.WAITING, message)
+
+
+func complete(ch: Adventurer) -> void:
+	release_targets(ch)
 	ch.travel_purpose = TP.NONE
-	_set_state(ch, S.COMPLETED, "Assignment complete")
+	set_state(ch, S.COMPLETED, "Assignment complete")
 	world.emit_event("assignment_completed", {"character_id": ch.id})
+	var asg := ch.assignment
+	if asg and not asg.route.is_empty():
+		_advance_route(ch, asg)
 
 
-func _interrupt(ch: Adventurer, reason: String) -> void:
+## Route builder: start the next step of the character's route.
+func _advance_route(ch: Adventurer, asg: Assignment) -> void:
+	var next := asg.route_index + 1
+	if next >= asg.route.size():
+		if not asg.route_loop:
+			ch.status_message = "Route complete"
+			world.emit_event("route_completed", {"character_id": ch.id})
+			return
+		next = 0
+	var step := Assignment.from_dict(asg.route[next])
+	step.route = asg.route
+	step.route_index = next
+	step.route_loop = asg.route_loop
+	step.route_name = asg.route_name
+	var err := assign(ch, step)
+	if not err.is_empty():
+		interrupt(ch, "Route step %d: %s" % [next + 1, err])
+		return
+	world.emit_event("route_step", {"character_id": ch.id, "step": next})
+
+
+func interrupt(ch: Adventurer, reason: String) -> void:
 	ch.stats.interruptions = int(ch.stats.interruptions) + 1
 	world.emit_event("interrupted", {"character_id": ch.id, "reason": reason})
-	_release_node(ch)
+	release_targets(ch)
 	ch.path.clear()
 	ch.travel_purpose = TP.NONE
-	_set_state(ch, S.IDLE, reason)
+	set_state(ch, S.IDLE, reason)
 
 
+func release_targets(ch: Adventurer) -> void:
+	if not ch.target_node_id.is_empty():
+		var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
+		if node:
+			node.release(ch.id)
+		ch.target_node_id = ""
+	if not ch.target_enemy_id.is_empty():
+		var e: EnemyState = world.enemies.get(ch.target_enemy_id)
+		if e:
+			e.disengage(ch.id)
+		ch.target_enemy_id = ""
+	ch.target_station_id = ""
+
+
+## Kept for Phase 1 callers and tests.
 func _release_node(ch: Adventurer) -> void:
-	if ch.target_node_id.is_empty():
-		return
-	var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
-	if node:
-		node.release(ch.id)
-	ch.target_node_id = ""
+	release_targets(ch)
 
 
-func _set_state(ch: Adventurer, new_state: int, message := "") -> void:
+func set_state(ch: Adventurer, new_state: int, message := "") -> void:
 	if not message.is_empty():
 		ch.status_message = message
 	if new_state == ch.state:
@@ -451,3 +525,7 @@ func _set_state(ch: Adventurer, new_state: int, message := "") -> void:
 	var w = world
 	if w.wants_event("state_changed"):
 		w.emit_event("state_changed", {"character_id": ch.id, "from": old, "to": new_state})
+
+
+func _set_state(ch: Adventurer, new_state: int, message := "") -> void:
+	set_state(ch, new_state, message)

@@ -1,0 +1,579 @@
+{
+ "schema_version": 1,
+ "recipes": [
+  {
+   "id": "smelt_bronze",
+   "name": "Bronze Bar",
+   "skill": "smithing",
+   "required_level": 1,
+   "station": "furnace",
+   "inputs": {
+    "copper_ore": 1,
+    "tin_ore": 1
+   },
+   "outputs": {
+    "bronze_bar": 1
+   },
+   "seconds": 4.0,
+   "xp": 6.5
+  },
+  {
+   "id": "smelt_iron",
+   "name": "Iron Bar",
+   "skill": "smithing",
+   "required_level": 15,
+   "station": "furnace",
+   "inputs": {
+    "iron_ore": 2
+   },
+   "outputs": {
+    "iron_bar": 1
+   },
+   "seconds": 5.0,
+   "xp": 14.0
+  },
+  {
+   "id": "forge_bronze_pickaxe",
+   "name": "Bronze Pickaxe",
+   "skill": "smithing",
+   "required_level": 1,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 2
+   },
+   "outputs": {
+    "bronze_pickaxe": 1
+   },
+   "seconds": 5.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_axe",
+   "name": "Bronze Axe",
+   "skill": "smithing",
+   "required_level": 2,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 2
+   },
+   "outputs": {
+    "bronze_axe": 1
+   },
+   "seconds": 5.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_sword",
+   "name": "Bronze Sword",
+   "skill": "smithing",
+   "required_level": 3,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 2
+   },
+   "outputs": {
+    "bronze_sword": 1
+   },
+   "seconds": 5.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_helm",
+   "name": "Bronze Helm",
+   "skill": "smithing",
+   "required_level": 4,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 2
+   },
+   "outputs": {
+    "bronze_helm": 1
+   },
+   "seconds": 5.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_gloves",
+   "name": "Bronze Gloves",
+   "skill": "smithing",
+   "required_level": 3,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 1
+   },
+   "outputs": {
+    "bronze_gloves": 1
+   },
+   "seconds": 4.0,
+   "xp": 12.5,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_boots",
+   "name": "Bronze Boots",
+   "skill": "smithing",
+   "required_level": 5,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 1
+   },
+   "outputs": {
+    "bronze_boots": 1
+   },
+   "seconds": 4.0,
+   "xp": 12.5,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_platelegs",
+   "name": "Bronze Platelegs",
+   "skill": "smithing",
+   "required_level": 7,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 3
+   },
+   "outputs": {
+    "bronze_platelegs": 1
+   },
+   "seconds": 6.0,
+   "xp": 37.5,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_bronze_platebody",
+   "name": "Bronze Platebody",
+   "skill": "smithing",
+   "required_level": 9,
+   "station": "anvil",
+   "inputs": {
+    "bronze_bar": 5
+   },
+   "outputs": {
+    "bronze_platebody": 1
+   },
+   "seconds": 8.0,
+   "xp": 62.5,
+   "requires_building": {
+    "blacksmith": 1
+   }
+  },
+  {
+   "id": "forge_iron_pickaxe",
+   "name": "Iron Pickaxe",
+   "skill": "smithing",
+   "required_level": 15,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 2
+   },
+   "outputs": {
+    "iron_pickaxe": 1
+   },
+   "seconds": 5.0,
+   "xp": 50.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_axe",
+   "name": "Iron Axe",
+   "skill": "smithing",
+   "required_level": 16,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 2
+   },
+   "outputs": {
+    "iron_axe": 1
+   },
+   "seconds": 5.0,
+   "xp": 50.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_sword",
+   "name": "Iron Sword",
+   "skill": "smithing",
+   "required_level": 17,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 2
+   },
+   "outputs": {
+    "iron_sword": 1
+   },
+   "seconds": 5.0,
+   "xp": 50.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_helm",
+   "name": "Iron Helm",
+   "skill": "smithing",
+   "required_level": 18,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 2
+   },
+   "outputs": {
+    "iron_helm": 1
+   },
+   "seconds": 5.0,
+   "xp": 50.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_gloves",
+   "name": "Iron Gloves",
+   "skill": "smithing",
+   "required_level": 17,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 1
+   },
+   "outputs": {
+    "iron_gloves": 1
+   },
+   "seconds": 4.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_boots",
+   "name": "Iron Boots",
+   "skill": "smithing",
+   "required_level": 19,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 1
+   },
+   "outputs": {
+    "iron_boots": 1
+   },
+   "seconds": 4.0,
+   "xp": 25.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_platelegs",
+   "name": "Iron Platelegs",
+   "skill": "smithing",
+   "required_level": 21,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 3
+   },
+   "outputs": {
+    "iron_platelegs": 1
+   },
+   "seconds": 6.0,
+   "xp": 75.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "forge_iron_platebody",
+   "name": "Iron Platebody",
+   "skill": "smithing",
+   "required_level": 23,
+   "station": "anvil",
+   "inputs": {
+    "iron_bar": 5
+   },
+   "outputs": {
+    "iron_platebody": 1
+   },
+   "seconds": 8.0,
+   "xp": 125.0,
+   "requires_building": {
+    "blacksmith": 2
+   }
+  },
+  {
+   "id": "saw_oak",
+   "name": "Oak Plank",
+   "skill": "crafting",
+   "required_level": 1,
+   "station": "workbench",
+   "inputs": {
+    "oak_log": 1
+   },
+   "outputs": {
+    "oak_plank": 1
+   },
+   "seconds": 3.0,
+   "xp": 5.0
+  },
+  {
+   "id": "saw_willow",
+   "name": "Willow Plank",
+   "skill": "crafting",
+   "required_level": 15,
+   "station": "workbench",
+   "inputs": {
+    "willow_log": 1
+   },
+   "outputs": {
+    "willow_plank": 1
+   },
+   "seconds": 3.5,
+   "xp": 12.0
+  },
+  {
+   "id": "craft_oak_rod",
+   "name": "Oak Fishing Rod",
+   "skill": "crafting",
+   "required_level": 3,
+   "station": "workbench",
+   "inputs": {
+    "oak_plank": 2
+   },
+   "outputs": {
+    "oak_fishing_rod": 1
+   },
+   "seconds": 5.0,
+   "xp": 16.0
+  },
+  {
+   "id": "craft_willow_rod",
+   "name": "Willow Fishing Rod",
+   "skill": "crafting",
+   "required_level": 18,
+   "station": "workbench",
+   "inputs": {
+    "willow_plank": 2
+   },
+   "outputs": {
+    "willow_fishing_rod": 1
+   },
+   "seconds": 5.0,
+   "xp": 40.0
+  },
+  {
+   "id": "craft_oak_bow",
+   "name": "Oak Shortbow",
+   "skill": "crafting",
+   "required_level": 5,
+   "station": "workbench",
+   "inputs": {
+    "oak_plank": 3
+   },
+   "outputs": {
+    "oak_shortbow": 1
+   },
+   "seconds": 6.0,
+   "xp": 25.0
+  },
+  {
+   "id": "craft_willow_bow",
+   "name": "Willow Shortbow",
+   "skill": "crafting",
+   "required_level": 20,
+   "station": "workbench",
+   "inputs": {
+    "willow_plank": 3
+   },
+   "outputs": {
+    "willow_shortbow": 1
+   },
+   "seconds": 6.0,
+   "xp": 60.0
+  },
+  {
+   "id": "craft_apprentice_staff",
+   "name": "Apprentice Staff",
+   "skill": "crafting",
+   "required_level": 8,
+   "station": "workbench",
+   "inputs": {
+    "oak_plank": 2,
+    "uncut_quartz": 1
+   },
+   "outputs": {
+    "apprentice_staff": 1
+   },
+   "seconds": 6.0,
+   "xp": 35.0
+  },
+  {
+   "id": "craft_willow_staff",
+   "name": "Willow Staff",
+   "skill": "crafting",
+   "required_level": 22,
+   "station": "workbench",
+   "inputs": {
+    "willow_plank": 2,
+    "uncut_quartz": 1
+   },
+   "outputs": {
+    "willow_staff": 1
+   },
+   "seconds": 6.0,
+   "xp": 70.0
+  },
+  {
+   "id": "craft_quartz_ring",
+   "name": "Quartz Ring",
+   "skill": "crafting",
+   "required_level": 10,
+   "station": "workbench",
+   "inputs": {
+    "bronze_bar": 1,
+    "uncut_quartz": 1
+   },
+   "outputs": {
+    "quartz_ring": 1
+   },
+   "seconds": 6.0,
+   "xp": 40.0
+  },
+  {
+   "id": "craft_pearl_amulet",
+   "name": "Pearl Amulet",
+   "skill": "crafting",
+   "required_level": 20,
+   "station": "workbench",
+   "inputs": {
+    "iron_bar": 1,
+    "river_pearl": 1
+   },
+   "outputs": {
+    "pearl_amulet": 1
+   },
+   "seconds": 6.0,
+   "xp": 80.0
+  },
+  {
+   "id": "craft_backpack",
+   "name": "Leather Backpack",
+   "skill": "crafting",
+   "required_level": 12,
+   "station": "workbench",
+   "inputs": {
+    "wolf_pelt": 3
+   },
+   "outputs": {
+    "leather_backpack": 1
+   },
+   "seconds": 6.0,
+   "xp": 45.0
+  },
+  {
+   "id": "cook_minnow",
+   "name": "Cooked Minnow",
+   "skill": "cooking",
+   "required_level": 1,
+   "station": "range",
+   "inputs": {
+    "raw_minnow": 1
+   },
+   "outputs": {
+    "cooked_minnow": 1
+   },
+   "seconds": 2.5,
+   "xp": 10.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.4,
+    "stop_level": 15
+   }
+  },
+  {
+   "id": "cook_trout",
+   "name": "Cooked Trout",
+   "skill": "cooking",
+   "required_level": 15,
+   "station": "range",
+   "inputs": {
+    "raw_trout": 1
+   },
+   "outputs": {
+    "cooked_trout": 1
+   },
+   "seconds": 3.0,
+   "xp": 40.0,
+   "burn": {
+    "item": "burnt_fish",
+    "base_chance": 0.4,
+    "stop_level": 35
+   }
+  },
+  {
+   "id": "bake_potato",
+   "name": "Baked Potato",
+   "skill": "cooking",
+   "required_level": 5,
+   "station": "range",
+   "inputs": {
+    "potato": 1
+   },
+   "outputs": {
+    "baked_potato": 1
+   },
+   "seconds": 3.0,
+   "xp": 15.0
+  },
+  {
+   "id": "brew_healing",
+   "name": "Healing Potion",
+   "skill": "herblore",
+   "required_level": 3,
+   "station": "alchemy_table",
+   "inputs": {
+    "guam_leaf": 2
+   },
+   "outputs": {
+    "healing_potion": 1
+   },
+   "seconds": 4.0,
+   "xp": 25.0
+  },
+  {
+   "id": "brew_vigor",
+   "name": "Vigor Tonic",
+   "skill": "herblore",
+   "required_level": 12,
+   "station": "alchemy_table",
+   "inputs": {
+    "marrentill": 2,
+    "guam_leaf": 1
+   },
+   "outputs": {
+    "vigor_tonic": 1
+   },
+   "seconds": 5.0,
+   "xp": 55.0
+  }
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "schema_version": 1,
+ "unlock_skill_level": 30,
+ "slots_by_character_level": {
+  "1": 1,
+  "50": 2
+ },
+ "respec_cost": {
+  "gems": 100
+ },
+ "specializations": [
+  {
+   "id": "ore_extractor",
+   "name": "Ore Extractor",
+   "skill": "mining",
+   "description": "+20% mining speed.",
+   "effects": {
+    "gather_speed.mining": 1.2
+   }
+  },
+  {
+   "id": "gem_specialist",
+   "name": "Gem Specialist",
+   "skill": "mining",
+   "description": "Triple gem chance, 5% slower mining.",
+   "effects": {
+    "rare_drop.mining": 3.0,
+    "gather_speed.mining": 0.95
+   }
+  },
+  {
+   "id": "master_woodcutter",
+   "name": "Master Woodcutter",
+   "skill": "woodcutting",
+   "description": "+20% woodcutting speed.",
+   "effects": {
+    "gather_speed.woodcutting": 1.2
+   }
+  },
+  {
+   "id": "forester",
+   "name": "Forester",
+   "skill": "woodcutting",
+   "description": "12% chance of an extra log.",
+   "effects": {
+    "yield_bonus_chance.woodcutting": 0.12
+   }
+  },
+  {
+   "id": "angler",
+   "name": "Angler",
+   "skill": "fishing",
+   "description": "+20% fishing speed.",
+   "effects": {
+    "gather_speed.fishing": 1.2
+   }
+  },
+  {
+   "id": "net_caster",
+   "name": "Net Caster",
+   "skill": "fishing",
+   "description": "15% chance of an extra fish, 5% slower.",
+   "effects": {
+    "yield_bonus_chance.fishing": 0.15,
+    "gather_speed.fishing": 0.95
+   }
+  },
+  {
+   "id": "master_smith",
+   "name": "Master Smith",
+   "skill": "smithing",
+   "description": "15% chance to preserve bars and ore.",
+   "effects": {
+    "preserve_chance.smithing": 0.15
+   }
+  },
+  {
+   "id": "swift_forger",
+   "name": "Swift Forger",
+   "skill": "smithing",
+   "description": "+25% smithing speed.",
+   "effects": {
+    "craft_speed.smithing": 1.25
+   }
+  },
+  {
+   "id": "master_crafter",
+   "name": "Master Crafter",
+   "skill": "crafting",
+   "description": "15% chance to preserve materials.",
+   "effects": {
+    "preserve_chance.crafting": 0.15
+   }
+  },
+  {
+   "id": "artisan",
+   "name": "Artisan",
+   "skill": "crafting",
+   "description": "+25% crafting speed.",
+   "effects": {
+    "craft_speed.crafting": 1.25
+   }
+  },
+  {
+   "id": "head_chef",
+   "name": "Head Chef",
+   "skill": "cooking",
+   "description": "10% chance of an extra portion.",
+   "effects": {
+    "double_craft_chance.cooking": 0.1
+   }
+  },
+  {
+   "id": "field_cook",
+   "name": "Field Cook",
+   "skill": "cooking",
+   "description": "+25% cooking speed.",
+   "effects": {
+    "craft_speed.cooking": 1.25
+   }
+  },
+  {
+   "id": "alchemist",
+   "name": "Alchemist",
+   "skill": "herblore",
+   "description": "10% chance of an extra potion.",
+   "effects": {
+    "double_craft_chance.herblore": 0.1
+   }
+  },
+  {
+   "id": "combat_vanguard",
+   "name": "Combat Vanguard",
+   "skill": "defense",
+   "description": "+30 max health and +10 armour.",
+   "effects": {
+    "max_health": 30,
+    "armor": 10
+   }
+  },
+  {
+   "id": "berserker",
+   "name": "Berserker",
+   "skill": "strength",
+   "description": "+15% damage.",
+   "effects": {
+    "damage": 1.15
+   }
+  },
+  {
+   "id": "sharpshooter",
+   "name": "Sharpshooter",
+   "skill": "ranged",
+   "description": "+12 accuracy and +8% damage.",
+   "effects": {
+    "accuracy": 12,
+    "damage": 1.08
+   }
+  },
+  {
+   "id": "battlemage",
+   "name": "Battlemage",
+   "skill": "magic",
+   "description": "+15% damage.",
+   "effects": {
+    "damage": 1.15
+   }
+  },
+  {
+   "id": "dungeon_explorer",
+   "name": "Dungeon Explorer",
+   "skill": "exploration",
+   "description": "+30% discovery and +10% expedition rewards.",
+   "effects": {
+    "discovery": 1.3,
+    "expedition_reward": 1.1
+   }
+  },
+  {
+   "id": "rare_herb_collector",
+   "name": "Rare Herb Collector",
+   "skill": "foraging",
+   "description": "+15% foraging speed and extra herbs.",
+   "effects": {
+    "gather_speed.foraging": 1.15,
+    "yield_bonus_chance.foraging": 0.1
+   }
+  },
+  {
+   "id": "master_builder",
+   "name": "Master Builder",
+   "skill": "construction",
+   "description": "+25% construction speed.",
+   "effects": {
+    "gather_speed.construction": 1.25
+   }
+  }
+ ]
+}

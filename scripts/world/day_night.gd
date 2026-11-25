@@ -17,4 +17,4 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if world:
-		color = _gradient.sample(fmod(world.sim_time / DAY_LENGTH_SECONDS + 0.35, 1.0))
+		color = _gradient.sample(world.day_phase())

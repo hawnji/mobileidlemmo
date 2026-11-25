@@ -20,6 +20,23 @@ var character_order: Array[String] = []
 var terrain_by_symbol := {}
 var terrain_list: Array = []
 var regions := {}
+var traits := {}
+var specializations := {}
+var specialization_config := {}
+var recipes := {}
+var recipe_order: Array[String] = []
+var enemies := {}
+var enemy_variants: Array = []
+var currencies := {}
+var currency_list: Array = []
+var economy_config := {}
+var banners := {}
+var banner_order: Array[String] = []
+var recruitment_config := {}
+var buildings := {}
+var building_order: Array[String] = []
+var town_config := {}
+var stat_families := {}
 var skill_xp_table: XpTable
 var character_xp_table: XpTable
 var load_errors := PackedStringArray()
@@ -62,6 +79,34 @@ func load_from(p_root: String) -> bool:
 	terrain_list = _load_list("regions/terrain.json", "terrain")
 	for t in terrain_list:
 		terrain_by_symbol[t.symbol] = t
+	for t in _load_list("characters/traits.json", "traits"):
+		traits[t.id] = t
+	specialization_config = _load_dict("characters/specializations.json")
+	for sp in specialization_config.get("specializations", []):
+		specializations[sp.id] = sp
+	recipe_order.clear()
+	for r in _load_list("recipes/recipes.json", "recipes"):
+		recipes[r.id] = r
+		recipe_order.append(String(r.id))
+	var en := _load_dict("enemies/enemies.json")
+	for e in en.get("enemies", []):
+		enemies[e.id] = e
+	enemy_variants = en.get("variants", [])
+	economy_config = _load_dict("economy/currencies.json")
+	currency_list = economy_config.get("currencies", [])
+	for c in currency_list:
+		currencies[c.id] = c
+	recruitment_config = _load_dict("recruitment/banners.json")
+	banner_order.clear()
+	for b in recruitment_config.get("banners", []):
+		banners[b.id] = b
+		banner_order.append(String(b.id))
+	town_config = _load_dict("town/buildings.json")
+	building_order.clear()
+	for b in town_config.get("buildings", []):
+		buildings[b.id] = b
+		building_order.append(String(b.id))
+	stat_families = _load_dict("config/stats.json").get("families", {})
 	var start_region := String(get_config("world.start_region", "greenvale_start"))
 	var region := _load_dict("regions/%s.json" % start_region)
 	if not region.is_empty():
@@ -97,6 +142,26 @@ func get_config(path: String, fallback: Variant = null) -> Variant:
 	return node
 
 
+func new_stat_block() -> StatBlock:
+	return StatBlock.new(stat_families)
+
+
+func recipes_for_station(station: String) -> Array[String]:
+	var out: Array[String] = []
+	for rid in recipe_order:
+		if String(recipes[rid].station) == station:
+			out.append(rid)
+	return out
+
+
+func characters_by_acquisition(kind: String) -> Array[String]:
+	var out: Array[String] = []
+	for cid in character_order:
+		if String(characters[cid].get("acquisition", "gacha")) == kind:
+			out.append(cid)
+	return out
+
+
 func get_item_name(item_id: String) -> String:
 	return String(items.get(item_id, {}).get("name", item_id))
 
@@ -122,9 +187,9 @@ func validate() -> PackedStringArray:
 			errors.append("Node type %s needs charges > 0" % nt_id)
 	for a_id in activities:
 		var a: Dictionary = activities[a_id]
-		if not node_types.has(a.get("node_type", "")):
+		if String(a.get("type", "gathering")) == "gathering" and not node_types.has(a.get("node_type", "")):
 			errors.append("Activity %s references unknown node type %s" % [a_id, a.get("node_type")])
-		if not skills.has(a.get("skill", "")):
+		if String(a.get("type", "gathering")) != "combat" and not skills.has(a.get("skill", "")):
 			errors.append("Activity %s references unknown skill %s" % [a_id, a.get("skill")])
 	for c_id in characters:
 		var c: Dictionary = characters[c_id]
@@ -136,6 +201,70 @@ func validate() -> PackedStringArray:
 				errors.append("Character %s has unknown affinity skill %s" % [c_id, s])
 		if int(c.get("base_stats", {}).get("carry_capacity", 0)) <= 0:
 			errors.append("Character %s needs carry_capacity > 0" % c_id)
+	for a_id in activities:
+		var a: Dictionary = activities[a_id]
+		match String(a.get("type", "gathering")):
+			"crafting":
+				if recipes_for_station(String(a.get("station", ""))).is_empty():
+					errors.append("Crafting activity %s has no recipes for station %s" % [a_id, a.get("station")])
+	for r_id in recipes:
+		var r: Dictionary = recipes[r_id]
+		if not skills.has(r.get("skill", "")):
+			errors.append("Recipe %s unknown skill" % r_id)
+		for k in r.get("inputs", {}):
+			if not items.has(k):
+				errors.append("Recipe %s unknown input %s" % [r_id, k])
+		for k in r.get("outputs", {}):
+			if not items.has(k):
+				errors.append("Recipe %s unknown output %s" % [r_id, k])
+		if r.has("burn") and not items.has(r.burn.get("item", "")):
+			errors.append("Recipe %s unknown burn item" % r_id)
+		for b in r.get("requires_building", {}):
+			if not buildings.has(b):
+				errors.append("Recipe %s requires unknown building %s" % [r_id, b])
+	for e_id in enemies:
+		for l in enemies[e_id].get("loot", []):
+			if not items.has(l.get("item", "")):
+				errors.append("Enemy %s loot unknown item %s" % [e_id, l.get("item")])
+	for i_id in items:
+		var it: Dictionary = items[i_id]
+		if it.get("category") == "equipment":
+			if not ["weapon", "head", "body", "legs", "gloves", "boots", "accessory", "tool"].has(it.get("equip_slot", "")):
+				errors.append("Item %s has invalid equip_slot" % i_id)
+			for k in it.get("stats", {}):
+				if not stat_families.has(String(k).get_slice(".", 0)):
+					errors.append("Item %s unknown stat family %s" % [i_id, k])
+	for c_id in characters:
+		var c: Dictionary = characters[c_id]
+		for t in c.get("traits", []):
+			if not traits.has(t):
+				errors.append("Character %s unknown trait %s" % [c_id, t])
+		for k in c.get("passive", {}).get("effects", {}):
+			if not stat_families.has(String(k).get_slice(".", 0)):
+				errors.append("Character %s passive unknown stat family %s" % [c_id, k])
+		if not recruitment_config.get("rarity_order", []).has(c.get("rarity", "")):
+			errors.append("Character %s invalid rarity" % c_id)
+	for b_id in banners:
+		var b: Dictionary = banners[b_id]
+		var total := 0.0
+		for r in b.get("rates", {}):
+			total += float(b.rates[r])
+		if absf(total - 1.0) > 0.0001:
+			errors.append("Banner %s rates sum to %f" % [b_id, total])
+		for c in b.get("costs", {}):
+			if not currencies.has(c):
+				errors.append("Banner %s unknown currency %s" % [b_id, c])
+		var feat: Variant = b.get("featured")
+		if feat is Dictionary and not characters.has(feat.get("character_id", "")):
+			errors.append("Banner %s featured unknown character" % b_id)
+	for b_id in buildings:
+		for lv in buildings[b_id].get("levels", []):
+			for k in lv.get("cost", {}).get("items", {}):
+				if not items.has(k):
+					errors.append("Building %s cost unknown item %s" % [b_id, k])
+			for k in lv.get("effects", {}):
+				if not stat_families.has(String(k).get_slice(".", 0)):
+					errors.append("Building %s unknown effect %s" % [b_id, k])
 	for r_id in regions:
 		errors.append_array(_validate_region(regions[r_id]))
 	return errors
@@ -165,4 +294,10 @@ func _validate_region(region: Dictionary) -> PackedStringArray:
 	for n in region.get("resource_nodes", []):
 		if not node_types.has(n.get("type", "")):
 			errors.append("Region node %s has unknown type %s" % [n.get("id"), n.get("type")])
+	for e in region.get("enemy_spawns", []):
+		if not enemies.has(e.get("enemy", "")):
+			errors.append("Region spawn %s unknown enemy %s" % [e.get("id"), e.get("enemy")])
+	for b in region.get("building_plots", []):
+		if not buildings.has(b.get("building", "")):
+			errors.append("Region plot unknown building %s" % b.get("building"))
 	return errors

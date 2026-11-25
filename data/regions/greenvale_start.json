@@ -11,7 +11,7 @@
     "Tfffffffffffffffffff......s~~~s.........^^^^^^^^^^^^^^^^^^^^^^^^",
     "Tffffffffffffffffffff.....s~~~s,,.......^^^^^^^cccccccccccccc^^^",
     "TfffffTfffffffffTffff...,..s~~~s........^^^^^^^cccccccccccccc^^^",
-    "TffffffTfTfffffffffff...,..s~~~s.........^^^^^^cccccccccccccc^^^",
+    "TffffffffTfffffffffff...,..s~~~s.........^^^^^^cccccccccccccc^^^",
     "TffTTfTTTfffffTfTffff....,.s~~~s.........^^^^^^cccccccccccccc^^^",
     "TffffffffTffffTfTffff......s~~~s..........^^^^^cccccccccccccc^^^",
     "TfffTffffffffffffffff......s~~~s...........^^^^cccccccccccccc^^^",
@@ -47,8 +47,8 @@
     "TfffffffffffffffTTff.....s~~~s.....wwwwwwww=wwwwwwww......,....^",
     "TfffffffffTTffffTfff....,.s~~~s.....xxxxxxxxxxxxxxx....,....,..^",
     "TffffTfffffffffTTTT.......s~~~s.....xxxxxxxxxxxxxxx...,........^",
-    "TfffffTfffTTTfffTTf.....,.s~~~s.....xxxxxxxxxxxxxxx.,..........^",
-    "TffffTTffffffffTfff....,..,s~~~s....xxxxxxxxxxxxxxx............^",
+    "TfffffffffTTTfffTTf.....,.s~~~s.....xxxxxxxxxxxxxxx.,..........^",
+    "TffffffffffffffTfff....,..,s~~~s....xxxxxxxxxxxxxxx............^",
     "TffffffffffffffffTf........s~~~s....xxxxxxxxxxxxxxx,...........^",
     "TffffffffffffffTTTf........s~~~s....xxxxxxxxxxxxxxx............^",
     "Tffffffffffffffffff........s~~~s.,.wwwwwwwwwwwwwwwww...........^",
@@ -115,11 +115,77 @@
     {
       "id": "hollow_farms",
       "name": "Hollow Farms",
-      "kind": "farmland",
+      "kind": "resource_area",
       "rect": [
         35,
         38,
         17,
+        8
+      ]
+    },
+    {
+      "id": "upper_river",
+      "name": "Upper River",
+      "kind": "resource_area",
+      "rect": [
+        22,
+        1,
+        12,
+        16
+      ]
+    },
+    {
+      "id": "willow_bend",
+      "name": "Willow Bend",
+      "kind": "resource_area",
+      "rect": [
+        26,
+        16,
+        8,
+        10
+      ]
+    },
+    {
+      "id": "east_meadows",
+      "name": "East Meadows",
+      "kind": "hunting_ground",
+      "rect": [
+        56,
+        17,
+        7,
+        20
+      ]
+    },
+    {
+      "id": "wolf_den",
+      "name": "Wolf Den",
+      "kind": "hunting_ground",
+      "rect": [
+        1,
+        1,
+        11,
+        9
+      ]
+    },
+    {
+      "id": "goblin_camp",
+      "name": "Goblin Camp",
+      "kind": "hunting_ground",
+      "rect": [
+        53,
+        38,
+        10,
+        9
+      ]
+    },
+    {
+      "id": "troll_hollow",
+      "name": "Troll Hollow",
+      "kind": "hunting_ground",
+      "rect": [
+        1,
+        39,
+        9,
         8
       ]
     }
@@ -195,6 +261,30 @@
       "tile": [
         47,
         7
+      ]
+    },
+    {
+      "id": "iron_rock_1",
+      "type": "iron_rock",
+      "tile": [
+        56,
+        12
+      ]
+    },
+    {
+      "id": "iron_rock_2",
+      "type": "iron_rock",
+      "tile": [
+        59,
+        12
+      ]
+    },
+    {
+      "id": "iron_rock_3",
+      "type": "iron_rock",
+      "tile": [
+        60,
+        9
       ]
     },
     {
@@ -294,6 +384,70 @@
       ]
     },
     {
+      "id": "herb_bush_1",
+      "type": "herb_bush",
+      "tile": [
+        12,
+        12
+      ]
+    },
+    {
+      "id": "herb_bush_2",
+      "type": "herb_bush",
+      "tile": [
+        4,
+        27
+      ]
+    },
+    {
+      "id": "herb_bush_3",
+      "type": "herb_bush",
+      "tile": [
+        6,
+        16
+      ]
+    },
+    {
+      "id": "herb_bush_4",
+      "type": "herb_bush",
+      "tile": [
+        10,
+        16
+      ]
+    },
+    {
+      "id": "herb_bush_5",
+      "type": "herb_bush",
+      "tile": [
+        16,
+        31
+      ]
+    },
+    {
+      "id": "herb_bush_6",
+      "type": "herb_bush",
+      "tile": [
+        6,
+        37
+      ]
+    },
+    {
+      "id": "herb_bush_7",
+      "type": "herb_bush",
+      "tile": [
+        4,
+        35
+      ]
+    },
+    {
+      "id": "herb_bush_8",
+      "type": "herb_bush",
+      "tile": [
+        3,
+        14
+      ]
+    },
+    {
       "id": "minnow_spot_1",
       "type": "minnow_spot",
       "tile": [
@@ -323,6 +477,469 @@
       "tile": [
         30,
         43
+      ]
+    },
+    {
+      "id": "trout_spot_1",
+      "type": "trout_spot",
+      "tile": [
+        30,
+        4
+      ]
+    },
+    {
+      "id": "trout_spot_2",
+      "type": "trout_spot",
+      "tile": [
+        30,
+        8
+      ]
+    },
+    {
+      "id": "trout_spot_3",
+      "type": "trout_spot",
+      "tile": [
+        30,
+        12
+      ]
+    },
+    {
+      "id": "willow_tree_1",
+      "type": "willow_tree",
+      "tile": [
+        29,
+        18
+      ]
+    },
+    {
+      "id": "willow_tree_2",
+      "type": "willow_tree",
+      "tile": [
+        28,
+        21
+      ]
+    },
+    {
+      "id": "willow_tree_3",
+      "type": "willow_tree",
+      "tile": [
+        27,
+        24
+      ]
+    },
+    {
+      "id": "potato_patch_1",
+      "type": "potato_patch",
+      "tile": [
+        38,
+        40
+      ]
+    },
+    {
+      "id": "potato_patch_2",
+      "type": "potato_patch",
+      "tile": [
+        41,
+        40
+      ]
+    },
+    {
+      "id": "potato_patch_3",
+      "type": "potato_patch",
+      "tile": [
+        44,
+        40
+      ]
+    },
+    {
+      "id": "potato_patch_4",
+      "type": "potato_patch",
+      "tile": [
+        47,
+        40
+      ]
+    },
+    {
+      "id": "marrentill_patch_1",
+      "type": "marrentill_patch",
+      "tile": [
+        38,
+        43
+      ]
+    },
+    {
+      "id": "marrentill_patch_2",
+      "type": "marrentill_patch",
+      "tile": [
+        42,
+        43
+      ]
+    },
+    {
+      "id": "marrentill_patch_3",
+      "type": "marrentill_patch",
+      "tile": [
+        46,
+        43
+      ]
+    }
+  ],
+  "stations": [
+    {
+      "id": "furnace_1",
+      "type": "furnace",
+      "name": "Furnace",
+      "tile": [
+        37,
+        28
+      ]
+    },
+    {
+      "id": "anvil_1",
+      "type": "anvil",
+      "name": "Anvil",
+      "tile": [
+        39,
+        28
+      ]
+    },
+    {
+      "id": "workbench_1",
+      "type": "workbench",
+      "name": "Workbench",
+      "tile": [
+        48,
+        28
+      ]
+    },
+    {
+      "id": "range_1",
+      "type": "range",
+      "name": "Cooking Range",
+      "tile": [
+        50,
+        28
+      ]
+    },
+    {
+      "id": "alchemy_table_1",
+      "type": "alchemy_table",
+      "name": "Alchemy Table",
+      "tile": [
+        52,
+        30
+      ]
+    }
+  ],
+  "enemy_spawns": [
+    {
+      "id": "slime_1",
+      "enemy": "slime",
+      "tile": [
+        58,
+        19
+      ]
+    },
+    {
+      "id": "slime_2",
+      "enemy": "slime",
+      "tile": [
+        61,
+        22
+      ]
+    },
+    {
+      "id": "slime_3",
+      "enemy": "slime",
+      "tile": [
+        58,
+        26
+      ]
+    },
+    {
+      "id": "slime_4",
+      "enemy": "slime",
+      "tile": [
+        60,
+        30
+      ]
+    },
+    {
+      "id": "giant_rat_1",
+      "enemy": "giant_rat",
+      "tile": [
+        60,
+        18
+      ]
+    },
+    {
+      "id": "giant_rat_2",
+      "enemy": "giant_rat",
+      "tile": [
+        57,
+        23
+      ]
+    },
+    {
+      "id": "giant_rat_3",
+      "enemy": "giant_rat",
+      "tile": [
+        61,
+        27
+      ]
+    },
+    {
+      "id": "giant_rat_4",
+      "enemy": "giant_rat",
+      "tile": [
+        58,
+        33
+      ]
+    },
+    {
+      "id": "wolf_1",
+      "enemy": "wolf",
+      "tile": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "wolf_2",
+      "enemy": "wolf",
+      "tile": [
+        7,
+        5
+      ]
+    },
+    {
+      "id": "wolf_3",
+      "enemy": "wolf",
+      "tile": [
+        5,
+        7
+      ]
+    },
+    {
+      "id": "wolf_4",
+      "enemy": "wolf",
+      "tile": [
+        9,
+        3
+      ]
+    },
+    {
+      "id": "goblin_1",
+      "enemy": "goblin",
+      "tile": [
+        55,
+        41
+      ]
+    },
+    {
+      "id": "goblin_2",
+      "enemy": "goblin",
+      "tile": [
+        58,
+        40
+      ]
+    },
+    {
+      "id": "goblin_3",
+      "enemy": "goblin",
+      "tile": [
+        60,
+        43
+      ]
+    },
+    {
+      "id": "goblin_archer_1",
+      "enemy": "goblin_archer",
+      "tile": [
+        57,
+        44
+      ]
+    },
+    {
+      "id": "goblin_archer_2",
+      "enemy": "goblin_archer",
+      "tile": [
+        61,
+        41
+      ]
+    },
+    {
+      "id": "goblin_warrior_1",
+      "enemy": "goblin_warrior",
+      "tile": [
+        59,
+        45
+      ]
+    },
+    {
+      "id": "forest_troll_1",
+      "enemy": "forest_troll",
+      "tile": [
+        5,
+        43
+      ]
+    }
+  ],
+  "building_plots": [
+    {
+      "building": "town_hall",
+      "rect": [
+        37,
+        23,
+        4,
+        3
+      ],
+      "work_tile": [
+        38,
+        26
+      ]
+    },
+    {
+      "building": "bank",
+      "rect": [
+        44,
+        23,
+        5,
+        3
+      ],
+      "work_tile": [
+        46,
+        26
+      ]
+    },
+    {
+      "building": "tavern",
+      "rect": [
+        50,
+        23,
+        3,
+        4
+      ],
+      "work_tile": [
+        49,
+        25
+      ]
+    },
+    {
+      "building": "blacksmith",
+      "rect": [
+        37,
+        31,
+        4,
+        4
+      ],
+      "work_tile": [
+        38,
+        30
+      ]
+    },
+    {
+      "building": "workshop",
+      "rect": [
+        49,
+        31,
+        4,
+        4
+      ],
+      "work_tile": [
+        50,
+        30
+      ]
+    },
+    {
+      "building": "academy",
+      "rect": [
+        43,
+        33,
+        4,
+        3
+      ],
+      "work_tile": [
+        44,
+        32
+      ]
+    },
+    {
+      "building": "farm",
+      "rect": [
+        36,
+        39,
+        15,
+        6
+      ],
+      "work_tile": [
+        41,
+        37
+      ]
+    },
+    {
+      "building": "housing",
+      "rect": [
+        54,
+        23,
+        2,
+        2
+      ],
+      "work_tile": [
+        54,
+        25
+      ]
+    },
+    {
+      "building": "marketplace",
+      "rect": [
+        54,
+        27,
+        2,
+        2
+      ],
+      "work_tile": [
+        54,
+        29
+      ]
+    },
+    {
+      "building": "barracks",
+      "rect": [
+        54,
+        31,
+        2,
+        2
+      ],
+      "work_tile": [
+        54,
+        33
+      ]
+    },
+    {
+      "building": "guild_hall",
+      "rect": [
+        33,
+        23,
+        2,
+        2
+      ],
+      "work_tile": [
+        34,
+        25
+      ]
+    },
+    {
+      "building": "expedition_center",
+      "rect": [
+        33,
+        32,
+        2,
+        2
+      ],
+      "work_tile": [
+        34,
+        34
       ]
     }
   ]

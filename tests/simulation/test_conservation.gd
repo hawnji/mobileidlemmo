@@ -14,7 +14,7 @@ func test_held_items_equal_production_ledger() -> void:
 	_assign_all(w)
 	for i in 20:
 		w.advance(60.0, 0.1)
-		assert_eq(w.held_totals(), w.production_ledger, "after %d min" % (i + 1))
+		assert_eq(w.held_totals(), w.ledger_totals(), "after %d min" % (i + 1))
 
 
 func test_each_gather_consumes_one_charge() -> void:
@@ -38,7 +38,7 @@ func test_save_load_round_trip_preserves_everything() -> void:
 	var data: Dictionary = JSON.parse_string(JSON.stringify(w.to_dict()))
 	var w2 := SimulationWorld.from_dict(registry(), data)
 	assert_eq(w2.held_totals(), w.held_totals())
-	assert_eq(w2.production_ledger, w.production_ledger)
+	assert_eq(w2.ledger_totals(), w.ledger_totals())
 	assert_almost(w2.sim_time, w.sim_time)
 	for cid in w.character_order:
 		var a: Adventurer = w.characters[cid]
@@ -70,3 +70,30 @@ func test_tampered_save_reservations_are_cleared() -> void:
 	d.nodes = {"copper_rock_1": {"id": "copper_rock_1", "charges": 4, "reserved_by": "ghost"}}
 	var w2 := SimulationWorld.from_dict(registry(), d)
 	assert_eq(w2.nodes.copper_rock_1.reserved_by, "", "reservation without an owner is dropped")
+
+
+## Every Phase 2 source and sink at once: gathering, crafting, combat loot,
+## eating, selling, construction costs, equipment. Totals must always match.
+func test_ledger_holds_across_all_activities() -> void:
+	var w := new_world(2024)
+	var start := {"copper_ore": 30, "tin_ore": 30, "cooked_minnow": 20, "oak_plank": 20, "bronze_sword": 1}
+	for it in start:
+		var q: int = start[it]
+		w.storage.add(it, q)
+		w.record_source(it, q, "test")
+	assert_eq(w.equip("tamsin_reed", "bronze_sword"), "")
+	var a := make_assignment(w, "brom_stonefist", "smelt")
+	a.recipe_id = "smelt_bronze"
+	assert_eq(w.assign_activity("brom_stonefist", a), "")
+	var c := make_assignment(w, "tamsin_reed", "hunt_meadows")
+	c.heal_threshold = 0.8
+	assert_eq(w.assign_activity("tamsin_reed", c), "")
+	assert_eq(w.assign_activity("sylvara_moonleaf", make_assignment(w, "sylvara_moonleaf", "chop_oak")), "")
+	assert_eq(w.start_construction("bank"), "")
+	for i in 10:
+		w.advance(60.0, 0.5)
+		if i == 5:
+			w.sell_item("copper_ore", mini(3, w.storage.get_quantity("copper_ore")))
+		assert_eq(w.held_totals(), w.ledger_totals(), "after %d min" % (i + 1))
+	var w2 := SimulationWorld.from_dict(registry(), JSON.parse_string(JSON.stringify(w.to_dict())))
+	assert_eq(w2.held_totals(), w2.ledger_totals(), "after save/load")

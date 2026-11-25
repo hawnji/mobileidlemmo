@@ -66,6 +66,70 @@ func _process(_delta: float) -> bool:
 		700:
 			_snap("08_river_fishing")
 		705:
+			# Phase 2: combat, crafting, recruitment, town, gear.
+			var w = game.world
+			w.storage.add("bronze_sword", 1)
+			w.record_source("bronze_sword", 1, "screenshot")
+			w.equip("brom_stonefist", "bronze_sword")
+			w.assign_activity("brom_stonefist", Assignment.create("brom_stonefist", w.registry.activities["hunt_meadows"]))
+			w.storage.add("oak_plank", 10)
+			w.record_source("oak_plank", 10, "screenshot")
+			w.start_construction("bank")
+			w.assign_activity("tamsin_reed", Assignment.create("tamsin_reed", w.registry.activities["construct"]))
+			game.time_scale = 5.0
+			game.select_character("brom_stonefist", true)
+		820:
+			game.time_scale = 1.0
+		860:
+			_snap("09_combat_meadows")
+		865:
+			var w2 = game.world
+			hud.open_assign(w2.characters.brom_stonefist)
+			for c in hud._modal_layer.get_children():
+				if c is ActivityPanel:
+					c._category = "combat"
+					c._selected_activity = "hunt_meadows"
+					c._rebuild()
+		885:
+			_snap("10_assign_combat")
+		890:
+			var w3 = game.world
+			hud.open_assign(w3.characters.sylvara_moonleaf)
+			for c in hud._modal_layer.get_children():
+				if c is ActivityPanel:
+					c._category = "crafting"
+					c._selected_activity = "craft"
+					c._recipe = "saw_oak"
+					c._rebuild()
+		910:
+			_snap("11_assign_crafting")
+		915:
+			hud._on_nav("recruit")
+			for c in hud._modal_layer.get_children():
+				if c is RecruitPanel:
+					var res = game.world.recruit("standard", 10)
+					c._results = res.results
+					c.refresh()
+		940:
+			_snap("12_recruit")
+		945:
+			hud._on_nav("heroes")
+		965:
+			_snap("13_heroes")
+		970:
+			hud._on_nav("town")
+		990:
+			_snap("14_town")
+		995:
+			hud.open_gear(game.world.characters.brom_stonefist)
+		1015:
+			_snap("15_gear")
+		1020:
+			hud._close_modals()
+			game.select_character("tamsin_reed", true)
+		1060:
+			_snap("16_construction")
+		1065:
 			print("screenshots: %d saved to %s" % [_shots, ProjectSettings.globalize_path(_out)])
 			return true
 	return false

@@ -15,11 +15,13 @@ var storage_gained := {}  # item_id -> qty
 ##                  state_label, interruptions: [reason]}
 var characters := {}
 var rare_finds: Array[Dictionary] = []
+var currency_gained := {}  # currency -> net change
+var buildings_completed: Array[Dictionary] = []
 var interruptions: Array[Dictionary] = []
 
 
 static func capture(world: SimulationWorld) -> Dictionary:
-	var snap := {"storage": world.storage.items(), "characters": {}}
+	var snap := {"storage": world.storage.items(), "characters": {}, "wallet": world.wallet.balances.duplicate()}
 	for cid in world.character_order:
 		var ch: Adventurer = world.characters[cid]
 		var levels := {}
@@ -31,6 +33,9 @@ static func capture(world: SimulationWorld) -> Dictionary:
 			"gathered": ch.stats.gathered.duplicate(),
 			"deposited": ch.stats.deposited.duplicate(),
 			"trips": int(ch.stats.trips),
+			"crafted": ch.stats.crafted.duplicate(),
+			"kills": ch.stats.kills.duplicate(),
+			"deaths": int(ch.stats.deaths),
 		}
 	return snap
 
@@ -38,6 +43,7 @@ static func capture(world: SimulationWorld) -> Dictionary:
 static func build(world: SimulationWorld, before: Dictionary, after: Dictionary, events: Array) -> OfflineReport:
 	var r := OfflineReport.new()
 	r.storage_gained = _diff(before.storage, after.storage)
+	r.currency_gained = _diff(before.get("wallet", {}), after.get("wallet", {}))
 	for cid in world.character_order:
 		var ch: Adventurer = world.characters[cid]
 		var b: Dictionary = before.characters.get(cid, {})
@@ -58,6 +64,9 @@ static func build(world: SimulationWorld, before: Dictionary, after: Dictionary,
 			"gathered": _diff(b.get("gathered", {}), a.gathered),
 			"deposited": _diff(b.get("deposited", {}), a.deposited),
 			"trips": int(a.trips) - int(b.get("trips", 0)),
+			"crafted": _diff(b.get("crafted", {}), a.get("crafted", {})),
+			"kills": _diff(b.get("kills", {}), a.get("kills", {})),
+			"deaths": int(a.get("deaths", 0)) - int(b.get("deaths", 0)),
 			"state_label": CharacterStates.label_of(ch.state),
 			"status": ch.status_message,
 			"interruptions": [],
@@ -66,6 +75,8 @@ static func build(world: SimulationWorld, before: Dictionary, after: Dictionary,
 		match String(ev.get("type", "")):
 			"rare_drop":
 				r.rare_finds.append(ev)
+			"building_completed":
+				r.buildings_completed.append(ev)
 			"interrupted":
 				r.interruptions.append(ev)
 				var c: Dictionary = r.characters.get(ev.get("character_id", ""), {})
