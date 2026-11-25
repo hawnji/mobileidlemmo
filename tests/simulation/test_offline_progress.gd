@@ -21,7 +21,7 @@ func test_one_hour_offline_produces_progress_and_report() -> void:
 	assert_gt(r.storage_gained.get("raw_minnow", 0), 0)
 	assert_gt(r.characters.brom_stonefist.xp.get("mining", 0.0), 0.0)
 	assert_gt(r.characters.brom_stonefist.trips, 0)
-	assert_eq(w.held_totals(), w.production_ledger)
+	assert_eq(w.held_totals(), w.ledger_totals())
 
 
 func test_report_matches_actual_state_change() -> void:
@@ -90,4 +90,20 @@ func test_eight_hour_simulation_is_fast_enough() -> void:
 	LocalOfflineSimulator.new(registry()).apply_offline_progress(w, 8.0 * 3600.0)
 	var ms := Time.get_ticks_msec() - t0
 	assert_lte(ms, 8000, "8h offline for 3 characters took %d ms" % ms)
-	assert_eq(w.held_totals(), w.production_ledger)
+	assert_eq(w.held_totals(), w.ledger_totals())
+
+
+func test_report_includes_combat_crafting_and_gold() -> void:
+	var w := new_world()
+	w.storage.add("oak_log", 50)
+	w.record_source("oak_log", 50, "test")
+	w.assign_activity("brom_stonefist", make_assignment(w, "brom_stonefist", "hunt_meadows"))
+	var a := make_assignment(w, "sylvara_moonleaf", "craft")
+	a.recipe_id = "saw_oak"
+	w.assign_activity("sylvara_moonleaf", a)
+	var sim := LocalOfflineSimulator.new(registry())
+	var r := sim.apply_offline_progress(w, 1800.0)
+	assert_false(r.characters.brom_stonefist.kills.is_empty())
+	assert_gt(int(r.characters.sylvara_moonleaf.crafted.get("oak_plank", 0)), 0)
+	assert_gt(int(r.currency_gained.get("gold", 0)), 0)
+	assert_eq(w.held_totals(), w.ledger_totals())

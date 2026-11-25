@@ -63,28 +63,50 @@ repeat without continuous player input." This is ✅, verified by
 | Final art | Placeholders by design | Artist pass following the asset standards |
 | Offline sim scales linearly with characters | Fine at 3 characters | Server simulation and cycle extrapolation (see architecture §9) |
 
-## Phase 2: RPG progression (next)
+## Phase 2: RPG progression (complete)
 
-Suggested order. Each step keeps the game playable and the tests green.
+Acceptance (spec): players collect multiple characters, give them different professions, and
+manage their independent progression. **Met**: 23 characters, recruitment, crafting, combat,
+equipment and town loops all run unattended, online and offline, and are covered by tests.
 
-1. **Data-driven currencies + Economy service interface** (Gold, Gems, Tokens) with transaction
-   log and tests (`currency transactions` from spec rule 5).
-2. **Recruitment / gacha**: banner data, configurable rates and pity per banner, transparent rates
-   UI, duplicate → fragments. Built behind a `RecruitmentService` interface whose local
-   implementation is clearly marked dev-only, because final rolls must be server-side.
-   Statistical tests for rates (chi-square over 1M rolls) and pity edge cases.
-3. **Roster expansion**: character database to ~20, rarity-driven starting skills, traits.
-4. **Processing and crafting**: Smithing (copper + tin → bronze bar), recipes data, a "crafting"
-   activity type in the engine (travel to workstation, check ingredients, consume, produce).
-5. **Equipment**: 9 slots, tools affect gathering speed, durability and repair.
-6. **Combat**: enemies data, combat activity, COMBAT, INJURED and RESTING states, healing
-   thresholds, loot tables. Greenvale enemies (slimes, rats, wolves, goblins).
-7. **Route builder**: multi-stop routes, saved templates, safety rules.
-8. **Town buildings**: Bank (storage upgrades), Blacksmith, Workshop, using Construction.
-9. **Additional activities**: Cooking, Foraging, Hunting, Farming.
+### Phase 2 feature checklist
 
-Acceptance: players collect multiple characters, give them different professions, and manage their
-independent progression.
+| Feature | Status | Where | Tests |
+|---|---|---|---|
+| Data-driven currencies with transaction log | Done | `scripts/economy/wallet.gd`, `data/economy/currencies.json` | `test_wallet` (7) |
+| Account-wide and per-character stat system | Done | `stat_block.gd`, `account_effects.gd`, `data/config/stats.json` | `test_stat_block` (7) |
+| Recruitment: banners, rates, pity, featured, 10-pull discount | Done (local/dev only) | `recruitment_state.gd`, `data/recruitment/banners.json` | `test_recruitment` (14, incl. chi-square over 10^6 rolls) |
+| Effective rates published in-game | Done | Recruit screen, `tools/gacha_report.gd` | `test_effective_rates_include_pity` |
+| Duplicates to fragments, star ranks | Done | `SimulationWorld.recruit/star_up` | `test_star_up_uses_fragments` |
+| Roster of ~20 characters | Done (23) | `data/characters/characters.json` | `test_data_registry` |
+| Traits (unlock at character level 10/30/60) | Done | `data/characters/traits.json`, `sync_traits` | `test_progression` |
+| Specializations (skill 30, slots by character level, respec) | Done | `data/characters/specializations.json` | `test_specializations` |
+| Processing and crafting (5 stations, 34 recipes) | Done | `handlers/crafting_handler.gd`, `data/recipes/recipes.json` | `test_crafting_loop` (7) |
+| Crafting requirements (skill, building, station) | Done | `CraftingHandler.validate` | `test_requirements` |
+| Equipment: 9 slots, requirements, durability, repair, upgrade | Done | `equipment_service.gd` | `test_equipment` (11) |
+| Combat: enemies, variants, styles, food, retreat, injury, resting, loot | Done | `handlers/combat_handler.gd`, `combat_rules.gd`, `enemy_state.gd` | `test_combat_loop` (9) |
+| COMBAT, RESTOCKING, RESTING, INJURED states in use | Done | `character_states.gd` | `test_state_machine`, combat tests |
+| Route builder (multi-step, loop, templates) | Done | `Assignment.route`, `SimulationWorld.start_route` | `test_routes` (5) |
+| Town buildings (12) and construction projects | Done | `town_state.gd`, `handlers/construction_handler.gd` | `test_town` (8) |
+| Worker capacity, storage slots, tavern tokens | Done | `SimulationWorld` | `test_town` |
+| Cooking, Foraging, Farming, Hunting, Herblore | Done | activities + recipes data | crafting and combat tests |
+| NPC selling, item lock and favourites | Done | `SimulationWorld.sell_item` | `test_sell_items_for_gold_respects_lock` |
+| Skill milestones (token + gold every 10 levels) | Done | `on_skill_level_up` | `test_skill_milestones_pay_tokens_and_gold` |
+| Item conservation across all sources and sinks | Done | `item_sources/item_sinks` | `test_ledger_holds_across_all_activities` |
+| Offline report covers crafting, kills, currencies, buildings | Done | `offline_report.gd` | `test_report_includes_combat_crafting_and_gold` |
+| UI: categories, recipes, combat settings, heroes, gear, recruit, town, storage actions, routes | Done | `scripts/ui/*` | screenshots `09` to `16` |
+| Save format 2 with migration from Phase 1 saves | Done | `SimulationWorld.from_dict` | save/load tests |
+
+### Phase 2 known gaps (honest list)
+
+| Gap | Why | Plan |
+|---|---|---|
+| Gacha rolls happen on the device | No server yet. Marked dev-only in code and UI | Phase 4 Recruitment Service owns RNG, pity and history |
+| Enemies stand still at spawn points; ranged and magic attack from an adjacent tile | Keeps combat deterministic and cheap | Aggro radius and ranged distance in Phase 3 combat pass |
+| Equipment loadouts are stored but have no UI | Time | Loadout save/apply buttons on the Gear screen |
+| Character active abilities | Not designed in data yet | Phase 3 (bosses need them) |
+| Audio | Out of scope so far | Audio bus layout and SFX per activity |
+| Crafting and cooking XP/hour is high at low levels | Tier 1 recipes are quick | Tune `seconds`/`xp` in recipes.json after playtesting (see BALANCE.md) |
 
 ## Phase 3: World expansion
 

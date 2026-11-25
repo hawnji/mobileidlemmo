@@ -7,7 +7,8 @@ extends Node2D
 const S := CharacterStates.State
 const DIR_ROWS := {Vector2i.DOWN: 0, Vector2i.LEFT: 1, Vector2i.RIGHT: 2, Vector2i.UP: 3}
 const TOOL_BY_SKILL := {"mining": "pickaxe", "woodcutting": "axe", "fishing": "fishing_rod"}
-const PARTICLE_COLORS := {"mining": Color("b0a090"), "woodcutting": Color("a7773f"), "fishing": Color("9fd0ff")}
+const PARTICLE_COLORS := {"mining": Color("b0a090"), "woodcutting": Color("a7773f"), "fishing": Color("9fd0ff"), "smithing": Color("ffb060"),
+	"foraging": Color("8fd06a"), "farming": Color("c9a26b")}
 
 var character: Adventurer
 var world: SimulationWorld
@@ -21,6 +22,8 @@ var _selected := false
 var _particles: CPUParticles2D
 var _work_t := 0.0
 var _tools := {}
+var _attack_t := 0.0
+var _hp_bar: ProgressBar
 
 
 func setup(p_character: Adventurer, p_world: SimulationWorld) -> void:
@@ -72,6 +75,16 @@ func setup(p_character: Adventurer, p_world: SimulationWorld) -> void:
 	_bag_bar.add_theme_stylebox_override("background", UiTheme.box(Color(0, 0, 0, 0.6), Color(0, 0, 0, 0), 1, 0, 0))
 	_bag_bar.add_theme_stylebox_override("fill", UiTheme.box(UiTheme.ACCENT, UiTheme.ACCENT, 1, 0, 0))
 	add_child(_bag_bar)
+	_hp_bar = ProgressBar.new()
+	_hp_bar.show_percentage = false
+	_hp_bar.max_value = 1.0
+	_hp_bar.step = 0.0
+	_hp_bar.custom_minimum_size = Vector2(22, 3)
+	_hp_bar.size = Vector2(22, 3)
+	_hp_bar.position = Vector2(-11, -34)
+	_hp_bar.add_theme_stylebox_override("background", UiTheme.box(Color(0, 0, 0, 0.6), Color(0, 0, 0, 0), 1, 0, 0))
+	_hp_bar.add_theme_stylebox_override("fill", UiTheme.box(Color(0.9, 0.3, 0.3), Color(0.9, 0.3, 0.3), 1, 0, 0))
+	add_child(_hp_bar)
 	position = _target_position()
 
 
@@ -119,9 +132,23 @@ func _process(delta: float) -> void:
 		_sprite.play(anim)
 	_sprite.speed_scale = character.move_speed_tiles() / 3.5
 	_bag_bar.value = character.inventory.fill_ratio()
-	if character.state == S.PERFORMING_ACTIVITY and character.assignment:
-		var skill := String(world.registry.activities.get(character.assignment.activity_id, {}).get("skill", ""))
-		_tool.texture = _tools.get(skill)
+	var hp := character.health / character.max_health()
+	_hp_bar.visible = hp < 0.999
+	_hp_bar.value = hp
+	_sprite.modulate = Color(1, 0.6, 0.6, 0.8) if character.state == S.INJURED else Color.WHITE
+	if character.state == S.COMBAT:
+		var wid := character.equipped_item_id("weapon")
+		_tool.texture = UiTheme.texture(String(world.registry.items.get(wid, {}).get("icon", ""))) if not wid.is_empty() else null
+		_tool.visible = _tool.texture != null
+		_tool.flip_h = character.facing.x < 0
+		_attack_t = maxf(_attack_t - delta, 0.0)
+		_tool.rotation = (1.0 - _attack_t / 0.25) * 1.2 * (-1.0 if _tool.flip_h else 1.0) if _attack_t > 0.0 else 0.0
+		_sprite.position.x = Vector2(character.facing).x * 3.0 * (_attack_t / 0.25)
+		_sprite.position.y = Vector2(character.facing).y * 3.0 * (_attack_t / 0.25)
+	elif character.state == S.PERFORMING_ACTIVITY and character.assignment:
+		var act: Dictionary = world.registry.activities.get(character.assignment.activity_id, {})
+		var skill := String(act.get("skill", ""))
+		_tool.texture = _tools.get(skill, _tools.get("mining") if String(act.get("type", "")) != "gathering" else null)
 		_tool.visible = _tool.texture != null
 		_tool.flip_h = character.facing.x < 0
 		_work_t += delta
@@ -130,8 +157,12 @@ func _process(delta: float) -> void:
 		_sprite.position.y = -absf(sin(_work_t * 9.0)) * 1.5
 	else:
 		_tool.visible = false
-		_sprite.position.y = -1.0 if character.state == S.DEPOSITING else 0.0
+		_sprite.position = Vector2(0, -1.0 if character.state == S.DEPOSITING else 0.0)
 		_work_t = 0.0
+
+
+func play_attack() -> void:
+	_attack_t = 0.25
 
 
 func play_gather_effect(skill: String) -> void:

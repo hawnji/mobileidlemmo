@@ -1,4 +1,4 @@
-# Worldbound: Systems Reference (Phase 1)
+# Worldbound: Systems Reference (Phases 1 and 2)
 
 How each implemented system works, where it lives, and how to test it.
 
@@ -97,6 +97,67 @@ new obstacles)
    he heads back out.
 4. Open Storage to see the ore.
 
+## Activity handlers (Phase 2)
+**Files:** `scripts/activities/handlers/*.gd`
+
+The engine runs travel, pathfinding, depositing, restocking, waiting, resting and injury for every
+activity, and asks the handler for the activity's `type` what to do at the work site. A handler
+implements `validate`, `decide` (the CHECKING_CONDITIONS step), `on_arrive`, `perform`,
+`primary_item`, `keep_on_deposit`, `after_deposit`, `wants_restock` and `restock`. Handlers hold no
+state, so loops survive save/load.
+
+| Handler | Loop |
+|---|---|
+| Gathering | Phase 1 loop, plus tool wear, `yield_bonus_chance` and night speed |
+| Crafting | inputs in bag → walk to nearest station → craft until out → storage: deposit, RESTOCKING (as many batches as fit) → repeat; WAITING "Waiting for materials" when storage is short |
+| Combat | pick enemy (priority, then nearest, skipping engaged ones and those above the level limit) → walk adjacent → COMBAT (event-timed swings) → loot, gold, XP → next; eat below the heal threshold; retreat below the retreat threshold with no food; 0 HP → INJURED (carried home, 60 s) → RESTING to full |
+| Construction | walk to the plot's work tile → 3 s work actions add work and Construction XP → project completes → wait for the next project |
+
+**Manual test (combat):** assign Brom to *Clear the East Meadows*, press x20 and follow him: he
+walks east, swings at slimes and rats (damage numbers, enemy HP bars), gold appears, and he goes
+home when his bag fills.
+
+**Manual test (crafting):** let Brom mine copper and tin for a while, then assign him to *Smelt
+Bars → Bronze Bar*. He walks to the chest, takes ore, walks to the furnace and smelts.
+
+## Recruitment (Phase 2)
+**Files:** `scripts/recruitment/recruitment_state.gd`, `SimulationWorld.recruit`,
+`scripts/ui/recruit_panel.gd`. Rules and rates are in BALANCE.md. Rolls use their own RNG so
+recruiting never changes the world RNG sequence. **Local rolls are development-only**; the Phase 4
+server owns them.
+
+**Manual test:** tap **Recruit**, then **Recruit x10** (uses the 10 starting tokens). New heroes
+appear in the roster bar; the rates list shows pity progress (for example `3 / 10`).
+
+## Equipment (Phase 2)
+**Files:** `scripts/equipment/equipment_service.gd`, `scripts/ui/equipment_panel.gd`. Pristine
+items live in storage stacks; used or upgraded items keep their identity in the armory. Equipped
+and armory items count as held for the item ledger.
+
+**Manual test:** build the Blacksmith, forge a Bronze Pickaxe, open
+**Storage**, tap the pickaxe, **Equip on Brom**, then open **Gear** to see durability fall while he
+mines.
+
+## Town (Phase 2)
+**Files:** `scripts/town/town_state.gd`, `scripts/ui/town_panel.gd`,
+`scripts/activities/handlers/construction_handler.gd`, `scripts/world/building_view.gd`.
+
+**Manual test:** saw oak planks, open **Town**, **Build** the Bank, then assign two heroes to
+*Construct Buildings*. Scaffolding appears on the plot and turns into the building at 100%;
+storage slots go from 48 to 64.
+
+## Economy (Phase 2)
+`Wallet` (atomic multi-currency spend, rejects negative and invalid amounts, caps balances,
+keeps a 100-entry history). Sources: starting balances, loot gold, NPC sales, milestones, tavern.
+Sinks: recruitment, construction, repair, upgrade, respec. Items: `item_sources` and
+`item_sinks` in `SimulationWorld`; `held_totals() == ledger_totals()` must always hold.
+
+## Route builder (Phase 2)
+`Assignment.route` holds step assignments. When a step completes, the engine starts the next one
+(wrapping when `route_loop` is set). Steps must end (Until amount or One trip). Templates are saved
+in the world. **Manual test:** in Assign, add *Mine Copper until 20*, *Mine Tin until 20* and
+*Smelt Bronze until 20* as steps, tick Loop, then **Start route**.
+
 ## Offline progression
 **Files:** `scripts/progression/*.gd`, `scripts/multiplayer/*.gd`, `scripts/save/save_service.gd`,
 `scripts/core/time_source.gd`, `scripts/ui/offline_report_panel.gd`
@@ -136,21 +197,30 @@ seed and state, sim time, and the ledger. Characters added to data after a save 
 **Visual test:** `tools/capture_screenshots.gd` renders 8 screenshots of the key screens (requires
 a display or Xvfb).
 
-## Test inventory (72 tests)
+## Test inventory (148 tests)
 
-| Suite | File | Tests |
-|---|---|---|
-| unit | test_xp_table | 7 |
-| unit | test_skill_set | 5 |
-| unit | test_inventory | 7 |
-| unit | test_pathfinding | 9 |
-| unit | test_state_machine | 4 |
-| unit | test_data_registry | 5 |
-| unit | test_resource_node | 3 |
-| unit | test_assignment | 4 |
-| unit | test_estimator | 3 |
-| integration | test_gathering_loop | 10 |
-| integration | test_backend | 3 |
-| simulation | test_conservation | 5 |
-| simulation | test_offline_progress | 7 |
-| smoke | Main.tscn headless boot (in run_tests.sh) | 1 |
+| Suite | File | Tests | Covers |
+|---|---|---|---|
+| unit | test_xp_table | 7 | XP curve |
+| unit | test_skill_set | 5 | skill XP and levels |
+| unit | test_inventory | 7 | bags and storage |
+| unit | test_pathfinding | 9 | A*, caching, reachability |
+| unit | test_state_machine | 4 | legal transitions |
+| unit | test_data_registry | 5 | data validation |
+| unit | test_resource_node | 3 | charges, reservations |
+| unit | test_assignment | 4 | assignment rules |
+| unit | test_estimator | 3 | estimates vs simulation |
+| unit | test_wallet | 7 | currency transactions |
+| unit | test_stat_block | 7 | stat combination |
+| unit | test_recruitment | 14 | gacha probabilities (chi-square), pity, costs, fragments, stars |
+| unit | test_equipment | 11 | equip, wear, repair, upgrade |
+| unit | test_progression | 6 | traits, milestones, specializations |
+| integration | test_gathering_loop | 10 | Phase 1 acceptance loop |
+| integration | test_crafting_loop | 7 | crafting requirements and loop |
+| integration | test_combat_loop | 9 | combat, injury, retreat, variants |
+| integration | test_town | 8 | construction, capacity, selling |
+| integration | test_routes | 5 | route builder |
+| integration | test_backend | 3 | save/offline with a fake clock |
+| simulation | test_conservation | 6 | item ledger across every system |
+| simulation | test_offline_progress | 8 | offline simulation and reports |
+| smoke | Main.tscn headless boot (in run_tests.sh) | 1 | scenes, UI, autoload |

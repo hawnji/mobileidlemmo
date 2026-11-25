@@ -7,14 +7,14 @@ var registry: DataRegistry
 var _state: Label
 var _bag: ProgressBar
 var _portrait: TextureRect
+var _hp: ProgressBar
 
 
 func setup(p_character: Adventurer, p_registry: DataRegistry) -> void:
 	character = p_character
 	registry = p_registry
 	toggle_mode = true
-	custom_minimum_size = Vector2(0, 116)
-	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	custom_minimum_size = Vector2(220, 116)
 	var h := HBoxContainer.new()
 	h.set_anchors_preset(Control.PRESET_FULL_RECT)
 	h.offset_left = 8
@@ -46,9 +46,13 @@ func setup(p_character: Adventurer, p_registry: DataRegistry) -> void:
 	_bag = UiTheme.bar(UiTheme.ACCENT, 8)
 	_bag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(_bag)
+	_hp = UiTheme.bar(UiTheme.BAD, 6)
+	_hp.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	v.add_child(_hp)
 	refresh()
 
 
 func refresh() -> void:
 	_state.text = CharacterStates.label_of(character.state)
 	_bag.value = character.inventory.fill_ratio()
+	_hp.value = character.health / character.max_health()

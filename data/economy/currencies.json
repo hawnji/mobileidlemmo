@@ -1,0 +1,61 @@
+{
+ "schema_version": 1,
+ "currencies": [
+  {
+   "id": "gold",
+   "name": "Gold",
+   "description": "Earned through play. Basic purchases, repairs, upgrades.",
+   "starting": 200,
+   "premium": false
+  },
+  {
+   "id": "gems",
+   "name": "Gems",
+   "description": "Earned or purchased. Premium recruitment and convenience.",
+   "starting": 300,
+   "premium": true
+  },
+  {
+   "id": "recruitment_tokens",
+   "name": "Recruitment Tokens",
+   "description": "Free recruitment pulls.",
+   "starting": 10,
+   "premium": false
+  },
+  {
+   "id": "event_tokens",
+   "name": "Festival Tokens",
+   "description": "Event recruitment currency.",
+   "starting": 0,
+   "premium": false
+  },
+  {
+   "id": "guild_coins",
+   "name": "Guild Coins",
+   "description": "Spent in the guild shop (multiplayer).",
+   "starting": 0,
+   "premium": false
+  },
+  {
+   "id": "ascension_points",
+   "name": "Ascension Points",
+   "description": "Prestige upgrades.",
+   "starting": 0,
+   "premium": false
+  },
+  {
+   "id": "relic_dust",
+   "name": "Relic Dust",
+   "description": "Relic upgrades.",
+   "starting": 0,
+   "premium": false
+  }
+ ],
+ "milestones": {
+  "skill_level_every": 10,
+  "reward": {
+   "recruitment_tokens": 1,
+   "gold": 50
+  }
+ }
+}

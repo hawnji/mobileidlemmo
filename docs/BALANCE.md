@@ -53,38 +53,92 @@ XP as character XP.
 | Oak Tree | Woodcutting | 1 | 6.0 | 25.0 | 1 oak log | Bird Nest 0.2% | 5 | 15 |
 | Minnow Spot | Fishing | 1 | 6.0 | 10.0 | 1 raw minnow | River Pearl 0.1% | 8 | 12 |
 
-The speed multiplier is `affinity_speed × (1 + min(0.005 × (level − req), 0.40))`. The constants
-`LEVEL_SPEED_PER_LEVEL` and `LEVEL_SPEED_CAP` are in `scripts/characters/adventurer.gd` and are
-**scheduled to move to config in P2**.
+The speed multiplier is `stat("gather_speed", skill) × (1 + min(0.005 × (level − req), 0.40))`,
+where the stat folds affinities, passive, traits, specializations, stars, tools and buildings
+(see "Stat system" below). The constants `LEVEL_SPEED_PER_LEVEL` and `LEVEL_SPEED_CAP` are still in
+`scripts/characters/adventurer.gd` (moving them to config was not done in Phase 2).
 
-### Measured rates (1 h simulated from a fresh save, `tools/balance_report.gd`)
-
-| Character | Activity | Est. items/h | Est. XP/h | Simulated items | Skill level after 1 h |
+### Nodes added in Phase 2
+| Node | Skill | Req | Gather (s) | XP | Yield |
 |---|---|---|---|---|---|
-| Brom Stonefist | Mine Copper | 855 | 16,471 | 841 | 15 → 33 |
-| Brom Stonefist | Chop Oak | 555 | 13,883 | 589 | 1 → 30 |
-| Brom Stonefist | Fish Minnows | 567 | 5,672 | 597 | 1 → 22 |
-| Sylvara Moonleaf | Mine Copper | 661 | 11,568 | 691 | 1 → 29 |
-| Sylvara Moonleaf | Chop Oak | 737 | 21,196 | 746 | 18 → 36 |
-| Sylvara Moonleaf | Fish Minnows | 568 | 5,685 | 596 | 1 → 22 |
-| Tamsin Reed | Mine Copper | 669 | 12,300 | 699 | 1 → 29 |
-| Tamsin Reed | Chop Oak | 563 | 14,791 | 605 | 1 → 31 |
-| Tamsin Reed | Fish Minnows | 606 | 6,366 | 638 | 3 → 23 |
+| Iron Rock | Mining | 15 | 6.0 | 35.0 | iron ore |
+| Willow Tree | Woodcutting | 15 | 7.0 | 45.0 | willow log |
+| Trout Spot | Fishing | 20 | 7.0 | 50.0 | raw trout |
+| Herb Bush | Foraging | 1 | 5.0 | 15.0 | guam leaf |
+| Potato Patch | Farming | 1 | 6.0 | 14.0 | potato |
+| Marrentill Patch | Farming | 12 | 8.0 | 40.0 | marrentill |
 
-The assignment screen's estimate (`ActivityEstimator`) is within ±25% of the simulation, which
-`test_estimate_close_to_simulation` checks. It is slightly low because it ignores the speed gained
-from levelling during the hour.
+Tier 2 gives 2 to 5 times the XP per action of tier 1, which addresses the Phase 1 observation
+that progress stalled around level 40 with only tier 1 content.
 
-### Balance observations to address in Phase 2
+## Stat system
 
-- **Early levels come very fast** (1 → 30 in an hour). This is intended for the curve's front
-  end, but with only tier-1 content XP/hour stays flat while thresholds grow, so progress stalls
-  near 40 to 50. Phase 2 needs tier-2 nodes (iron at level 15, willow at 15, trout at 20) with
-  around 2 to 3 times the XP per action to keep the 30 to 60 range moving.
-- **Fishing XP is low** (10 XP per catch). Fish become food, which has value once combat exists.
-  Fishing XP/h should be revisited against cooking demand.
-- **Specialists are about 25 to 45% better** in their field, and generalists are about 5 to 10%
-  better outside it. That matches "rarity matters but is not everything".
+`data/config/stats.json` lists every stat family and whether it multiplies (`mul`, default 1) or
+adds (`add`, default 0). Keys are `family.skill`, `family.all` or a bare family. Sources: character
+affinities, passive, traits, specializations, stars (`progression.star_effects_per_star` applied
+`stars − 1` times), equipment (skipped when broken; each upgrade level adds 10% of the item's
+bonus) and account effects (buildings now; relics, pets and guild perks later).
+
+## Combat
+
+Formulas (`scripts/combat/combat_rules.gd`, tunables in `game_config.json` → `combat`):
+
+```
+player hit chance = clamp(0.55 + (offense_level + accuracy − enemy_defense) × 0.02, 0.15, 0.95)
+player max hit    = floor((1 + power_level × 0.18 + weapon_power) × damage × weakness[style])
+enemy hit chance  = clamp(0.50 + (enemy_accuracy − (defense_level + armor/2)) × 0.02, 0.05, 0.90)
+enemy damage      = randi(0, max_hit) − floor(armor / 10)
+XP                = 4 per damage dealt (melee splits attack/strength), 1.5 defense per damage taken,
+                    hunting 2 × enemy level × variant multiplier per kill
+```
+
+Variants multiply health, accuracy, defense and max hit by `stat_multiplier`, and XP, gold and loot
+rolls by their own multipliers. Chances: Champion 3%, Elite 1.5%, Ancient 0.4%, Corrupted 0.2%,
+Legendary 0.05%.
+
+### Measured (1 h simulated, starters with default rules and 200 cooked minnows in storage)
+| Character | Hunting ground | Kills | Gold | Knock-outs | Levels after 1 h | Estimated risk |
+|---|---|---|---|---|---|---|
+| Brom | East Meadows | 157 | 491 | 0 | attack 16, def 9, hunting 8 | Low |
+| Brom | Goblin Camp | 86 | 906 | 0 | attack 16, def 13, hunting 9 | High |
+| Sylvara | East Meadows | 261 | 720 | 0 | ranged 27, def 6, hunting 12 | Low |
+| Sylvara | Goblin Camp | 151 | 1,724 | 0 | ranged 28, def 12, hunting 15 | Medium |
+| Tamsin | Wolf Den | 39 | 150* | 0 | attack 13, def 13, hunting 7 | Deadly |
+| any starter | Forest Troll | 0 | 100* | 0 | defense rises only | Deadly |
+
+\* milestone rewards only (wolves drop no gold; nobody can damage the troll yet). The retreat rule
+keeps fresh characters alive: they eat, then go home to rest instead of being knocked out. The
+troll is meant as a goal for geared, level 20+ fighters.
+
+## Crafting
+
+| Character | Recipe | Crafts in 1 h (unlimited materials) | Level after 1 h |
+|---|---|---|---|
+| Brom | Bronze Bar | 974 | smithing 8 → 24 |
+| Sylvara | Oak Plank | 1,233 | crafting 1 → 22 |
+| Tamsin | Cooked Minnow | 1,437 | cooking 1 → 30 |
+
+**Observation:** with unlimited materials, tier 1 crafting levels faster than gathering. In real
+play, crafting is limited by gathered materials (a bronze bar needs one copper and one tin, which
+take about 10 s of mining), so the effective rate is far lower. If playtests find it too fast,
+raise `seconds` on tier 1 recipes.
+
+Cooking burn chance: `base_chance × (1 − (level − req) / (stop_level − req))`, 0 at `stop_level`.
+Preserve chance keeps the inputs; double-craft doubles the outputs; both come from stats (traits,
+specializations, Workshop).
+
+## Equipment
+| Rule | Value |
+|---|---|
+| Durability loss | 1 per gather (matching tool), 1 per attack (weapon), 1 per hit taken (random armour piece) |
+| Repair cost | missing points × tier × 0.25 gold × (1 − Blacksmith discount) |
+| Upgrade cost | level × 100 gold + level × 2 bars (bronze for tier 1, iron for tier 2) |
+| Upgrade bonus | +10% of the item's stat bonus per level, max +5, capped by Blacksmith level |
+
+## Town
+Building effects are the values of the **current** level (not cumulative). Worker capacity =
+4 + Town Hall + Housing bonuses. The Tavern makes `token_rate` recruitment tokens per hour.
+Every 10 levels in any skill pays 1 recruitment token and 50 gold.
 
 ## Offline
 
@@ -95,17 +149,23 @@ from levelling during the hour.
 | Minimum absence | 60 s |
 | Simulation step | 1 s |
 
-## Planned gacha (Phase 2, from the master spec)
+## Gacha (implemented)
 
-| Rarity | Rate | Hard pity (configurable, per banner) |
-|---|---|---|
-| Common | 45% | |
-| Uncommon | 30% | |
-| Rare | 17% | Rare or better within 10 pulls |
-| Epic | 6% | Epic or better within 50 |
-| Legendary | 1.8% | Legendary within 100 |
-| Mythic | 0.2% | Mythic within 200 |
+| Rarity | Base rate | Effective rate incl. pity (10^6 simulated pulls) | Hard pity |
+|---|---|---|---|
+| Common | 45.0% | 43.85% | |
+| Uncommon | 30.0% | 29.21% | |
+| Rare | 17.0% | 18.27% | Rare or better within 10 pulls |
+| Epic | 6.0% | 6.04% | Epic or better within 50 |
+| Legendary | 1.8% | 2.02% | Legendary or better within 100 |
+| Mythic | 0.2% | 0.61% | Mythic within 200 |
 
-The planned tests are: a chi-square test of the base rates over 10^6 server-side rolls; exact
-pity-counter behaviour (reset only the tier that hit and lower tiers, with counters persisted per
-banner); and the effective rates including pity, which are published in-game.
+Regenerate with `godot --headless --path . -s res://tools/gacha_report.gd`. The Recruit screen
+shows the same numbers. Costs: 1 recruitment token or 150 gems per pull, 10 pulls with gems cost
+1,350 (10% off). Duplicates give 5/8/10/15/20/25 fragments by rarity; stars cost 10, 20, 40, 80,
+120 fragments.
+
+Tests: `test_base_rates_chi_square_one_million_rolls` (chi-square must stay under 20.52, the
+99.9% critical value for 5 degrees of freedom), exact pity behaviour (pulls 10/20/30 forced rare,
+higher tier wins, lower tiers reset), mythic by pull 200, featured share within ±3%, and pity and
+history persisting through save/load.

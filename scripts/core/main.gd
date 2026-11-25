@@ -36,7 +36,8 @@ func _process(delta: float) -> void:
 	_smoke_time += delta
 	if _smoke_time > 4.0:
 		var w: SimulationWorld = Game.world
-		var ok := w.held_totals() == w.production_ledger and w.sim_time > 10.0
-		print("SMOKE TEST %s: sim_time=%.1f storage=%d ledger_ok=%s" % ["PASSED" if ok else "FAILED", w.sim_time, w.storage.total_units(), w.held_totals() == w.production_ledger])
+		var ledger_ok: bool = w.held_totals() == w.ledger_totals()
+		var ok: bool = ledger_ok and w.sim_time > 10.0
+		print("SMOKE TEST %s: sim_time=%.1f storage=%d ledger_ok=%s" % ["PASSED" if ok else "FAILED", w.sim_time, w.storage.total_units(), ledger_ok])
 		Game.backend.delete_save()
 		get_tree().quit(0 if ok else 1)

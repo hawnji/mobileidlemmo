@@ -13,6 +13,7 @@ var _camera: WorldCamera
 var _floating: FloatingTextPool
 var _day_night: DayNight
 var _char_views := {}  # id -> CharacterView
+var _enemy_views := {}  # spawn id -> EnemyView
 var _vis_accum := 0.0
 
 
@@ -51,6 +52,7 @@ func _on_session_started(w: SimulationWorld) -> void:
 	for c in _labels.get_children():
 		c.queue_free()
 	_char_views.clear()
+	_enemy_views.clear()
 	_day_night.world = world
 	_terrain.setup(world.registry, world.region)
 	_camera.set_map_size(Vector2(world.grid.width, world.grid.height) * tile_px)
@@ -68,6 +70,25 @@ func _on_session_started(w: SimulationWorld) -> void:
 	chest.position = Vector2(world.storage_tile * tile_px) + Vector2(tile_px, tile_px) * 0.5
 	chest.offset = Vector2(0, -4)
 	_entities.add_child(chest)
+	for sid in world.stations:
+		var st: Dictionary = world.stations[sid]
+		var sp := Sprite2D.new()
+		sp.name = sid
+		sp.texture = UiTheme.texture("res://assets/environments/props/%s.png" % st.type)
+		sp.position = Vector2(st.tile * tile_px) + Vector2(tile_px, tile_px) * 0.5
+		sp.offset = Vector2(0, -4)
+		_entities.add_child(sp)
+	for eid in world.enemy_order:
+		var ev := EnemyView.new()
+		ev.name = eid
+		_entities.add_child(ev)
+		ev.setup(world.enemies[eid], tile_px)
+		_enemy_views[eid] = ev
+	for bid in world.plots:
+		var bv := BuildingView.new()
+		bv.name = "plot_" + bid
+		_entities.add_child(bv)
+		bv.setup(world, bid, world.plots[bid], tile_px)
 	for lid in world.locations:
 		var loc: Dictionary = world.locations[lid]
 		var l := Label.new()
@@ -82,12 +103,16 @@ func _on_session_started(w: SimulationWorld) -> void:
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_labels.add_child(l)
 	for cid in world.character_order:
-		var cv := CharacterView.new()
-		cv.name = cid
-		_entities.add_child(cv)
-		cv.setup(world.characters[cid], world)
-		_char_views[cid] = cv
+		_add_character_view(cid)
 	_on_selection_changed(Game.selected_character_id)
+
+
+func _add_character_view(cid: String) -> void:
+	var cv := CharacterView.new()
+	cv.name = cid
+	_entities.add_child(cv)
+	cv.setup(world.characters[cid], world)
+	_char_views[cid] = cv
 
 
 func _process(delta: float) -> void:
@@ -126,10 +151,31 @@ func _on_tapped(world_pos: Vector2) -> void:
 
 
 func _on_world_event(ev: Dictionary) -> void:
+	if ev.type == "recruited" and ev.get("new", false) and not _char_views.has(ev.character_id) and world.characters.has(ev.character_id):
+		_add_character_view(String(ev.character_id))
 	var cv: CharacterView = _char_views.get(ev.get("character_id", ""))
 	if cv == null or not cv.on_screen:
 		return
 	match String(ev.type):
+		"combat_hit":
+			var en: EnemyView = _enemy_views.get(ev.spawn_id)
+			if ev.by == "player" and en:
+				_floating.spawn(str(ev.damage) if int(ev.damage) > 0 else "miss", en.position + Vector2(0, -30), Color("ffd27a") if int(ev.damage) > 0 else Color(0.8, 0.8, 0.8))
+				if int(ev.damage) > 0:
+					en.flash()
+				cv.play_attack()
+			elif int(ev.damage) > 0:
+				_floating.spawn("-%d" % ev.damage, cv.position + Vector2(0, -40), Color("ff6a6a"))
+		"enemy_killed":
+			var en2: EnemyView = _enemy_views.get(ev.spawn_id)
+			if en2 and int(ev.gold) > 0:
+				_floating.spawn("+%d gold" % ev.gold, en2.position + Vector2(0, -44), Color("f0c040"))
+		"food_eaten":
+			_floating.spawn("+%d hp" % int(ev.heal), cv.position + Vector2(0, -40), Color("7ae08a"))
+		"item_crafted":
+			for it in ev.outputs:
+				_floating.spawn("+%d %s" % [ev.outputs[it], world.registry.get_item_name(it)], cv.position + Vector2(0, -52), Color("f3e2b0") if not ev.burnt else Color(0.6, 0.6, 0.6))
+			cv.play_gather_effect("smithing")
 		"item_gathered":
 			_floating.spawn("+%d %s" % [ev.qty, world.registry.get_item_name(ev.item_id)], cv.position + Vector2(0, -52), Color("f3e2b0"))
 			var node: ResourceNodeState = world.nodes.get(ev.node_id)

@@ -309,7 +309,7 @@ icon(pearl, "assets/resources/items/river_pearl.png")
 
 # -------------------------------------------------------------- characters ----
 chars = json.loads((ROOT / "data/characters/characters.json").read_text())["characters"]
-SKIN = {"Dwarf": "#e0a77a", "Elf": "#f0d2b0", "Human": "#d9a982"}
+SKIN = {"Dwarf": "#e0a77a", "Elf": "#f0d2b0", "Human": "#d9a982", "Halfling": "#e6b48c", "Gnome": "#f0c8a0", "Half-orc": "#8fa86a"}
 HAIR = {"brom_stonefist": "#b5532a", "sylvara_moonleaf": "#e9e4c8", "tamsin_reed": "#4a3019"}
 
 
@@ -317,8 +317,8 @@ def draw_char(d, ox, oy, direction, frame, c):
     prim = hexrgb(c["palette"]["primary"])
     sec = hexrgb(c["palette"]["secondary"])
     skin = hexrgb(SKIN.get(c["origin"], "#d9a982"))
-    hair = hexrgb(HAIR.get(c["id"], "#4a3019"))
-    dwarf = c["origin"] == "Dwarf"
+    hair = hexrgb(HAIR[c["id"]]) if c["id"] in HAIR else shade(hexrgb(c["palette"]["secondary"]), 0.55)
+    dwarf = c["origin"] in ("Dwarf", "Halfling", "Gnome")
     top = 6 if not dwarf else 9
     bob = 1 if frame in (1, 3) else 0
     # shadow
@@ -416,5 +416,265 @@ for s in skills:
     bbox = d.textbbox((0, 0), label, font=font)
     d.text(((48 - (bbox[2] - bbox[0])) / 2 - bbox[0], (48 - (bbox[3] - bbox[1])) / 2 - bbox[1]), label, fill=(245, 235, 210, 255), font=font)
     save(im, f"assets/ui/skills/{s['id']}.png")
+
+
+# ======================================================= Phase 2 content ====
+MAT = {"bronze": "#c08a4a", "iron": "#9aa3ab", "oak": "#a0703a", "willow": "#8a9a52", "apprentice": "#a0703a",
+       "quartz": "#dfe3f5", "pearl": "#efe8f2", "leather": "#8a5a2b"}
+
+
+def mat_of(item_id):
+    for k, v in MAT.items():
+        if item_id.startswith(k):
+            return hexrgb(v)
+    return hexrgb("#9aa3ab")
+
+
+def draw_item(d, it):
+    iid, cat = it["id"], it["category"]
+    m = mat_of(iid)
+    dark = shade(m, 0.55)
+    if cat == "ore":
+        ore_icon("#7a8590")(d)
+    elif cat == "bar":
+        d.polygon([(4, 20), (10, 12), (28, 12), (22, 20)], fill=shade(m, 1.2), outline=dark)
+        d.polygon([(4, 20), (22, 20), (22, 26), (4, 26)], fill=m, outline=dark)
+        d.polygon([(22, 20), (28, 12), (28, 18), (22, 26)], fill=shade(m, 0.8), outline=dark)
+    elif cat == "log":
+        d.polygon([(4, 20), (22, 6), (28, 12), (10, 26)], fill=shade(m, 0.8))
+        d.ellipse([22, 5, 30, 13], fill=shade(m, 1.3), outline=dark)
+    elif cat == "plank":
+        for i, y in enumerate((8, 15, 22)):
+            d.rectangle([4 + i, y, 28 - i, y + 5], fill=shade(m, 1.1 - i * 0.1), outline=dark)
+    elif cat in ("fish", "food", "junk"):
+        col = {"raw_trout": "#b9a07a", "cooked_minnow": "#c9945a", "cooked_trout": "#b97a3e", "burnt_fish": "#3a3330",
+               "baked_potato": "#b98a4a"}.get(iid, "#8fa9b8")
+        if "potato" in iid:
+            d.ellipse([6, 9, 26, 25], fill=hexrgb(col), outline=shade(hexrgb(col), 0.5))
+        else:
+            d.ellipse([5, 11, 23, 21], fill=hexrgb(col), outline=shade(hexrgb(col), 0.5))
+            d.polygon([(22, 16), (29, 10), (29, 22)], fill=shade(hexrgb(col), 0.8))
+    elif cat == "crop":
+        d.ellipse([7, 10, 25, 26], fill=hexrgb("#b99a5a"), outline=hexrgb("#6b5530"))
+        d.point([(12, 15), (19, 19), (15, 22)], fill=hexrgb("#6b5530"))
+    elif cat == "herb":
+        col = hexrgb("#4f9a3c" if iid == "guam_leaf" else "#9a5ab0")
+        for a in (-1, 0, 1):
+            d.ellipse([12 + a * 7, 6 + abs(a) * 4, 20 + a * 7, 22], fill=col, outline=shade(col, 0.5))
+        d.line([(16, 30), (16, 12)], fill=hexrgb("#2f5a20"), width=2)
+    elif cat == "potion":
+        col = hexrgb("#d04a4a" if iid == "healing_potion" else "#4aa0d0")
+        d.rectangle([13, 4, 19, 10], fill=hexrgb("#c9a26b"))
+        d.ellipse([7, 10, 25, 28], fill=col, outline=hexrgb("#2a2a2a"))
+        d.ellipse([10, 13, 15, 18], fill=(255, 255, 255, 140))
+    elif cat == "hide":
+        d.polygon([(6, 8), (26, 8), (28, 18), (22, 28), (10, 28), (4, 18)], fill=hexrgb("#7a6a5a"), outline=hexrgb("#3a2e22"))
+    elif cat == "gem":
+        quartz(d)
+    else:  # misc: bones, gel, tail, trinket, tooth
+        if iid == "bones":
+            d.line([(6, 24), (26, 8)], fill=hexrgb("#e8e2cf"), width=4)
+            for (x, y) in ((5, 23), (7, 26), (25, 7), (27, 10)):
+                d.ellipse([x - 2, y - 2, x + 2, y + 2], fill=hexrgb("#e8e2cf"))
+        elif iid == "slime_gel":
+            d.ellipse([6, 12, 26, 26], fill=(90, 200, 120, 220), outline=hexrgb("#2a7a4a"))
+        elif iid == "rat_tail":
+            d.arc([4, 6, 28, 30], 180, 360, fill=hexrgb("#c98a8a"), width=3)
+        elif iid == "troll_tooth":
+            d.polygon([(12, 4), (22, 6), (18, 28)], fill=hexrgb("#efe6c8"), outline=hexrgb("#8a8270"))
+        else:
+            d.ellipse([8, 8, 24, 24], fill=hexrgb("#c9a030"), outline=hexrgb("#6a5010"))
+            d.rectangle([14, 4, 18, 9], fill=hexrgb("#6a5010"))
+    if cat == "equipment":
+        slot = it.get("equip_slot", "")
+        tool = it.get("tool_skill", "")
+        handle = hexrgb("#7a532e")
+        if tool == "mining":
+            d.line([(4, 28), (22, 10)], fill=handle, width=3)
+            d.arc([10, 2, 30, 22], 200, 340, fill=m, width=4)
+        elif tool == "woodcutting":
+            d.line([(4, 28), (22, 10)], fill=handle, width=3)
+            d.polygon([(18, 4), (29, 7), (26, 19), (19, 14)], fill=m, outline=dark)
+        elif tool == "fishing":
+            d.line([(4, 28), (26, 4)], fill=m, width=3)
+            d.line([(26, 4), (30, 22)], fill=(230, 230, 230, 200))
+        elif it.get("combat_style") == "melee":
+            d.line([(6, 26), (26, 6)], fill=m, width=4)
+            d.line([(5, 21), (11, 27)], fill=hexrgb("#6b4a2a"), width=3)
+        elif it.get("combat_style") == "ranged":
+            d.arc([4, 2, 24, 30], 270, 90, fill=m, width=3)
+            d.line([(14, 3), (14, 29)], fill=(230, 230, 230, 220))
+        elif it.get("combat_style") == "magic":
+            d.line([(8, 28), (22, 6)], fill=m, width=3)
+            d.ellipse([18, 2, 28, 12], fill=hexrgb("#a0c0ff"), outline=hexrgb("#4060a0"))
+        elif slot == "head":
+            d.chord([6, 6, 26, 28], 180, 360, fill=m, outline=dark)
+            d.rectangle([6, 16, 26, 20], fill=shade(m, 0.8))
+        elif slot == "body":
+            d.polygon([(6, 8), (26, 8), (24, 28), (8, 28)], fill=m, outline=dark)
+            d.rectangle([2, 8, 6, 18], fill=shade(m, 0.8))
+            d.rectangle([26, 8, 30, 18], fill=shade(m, 0.8))
+        elif slot == "legs":
+            d.rectangle([8, 4, 24, 10], fill=m, outline=dark)
+            d.rectangle([8, 10, 14, 28], fill=m, outline=dark)
+            d.rectangle([18, 10, 24, 28], fill=m, outline=dark)
+        elif slot == "gloves":
+            d.rounded_rectangle([8, 8, 24, 26], 4, fill=m, outline=dark)
+            d.rectangle([4, 12, 8, 18], fill=m)
+        elif slot == "boots":
+            d.rectangle([8, 6, 16, 22], fill=m, outline=dark)
+            d.rectangle([8, 20, 26, 26], fill=m, outline=dark)
+        elif iid == "quartz_ring":
+            d.ellipse([7, 10, 25, 28], outline=hexrgb("#c08a4a"), width=3)
+            d.polygon([(16, 3), (21, 9), (16, 13), (11, 9)], fill=hexrgb("#dfe3f5"), outline=hexrgb("#7a80a0"))
+        elif iid == "pearl_amulet":
+            d.arc([6, 2, 26, 22], 0, 180, fill=hexrgb("#9aa3ab"), width=2)
+            d.ellipse([11, 17, 21, 27], fill=hexrgb("#efe8f2"), outline=hexrgb("#a89ab0"))
+        else:
+            d.rounded_rectangle([7, 6, 25, 28], 5, fill=hexrgb("#8a5a2b"), outline=hexrgb("#4a3019"))
+            d.rectangle([10, 14, 22, 18], fill=hexrgb("#6b4220"))
+
+
+for it in json.loads((ROOT / "data/items/items.json").read_text())["items"]:
+    path = it["icon"].replace("res://", "")
+    if it["id"] in ("copper_ore", "tin_ore", "oak_log", "raw_minnow", "uncut_quartz", "bird_nest", "river_pearl"):
+        continue
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    draw_item(ImageDraw.Draw(im), it)
+    save(im, path)
+
+# --- resource nodes
+save(rock(hexrgb("#6d6460"), hexrgb("#8a5a4a")), "assets/resources/nodes/iron_rock.png")
+willow = Image.new("RGBA", (T, 48), (0, 0, 0, 0))
+d = ImageDraw.Draw(willow)
+d.ellipse([5, 40, 27, 47], fill=(0, 0, 0, 80))
+d.rectangle([13, 26, 18, 44], fill=hexrgb("#5a4a32"))
+d.ellipse([3, 4, 29, 30], fill=hexrgb("#6a8a3a"))
+for x in range(5, 28, 4):
+    d.line([(x, 14), (x - 1, 34)], fill=hexrgb("#88aa4a"), width=2)
+save(willow, "assets/resources/nodes/willow_tree.png")
+for name, berries in (("herb_bush", True), ("herb_bush_picked", False)):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([4, 24, 28, 31], fill=(0, 0, 0, 60))
+    d.ellipse([5, 8, 27, 28], fill=hexrgb("#3f7a30" if berries else "#5a6a40"))
+    if berries:
+        for (x, y) in ((10, 14), (18, 12), (21, 20), (13, 21)):
+            d.ellipse([x, y, x + 3, y + 3], fill=hexrgb("#8fd06a"))
+    save(im, f"assets/resources/nodes/{name}.png")
+for name, crop in (("crop_patch", "#b99a5a"), ("herb_patch", "#9a5ab0"), ("crop_patch_empty", None)):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rectangle([2, 6, 30, 30], fill=hexrgb("#5a3f22"))
+    for y in (10, 17, 24):
+        d.line([(3, y), (29, y)], fill=hexrgb("#43301a"))
+    if crop:
+        for y in (8, 15, 22):
+            for x in (6, 13, 20, 26):
+                d.line([(x, y + 4), (x, y)], fill=hexrgb("#4f9a3c"), width=2)
+                d.ellipse([x - 2, y - 2, x + 2, y + 1], fill=hexrgb(crop))
+    save(im, f"assets/resources/nodes/{name}.png")
+
+# --- enemies (32x32; the troll is 48x48)
+def enemy(eid, size, fn):
+    im = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([size * 0.2, size * 0.82, size * 0.8, size * 0.98], fill=(0, 0, 0, 80))
+    fn(d, size)
+    save(im, f"assets/enemies/{eid}.png")
+
+
+def humanoid(col, weapon=None):
+    def f(d, s):
+        c = hexrgb(col)
+        d.rectangle([11, 14, 21, 25], fill=shade(c, 0.8))
+        d.rectangle([11, 4, 21, 13], fill=c)
+        d.polygon([(9, 6), (11, 8), (11, 4)], fill=c)
+        d.polygon([(23, 6), (21, 8), (21, 4)], fill=c)
+        d.point([(14, 8), (18, 8)], fill=(250, 220, 60, 255))
+        d.rectangle([12, 25, 14, 30], fill=shade(c, 0.5))
+        d.rectangle([18, 25, 20, 30], fill=shade(c, 0.5))
+        if weapon == "bow":
+            d.arc([20, 8, 30, 26], 270, 90, fill=hexrgb("#7a532e"), width=2)
+        elif weapon == "axe":
+            d.line([(24, 26), (26, 8)], fill=hexrgb("#7a532e"), width=2)
+            d.polygon([(25, 6), (31, 9), (29, 15), (26, 12)], fill=hexrgb("#9aa3ab"))
+        else:
+            d.line([(23, 24), (28, 12)], fill=hexrgb("#9aa3ab"), width=2)
+    return f
+
+
+enemy("slime", T, lambda d, s: (d.chord([5, 10, 27, 30], 180, 360, fill=(90, 200, 120, 230)), d.rectangle([5, 20, 27, 28], fill=(90, 200, 120, 230)),
+      d.point([(12, 17), (20, 17)], fill=(20, 40, 20, 255)), d.ellipse([9, 13, 13, 16], fill=(220, 255, 230, 180))))
+enemy("giant_rat", T, lambda d, s: (d.ellipse([6, 14, 24, 26], fill=hexrgb("#7a6a60")), d.ellipse([20, 12, 29, 21], fill=hexrgb("#8a7a70")),
+      d.point([(26, 15)], fill=(200, 30, 30, 255)), d.arc([0, 12, 12, 30], 90, 270, fill=hexrgb("#c98a8a"), width=2)))
+enemy("wolf", T, lambda d, s: (d.ellipse([5, 13, 25, 25], fill=hexrgb("#6a6a72")), d.polygon([(21, 9), (31, 14), (24, 20)], fill=hexrgb("#7a7a84")),
+      d.polygon([(22, 9), (24, 4), (26, 10)], fill=hexrgb("#5a5a62")), d.line([(5, 18), (0, 12)], fill=hexrgb("#6a6a72"), width=3),
+      d.rectangle([8, 24, 10, 30], fill=hexrgb("#55555c")), d.rectangle([19, 24, 21, 30], fill=hexrgb("#55555c"))))
+enemy("goblin", T, humanoid("#6aa04a"))
+enemy("goblin_archer", T, humanoid("#5a904a", "bow"))
+enemy("goblin_warrior", T, humanoid("#4a7a3a", "axe"))
+enemy("forest_troll", 48, lambda d, s: (d.rectangle([14, 18, 34, 38], fill=hexrgb("#5a7a4a")), d.ellipse([15, 4, 33, 22], fill=hexrgb("#6a8a5a")),
+      d.point([(20, 12), (28, 12)], fill=(250, 220, 60, 255)), d.rectangle([8, 20, 14, 34], fill=hexrgb("#5a7a4a")), d.rectangle([34, 20, 40, 34], fill=hexrgb("#5a7a4a")),
+      d.rectangle([16, 38, 22, 46], fill=hexrgb("#4a6a3a")), d.rectangle([26, 38, 32, 46], fill=hexrgb("#4a6a3a")), d.line([(40, 34), (46, 10)], fill=hexrgb("#6b4a2a"), width=4)))
+
+# --- crafting stations (32x32)
+def station(name, fn):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([3, 25, 29, 31], fill=(0, 0, 0, 70))
+    fn(d)
+    save(im, f"assets/environments/props/{name}.png")
+
+
+station("furnace", lambda d: (d.rounded_rectangle([5, 6, 27, 29], 4, fill=hexrgb("#7a6a60"), outline=hexrgb("#3a302a")),
+        d.chord([11, 14, 21, 30], 180, 360, fill=hexrgb("#f08a30")), d.rectangle([11, 22, 21, 28], fill=hexrgb("#f0b040")), d.rectangle([13, 1, 19, 7], fill=hexrgb("#5a4a40"))))
+station("anvil", lambda d: (d.polygon([(4, 10), (28, 10), (24, 16), (8, 16)], fill=hexrgb("#5a5f66"), outline=hexrgb("#2a2d30")),
+        d.rectangle([12, 16, 20, 24], fill=hexrgb("#4a4f56")), d.rectangle([8, 24, 24, 28], fill=hexrgb("#5a5f66"))))
+station("workbench", lambda d: (d.rectangle([3, 12, 29, 17], fill=hexrgb("#a0703a"), outline=hexrgb("#4a3019")),
+        d.rectangle([5, 17, 8, 29], fill=hexrgb("#7a532e")), d.rectangle([24, 17, 27, 29], fill=hexrgb("#7a532e")), d.line([(10, 10), (20, 6)], fill=hexrgb("#9aa3ab"), width=2)))
+station("range", lambda d: (d.rectangle([4, 10, 28, 29], fill=hexrgb("#6a5a50"), outline=hexrgb("#2a2420")),
+        d.ellipse([8, 6, 16, 12], fill=hexrgb("#3a3a3a")), d.ellipse([17, 6, 25, 12], fill=hexrgb("#3a3a3a")), d.rectangle([9, 18, 23, 26], fill=hexrgb("#f08a30"))))
+station("alchemy_table", lambda d: (d.rectangle([3, 14, 29, 18], fill=hexrgb("#6a4a7a"), outline=hexrgb("#2a1a30")),
+        d.rectangle([5, 18, 8, 29], fill=hexrgb("#4a3a5a")), d.rectangle([24, 18, 27, 29], fill=hexrgb("#4a3a5a")),
+        d.ellipse([7, 5, 15, 14], fill=hexrgb("#d04a4a")), d.ellipse([17, 7, 23, 14], fill=hexrgb("#4aa0d0"))))
+
+# --- buildings: one sprite per building sized to its plot, plus a site sprite
+ROOFS = {"town_hall": "#a83232", "bank": "#3d6fb0", "tavern": "#b5651d", "blacksmith": "#4a4f56", "workshop": "#8a6239",
+         "academy": "#6a4a9a", "farm": "#c9a030", "housing": "#9a5a3a", "marketplace": "#3a8a5a", "barracks": "#7a3030",
+         "guild_hall": "#2a5a8a", "expedition_center": "#5a7a3a"}
+region = json.loads((ROOT / "data/regions/greenvale_start.json").read_text())
+for plot in region.get("building_plots", []):
+    bid = plot["building"]
+    w, h = plot["rect"][2] * T, plot["rect"][3] * T
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    roof = hexrgb(ROOFS.get(bid, "#8a6239"))
+    if bid == "farm":
+        d.rectangle([4, 4, w - 5, h - 5], outline=hexrgb("#8a6239"), width=3)
+        d.rectangle([w // 2 - 24, 8, w // 2 + 24, 52], fill=hexrgb("#a83232"), outline=hexrgb("#4a1a1a"))
+        d.polygon([(w // 2 - 30, 12), (w // 2, -4), (w // 2 + 30, 12)], fill=hexrgb("#7a2020"))
+    else:
+        wall_top = int(h * 0.4)
+        d.rectangle([4, wall_top, w - 5, h - 3], fill=hexrgb("#d8c8a0"), outline=hexrgb("#4a3019"), width=2)
+        d.polygon([(0, wall_top + 4), (w // 2, 2), (w - 1, wall_top + 4)], fill=roof, outline=shade(roof, 0.5))
+        d.rectangle([w // 2 - 7, h - 22, w // 2 + 7, h - 3], fill=hexrgb("#6b4a2a"))
+        for x in range(14, w - 14, 28):
+            if abs(x - w // 2) > 16:
+                d.rectangle([x - 5, wall_top + 10, x + 5, wall_top + 20], fill=hexrgb("#9fd0ff"), outline=hexrgb("#4a3019"))
+    save(im, f"assets/environments/buildings/{bid}.png")
+site = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+d = ImageDraw.Draw(site)
+for x in (8, 54):
+    d.rectangle([x, 10, x + 3, 60], fill=hexrgb("#a0703a"))
+d.rectangle([8, 10, 57, 13], fill=hexrgb("#a0703a"))
+d.line([(8, 60), (57, 13)], fill=hexrgb("#7a532e"), width=2)
+d.rectangle([20, 46, 44, 58], fill=hexrgb("#c9a26b"), outline=hexrgb("#6b4a2a"))
+save(site, "assets/environments/buildings/construction_site.png")
+icon(lambda d: (d.line([(6, 26), (20, 12)], fill=hexrgb("#7a532e"), width=3), d.rectangle([16, 4, 28, 12], fill=hexrgb("#9aa3ab"))), "assets/ui/icons/build.png")
+for cid in ("gold", "gems", "recruitment_tokens"):
+    col = {"gold": "#e0b030", "gems": "#40c0e0", "recruitment_tokens": "#c060e0"}[cid]
+    icon(lambda d, col=col: (d.ellipse([5, 5, 27, 27], fill=hexrgb(col), outline=shade(hexrgb(col), 0.5)), d.ellipse([10, 9, 16, 15], fill=(255, 255, 255, 120))),
+         f"assets/ui/icons/{cid}.png")
 
 print("placeholder art generated")

@@ -1,142 +1,1240 @@
 {
-  "schema_version": 1,
-  "characters": [
-    {
-      "id": "brom_stonefist",
-      "name": "Brom Stonefist",
-      "rarity": "legendary",
-      "origin": "Dwarf",
-      "title": "Dwarven Miner",
-      "role": "mining_specialist",
-      "combat_specialty": "tank",
-      "primary_affinity": "mining",
-      "secondary_affinity": "smithing",
-      "affinities": {
-        "mining": {
-          "speed": 1.25,
-          "xp": 1.1
-        },
-        "smithing": {
-          "speed": 1.1,
-          "xp": 1.1
-        }
-      },
-      "starting_skills": {
-        "mining": 15,
-        "smithing": 8,
-        "defense": 5
-      },
-      "base_stats": {
-        "health": 120,
-        "move_speed_tiles": 3.2,
-        "carry_capacity": 28
-      },
-      "passive": {
-        "id": "deep_veins",
-        "name": "Deep Veins",
-        "description": "+25% mining speed and double the chance of rare gems.",
-        "effects": {
-          "rare_drop_multiplier.mining": 2.0
-        }
-      },
-      "personality": "Gruff, loyal, quietly sentimental about good rock.",
-      "background": "Brom left the Irondeep holds after a cave-in buried his old crew. He swore he would never again dig without someone watching his back.",
-      "portrait": "res://assets/characters/portraits/brom_stonefist.png",
-      "sprite": "res://assets/characters/sprites/brom_stonefist.png",
-      "palette": {
-        "primary": "#8a5a2b",
-        "secondary": "#c9a26b"
-      }
+ "schema_version": 2,
+ "characters": [
+  {
+   "id": "brom_stonefist",
+   "name": "Brom Stonefist",
+   "rarity": "legendary",
+   "origin": "Dwarf",
+   "title": "Dwarven Miner",
+   "role": "mining_specialist",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "mining",
+   "secondary_affinity": "smithing",
+   "affinities": {
+    "mining": {
+     "speed": 1.25,
+     "xp": 1.1
     },
-    {
-      "id": "sylvara_moonleaf",
-      "name": "Sylvara Moonleaf",
-      "rarity": "mythic",
-      "origin": "Elf",
-      "title": "Elven Ranger",
-      "role": "woodcutting_specialist",
-      "combat_specialty": "ranger",
-      "primary_affinity": "woodcutting",
-      "secondary_affinity": "exploration",
-      "affinities": {
-        "woodcutting": {
-          "speed": 1.25,
-          "xp": 1.15
-        },
-        "exploration": {
-          "speed": 1.2,
-          "xp": 1.15
-        }
-      },
-      "starting_skills": {
-        "woodcutting": 18,
-        "exploration": 12,
-        "ranged": 10,
-        "hunting": 6,
-        "foraging": 5
-      },
-      "base_stats": {
-        "health": 95,
-        "move_speed_tiles": 4.0,
-        "carry_capacity": 24
-      },
-      "passive": {
-        "id": "forest_sense",
-        "name": "Forest Sense",
-        "description": "+25% woodcutting speed and finds bird nests 50% more often.",
-        "effects": {
-          "rare_drop_multiplier.woodcutting": 1.5
-        }
-      },
-      "personality": "Curious, patient, speaks to trees when she thinks nobody is listening.",
-      "background": "A ranger of the Moonleaf circle who followed a silver stag out of Whisperwood and never found her way back.",
-      "portrait": "res://assets/characters/portraits/sylvara_moonleaf.png",
-      "sprite": "res://assets/characters/sprites/sylvara_moonleaf.png",
-      "palette": {
-        "primary": "#2f6b3a",
-        "secondary": "#d8e6c0"
-      }
-    },
-    {
-      "id": "tamsin_reed",
-      "name": "Tamsin Reed",
-      "rarity": "common",
-      "origin": "Human",
-      "title": "Wandering Adventurer",
-      "role": "generalist",
-      "combat_specialty": "warrior",
-      "primary_affinity": "fishing",
-      "secondary_affinity": null,
-      "affinities": {
-        "fishing": {
-          "speed": 1.05,
-          "xp": 1.0
-        }
-      },
-      "starting_skills": {
-        "fishing": 3
-      },
-      "base_stats": {
-        "health": 100,
-        "move_speed_tiles": 3.5,
-        "carry_capacity": 32
-      },
-      "passive": {
-        "id": "jack_of_all_trades",
-        "name": "Jack of All Trades",
-        "description": "Carries more than specialists and gains 5% XP in every skill.",
-        "effects": {
-          "xp_multiplier.all": 1.05
-        }
-      },
-      "personality": "Cheerful, restless, always has a story that is probably exaggerated.",
-      "background": "A farmhand from the Greenvale outskirts who decided the world was bigger than one field.",
-      "portrait": "res://assets/characters/portraits/tamsin_reed.png",
-      "sprite": "res://assets/characters/sprites/tamsin_reed.png",
-      "palette": {
-        "primary": "#3b5b8c",
-        "secondary": "#e0c9a0"
-      }
+    "smithing": {
+     "speed": 1.1,
+     "xp": 1.1
     }
-  ]
+   },
+   "starting_skills": {
+    "mining": 15,
+    "smithing": 8,
+    "defense": 5,
+    "strength": 4
+   },
+   "base_stats": {
+    "health": 120,
+    "move_speed_tiles": 3.2,
+    "carry_capacity": 28
+   },
+   "passive": {
+    "id": "deep_veins",
+    "name": "Deep Veins",
+    "description": "+25% mining speed and double the chance of rare gems.",
+    "effects": {
+     "rare_drop.mining": 2.0
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "battle_hardened",
+    "pack_mule"
+   ],
+   "personality": "Gruff, loyal, quietly sentimental about good rock.",
+   "background": "Brom left the Irondeep holds after a cave-in buried his old crew. He swore he would never again dig without someone watching his back.",
+   "acquisition": "starter",
+   "portrait": "res://assets/characters/portraits/brom_stonefist.png",
+   "sprite": "res://assets/characters/sprites/brom_stonefist.png",
+   "palette": {
+    "primary": "#8a5a2b",
+    "secondary": "#c9a26b"
+   }
+  },
+  {
+   "id": "sylvara_moonleaf",
+   "name": "Sylvara Moonleaf",
+   "rarity": "mythic",
+   "origin": "Elf",
+   "title": "Elven Ranger",
+   "role": "woodcutting_specialist",
+   "combat_specialty": "ranger",
+   "combat_style": "ranged",
+   "primary_affinity": "woodcutting",
+   "secondary_affinity": "exploration",
+   "affinities": {
+    "woodcutting": {
+     "speed": 1.25,
+     "xp": 1.15
+    },
+    "exploration": {
+     "speed": 1.2,
+     "xp": 1.15
+    }
+   },
+   "starting_skills": {
+    "woodcutting": 18,
+    "exploration": 12,
+    "ranged": 10,
+    "hunting": 6,
+    "foraging": 5,
+    "agility": 4
+   },
+   "base_stats": {
+    "health": 95,
+    "move_speed_tiles": 4.0,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "forest_sense",
+    "name": "Forest Sense",
+    "description": "+25% woodcutting speed and finds bird nests 50% more often.",
+    "effects": {
+     "rare_drop.woodcutting": 1.5,
+     "discovery": 1.25
+    }
+   },
+   "traits": [
+    "treasure_seeker",
+    "adventurous",
+    "night_owl"
+   ],
+   "personality": "Curious, patient, speaks to trees when she thinks nobody is listening.",
+   "background": "A ranger of the Moonleaf circle who followed a silver stag out of Whisperwood and never found her way back.",
+   "acquisition": "starter",
+   "portrait": "res://assets/characters/portraits/sylvara_moonleaf.png",
+   "sprite": "res://assets/characters/sprites/sylvara_moonleaf.png",
+   "palette": {
+    "primary": "#2f6b3a",
+    "secondary": "#d8e6c0"
+   }
+  },
+  {
+   "id": "tamsin_reed",
+   "name": "Tamsin Reed",
+   "rarity": "common",
+   "origin": "Human",
+   "title": "Wandering Adventurer",
+   "role": "generalist",
+   "combat_specialty": "warrior",
+   "combat_style": "melee",
+   "primary_affinity": "fishing",
+   "secondary_affinity": null,
+   "affinities": {
+    "fishing": {
+     "speed": 1.05,
+     "xp": 1.0
+    }
+   },
+   "starting_skills": {
+    "fishing": 3
+   },
+   "base_stats": {
+    "health": 100,
+    "move_speed_tiles": 3.5,
+    "carry_capacity": 32
+   },
+   "passive": {
+    "id": "jack_of_all_trades",
+    "name": "Jack of All Trades",
+    "description": "Carries more than specialists and gains 5% XP in every skill.",
+    "effects": {
+     "xp.all": 1.05
+    }
+   },
+   "traits": [
+    "efficient",
+    "adventurous",
+    "hard_worker"
+   ],
+   "personality": "Cheerful, restless, always has a story that is probably exaggerated.",
+   "background": "A farmhand from the Greenvale outskirts who decided the world was bigger than one field.",
+   "acquisition": "starter",
+   "portrait": "res://assets/characters/portraits/tamsin_reed.png",
+   "sprite": "res://assets/characters/sprites/tamsin_reed.png",
+   "palette": {
+    "primary": "#3b5b8c",
+    "secondary": "#e0c9a0"
+   }
+  },
+  {
+   "id": "pip_tumblewick",
+   "name": "Pip Tumblewick",
+   "rarity": "common",
+   "origin": "Halfling",
+   "title": "Camp Cook",
+   "role": "cooking_specialist",
+   "combat_specialty": "support",
+   "combat_style": "ranged",
+   "primary_affinity": "cooking",
+   "secondary_affinity": null,
+   "affinities": {
+    "cooking": {
+     "speed": 1.15,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "cooking": 5
+   },
+   "base_stats": {
+    "health": 80,
+    "move_speed_tiles": 3.4,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "second_helpings",
+    "name": "Second Helpings",
+    "description": "8% chance to cook an extra portion.",
+    "effects": {
+     "double_craft_chance.cooking": 0.08
+    }
+   },
+   "traits": [
+    "efficient",
+    "perfectionist",
+    "pack_mule"
+   ],
+   "personality": "Talks to his pans. Will feed anyone.",
+   "background": "Pip cooked for a caravan until bandits ate the caravan's lunch and the caravan. He kept the pans.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/pip_tumblewick.png",
+   "sprite": "res://assets/characters/sprites/pip_tumblewick.png",
+   "palette": {
+    "primary": "#a0522d",
+    "secondary": "#f1d9a8"
+   }
+  },
+  {
+   "id": "hilda_brook",
+   "name": "Hilda Brook",
+   "rarity": "common",
+   "origin": "Human",
+   "title": "River Fisher",
+   "role": "fishing_specialist",
+   "combat_specialty": "warrior",
+   "combat_style": "melee",
+   "primary_affinity": "fishing",
+   "secondary_affinity": null,
+   "affinities": {
+    "fishing": {
+     "speed": 1.15,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "fishing": 6
+   },
+   "base_stats": {
+    "health": 95,
+    "move_speed_tiles": 3.3,
+    "carry_capacity": 28
+   },
+   "passive": {
+    "id": "patient_line",
+    "name": "Patient Line",
+    "description": "10% chance to catch an extra fish.",
+    "effects": {
+     "yield_bonus_chance.fishing": 0.1
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "night_owl",
+    "pack_mule"
+   ],
+   "personality": "Unhurried, dry humour, reads the water like a book.",
+   "background": "Hilda has fished the Greenvale since before the bridge was built.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/hilda_brook.png",
+   "sprite": "res://assets/characters/sprites/hilda_brook.png",
+   "palette": {
+    "primary": "#4a7a8c",
+    "secondary": "#d8cfa8"
+   }
+  },
+  {
+   "id": "odo_ferris",
+   "name": "Odo Ferris",
+   "rarity": "common",
+   "origin": "Human",
+   "title": "Farmhand",
+   "role": "farming_specialist",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "farming",
+   "secondary_affinity": "foraging",
+   "affinities": {
+    "farming": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "farming": 4,
+    "foraging": 2
+   },
+   "base_stats": {
+    "health": 110,
+    "move_speed_tiles": 3.2,
+    "carry_capacity": 30
+   },
+   "passive": {
+    "id": "green_thumb",
+    "name": "Green Thumb",
+    "description": "10% chance of an extra crop.",
+    "effects": {
+     "yield_bonus_chance.farming": 0.1
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "efficient",
+    "pack_mule"
+   ],
+   "personality": "Shy, strong, knows every field by smell.",
+   "background": "Odo grew up on Hollow Farms and has never left them, until now.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/odo_ferris.png",
+   "sprite": "res://assets/characters/sprites/odo_ferris.png",
+   "palette": {
+    "primary": "#6b7a2f",
+    "secondary": "#e8d8a0"
+   }
+  },
+  {
+   "id": "nell_ashby",
+   "name": "Nell Ashby",
+   "rarity": "common",
+   "origin": "Human",
+   "title": "Woodsman",
+   "role": "woodcutting_specialist",
+   "combat_specialty": "warrior",
+   "combat_style": "melee",
+   "primary_affinity": "woodcutting",
+   "secondary_affinity": null,
+   "affinities": {
+    "woodcutting": {
+     "speed": 1.12,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "woodcutting": 5
+   },
+   "base_stats": {
+    "health": 100,
+    "move_speed_tiles": 3.4,
+    "carry_capacity": 28
+   },
+   "passive": {
+    "id": "steady_swing",
+    "name": "Steady Swing",
+    "description": "+5% woodcutting XP.",
+    "effects": {
+     "xp.woodcutting": 1.05
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "battle_hardened",
+    "pack_mule"
+   ],
+   "personality": "Blunt and practical.",
+   "background": "Nell cleared roads for the Greenvale council for twelve years.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/nell_ashby.png",
+   "sprite": "res://assets/characters/sprites/nell_ashby.png",
+   "palette": {
+    "primary": "#7a4a2a",
+    "secondary": "#c8b08a"
+   }
+  },
+  {
+   "id": "rook_varga",
+   "name": "Rook Varga",
+   "rarity": "uncommon",
+   "origin": "Human",
+   "title": "Hunter",
+   "role": "combat_ranged",
+   "combat_specialty": "ranger",
+   "combat_style": "ranged",
+   "primary_affinity": "ranged",
+   "secondary_affinity": "hunting",
+   "affinities": {
+    "ranged": {
+     "speed": 1.0,
+     "xp": 1.1
+    },
+    "hunting": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "ranged": 8,
+    "hunting": 6
+   },
+   "base_stats": {
+    "health": 100,
+    "move_speed_tiles": 3.8,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "trackers_eye",
+    "name": "Tracker's Eye",
+    "description": "+10% damage against beasts.",
+    "effects": {
+     "damage": 1.05,
+     "discovery": 1.1
+    }
+   },
+   "traits": [
+    "battle_hardened",
+    "treasure_seeker",
+    "adventurous"
+   ],
+   "personality": "Quiet and watchful.",
+   "background": "Rook tracked wolves for bounties until the wolves started tracking him.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/rook_varga.png",
+   "sprite": "res://assets/characters/sprites/rook_varga.png",
+   "palette": {
+    "primary": "#5a4a3a",
+    "secondary": "#a89a7a"
+   }
+  },
+  {
+   "id": "mira_quell",
+   "name": "Mira Quell",
+   "rarity": "uncommon",
+   "origin": "Human",
+   "title": "Herbalist",
+   "role": "herblore_specialist",
+   "combat_specialty": "healer",
+   "combat_style": "magic",
+   "primary_affinity": "herblore",
+   "secondary_affinity": "foraging",
+   "affinities": {
+    "herblore": {
+     "speed": 1.15,
+     "xp": 1.1
+    },
+    "foraging": {
+     "speed": 1.15,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "herblore": 6,
+    "foraging": 5
+   },
+   "base_stats": {
+    "health": 85,
+    "move_speed_tiles": 3.6,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "steady_hands",
+    "name": "Steady Hands",
+    "description": "10% chance to save an ingredient when brewing.",
+    "effects": {
+     "preserve_chance.herblore": 0.1,
+     "healing": 1.1
+    }
+   },
+   "traits": [
+    "perfectionist",
+    "efficient",
+    "treasure_seeker"
+   ],
+   "personality": "Kind, precise, keeps notes on everything.",
+   "background": "Mira was the Hollow's healer until the healer's hut burned down.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/mira_quell.png",
+   "sprite": "res://assets/characters/sprites/mira_quell.png",
+   "palette": {
+    "primary": "#5a8a6a",
+    "secondary": "#e0e8d0"
+   }
+  },
+  {
+   "id": "dunstan_crag",
+   "name": "Dunstan Crag",
+   "rarity": "uncommon",
+   "origin": "Dwarf",
+   "title": "Apprentice Smith",
+   "role": "smithing_specialist",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "smithing",
+   "secondary_affinity": "mining",
+   "affinities": {
+    "smithing": {
+     "speed": 1.15,
+     "xp": 1.1
+    },
+    "mining": {
+     "speed": 1.05,
+     "xp": 1.0
+    }
+   },
+   "starting_skills": {
+    "smithing": 6,
+    "mining": 4
+   },
+   "base_stats": {
+    "health": 115,
+    "move_speed_tiles": 3.1,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "bellows_lung",
+    "name": "Bellows Lung",
+    "description": "+10% smithing speed.",
+    "effects": {
+     "craft_speed.smithing": 1.1
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "perfectionist",
+    "battle_hardened"
+   ],
+   "personality": "Eager to prove himself to Brom.",
+   "background": "Brom's nephew, sent to Greenvale 'to learn humility'.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/dunstan_crag.png",
+   "sprite": "res://assets/characters/sprites/dunstan_crag.png",
+   "palette": {
+    "primary": "#6a3a2a",
+    "secondary": "#b89a6a"
+   }
+  },
+  {
+   "id": "kesh_tallow",
+   "name": "Kesh Tallow",
+   "rarity": "uncommon",
+   "origin": "Half-orc",
+   "title": "Brawler",
+   "role": "combat_melee",
+   "combat_specialty": "warrior",
+   "combat_style": "melee",
+   "primary_affinity": "strength",
+   "secondary_affinity": "attack",
+   "affinities": {
+    "strength": {
+     "speed": 1.0,
+     "xp": 1.1
+    },
+    "attack": {
+     "speed": 1.0,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "strength": 9,
+    "attack": 7,
+    "defense": 4
+   },
+   "base_stats": {
+    "health": 130,
+    "move_speed_tiles": 3.4,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "thick_skin",
+    "name": "Thick Skin",
+    "description": "+15 max health.",
+    "effects": {
+     "max_health": 15
+    }
+   },
+   "traits": [
+    "battle_hardened",
+    "pack_mule",
+    "efficient"
+   ],
+   "personality": "Loud, loyal, terrible at cards.",
+   "background": "Kesh fought in pit matches until he realised the pit owner was the real opponent.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/kesh_tallow.png",
+   "sprite": "res://assets/characters/sprites/kesh_tallow.png",
+   "palette": {
+    "primary": "#4a6a3a",
+    "secondary": "#8a6a4a"
+   }
+  },
+  {
+   "id": "garrick_emberforge",
+   "name": "Garrick Emberforge",
+   "rarity": "rare",
+   "origin": "Human",
+   "title": "Blacksmith",
+   "role": "smithing_specialist",
+   "combat_specialty": "warrior",
+   "combat_style": "melee",
+   "primary_affinity": "smithing",
+   "secondary_affinity": "crafting",
+   "affinities": {
+    "smithing": {
+     "speed": 1.2,
+     "xp": 1.1
+    },
+    "crafting": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "smithing": 12,
+    "crafting": 8,
+    "strength": 6
+   },
+   "base_stats": {
+    "health": 115,
+    "move_speed_tiles": 3.2,
+    "carry_capacity": 28
+   },
+   "passive": {
+    "id": "material_saver",
+    "name": "Material Saver",
+    "description": "15% chance to preserve materials when smithing or crafting.",
+    "effects": {
+     "preserve_chance.smithing": 0.15,
+     "preserve_chance.crafting": 0.15
+    }
+   },
+   "traits": [
+    "perfectionist",
+    "hard_worker",
+    "battle_hardened"
+   ],
+   "personality": "Proud of his work, prouder of his apprentices.",
+   "background": "Garrick's forge supplied three kingdoms before he retired to Greenvale. He did not stay retired.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/garrick_emberforge.png",
+   "sprite": "res://assets/characters/sprites/garrick_emberforge.png",
+   "palette": {
+    "primary": "#8a2a1a",
+    "secondary": "#d0a060"
+   }
+  },
+  {
+   "id": "lyra_swiftwind",
+   "name": "Lyra Swiftwind",
+   "rarity": "rare",
+   "origin": "Elf",
+   "title": "Archer",
+   "role": "combat_ranged",
+   "combat_specialty": "ranger",
+   "combat_style": "ranged",
+   "primary_affinity": "ranged",
+   "secondary_affinity": "agility",
+   "affinities": {
+    "ranged": {
+     "speed": 1.0,
+     "xp": 1.15
+    },
+    "agility": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "ranged": 14,
+    "agility": 8
+   },
+   "base_stats": {
+    "health": 90,
+    "move_speed_tiles": 4.2,
+    "carry_capacity": 22
+   },
+   "passive": {
+    "id": "quickdraw",
+    "name": "Quickdraw",
+    "description": "+12% damage with bows.",
+    "effects": {
+     "damage": 1.12
+    }
+   },
+   "traits": [
+    "battle_hardened",
+    "adventurous",
+    "night_owl"
+   ],
+   "personality": "Competitive, restless, kind underneath.",
+   "background": "Lyra won the Whisperwood archery tourney three years running and got bored.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/lyra_swiftwind.png",
+   "sprite": "res://assets/characters/sprites/lyra_swiftwind.png",
+   "palette": {
+    "primary": "#3a6a8a",
+    "secondary": "#e8e0b0"
+   }
+  },
+  {
+   "id": "bram_oakheart",
+   "name": "Bram Oakheart",
+   "rarity": "rare",
+   "origin": "Human",
+   "title": "Lumberjack",
+   "role": "woodcutting_specialist",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "woodcutting",
+   "secondary_affinity": "construction",
+   "affinities": {
+    "woodcutting": {
+     "speed": 1.2,
+     "xp": 1.1
+    },
+    "construction": {
+     "speed": 1.2,
+     "xp": 1.15
+    }
+   },
+   "starting_skills": {
+    "woodcutting": 12,
+    "construction": 8
+   },
+   "base_stats": {
+    "health": 125,
+    "move_speed_tiles": 3.2,
+    "carry_capacity": 30
+   },
+   "passive": {
+    "id": "builders_back",
+    "name": "Builder's Back",
+    "description": "+20% construction speed.",
+    "effects": {
+     "gather_speed.construction": 1.2
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "pack_mule",
+    "efficient"
+   ],
+   "personality": "Big laugh, bigger axe.",
+   "background": "Bram built half of Greenvale Hollow and intends to build the other half.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/bram_oakheart.png",
+   "sprite": "res://assets/characters/sprites/bram_oakheart.png",
+   "palette": {
+    "primary": "#5a3a1a",
+    "secondary": "#c0904a"
+   }
+  },
+  {
+   "id": "sela_tidecaller",
+   "name": "Sela Tidecaller",
+   "rarity": "rare",
+   "origin": "Human",
+   "title": "Tide Mage",
+   "role": "fishing_specialist",
+   "combat_specialty": "mage",
+   "combat_style": "magic",
+   "primary_affinity": "fishing",
+   "secondary_affinity": "magic",
+   "affinities": {
+    "fishing": {
+     "speed": 1.2,
+     "xp": 1.1
+    },
+    "magic": {
+     "speed": 1.0,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "fishing": 12,
+    "magic": 10
+   },
+   "base_stats": {
+    "health": 85,
+    "move_speed_tiles": 3.6,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "call_of_the_tide",
+    "name": "Call of the Tide",
+    "description": "Doubles pearl chance while fishing.",
+    "effects": {
+     "rare_drop.fishing": 2.0
+    }
+   },
+   "traits": [
+    "treasure_seeker",
+    "night_owl",
+    "perfectionist"
+   ],
+   "personality": "Serene and a little eerie.",
+   "background": "Sela speaks to rivers. Sometimes they answer.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/sela_tidecaller.png",
+   "sprite": "res://assets/characters/sprites/sela_tidecaller.png",
+   "palette": {
+    "primary": "#2a5a8a",
+    "secondary": "#a0d0e0"
+   }
+  },
+  {
+   "id": "morgana_ashveil",
+   "name": "Morgana Ashveil",
+   "rarity": "epic",
+   "origin": "Human",
+   "title": "Swamp Witch",
+   "role": "herblore_specialist",
+   "combat_specialty": "mage",
+   "combat_style": "magic",
+   "primary_affinity": "herblore",
+   "secondary_affinity": "magic",
+   "affinities": {
+    "herblore": {
+     "speed": 1.25,
+     "xp": 1.2
+    },
+    "magic": {
+     "speed": 1.0,
+     "xp": 1.15
+    }
+   },
+   "starting_skills": {
+    "herblore": 15,
+    "magic": 14,
+    "foraging": 8
+   },
+   "base_stats": {
+    "health": 90,
+    "move_speed_tiles": 3.5,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "bubbling_cauldron",
+    "name": "Bubbling Cauldron",
+    "description": "+20% herblore XP and 15% chance to preserve ingredients.",
+    "effects": {
+     "preserve_chance.herblore": 0.15,
+     "double_craft_chance.herblore": 0.05
+    }
+   },
+   "traits": [
+    "perfectionist",
+    "night_owl",
+    "treasure_seeker"
+   ],
+   "personality": "Sardonic, secretly sentimental.",
+   "background": "Morgana was run out of three villages before Greenvale offered her a cottage and a garden.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/morgana_ashveil.png",
+   "sprite": "res://assets/characters/sprites/morgana_ashveil.png",
+   "palette": {
+    "primary": "#4a2a5a",
+    "secondary": "#9ac080"
+   }
+  },
+  {
+   "id": "thane_ironward",
+   "name": "Thane Ironward",
+   "rarity": "epic",
+   "origin": "Dwarf",
+   "title": "Battle Priest",
+   "role": "combat_support",
+   "combat_specialty": "healer",
+   "combat_style": "melee",
+   "primary_affinity": "defense",
+   "secondary_affinity": "prayer",
+   "affinities": {
+    "defense": {
+     "speed": 1.0,
+     "xp": 1.2
+    },
+    "prayer": {
+     "speed": 1.0,
+     "xp": 1.2
+    }
+   },
+   "starting_skills": {
+    "defense": 16,
+    "prayer": 12,
+    "attack": 10,
+    "strength": 8
+   },
+   "base_stats": {
+    "health": 140,
+    "move_speed_tiles": 3.0,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "blessed_ward",
+    "name": "Blessed Ward",
+    "description": "+20% healing from food and +10 armour.",
+    "effects": {
+     "healing": 1.2,
+     "armor": 10
+    }
+   },
+   "traits": [
+    "battle_hardened",
+    "efficient",
+    "hard_worker"
+   ],
+   "personality": "Solemn, steady, sings off-key.",
+   "background": "Thane guarded the Irondeep shrine for forty years. He left when the shrine went quiet.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/thane_ironward.png",
+   "sprite": "res://assets/characters/sprites/thane_ironward.png",
+   "palette": {
+    "primary": "#7a7a8a",
+    "secondary": "#e0c060"
+   }
+  },
+  {
+   "id": "vex_shadowstep",
+   "name": "Vex Shadowstep",
+   "rarity": "epic",
+   "origin": "Human",
+   "title": "Rogue",
+   "role": "treasure_hunter",
+   "combat_specialty": "assassin",
+   "combat_style": "melee",
+   "primary_affinity": "exploration",
+   "secondary_affinity": "archaeology",
+   "affinities": {
+    "exploration": {
+     "speed": 1.25,
+     "xp": 1.15
+    },
+    "archaeology": {
+     "speed": 1.2,
+     "xp": 1.15
+    }
+   },
+   "starting_skills": {
+    "exploration": 14,
+    "archaeology": 10,
+    "attack": 12,
+    "agility": 10
+   },
+   "base_stats": {
+    "health": 95,
+    "move_speed_tiles": 4.3,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "sticky_fingers",
+    "name": "Sticky Fingers",
+    "description": "+50% rare drops everywhere.",
+    "effects": {
+     "rare_drop.all": 1.5,
+     "discovery": 1.3
+    }
+   },
+   "traits": [
+    "treasure_seeker",
+    "adventurous",
+    "night_owl"
+   ],
+   "personality": "Charming, evasive, always smiling.",
+   "background": "Nobody knows where Vex came from. Vex likes it that way.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/vex_shadowstep.png",
+   "sprite": "res://assets/characters/sprites/vex_shadowstep.png",
+   "palette": {
+    "primary": "#2a2a3a",
+    "secondary": "#8a3a5a"
+   }
+  },
+  {
+   "id": "aurelia_dawnbringer",
+   "name": "Aurelia Dawnbringer",
+   "rarity": "legendary",
+   "origin": "Human",
+   "title": "Paladin",
+   "role": "combat_melee",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "attack",
+   "secondary_affinity": "defense",
+   "affinities": {
+    "attack": {
+     "speed": 1.0,
+     "xp": 1.2
+    },
+    "defense": {
+     "speed": 1.0,
+     "xp": 1.2
+    },
+    "strength": {
+     "speed": 1.0,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "attack": 20,
+    "defense": 20,
+    "strength": 16,
+    "prayer": 10
+   },
+   "base_stats": {
+    "health": 160,
+    "move_speed_tiles": 3.2,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "dawns_light",
+    "name": "Dawn's Light",
+    "description": "+15% damage and +25 max health.",
+    "effects": {
+     "damage": 1.15,
+     "max_health": 25
+    }
+   },
+   "traits": [
+    "battle_hardened",
+    "hard_worker",
+    "adventurous"
+   ],
+   "personality": "Earnest, unbending, quietly funny.",
+   "background": "Aurelia was the youngest knight of the Sun Order. She is now the last.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/aurelia_dawnbringer.png",
+   "sprite": "res://assets/characters/sprites/aurelia_dawnbringer.png",
+   "palette": {
+    "primary": "#d0b040",
+    "secondary": "#f0f0e0"
+   }
+  },
+  {
+   "id": "korrin_deepdelve",
+   "name": "Korrin Deepdelve",
+   "rarity": "legendary",
+   "origin": "Gnome",
+   "title": "Treasure Hunter",
+   "role": "treasure_hunter",
+   "combat_specialty": "support",
+   "combat_style": "ranged",
+   "primary_affinity": "archaeology",
+   "secondary_affinity": "exploration",
+   "affinities": {
+    "archaeology": {
+     "speed": 1.3,
+     "xp": 1.2
+    },
+    "exploration": {
+     "speed": 1.25,
+     "xp": 1.2
+    },
+    "mining": {
+     "speed": 1.1,
+     "xp": 1.05
+    }
+   },
+   "starting_skills": {
+    "archaeology": 18,
+    "exploration": 16,
+    "mining": 10,
+    "crafting": 8
+   },
+   "base_stats": {
+    "health": 85,
+    "move_speed_tiles": 3.9,
+    "carry_capacity": 30
+   },
+   "passive": {
+    "id": "x_marks_the_spot",
+    "name": "X Marks the Spot",
+    "description": "Doubles treasure discovery and +25% rare drops.",
+    "effects": {
+     "discovery": 2.0,
+     "rare_drop.all": 1.25
+    }
+   },
+   "traits": [
+    "treasure_seeker",
+    "adventurous",
+    "pack_mule"
+   ],
+   "personality": "Excitable, encyclopedic, allergic to maps drawn by others.",
+   "background": "Korrin has dug up four lost cities and lost two of them again.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/korrin_deepdelve.png",
+   "sprite": "res://assets/characters/sprites/korrin_deepdelve.png",
+   "palette": {
+    "primary": "#8a5a9a",
+    "secondary": "#e0c080"
+   }
+  },
+  {
+   "id": "elowen_starweaver",
+   "name": "Elowen Starweaver",
+   "rarity": "mythic",
+   "origin": "Elf",
+   "title": "Archmage",
+   "role": "combat_magic",
+   "combat_specialty": "mage",
+   "combat_style": "magic",
+   "primary_affinity": "magic",
+   "secondary_affinity": "enchanting",
+   "affinities": {
+    "magic": {
+     "speed": 1.0,
+     "xp": 1.25
+    },
+    "enchanting": {
+     "speed": 1.3,
+     "xp": 1.25
+    }
+   },
+   "starting_skills": {
+    "magic": 25,
+    "enchanting": 18,
+    "herblore": 10,
+    "prayer": 10,
+    "exploration": 8
+   },
+   "base_stats": {
+    "health": 100,
+    "move_speed_tiles": 3.8,
+    "carry_capacity": 24
+   },
+   "passive": {
+    "id": "starfall",
+    "name": "Starfall",
+    "description": "+25% damage and +10% XP in every skill.",
+    "effects": {
+     "damage": 1.25,
+     "xp.all": 1.1
+    }
+   },
+   "traits": [
+    "perfectionist",
+    "treasure_seeker",
+    "night_owl"
+   ],
+   "personality": "Distant, brilliant, kinder than she lets on.",
+   "background": "Elowen read every book in the Celestial Library. The library would like them back.",
+   "acquisition": "gacha",
+   "portrait": "res://assets/characters/portraits/elowen_starweaver.png",
+   "sprite": "res://assets/characters/sprites/elowen_starweaver.png",
+   "palette": {
+    "primary": "#3a3a8a",
+    "secondary": "#c0c0f0"
+   }
+  },
+  {
+   "id": "old_marrow",
+   "name": "Old Marrow",
+   "rarity": "rare",
+   "origin": "Human",
+   "title": "Hermit Miner",
+   "role": "mining_specialist",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "mining",
+   "secondary_affinity": "archaeology",
+   "affinities": {
+    "mining": {
+     "speed": 1.2,
+     "xp": 1.15
+    },
+    "archaeology": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "mining": 20,
+    "archaeology": 8
+   },
+   "base_stats": {
+    "health": 110,
+    "move_speed_tiles": 2.9,
+    "carry_capacity": 34
+   },
+   "passive": {
+    "id": "old_routes",
+    "name": "Old Routes",
+    "description": "Knows every tunnel: +10% move speed underground and +15% mining XP.",
+    "effects": {
+     "xp.mining": 1.15,
+     "move_speed": 1.05
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "pack_mule",
+    "efficient"
+   ],
+   "personality": "Mumbles, hums, never lost.",
+   "background": "Old Marrow has lived in the Greenvale mine longer than anyone has owned it. Help him and he may join you.",
+   "acquisition": "quest",
+   "portrait": "res://assets/characters/portraits/old_marrow.png",
+   "sprite": "res://assets/characters/sprites/old_marrow.png",
+   "palette": {
+    "primary": "#5a5a4a",
+    "secondary": "#a0a090"
+   }
+  },
+  {
+   "id": "fenwick_the_lost",
+   "name": "Fenwick the Lost",
+   "rarity": "epic",
+   "origin": "Human",
+   "title": "Lost Cartographer",
+   "role": "explorer",
+   "combat_specialty": "support",
+   "combat_style": "ranged",
+   "primary_affinity": "exploration",
+   "secondary_affinity": "agility",
+   "affinities": {
+    "exploration": {
+     "speed": 1.3,
+     "xp": 1.25
+    },
+    "agility": {
+     "speed": 1.15,
+     "xp": 1.15
+    }
+   },
+   "starting_skills": {
+    "exploration": 20,
+    "agility": 12
+   },
+   "base_stats": {
+    "health": 90,
+    "move_speed_tiles": 4.4,
+    "carry_capacity": 26
+   },
+   "passive": {
+    "id": "cartographers_eye",
+    "name": "Cartographer's Eye",
+    "description": "Reveals fog of war faster and +40% discovery.",
+    "effects": {
+     "discovery": 1.4,
+     "move_speed": 1.08
+    }
+   },
+   "traits": [
+    "adventurous",
+    "treasure_seeker",
+    "night_owl"
+   ],
+   "personality": "Polite, confused, brilliant with maps of places he has never been.",
+   "background": "Found wandering the Oakwood with a map of a forest that does not exist.",
+   "acquisition": "exploration",
+   "portrait": "res://assets/characters/portraits/fenwick_the_lost.png",
+   "sprite": "res://assets/characters/sprites/fenwick_the_lost.png",
+   "palette": {
+    "primary": "#4a6a5a",
+    "secondary": "#d0c0a0"
+   }
+  }
+ ]
 }

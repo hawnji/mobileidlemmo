@@ -10,6 +10,14 @@ func setup(registry: DataRegistry, report: OfflineReport) -> void:
 	if report.capped:
 		body.add_child(UiTheme.label("Offline progress is capped at %s." % OfflineReport.format_duration(report.cap_seconds), 18, UiTheme.BAD))
 	body.add_child(UiTheme.label("Total XP earned: %s" % ItemGrid._fmt(int(report.total_xp())), 22, UiTheme.GOOD))
+	var cur := PackedStringArray()
+	for c in report.currency_gained:
+		if int(report.currency_gained[c]) != 0:
+			cur.append("%+d %s" % [int(report.currency_gained[c]), registry.currencies.get(c, {}).get("name", c)])
+	if not cur.is_empty():
+		body.add_child(UiTheme.label(", ".join(cur), 20, UiTheme.ACCENT))
+	for b in report.buildings_completed:
+		body.add_child(UiTheme.label("%s reached level %d" % [registry.buildings.get(b.building, {}).get("name", b.building), int(b.level)], 20, UiTheme.GOOD))
 	if not report.storage_gained.is_empty():
 		body.add_child(UiTheme.label("Added to storage", 22, UiTheme.ACCENT))
 		var grid := ItemGrid.new()
@@ -44,6 +52,18 @@ func setup(registry: DataRegistry, report: OfflineReport) -> void:
 			gathered.append("%d %s" % [c.gathered[item], registry.get_item_name(item)])
 		if not gathered.is_empty():
 			lines.append("Gathered " + ", ".join(gathered))
+		var crafted := PackedStringArray()
+		for item in c.get("crafted", {}):
+			crafted.append("%d %s" % [c.crafted[item], registry.get_item_name(item)])
+		if not crafted.is_empty():
+			lines.append("Crafted " + ", ".join(crafted))
+		var kills := PackedStringArray()
+		for e in c.get("kills", {}):
+			kills.append("%d %s" % [c.kills[e], registry.enemies.get(e, {}).get("name", e)])
+		if not kills.is_empty():
+			lines.append("Defeated " + ", ".join(kills))
+		if int(c.get("deaths", 0)) > 0:
+			lines.append("Interrupted: knocked out %d time(s)" % int(c.deaths))
 		if int(c.trips) > 0:
 			lines.append("%d trips to storage" % c.trips)
 		if lines.is_empty():

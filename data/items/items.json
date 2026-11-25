@@ -1,12 +1,778 @@
 {
-  "schema_version": 1,
-  "items": [
-    {"id": "copper_ore", "name": "Copper Ore", "category": "ore", "tier": 1, "rarity": "common", "sell_price": 3, "icon": "res://assets/resources/items/copper_ore.png", "description": "A lump of soft reddish ore. Smelts into bronze with tin."},
-    {"id": "tin_ore", "name": "Tin Ore", "category": "ore", "tier": 1, "rarity": "common", "sell_price": 3, "icon": "res://assets/resources/items/tin_ore.png", "description": "A dull grey ore. Smelts into bronze with copper."},
-    {"id": "oak_log", "name": "Oak Log", "category": "log", "tier": 1, "rarity": "common", "sell_price": 4, "icon": "res://assets/resources/items/oak_log.png", "description": "Sturdy oak. Used for fuel, fletching and construction."},
-    {"id": "raw_minnow", "name": "Raw Minnow", "category": "fish", "tier": 1, "rarity": "common", "sell_price": 2, "icon": "res://assets/resources/items/raw_minnow.png", "description": "A small river fish. Cooks into a basic meal."},
-    {"id": "uncut_quartz", "name": "Uncut Quartz", "category": "gem", "tier": 1, "rarity": "uncommon", "sell_price": 25, "icon": "res://assets/resources/items/uncut_quartz.png", "description": "A rare find inside copper and tin veins."},
-    {"id": "bird_nest", "name": "Bird Nest", "category": "misc", "tier": 1, "rarity": "uncommon", "sell_price": 20, "icon": "res://assets/resources/items/bird_nest.png", "description": "Occasionally falls from felled trees."},
-    {"id": "river_pearl", "name": "River Pearl", "category": "gem", "tier": 1, "rarity": "rare", "sell_price": 60, "icon": "res://assets/resources/items/river_pearl.png", "description": "A lustrous pearl from the Greenvale river."}
-  ]
+ "schema_version": 2,
+ "items": [
+  {
+   "id": "copper_ore",
+   "name": "Copper Ore",
+   "category": "ore",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 3,
+   "icon": "res://assets/resources/items/copper_ore.png",
+   "description": "A lump of soft reddish ore. Smelts into bronze with tin."
+  },
+  {
+   "id": "tin_ore",
+   "name": "Tin Ore",
+   "category": "ore",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 3,
+   "icon": "res://assets/resources/items/tin_ore.png",
+   "description": "A dull grey ore. Smelts into bronze with copper."
+  },
+  {
+   "id": "iron_ore",
+   "name": "Iron Ore",
+   "category": "ore",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 8,
+   "icon": "res://assets/resources/items/iron_ore.png",
+   "description": "Dense ore from deeper veins. Two make an iron bar."
+  },
+  {
+   "id": "bronze_bar",
+   "name": "Bronze Bar",
+   "category": "bar",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 10,
+   "icon": "res://assets/resources/items/bronze_bar.png",
+   "description": "Smelted copper and tin. Forged into bronze gear."
+  },
+  {
+   "id": "iron_bar",
+   "name": "Iron Bar",
+   "category": "bar",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 25,
+   "icon": "res://assets/resources/items/iron_bar.png",
+   "description": "A solid bar of iron."
+  },
+  {
+   "id": "oak_log",
+   "name": "Oak Log",
+   "category": "log",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 4,
+   "icon": "res://assets/resources/items/oak_log.png",
+   "description": "Sturdy oak. Used for fuel, fletching and construction."
+  },
+  {
+   "id": "willow_log",
+   "name": "Willow Log",
+   "category": "log",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 9,
+   "icon": "res://assets/resources/items/willow_log.png",
+   "description": "Flexible willow wood from the riverbank."
+  },
+  {
+   "id": "oak_plank",
+   "name": "Oak Plank",
+   "category": "plank",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 8,
+   "icon": "res://assets/resources/items/oak_plank.png",
+   "description": "A sawn oak plank for construction and fletching."
+  },
+  {
+   "id": "willow_plank",
+   "name": "Willow Plank",
+   "category": "plank",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 18,
+   "icon": "res://assets/resources/items/willow_plank.png",
+   "description": "A sawn willow plank."
+  },
+  {
+   "id": "raw_minnow",
+   "name": "Raw Minnow",
+   "category": "fish",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 2,
+   "icon": "res://assets/resources/items/raw_minnow.png",
+   "description": "A small river fish. Cooks into a basic meal."
+  },
+  {
+   "id": "raw_trout",
+   "name": "Raw Trout",
+   "category": "fish",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 6,
+   "icon": "res://assets/resources/items/raw_trout.png",
+   "description": "A speckled river trout."
+  },
+  {
+   "id": "cooked_minnow",
+   "name": "Cooked Minnow",
+   "category": "food",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 4,
+   "icon": "res://assets/resources/items/cooked_minnow.png",
+   "description": "A crisp little fish. Heals 4.",
+   "heal": 4
+  },
+  {
+   "id": "cooked_trout",
+   "name": "Cooked Trout",
+   "category": "food",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 12,
+   "icon": "res://assets/resources/items/cooked_trout.png",
+   "description": "Flaky and filling. Heals 9.",
+   "heal": 9
+  },
+  {
+   "id": "baked_potato",
+   "name": "Baked Potato",
+   "category": "food",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 5,
+   "icon": "res://assets/resources/items/baked_potato.png",
+   "description": "Simple and hearty. Heals 6.",
+   "heal": 6
+  },
+  {
+   "id": "burnt_fish",
+   "name": "Burnt Fish",
+   "category": "junk",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 0,
+   "icon": "res://assets/resources/items/burnt_fish.png",
+   "description": "Charred beyond saving."
+  },
+  {
+   "id": "potato",
+   "name": "Potato",
+   "category": "crop",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 2,
+   "icon": "res://assets/resources/items/potato.png",
+   "description": "Grown in the Hollow Farms."
+  },
+  {
+   "id": "guam_leaf",
+   "name": "Guam Leaf",
+   "category": "herb",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 5,
+   "icon": "res://assets/resources/items/guam_leaf.png",
+   "description": "A common wild herb from Oakwood Forest."
+  },
+  {
+   "id": "marrentill",
+   "name": "Marrentill",
+   "category": "herb",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 12,
+   "icon": "res://assets/resources/items/marrentill.png",
+   "description": "A fragrant herb grown in farm patches."
+  },
+  {
+   "id": "healing_potion",
+   "name": "Healing Potion",
+   "category": "potion",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 30,
+   "icon": "res://assets/resources/items/healing_potion.png",
+   "description": "Heals 20.",
+   "heal": 20
+  },
+  {
+   "id": "vigor_tonic",
+   "name": "Vigor Tonic",
+   "category": "potion",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 60,
+   "icon": "res://assets/resources/items/vigor_tonic.png",
+   "description": "Heals 35.",
+   "heal": 35
+  },
+  {
+   "id": "uncut_quartz",
+   "name": "Uncut Quartz",
+   "category": "gem",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 25,
+   "icon": "res://assets/resources/items/uncut_quartz.png",
+   "description": "A rare find inside copper and tin veins."
+  },
+  {
+   "id": "bird_nest",
+   "name": "Bird Nest",
+   "category": "misc",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 20,
+   "icon": "res://assets/resources/items/bird_nest.png",
+   "description": "Occasionally falls from felled trees."
+  },
+  {
+   "id": "river_pearl",
+   "name": "River Pearl",
+   "category": "gem",
+   "tier": 1,
+   "rarity": "rare",
+   "sell_price": 60,
+   "icon": "res://assets/resources/items/river_pearl.png",
+   "description": "A lustrous pearl from the Greenvale river."
+  },
+  {
+   "id": "bones",
+   "name": "Bones",
+   "category": "misc",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 1,
+   "icon": "res://assets/resources/items/bones.png",
+   "description": "Remains of a fallen creature. Prayer material (later)."
+  },
+  {
+   "id": "slime_gel",
+   "name": "Slime Gel",
+   "category": "misc",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 3,
+   "icon": "res://assets/resources/items/slime_gel.png",
+   "description": "Sticky, faintly glowing gel."
+  },
+  {
+   "id": "rat_tail",
+   "name": "Rat Tail",
+   "category": "misc",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 2,
+   "icon": "res://assets/resources/items/rat_tail.png",
+   "description": "Proof of a pest cleared."
+  },
+  {
+   "id": "wolf_pelt",
+   "name": "Wolf Pelt",
+   "category": "hide",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 12,
+   "icon": "res://assets/resources/items/wolf_pelt.png",
+   "description": "Thick grey fur. Crafted into backpacks."
+  },
+  {
+   "id": "goblin_trinket",
+   "name": "Goblin Trinket",
+   "category": "misc",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 35,
+   "icon": "res://assets/resources/items/goblin_trinket.png",
+   "description": "A shiny bauble goblins hoard."
+  },
+  {
+   "id": "troll_tooth",
+   "name": "Troll Tooth",
+   "category": "misc",
+   "tier": 2,
+   "rarity": "rare",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/troll_tooth.png",
+   "description": "A tusk-like tooth from a forest troll."
+  },
+  {
+   "id": "bronze_pickaxe",
+   "name": "Bronze Pickaxe",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 30,
+   "icon": "res://assets/resources/items/bronze_pickaxe.png",
+   "description": "Mines 10% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 1
+   },
+   "stats": {
+    "gather_speed.mining": 1.1
+   },
+   "max_durability": 300,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "iron_pickaxe",
+   "name": "Iron Pickaxe",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 80,
+   "icon": "res://assets/resources/items/iron_pickaxe.png",
+   "description": "Mines 22% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 15
+   },
+   "stats": {
+    "gather_speed.mining": 1.22
+   },
+   "max_durability": 500,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "bronze_axe",
+   "name": "Bronze Axe",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 30,
+   "icon": "res://assets/resources/items/bronze_axe.png",
+   "description": "Chops 10% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 1
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.1
+   },
+   "max_durability": 300,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "iron_axe",
+   "name": "Iron Axe",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 80,
+   "icon": "res://assets/resources/items/iron_axe.png",
+   "description": "Chops 22% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 15
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.22
+   },
+   "max_durability": 500,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "oak_fishing_rod",
+   "name": "Oak Fishing Rod",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 25,
+   "icon": "res://assets/resources/items/oak_fishing_rod.png",
+   "description": "Fishes 10% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 1
+   },
+   "stats": {
+    "gather_speed.fishing": 1.1
+   },
+   "max_durability": 300,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "willow_fishing_rod",
+   "name": "Willow Fishing Rod",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/willow_fishing_rod.png",
+   "description": "Fishes 22% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 15
+   },
+   "stats": {
+    "gather_speed.fishing": 1.22
+   },
+   "max_durability": 500,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "bronze_sword",
+   "name": "Bronze Sword",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 30,
+   "icon": "res://assets/resources/items/bronze_sword.png",
+   "description": "A short bronze blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 1
+   },
+   "stats": {
+    "accuracy": 4,
+    "weapon_power": 2
+   },
+   "max_durability": 400,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "iron_sword",
+   "name": "Iron Sword",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 90,
+   "icon": "res://assets/resources/items/iron_sword.png",
+   "description": "A dependable iron blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 15
+   },
+   "stats": {
+    "accuracy": 10,
+    "weapon_power": 5
+   },
+   "max_durability": 600,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "oak_shortbow",
+   "name": "Oak Shortbow",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 35,
+   "icon": "res://assets/resources/items/oak_shortbow.png",
+   "description": "A light hunting bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 1
+   },
+   "stats": {
+    "accuracy": 5,
+    "weapon_power": 2
+   },
+   "max_durability": 400,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "willow_shortbow",
+   "name": "Willow Shortbow",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 95,
+   "icon": "res://assets/resources/items/willow_shortbow.png",
+   "description": "A springy willow bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 15
+   },
+   "stats": {
+    "accuracy": 11,
+    "weapon_power": 5
+   },
+   "max_durability": 600,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "apprentice_staff",
+   "name": "Apprentice Staff",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 45,
+   "icon": "res://assets/resources/items/apprentice_staff.png",
+   "description": "An oak staff set with quartz.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 1
+   },
+   "stats": {
+    "accuracy": 5,
+    "weapon_power": 3
+   },
+   "max_durability": 400,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "willow_staff",
+   "name": "Willow Staff",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 110,
+   "icon": "res://assets/resources/items/willow_staff.png",
+   "description": "A willow staff humming with power.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 15
+   },
+   "stats": {
+    "accuracy": 11,
+    "weapon_power": 6
+   },
+   "max_durability": 600,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "bronze_helm",
+   "name": "Bronze Helm",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 25,
+   "icon": "res://assets/resources/items/bronze_helm.png",
+   "description": "A bronze helmet.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 1
+   },
+   "stats": {
+    "armor": 2,
+    "max_health": 2
+   },
+   "max_durability": 400
+  },
+  {
+   "id": "bronze_platebody",
+   "name": "Bronze Platebody",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 60,
+   "icon": "res://assets/resources/items/bronze_platebody.png",
+   "description": "A bronze chestplate.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 1
+   },
+   "stats": {
+    "armor": 5,
+    "max_health": 5
+   },
+   "max_durability": 400
+  },
+  {
+   "id": "bronze_platelegs",
+   "name": "Bronze Platelegs",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 40,
+   "icon": "res://assets/resources/items/bronze_platelegs.png",
+   "description": "Bronze leg armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 1
+   },
+   "stats": {
+    "armor": 4,
+    "max_health": 3
+   },
+   "max_durability": 400
+  },
+  {
+   "id": "bronze_gloves",
+   "name": "Bronze Gloves",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 15,
+   "icon": "res://assets/resources/items/bronze_gloves.png",
+   "description": "Bronze gauntlets.",
+   "equip_slot": "gloves",
+   "requirements": {
+    "defense": 1
+   },
+   "stats": {
+    "armor": 1,
+    "accuracy": 1
+   },
+   "max_durability": 400
+  },
+  {
+   "id": "bronze_boots",
+   "name": "Bronze Boots",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "common",
+   "sell_price": 15,
+   "icon": "res://assets/resources/items/bronze_boots.png",
+   "description": "Bronze boots.",
+   "equip_slot": "boots",
+   "requirements": {
+    "defense": 1
+   },
+   "stats": {
+    "armor": 1,
+    "move_speed": 1.02
+   },
+   "max_durability": 400
+  },
+  {
+   "id": "iron_helm",
+   "name": "Iron Helm",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/iron_helm.png",
+   "description": "A iron helmet.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 15
+   },
+   "stats": {
+    "armor": 5,
+    "max_health": 5
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "iron_platebody",
+   "name": "Iron Platebody",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 168,
+   "icon": "res://assets/resources/items/iron_platebody.png",
+   "description": "A iron chestplate.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 15
+   },
+   "stats": {
+    "armor": 12,
+    "max_health": 12
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "iron_platelegs",
+   "name": "Iron Platelegs",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 112,
+   "icon": "res://assets/resources/items/iron_platelegs.png",
+   "description": "Iron leg armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 15
+   },
+   "stats": {
+    "armor": 10,
+    "max_health": 7
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "iron_gloves",
+   "name": "Iron Gloves",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 42,
+   "icon": "res://assets/resources/items/iron_gloves.png",
+   "description": "Iron gauntlets.",
+   "equip_slot": "gloves",
+   "requirements": {
+    "defense": 15
+   },
+   "stats": {
+    "armor": 2,
+    "accuracy": 2
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "iron_boots",
+   "name": "Iron Boots",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 42,
+   "icon": "res://assets/resources/items/iron_boots.png",
+   "description": "Iron boots.",
+   "equip_slot": "boots",
+   "requirements": {
+    "defense": 15
+   },
+   "stats": {
+    "armor": 2,
+    "move_speed": 1.02
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "quartz_ring",
+   "name": "Quartz Ring",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 60,
+   "icon": "res://assets/resources/items/quartz_ring.png",
+   "description": "+3% XP in every skill.",
+   "equip_slot": "accessory",
+   "requirements": {},
+   "stats": {
+    "xp.all": 1.03
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "pearl_amulet",
+   "name": "Pearl Amulet",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "rare",
+   "sell_price": 150,
+   "icon": "res://assets/resources/items/pearl_amulet.png",
+   "description": "+15% rare drop chance.",
+   "equip_slot": "accessory",
+   "requirements": {},
+   "stats": {
+    "rare_drop.all": 1.15
+   },
+   "max_durability": 800
+  },
+  {
+   "id": "leather_backpack",
+   "name": "Leather Backpack",
+   "category": "equipment",
+   "tier": 1,
+   "rarity": "uncommon",
+   "sell_price": 50,
+   "icon": "res://assets/resources/items/leather_backpack.png",
+   "description": "Carry 4 more items.",
+   "equip_slot": "accessory",
+   "requirements": {},
+   "stats": {
+    "carry_capacity": 4
+   },
+   "max_durability": 800
+  }
+ ]
 }

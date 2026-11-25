@@ -17,9 +17,11 @@
                                |                       |
 +------------------------------+-----------------------v--------------------+
 | Simulation (RefCounted, no Nodes) - SimulationWorld                       |
-|  WorldGrid - GridPathfinder - ResourceNodeState[] - Adventurer[]          |
-|  ActivityEngine (state machine) - Inventory (bags, storage) - SkillSet    |
-|  production ledger - seeded RNG - to_dict()/from_dict()                   |
+|  WorldGrid - GridPathfinder - ResourceNodeState[] - EnemyState[] - Adventurer[]|
+|  ActivityEngine + handlers (gathering, crafting, combat, construction)    |
+|  Inventory - SkillSet - StatBlock/AccountEffects - Wallet - TownState     |
+|  RecruitmentState (dev-only rolls) - EquipmentService - item ledger       |
+|  seeded RNG - to_dict()/from_dict()                                       |
 +------------------------------^-----------------------+--------------------+
                                |                       |
 +------------------------------+------------+   +------v--------------------+
@@ -37,7 +39,7 @@
 | Separate rendering from simulation | `SimulationWorld` and everything it owns are `RefCounted` with no Node, scene or rendering code. Views read state and interpolate positions |
 | Separate persistent state from presentation state | Only `to_dict()` data is persisted. Selection, camera, animation phase and tweens live in Nodes and the `Game` presentation fields |
 | Data-driven balance | Skills, the XP curve, items, nodes, activities, characters, terrain, the map and tunables are all JSON under `data/`. Nothing about balance is hard-coded in gameplay scripts (the level-speed constants are the one exception, documented in BALANCE.md and scheduled to move into data) |
-| Never trust the client | Phase 1 is single-player with local authority. All mutations go through a small command API (`assign_activity`, `cancel_assignment`) and a pure simulation, which is the shape a server needs. See section 6 |
+| Never trust the client | Still single-player with local authority. All mutations go through `SimulationWorld`'s command API (`assign_activity`, `cancel_assignment`, `start_route`, `equip`, `unequip`, `repair`, `upgrade_equipment`, `sell_item`, `start_construction`, `recruit`, `star_up`, `choose_specialization`, `respec`), each returning "" or a reason, which is the shape a server needs. Gacha rolls are explicitly dev-only on the client. See section 6 |
 | No per-frame pathfinding for everyone | Paths are computed only on the PATHFINDING state, cached, and limited to N requests per tick |
 | Many characters | The simulation cost is per event (gather, step), not per frame. Off-screen characters skip animation. Chunks and floating text are pooled |
 | Modular | One responsibility per script, about 40 scripts, no file over about 400 lines |
@@ -78,10 +80,28 @@ re-simulation and anti-cheat verification.
 - During a gather, the node **charge is consumed first**, and items are only granted when the
   charge was real and space exists. If there is no room, nothing is consumed or granted.
 - Deposits use `transfer_all_to`, which moves only what fits and keeps the rest.
-- `production_ledger` records every unit ever produced. The tests assert that
-  `storage + all bags == ledger` continuously, across save/load, and after offline simulation.
+- The item ledger records every unit that enters the world (`item_sources`: gathering, loot,
+  crafting output) and every unit that leaves it (`item_sinks`: crafting input, food eaten,
+  construction, upgrades, NPC sales). The tests assert `storage + bags + equipped + armory ==
+  sources − sinks` continuously, across save/load, offline simulation and every Phase 2 system.
+- Crafting removes inputs before adding outputs and never creates an output that cannot fit.
+  Loot that does not fit is never created. Currency changes go through `Wallet`, which is
+  all-or-nothing and rejects negative amounts.
 - Loaded saves are sanitised: node charges are clamped, orphan reservations are dropped,
   assignment values are clamped, and bag capacity comes from data rather than from the save.
+
+### Activity handlers and stats (Phase 2)
+
+`ActivityEngine` owns the shared state machine and delegates per-type behaviour to stateless
+`ActivityHandler` subclasses (see SYSTEMS.md). Combat resolves swings on exact event times
+(`min(next player swing, next enemy swing)`), so results do not depend on the step size
+(`test_combat_independent_of_step_size`).
+
+Every gameplay number a character uses comes from `Adventurer.stat(family, skill)`: a cached
+`StatBlock` folding affinities, passive, traits, specializations, stars and equipment, merged with
+the account-wide `AccountEffects` block (buildings; later relics, pets, guild perks, ascension).
+`AccountEffects.current()` rebuilds only when a source's `version` changes, and each character
+re-folds only when its own sources or the account version change; individual lookups are memoised.
 
 ## 3. Pathfinding
 
@@ -213,8 +233,8 @@ slower than export templates):
 
 | Scenario | Time |
 |---|---|
-| 72-test suite | ~7 s |
-| 8 h offline, 3 working characters (`test_eight_hour_simulation_is_fast_enough`) | ~2.7 s |
+| 148-test suite | ~19 s (about 2 s of it is the 10^6-roll chi-square test) |
+| 8 h offline, 3 working characters (`test_eight_hour_simulation_is_fast_enough`) | ~3.4 s (was 2.7 s in Phase 1; stat lookups now go through StatBlock) |
 | One gather cycle (check, perform, grant, events) | ~60-100 µs |
 | Cached path lookup | ~4 µs |
 

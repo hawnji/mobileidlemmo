@@ -82,7 +82,37 @@ Planned for P2: `active_ability`, `traits[]`, `specializations[]`, `star_rank`, 
 
 `greenvale_start.json` is generated and validated by `tools/generate_greenvale_map.py`.
 
+## Phase 2 data files
+
+| File | Shape |
+|---|---|
+| `config/stats.json` | `families: {family: "mul"\|"add"}` |
+| `config/game_config.json` | new sections `combat`, `equipment`, `progression`; `simulation.restock_seconds`, `materials_retry_seconds`; `world.day_length_seconds` |
+| `items/items.json` | adds `heal` (food), `equip_slot` (`weapon, head, body, legs, gloves, boots, accessory, tool`), `requirements {skill: level}`, `stats {stat key: value}`, `max_durability`, `tool_skill`, `combat_style`, `attack_speed` |
+| `recipes/recipes.json` | `recipes[]: {id, name, skill, required_level, station, inputs {item: qty}, outputs {item: qty}, seconds, xp, requires_building? {building: level}, burn? {item, base_chance, stop_level}}` |
+| `enemies/enemies.json` | `enemies[]: {id, name, level, health, max_hit, accuracy, defense, attack_speed, weaknesses {style: mult}, loot[] {item, chance, min, max}, gold [min,max], tags, respawn_seconds, sprite}`; `variants[]: {id, name, chance, stat_multiplier, xp_multiplier, loot_rolls, gold_multiplier}` |
+| `activities/activities.json` | `type` is `gathering`, `crafting` (`station`), `combat` (`default_destination` = hunting ground) or `construction` |
+| `characters/characters.json` | adds `combat_style`, `traits[3]`, `acquisition` (`starter`, `gacha`, `quest`, `exploration`) |
+| `characters/traits.json` | `traits[]: {id, name, description, effects}` |
+| `characters/specializations.json` | `unlock_skill_level`, `slots_by_character_level {level: slots}`, `respec_cost`, `specializations[]: {id, name, skill, description, effects}` |
+| `economy/currencies.json` | `currencies[]: {id, name, description, starting, premium}`, `milestones {skill_level_every, reward}` |
+| `recruitment/banners.json` | `rarity_order`, `duplicate_fragments {rarity: n}`, `banners[]: {id, name, description, rates {rarity: p}, pity[] {rarity, guaranteed_on_pull}, costs {currency: per pull}, ten_pull_discount, pool, featured {character_id, share}\|null}` |
+| `town/buildings.json` | `base_worker_capacity`, `work_action_seconds`, `xp_per_work_second`, `buildings[]: {id, name, description, max_level, phase, levels[] {level, cost {gold, items}, construction_level, work_seconds, effects}}` |
+| `regions/<region>.json` | adds `stations[] {id, type, name, tile}`, `enemy_spawns[] {id, enemy, tile}`, `building_plots[] {building, rect, work_tile}` |
+
 ## Save format (`user://worldbound_save.json`)
+
+**Format 2 (Phase 2)** adds to `world`: `wallet {balances, earned, spent}`, `town {levels,
+project}`, `recruitment {rng_seed, rng_state, pity, total_pulls, history}`, `fragments`,
+`armory[]`, `next_uid`, `token_progress`, `locked_items`, `favorite_items`, `enemies {spawn_id:
+{variant, health, respawn_remaining, engaged_by, attack_timer}}`, `route_templates`,
+`item_sources`, `item_sinks` (replacing `production_ledger`, which is migrated). Characters add
+`health, stars, traits, specializations, equipment, loadouts, target_enemy_id, target_station_id,
+target_tile, target_adjacent, attack_timer, injured_remaining`. Assignments add `recipe_id,
+enemy_priority, heal_threshold, food_supply, food_item, auto_repair, route, route_index,
+route_loop, route_name`.
+
+Format 1 layout (still readable):
 ```
 { save_version: 1, saved_at_unix: float,
   world: { format: 1, region_id, sim_time, rng_seed, rng_state,

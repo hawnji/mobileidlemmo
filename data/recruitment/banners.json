@@ -1,0 +1,100 @@
+{
+ "schema_version": 1,
+ "rarity_order": [
+  "common",
+  "uncommon",
+  "rare",
+  "epic",
+  "legendary",
+  "mythic"
+ ],
+ "duplicate_fragments": {
+  "common": 5,
+  "uncommon": 8,
+  "rare": 10,
+  "epic": 15,
+  "legendary": 20,
+  "mythic": 25
+ },
+ "banners": [
+  {
+   "id": "standard",
+   "name": "Adventurers' Guild",
+   "description": "Every recruitable adventurer. Pity carries over forever.",
+   "rates": {
+    "common": 0.45,
+    "uncommon": 0.3,
+    "rare": 0.17,
+    "epic": 0.06,
+    "legendary": 0.018,
+    "mythic": 0.002
+   },
+   "pity": [
+    {
+     "rarity": "rare",
+     "guaranteed_on_pull": 10
+    },
+    {
+     "rarity": "epic",
+     "guaranteed_on_pull": 50
+    },
+    {
+     "rarity": "legendary",
+     "guaranteed_on_pull": 100
+    },
+    {
+     "rarity": "mythic",
+     "guaranteed_on_pull": 200
+    }
+   ],
+   "costs": {
+    "recruitment_tokens": 1,
+    "gems": 150
+   },
+   "ten_pull_discount": 0.9,
+   "pool": "all_gacha",
+   "featured": null
+  },
+  {
+   "id": "harvest_festival",
+   "name": "Harvest Festival",
+   "description": "Event banner: Morgana Ashveil has a 50% share of Epic results.",
+   "rates": {
+    "common": 0.45,
+    "uncommon": 0.3,
+    "rare": 0.17,
+    "epic": 0.06,
+    "legendary": 0.018,
+    "mythic": 0.002
+   },
+   "pity": [
+    {
+     "rarity": "rare",
+     "guaranteed_on_pull": 10
+    },
+    {
+     "rarity": "epic",
+     "guaranteed_on_pull": 50
+    },
+    {
+     "rarity": "legendary",
+     "guaranteed_on_pull": 100
+    },
+    {
+     "rarity": "mythic",
+     "guaranteed_on_pull": 200
+    }
+   ],
+   "costs": {
+    "event_tokens": 1,
+    "gems": 150
+   },
+   "ten_pull_discount": 0.9,
+   "pool": "all_gacha",
+   "featured": {
+    "character_id": "morgana_ashveil",
+    "share": 0.5
+   }
+  }
+ ]
+}
