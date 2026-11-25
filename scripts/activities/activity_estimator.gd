@@ -27,13 +27,15 @@ static func estimate(world: SimulationWorld, ch: Adventurer, activity_id: String
 static func _exploration(world: SimulationWorld, ch: Adventurer, act: Dictionary) -> Dictionary:
 	var region := String(act.get("region", ""))
 	var pct := world.exploration.explored_pct(region)
-	# Rough: a walking explorer reveals up to ~radius new tiles per step, but
+	# Rough: one survey every survey_seconds reveals part of a circle, but
 	# never more than the region has left (so XP/h falls as the map fills in).
 	var ri := world.exploration.region_ids.find(region)
 	var remaining := 0
 	if ri >= 0:
 		remaining = world.exploration.region_walkable[ri] - world.exploration.region_revealed[ri]
-	var tiles_per_hour := minf(ch.move_speed_tiles() * 3600.0 * world.reveal_radius(ch) * 0.4, float(remaining))
+	var r := float(world.reveal_radius(ch))
+	var per_survey := r * r * 1.6  # new tiles per survey once neighbours overlap
+	var tiles_per_hour := minf(3600.0 / ExplorationHandler.survey_seconds(world, ch) * per_survey, float(remaining))
 	return {"reachable": world.is_region_unlocked(region), "skill": "exploration", "item": "",
 		"items_per_hour": 0.0, "explored_pct": pct,
 		"xp_per_hour": tiles_per_hour * float(world.registry.get_config("exploration.xp_per_tile", 0.6)) * ch.xp_multiplier("exploration")}

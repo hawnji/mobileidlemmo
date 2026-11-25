@@ -306,3 +306,19 @@ func test_phase3_state_survives_save_and_load() -> void:
 	assert_eq(w2.quests.reputation_tier("greenvale"), 1)
 	assert_true(w2.grid.is_walkable(w.secrets["irondeep_tunnel"].tiles[0]))
 	assert_eq(int(w2.mailbox.get("iron_ore", 0)), 4)
+
+
+func test_survey_reveals_more_than_walking_and_speeds_up_with_level() -> void:
+	var w := new_world()
+	var ch := _first(w)
+	var a := w.exploration.nearest_hidden("greenvale", Vector2i(0, 0), {}, w.grid)
+	var b := w.exploration.nearest_hidden("greenvale", Vector2i(63, 47), {}, w.grid)
+	assert_true(WorldGrid.chebyshev(a, b) > 12, "two separate hidden spots")
+	var walk := w.exploration.reveal(a, int(w.registry.get_config("exploration.walk_reveal_radius", 1)))
+	ch.tile = b
+	var survey := w.survey(ch)
+	assert_gt(survey, walk * 3, "a survey lifts a much wider circle than a step")
+	var slow := ExplorationHandler.survey_seconds(w, ch)
+	ch.skills.set_level("exploration", 60)
+	ch.invalidate_stats()
+	assert_gt(slow, ExplorationHandler.survey_seconds(w, ch))

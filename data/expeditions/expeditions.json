@@ -1,7 +1,7 @@
 {
  "schema_version": 1,
- "base_success": 0.25,
- "power_weight": 0.65,
+ "base_success": 0.1,
+ "power_weight": 0.6,
  "min_success": 0.05,
  "max_success": 0.97,
  "failure_reward_fraction": 0.25,
@@ -23,7 +23,7 @@
      "level": 1
     }
    ],
-   "recommended_power": 30,
+   "recommended_power": 45,
    "rewards": {
     "currencies": {
      "gold": [
@@ -84,7 +84,7 @@
      "level": 10
     }
    ],
-   "recommended_power": 90,
+   "recommended_power": 160,
    "rewards": {
     "currencies": {
      "gold": [
@@ -183,7 +183,7 @@
      "level": 20
     }
    ],
-   "recommended_power": 320,
+   "recommended_power": 750,
    "rewards": {
     "currencies": {
      "gold": [
@@ -347,7 +347,7 @@
      "level": 25
     }
    ],
-   "recommended_power": 200,
+   "recommended_power": 500,
    "rewards": {
     "currencies": {
      "gold": [
@@ -414,7 +414,7 @@
      "level": 45
     }
    ],
-   "recommended_power": 480,
+   "recommended_power": 1050,
    "rewards": {
     "currencies": {
      "gold": [
@@ -483,7 +483,7 @@
      "level": 20
     }
    ],
-   "recommended_power": 380,
+   "recommended_power": 560,
    "rewards": {
     "currencies": {
      "gold": [
@@ -565,7 +565,7 @@
      "level": 50
     }
    ],
-   "recommended_power": 760,
+   "recommended_power": 1600,
    "rewards": {
     "currencies": {
      "gold": [

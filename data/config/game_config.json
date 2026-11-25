@@ -97,10 +97,12 @@
  "exploration": {
   "base_reveal_radius": 4,
   "reveal_radius_per_levels": 25,
-  "xp_per_tile": 0.6,
+  "xp_per_tile": 4.0,
   "discovery_detect_radius": 2,
   "frontier_search_limit": 6000,
-  "explore_complete_pct": 0.98
+  "explore_complete_pct": 0.98,
+  "walk_reveal_radius": 1,
+  "survey_seconds": 60.0
  },
  "navigation": {
   "fast_travel_min_distance": 40

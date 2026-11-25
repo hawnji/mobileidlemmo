@@ -1,10 +1,11 @@
 class_name ExplorationHandler
 extends ActivityHandler
-## "Explore <region>": walk to the nearest hidden part of the region, lifting
-## the fog of war as you go, and investigate any discovery the character is
-## able to make. Fog and discoveries are resolved by the world whenever any
-## character moves (SimulationWorld.on_character_moved); this handler only
-## chooses where to walk.
+## "Explore <region>": walk to the nearest hidden part of the region, then
+## survey it (PERFORMING_ACTIVITY for exploration.survey_seconds, faster with
+## Exploration level and gear), which lifts the fog in the full reveal radius.
+## Walking itself only reveals a narrow line of sight
+## (exploration.walk_reveal_radius, for every character). Discoveries are
+## checked by the world whenever a character moves or surveys.
 ##
 ## UNTIL_QUANTITY counts discoveries made during the assignment. The
 ## assignment completes when the region is explored (exploration.explore_complete_pct)
@@ -58,6 +59,10 @@ func decide(e: ActivityEngine, ch: Adventurer, asg: Assignment, act: Dictionary)
 
 
 func on_arrive(e: ActivityEngine, ch: Adventurer) -> void:
+	if ch.target_key.begins_with("fog:"):
+		ch.action_elapsed = 0.0
+		e.set_state(ch, S.PERFORMING_ACTIVITY, "Surveying")
+		return
 	if ch.target_key.begins_with("disc:"):
 		var did := ch.target_key.substr(5)
 		if e.world.try_discover(ch, did) and ch.assignment:
@@ -66,6 +71,23 @@ func on_arrive(e: ActivityEngine, ch: Adventurer) -> void:
 			# Already found (or not by us): do not walk back here.
 			ch.unreachable_until[ch.target_key] = e.world.sim_time + 3600.0
 	e.set_state(ch, S.CHECKING_CONDITIONS)
+
+
+static func survey_seconds(world: SimulationWorld, ch: Adventurer) -> float:
+	var base := float(world.registry.get_config("exploration.survey_seconds", 40.0))
+	return base / ch.gather_speed_multiplier("exploration", 1)
+
+
+func perform(e: ActivityEngine, ch: Adventurer, t: float) -> float:
+	var need: float = survey_seconds(e.world, ch) - ch.action_elapsed
+	if t < need:
+		ch.action_elapsed += t
+		return 0.0
+	t -= need
+	ch.action_elapsed = 0.0
+	e.world.survey(ch)
+	e.set_state(ch, S.CHECKING_CONDITIONS)
+	return t
 
 
 func _finish(e: ActivityEngine, ch: Adventurer) -> void:

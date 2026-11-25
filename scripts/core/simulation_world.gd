@@ -923,16 +923,33 @@ func on_character_moved(ch: Adventurer) -> void:
 	if WorldGrid.chebyshev(last, ch.tile) < 2:
 		return
 	_last_reveal[ch.id] = ch.tile
-	var radius := reveal_radius(ch)
+	_reveal_around(ch, int(registry.get_config("exploration.walk_reveal_radius", 1)))
+	var detect := int(registry.get_config("exploration.discovery_detect_radius", 2)) + int(floor((ch.stat("discovery") - 1.0) * 5.0))
+	for did in exploration.nearby_undiscovered(ch.tile, maxi(detect, 1)):
+		try_discover(ch, did)
+	encounters.on_character_moved(self, ch)
+
+
+func _reveal_around(ch: Adventurer, radius: int) -> int:
 	var gained := exploration.reveal(ch.tile, radius)
 	if gained > 0:
 		engine.grant_xp(ch, "exploration", gained * float(registry.get_config("exploration.xp_per_tile", 0.6)))
 		if wants_event("fog_revealed"):
 			emit_event("fog_revealed", {"center": ch.tile, "radius": radius})
-	var detect := int(registry.get_config("exploration.discovery_detect_radius", 2)) + int(floor((ch.stat("discovery") - 1.0) * 5.0))
+	return gained
+
+
+## An explorer's survey: lifts the fog in the full reveal radius and checks
+## discoveries in a wider ring.
+func survey(ch: Adventurer) -> int:
+	var gained := _reveal_around(ch, reveal_radius(ch))
+	var detect := reveal_radius(ch) + int(floor((ch.stat("discovery") - 1.0) * 5.0))
 	for did in exploration.nearby_undiscovered(ch.tile, maxi(detect, 1)):
-		try_discover(ch, did)
-	encounters.on_character_moved(self, ch)
+		if exploration.is_revealed(JsonData.to_vec2i(exploration.discoveries[did].tile)):
+			continue
+		# Spotted from afar: reveal the spot so the explorer walks over to it.
+		exploration.reveal(JsonData.to_vec2i(exploration.discoveries[did].tile), 0)
+	return gained
 
 
 func reveal_radius(ch: Adventurer) -> int:
