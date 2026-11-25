@@ -32,6 +32,9 @@
   "guild_capacity": "add",
   "expedition_slots": "add",
   "relic_slots": "add",
-  "mastery_xp": "mul"
+  "mastery_xp": "mul",
+  "reveal_radius": "add",
+  "reputation_gain": "mul",
+  "dungeon_damage": "mul"
  }
 }

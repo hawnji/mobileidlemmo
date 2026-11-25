@@ -1,147 +1,247 @@
 {
-  "schema_version": 1,
-  "terrain": [
-    {
-      "symbol": ".",
-      "id": "grass",
-      "walkable": true,
-      "move_cost": 1.0,
-      "atlas": [
-        0,
-        0
-      ]
-    },
-    {
-      "symbol": ",",
-      "id": "meadow",
-      "walkable": true,
-      "move_cost": 1.0,
-      "atlas": [
-        1,
-        0
-      ]
-    },
-    {
-      "symbol": "=",
-      "id": "road",
-      "walkable": true,
-      "move_cost": 0.6,
-      "atlas": [
-        2,
-        0
-      ]
-    },
-    {
-      "symbol": "f",
-      "id": "forest_floor",
-      "walkable": true,
-      "move_cost": 1.3,
-      "atlas": [
-        3,
-        0
-      ]
-    },
-    {
-      "symbol": "T",
-      "id": "dense_trees",
-      "walkable": false,
-      "move_cost": 0.0,
-      "atlas": [
-        4,
-        0
-      ]
-    },
-    {
-      "symbol": "~",
-      "id": "water",
-      "walkable": false,
-      "move_cost": 0.0,
-      "atlas": [
-        0,
-        2
-      ],
-      "animation_frames": 4,
-      "animation_fps": 3.0
-    },
-    {
-      "symbol": "b",
-      "id": "bridge",
-      "walkable": true,
-      "move_cost": 0.6,
-      "atlas": [
-        6,
-        0
-      ]
-    },
-    {
-      "symbol": "^",
-      "id": "mountain",
-      "walkable": false,
-      "move_cost": 0.0,
-      "atlas": [
-        7,
-        0
-      ]
-    },
-    {
-      "symbol": "c",
-      "id": "cave_floor",
-      "walkable": true,
-      "move_cost": 1.1,
-      "atlas": [
-        0,
-        1
-      ]
-    },
-    {
-      "symbol": "H",
-      "id": "building",
-      "walkable": false,
-      "move_cost": 0.0,
-      "atlas": [
-        1,
-        1
-      ]
-    },
-    {
-      "symbol": "p",
-      "id": "plaza",
-      "walkable": true,
-      "move_cost": 0.7,
-      "atlas": [
-        2,
-        1
-      ]
-    },
-    {
-      "symbol": "s",
-      "id": "sand",
-      "walkable": true,
-      "move_cost": 1.2,
-      "atlas": [
-        3,
-        1
-      ]
-    },
-    {
-      "symbol": "x",
-      "id": "farmland",
-      "walkable": true,
-      "move_cost": 1.4,
-      "atlas": [
-        4,
-        1
-      ]
-    },
-    {
-      "symbol": "w",
-      "id": "fence",
-      "walkable": false,
-      "move_cost": 0.0,
-      "atlas": [
-        5,
-        1
-      ]
-    }
-  ]
+ "schema_version": 1,
+ "terrain": [
+  {
+   "symbol": ".",
+   "id": "grass",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    0,
+    0
+   ]
+  },
+  {
+   "symbol": ",",
+   "id": "meadow",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    1,
+    0
+   ]
+  },
+  {
+   "symbol": "=",
+   "id": "road",
+   "walkable": true,
+   "move_cost": 0.6,
+   "atlas": [
+    2,
+    0
+   ]
+  },
+  {
+   "symbol": "f",
+   "id": "forest_floor",
+   "walkable": true,
+   "move_cost": 1.3,
+   "atlas": [
+    3,
+    0
+   ]
+  },
+  {
+   "symbol": "T",
+   "id": "dense_trees",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    4,
+    0
+   ]
+  },
+  {
+   "symbol": "~",
+   "id": "water",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    0,
+    2
+   ],
+   "animation_frames": 4,
+   "animation_fps": 3.0
+  },
+  {
+   "symbol": "b",
+   "id": "bridge",
+   "walkable": true,
+   "move_cost": 0.6,
+   "atlas": [
+    6,
+    0
+   ]
+  },
+  {
+   "symbol": "^",
+   "id": "mountain",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    7,
+    0
+   ]
+  },
+  {
+   "symbol": "c",
+   "id": "cave_floor",
+   "walkable": true,
+   "move_cost": 1.1,
+   "atlas": [
+    0,
+    1
+   ]
+  },
+  {
+   "symbol": "H",
+   "id": "building",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    1,
+    1
+   ]
+  },
+  {
+   "symbol": "p",
+   "id": "plaza",
+   "walkable": true,
+   "move_cost": 0.7,
+   "atlas": [
+    2,
+    1
+   ]
+  },
+  {
+   "symbol": "s",
+   "id": "sand",
+   "walkable": true,
+   "move_cost": 1.2,
+   "atlas": [
+    3,
+    1
+   ]
+  },
+  {
+   "symbol": "x",
+   "id": "farmland",
+   "walkable": true,
+   "move_cost": 1.4,
+   "atlas": [
+    4,
+    1
+   ]
+  },
+  {
+   "symbol": "w",
+   "id": "fence",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    5,
+    1
+   ]
+  },
+  {
+   "symbol": "g",
+   "id": "gate",
+   "walkable": true,
+   "move_cost": 0.8,
+   "atlas": [
+    0,
+    3
+   ]
+  },
+  {
+   "symbol": "d",
+   "id": "dunes",
+   "walkable": true,
+   "move_cost": 1.4,
+   "atlas": [
+    1,
+    3
+   ]
+  },
+  {
+   "symbol": "r",
+   "id": "ruin_floor",
+   "walkable": true,
+   "move_cost": 0.9,
+   "atlas": [
+    2,
+    3
+   ]
+  },
+  {
+   "symbol": "R",
+   "id": "ruin_wall",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    3,
+    3
+   ]
+  },
+  {
+   "symbol": "m",
+   "id": "moss",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    4,
+    3
+   ]
+  },
+  {
+   "symbol": "e",
+   "id": "enchanted_trees",
+   "walkable": false,
+   "move_cost": 0.0,
+   "atlas": [
+    5,
+    3
+   ]
+  },
+  {
+   "symbol": "k",
+   "id": "stone_ground",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    6,
+    3
+   ]
+  },
+  {
+   "symbol": "Q",
+   "id": "hidden_tunnel",
+   "walkable": true,
+   "move_cost": 1.1,
+   "atlas": [
+    7,
+    0
+   ],
+   "secret": true,
+   "revealed_atlas": [
+    0,
+    1
+   ]
+  },
+  {
+   "symbol": "q",
+   "id": "hidden_trail",
+   "walkable": true,
+   "move_cost": 1.0,
+   "atlas": [
+    5,
+    3
+   ],
+   "secret": true,
+   "revealed_atlas": [
+    4,
+    3
+   ]
+  }
+ ]
 }

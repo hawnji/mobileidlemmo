@@ -773,6 +773,944 @@
     "carry_capacity": 4
    },
    "max_durability": 800
+  },
+  {
+   "id": "coal_ore",
+   "name": "Coal",
+   "category": "ore",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 10,
+   "icon": "res://assets/resources/items/coal_ore.png",
+   "description": "Fuel for steel and mithril smelting."
+  },
+  {
+   "id": "silver_ore",
+   "name": "Silver Ore",
+   "category": "ore",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 18,
+   "icon": "res://assets/resources/items/silver_ore.png",
+   "description": "Bright ore from the Silver Galleries."
+  },
+  {
+   "id": "mithril_ore",
+   "name": "Mithril Ore",
+   "category": "ore",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 40,
+   "icon": "res://assets/resources/items/mithril_ore.png",
+   "description": "Light, blue-sheened ore from the Deep Tunnels."
+  },
+  {
+   "id": "adamantite_ore",
+   "name": "Adamantite Ore",
+   "category": "ore",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 80,
+   "icon": "res://assets/resources/items/adamantite_ore.png",
+   "description": "Green-black ore from the Red Mesa."
+  },
+  {
+   "id": "steel_bar",
+   "name": "Steel Bar",
+   "category": "bar",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 45,
+   "icon": "res://assets/resources/items/steel_bar.png",
+   "description": "Iron hardened with coal."
+  },
+  {
+   "id": "silver_bar",
+   "name": "Silver Bar",
+   "category": "bar",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 50,
+   "icon": "res://assets/resources/items/silver_bar.png",
+   "description": "A gleaming bar of silver."
+  },
+  {
+   "id": "mithril_bar",
+   "name": "Mithril Bar",
+   "category": "bar",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/mithril_bar.png",
+   "description": "Mithril smelted with coal."
+  },
+  {
+   "id": "adamantite_bar",
+   "name": "Adamantite Bar",
+   "category": "bar",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 240,
+   "icon": "res://assets/resources/items/adamantite_bar.png",
+   "description": "The hardest metal known to the desert smiths."
+  },
+  {
+   "id": "uncut_sapphire",
+   "name": "Uncut Sapphire",
+   "category": "gem",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 90,
+   "icon": "res://assets/resources/items/uncut_sapphire.png",
+   "description": "A deep blue gem from Irondeep gem rocks."
+  },
+  {
+   "id": "uncut_ruby",
+   "name": "Uncut Ruby",
+   "category": "gem",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 140,
+   "icon": "res://assets/resources/items/uncut_ruby.png",
+   "description": "A fiery red gem."
+  },
+  {
+   "id": "sunstone",
+   "name": "Sunstone",
+   "category": "gem",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 600,
+   "icon": "res://assets/resources/items/sunstone.png",
+   "description": "A stone that holds the desert sun."
+  },
+  {
+   "id": "maple_log",
+   "name": "Maple Log",
+   "category": "log",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 22,
+   "icon": "res://assets/resources/items/maple_log.png",
+   "description": "Sweet-smelling maple from Whisperwood."
+  },
+  {
+   "id": "yew_log",
+   "name": "Yew Log",
+   "category": "log",
+   "tier": 4,
+   "rarity": "uncommon",
+   "sell_price": 55,
+   "icon": "res://assets/resources/items/yew_log.png",
+   "description": "Dense, dark yew from the Yew Thicket."
+  },
+  {
+   "id": "maple_plank",
+   "name": "Maple Plank",
+   "category": "plank",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 40,
+   "icon": "res://assets/resources/items/maple_plank.png",
+   "description": "A smooth maple plank."
+  },
+  {
+   "id": "yew_plank",
+   "name": "Yew Plank",
+   "category": "plank",
+   "tier": 4,
+   "rarity": "uncommon",
+   "sell_price": 95,
+   "icon": "res://assets/resources/items/yew_plank.png",
+   "description": "A hard yew plank."
+  },
+  {
+   "id": "heartwood",
+   "name": "Heartwood",
+   "category": "log",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 300,
+   "icon": "res://assets/resources/items/heartwood.png",
+   "description": "Living wood from a corrupted treant."
+  },
+  {
+   "id": "raw_cave_eel",
+   "name": "Raw Cave Eel",
+   "category": "fish",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 18,
+   "icon": "res://assets/resources/items/raw_cave_eel.png",
+   "description": "A pale eel from the Underground Lake."
+  },
+  {
+   "id": "raw_moonfish",
+   "name": "Raw Moonfish",
+   "category": "fish",
+   "tier": 4,
+   "rarity": "uncommon",
+   "sell_price": 40,
+   "icon": "res://assets/resources/items/raw_moonfish.png",
+   "description": "It glows faintly, even out of water."
+  },
+  {
+   "id": "raw_carp",
+   "name": "Raw Oasis Carp",
+   "category": "fish",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 14,
+   "icon": "res://assets/resources/items/raw_carp.png",
+   "description": "A fat carp from the Sunwell Oasis."
+  },
+  {
+   "id": "cooked_cave_eel",
+   "name": "Cooked Cave Eel",
+   "category": "food",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 30,
+   "icon": "res://assets/resources/items/cooked_cave_eel.png",
+   "description": "Rich and oily. Heals 14.",
+   "heal": 14
+  },
+  {
+   "id": "moonfish",
+   "name": "Cooked Moonfish",
+   "category": "food",
+   "tier": 4,
+   "rarity": "uncommon",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/moonfish.png",
+   "description": "Silvery and restorative. Heals 22.",
+   "heal": 22
+  },
+  {
+   "id": "cooked_carp",
+   "name": "Cooked Carp",
+   "category": "food",
+   "tier": 3,
+   "rarity": "common",
+   "sell_price": 24,
+   "icon": "res://assets/resources/items/cooked_carp.png",
+   "description": "A desert favourite. Heals 12.",
+   "heal": 12
+  },
+  {
+   "id": "ranarr",
+   "name": "Ranarr",
+   "category": "herb",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 35,
+   "icon": "res://assets/resources/items/ranarr.png",
+   "description": "A prized herb of the spirit glades."
+  },
+  {
+   "id": "glowcap",
+   "name": "Glowcap",
+   "category": "herb",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 45,
+   "icon": "res://assets/resources/items/glowcap.png",
+   "description": "A luminous mushroom from the Mushroom Caves."
+  },
+  {
+   "id": "restoration_draught",
+   "name": "Restoration Draught",
+   "category": "potion",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 160,
+   "icon": "res://assets/resources/items/restoration_draught.png",
+   "description": "Heals 55.",
+   "heal": 55
+  },
+  {
+   "id": "glowcap_elixir",
+   "name": "Glowcap Elixir",
+   "category": "potion",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/glowcap_elixir.png",
+   "description": "Heals 80.",
+   "heal": 80
+  },
+  {
+   "id": "pottery_shard",
+   "name": "Pottery Shard",
+   "category": "artifact",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 12,
+   "icon": "res://assets/resources/items/pottery_shard.png",
+   "description": "A fragment of painted pottery."
+  },
+  {
+   "id": "ancient_coin",
+   "name": "Ancient Coin",
+   "category": "artifact",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 60,
+   "icon": "res://assets/resources/items/ancient_coin.png",
+   "description": "A coin bearing a forgotten king."
+  },
+  {
+   "id": "golden_idol",
+   "name": "Golden Idol",
+   "category": "artifact",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 900,
+   "icon": "res://assets/resources/items/golden_idol.png",
+   "description": "A small idol of solid gold."
+  },
+  {
+   "id": "royal_tablet",
+   "name": "Royal Tablet",
+   "category": "artifact",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 400,
+   "icon": "res://assets/resources/items/royal_tablet.png",
+   "description": "Clay tablet with the Sand King's decrees."
+  },
+  {
+   "id": "golem_core",
+   "name": "Golem Core",
+   "category": "misc",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 220,
+   "icon": "res://assets/resources/items/golem_core.png",
+   "description": "The humming heart of a rock golem."
+  },
+  {
+   "id": "spirit_essence",
+   "name": "Spirit Essence",
+   "category": "misc",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 70,
+   "icon": "res://assets/resources/items/spirit_essence.png",
+   "description": "A wisp of a forest spirit."
+  },
+  {
+   "id": "enchanted_pelt",
+   "name": "Enchanted Pelt",
+   "category": "hide",
+   "tier": 3,
+   "rarity": "uncommon",
+   "sell_price": 55,
+   "icon": "res://assets/resources/items/enchanted_pelt.png",
+   "description": "A pelt that shimmers in moonlight."
+  },
+  {
+   "id": "wyrm_scale",
+   "name": "Wyrm Scale",
+   "category": "misc",
+   "tier": 4,
+   "rarity": "rare",
+   "sell_price": 180,
+   "icon": "res://assets/resources/items/wyrm_scale.png",
+   "description": "Hard as stone and hot to the touch."
+  },
+  {
+   "id": "bat_wing",
+   "name": "Bat Wing",
+   "category": "misc",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 9,
+   "icon": "res://assets/resources/items/bat_wing.png",
+   "description": "Leathery and light."
+  },
+  {
+   "id": "mithril_pickaxe",
+   "name": "Mithril Pickaxe",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 240,
+   "icon": "res://assets/resources/items/mithril_pickaxe.png",
+   "description": "Mines 34% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 30
+   },
+   "stats": {
+    "gather_speed.mining": 1.34
+   },
+   "max_durability": 1100,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "mithril_axe",
+   "name": "Mithril Axe",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 240,
+   "icon": "res://assets/resources/items/mithril_axe.png",
+   "description": "Chops 34% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 30
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.34
+   },
+   "max_durability": 1100,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "mithril_sword",
+   "name": "Mithril Sword",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 280,
+   "icon": "res://assets/resources/items/mithril_sword.png",
+   "description": "A mithril blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 30
+   },
+   "stats": {
+    "accuracy": 16,
+    "weapon_power": 8
+   },
+   "max_durability": 1100,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "mithril_helm",
+   "name": "Mithril Helm",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 240,
+   "icon": "res://assets/resources/items/mithril_helm.png",
+   "description": "Mithril armour.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 30
+   },
+   "stats": {
+    "armor": 9,
+    "max_health": 6
+   },
+   "max_durability": 1100
+  },
+  {
+   "id": "mithril_platebody",
+   "name": "Mithril Platebody",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 600,
+   "icon": "res://assets/resources/items/mithril_platebody.png",
+   "description": "Mithril armour.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 30
+   },
+   "stats": {
+    "armor": 19,
+    "max_health": 12
+   },
+   "max_durability": 1100
+  },
+  {
+   "id": "mithril_platelegs",
+   "name": "Mithril Platelegs",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 360,
+   "icon": "res://assets/resources/items/mithril_platelegs.png",
+   "description": "Mithril armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 30
+   },
+   "stats": {
+    "armor": 14,
+    "max_health": 9
+   },
+   "max_durability": 1100
+  },
+  {
+   "id": "mithril_gloves",
+   "name": "Mithril Gloves",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/mithril_gloves.png",
+   "description": "Mithril armour.",
+   "equip_slot": "gloves",
+   "requirements": {
+    "defense": 30
+   },
+   "stats": {
+    "armor": 4,
+    "max_health": 3
+   },
+   "max_durability": 1100
+  },
+  {
+   "id": "mithril_boots",
+   "name": "Mithril Boots",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/mithril_boots.png",
+   "description": "Mithril armour.",
+   "equip_slot": "boots",
+   "requirements": {
+    "defense": 30
+   },
+   "stats": {
+    "armor": 4,
+    "max_health": 3
+   },
+   "max_durability": 1100
+  },
+  {
+   "id": "adamantite_pickaxe",
+   "name": "Adamantite Pickaxe",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 520,
+   "icon": "res://assets/resources/items/adamantite_pickaxe.png",
+   "description": "Mines 48% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "mining": 45
+   },
+   "stats": {
+    "gather_speed.mining": 1.48
+   },
+   "max_durability": 1500,
+   "tool_skill": "mining"
+  },
+  {
+   "id": "adamantite_axe",
+   "name": "Adamantite Axe",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 520,
+   "icon": "res://assets/resources/items/adamantite_axe.png",
+   "description": "Chops 48% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "woodcutting": 45
+   },
+   "stats": {
+    "gather_speed.woodcutting": 1.48
+   },
+   "max_durability": 1500,
+   "tool_skill": "woodcutting"
+  },
+  {
+   "id": "adamantite_sword",
+   "name": "Adamantite Sword",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 560,
+   "icon": "res://assets/resources/items/adamantite_sword.png",
+   "description": "A adamantite blade.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 45
+   },
+   "stats": {
+    "accuracy": 24,
+    "weapon_power": 12
+   },
+   "max_durability": 1500,
+   "combat_style": "melee",
+   "attack_speed": 2.4
+  },
+  {
+   "id": "adamantite_helm",
+   "name": "Adamantite Helm",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 520,
+   "icon": "res://assets/resources/items/adamantite_helm.png",
+   "description": "Adamantite armour.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 45
+   },
+   "stats": {
+    "armor": 13,
+    "max_health": 9
+   },
+   "max_durability": 1500
+  },
+  {
+   "id": "adamantite_platebody",
+   "name": "Adamantite Platebody",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 1300,
+   "icon": "res://assets/resources/items/adamantite_platebody.png",
+   "description": "Adamantite armour.",
+   "equip_slot": "body",
+   "requirements": {
+    "defense": 45
+   },
+   "stats": {
+    "armor": 27,
+    "max_health": 18
+   },
+   "max_durability": 1500
+  },
+  {
+   "id": "adamantite_platelegs",
+   "name": "Adamantite Platelegs",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 780,
+   "icon": "res://assets/resources/items/adamantite_platelegs.png",
+   "description": "Adamantite armour.",
+   "equip_slot": "legs",
+   "requirements": {
+    "defense": 45
+   },
+   "stats": {
+    "armor": 20,
+    "max_health": 13
+   },
+   "max_durability": 1500
+  },
+  {
+   "id": "adamantite_gloves",
+   "name": "Adamantite Gloves",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/adamantite_gloves.png",
+   "description": "Adamantite armour.",
+   "equip_slot": "gloves",
+   "requirements": {
+    "defense": 45
+   },
+   "stats": {
+    "armor": 6,
+    "max_health": 4
+   },
+   "max_durability": 1500
+  },
+  {
+   "id": "adamantite_boots",
+   "name": "Adamantite Boots",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/adamantite_boots.png",
+   "description": "Adamantite armour.",
+   "equip_slot": "boots",
+   "requirements": {
+    "defense": 45
+   },
+   "stats": {
+    "armor": 6,
+    "max_health": 4
+   },
+   "max_durability": 1500
+  },
+  {
+   "id": "maple_shortbow",
+   "name": "Maple Shortbow",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 260,
+   "icon": "res://assets/resources/items/maple_shortbow.png",
+   "description": "A maple bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 30
+   },
+   "stats": {
+    "accuracy": 17,
+    "weapon_power": 8
+   },
+   "max_durability": 1100,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "maple_staff",
+   "name": "Maple Staff",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 290,
+   "icon": "res://assets/resources/items/maple_staff.png",
+   "description": "A maple staff set with a gem.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 30
+   },
+   "stats": {
+    "accuracy": 17,
+    "weapon_power": 9
+   },
+   "max_durability": 1100,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "maple_fishing_rod",
+   "name": "Maple Fishing Rod",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 200,
+   "icon": "res://assets/resources/items/maple_fishing_rod.png",
+   "description": "Fishes 34% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 30
+   },
+   "stats": {
+    "gather_speed.fishing": 1.34
+   },
+   "max_durability": 1100,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "yew_shortbow",
+   "name": "Yew Shortbow",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 560,
+   "icon": "res://assets/resources/items/yew_shortbow.png",
+   "description": "A yew bow.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 45
+   },
+   "stats": {
+    "accuracy": 25,
+    "weapon_power": 12
+   },
+   "max_durability": 1100,
+   "combat_style": "ranged",
+   "attack_speed": 2.2
+  },
+  {
+   "id": "yew_staff",
+   "name": "Yew Staff",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 590,
+   "icon": "res://assets/resources/items/yew_staff.png",
+   "description": "A yew staff set with a gem.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "magic": 45
+   },
+   "stats": {
+    "accuracy": 25,
+    "weapon_power": 13
+   },
+   "max_durability": 1100,
+   "combat_style": "magic",
+   "attack_speed": 2.8
+  },
+  {
+   "id": "yew_fishing_rod",
+   "name": "Yew Fishing Rod",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "epic",
+   "sell_price": 500,
+   "icon": "res://assets/resources/items/yew_fishing_rod.png",
+   "description": "Fishes 48% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "fishing": 45
+   },
+   "stats": {
+    "gather_speed.fishing": 1.48
+   },
+   "max_durability": 1100,
+   "tool_skill": "fishing"
+  },
+  {
+   "id": "silver_ring",
+   "name": "Silver Ring",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 220,
+   "icon": "res://assets/resources/items/silver_ring.png",
+   "description": "+6% XP in every skill.",
+   "equip_slot": "accessory",
+   "requirements": {},
+   "stats": {
+    "xp.all": 1.06
+   },
+   "max_durability": 1000
+  },
+  {
+   "id": "sapphire_amulet",
+   "name": "Sapphire Amulet",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 320,
+   "icon": "res://assets/resources/items/sapphire_amulet.png",
+   "description": "+10% gathering speed.",
+   "equip_slot": "accessory",
+   "requirements": {},
+   "stats": {
+    "gather_speed.all": 1.1
+   },
+   "max_durability": 1000
+  },
+  {
+   "id": "explorers_compass",
+   "name": "Explorer's Compass",
+   "category": "equipment",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 300,
+   "icon": "res://assets/resources/items/explorers_compass.png",
+   "description": "+25% discovery chance and wider fog reveal.",
+   "equip_slot": "accessory",
+   "requirements": {
+    "exploration": 20
+   },
+   "stats": {
+    "discovery": 1.25,
+    "reveal_radius": 1
+   },
+   "max_durability": 1000
+  },
+  {
+   "id": "trowel",
+   "name": "Archaeologist's Trowel",
+   "category": "equipment",
+   "tier": 2,
+   "rarity": "uncommon",
+   "sell_price": 120,
+   "icon": "res://assets/resources/items/trowel.png",
+   "description": "Digs 25% faster.",
+   "equip_slot": "tool",
+   "requirements": {
+    "archaeology": 1
+   },
+   "stats": {
+    "gather_speed.archaeology": 1.25
+   },
+   "max_durability": 800,
+   "tool_skill": "archaeology"
+  },
+  {
+   "id": "sunstone_crown",
+   "name": "Sunstone Crown",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "legendary",
+   "sell_price": 3000,
+   "icon": "res://assets/resources/items/sunstone_crown.png",
+   "description": "The Sand King's crown. +12% damage, +20 health.",
+   "equip_slot": "head",
+   "requirements": {
+    "defense": 50
+   },
+   "stats": {
+    "armor": 30,
+    "max_health": 20,
+    "damage": 1.12
+   },
+   "max_durability": 2500
+  },
+  {
+   "id": "deepforge_hammer",
+   "name": "Deepforge Hammer",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "legendary",
+   "sell_price": 2800,
+   "icon": "res://assets/resources/items/deepforge_hammer.png",
+   "description": "Forged in the vault. Hits like a landslide.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "attack": 50
+   },
+   "stats": {
+    "accuracy": 26,
+    "weapon_power": 16
+   },
+   "max_durability": 2500,
+   "combat_style": "melee",
+   "attack_speed": 3.0
+  },
+  {
+   "id": "heartwood_bow",
+   "name": "Heartwood Bow",
+   "category": "equipment",
+   "tier": 4,
+   "rarity": "legendary",
+   "sell_price": 2800,
+   "icon": "res://assets/resources/items/heartwood_bow.png",
+   "description": "A living bow that never misses its mark.",
+   "equip_slot": "weapon",
+   "requirements": {
+    "ranged": 50
+   },
+   "stats": {
+    "accuracy": 30,
+    "weapon_power": 14
+   },
+   "max_durability": 2500,
+   "combat_style": "ranged",
+   "attack_speed": 2.0
+  },
+  {
+   "id": "dwarven_artifact",
+   "name": "Dwarven Artifact",
+   "category": "artifact",
+   "tier": 3,
+   "rarity": "rare",
+   "sell_price": 350,
+   "icon": "res://assets/resources/items/dwarven_artifact.png",
+   "description": "A rune-etched cog from the old dwarven vaults."
+  },
+  {
+   "id": "expedition_rations",
+   "name": "Expedition Rations",
+   "category": "food",
+   "tier": 2,
+   "rarity": "common",
+   "sell_price": 20,
+   "icon": "res://assets/resources/items/expedition_rations.png",
+   "description": "Hard tack and dried fish. Heals 10. Improves expedition odds.",
+   "heal": 10
   }
  ]
 }

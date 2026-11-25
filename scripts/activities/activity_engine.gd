@@ -60,6 +60,7 @@ func _init(p_world, p_registry: DataRegistry) -> void:
 		"crafting": CraftingHandler.new(),
 		"combat": CombatHandler.new(),
 		"construction": ConstructionHandler.new(),
+		"exploration": ExplorationHandler.new(),
 	}
 
 
@@ -79,6 +80,8 @@ func assign(ch: Adventurer, asg: Assignment) -> String:
 		return err
 	if ch.state == S.INJURED:
 		return "%s is recovering from an injury" % ch.display_name
+	if ch.state == S.AWAY:
+		return "%s is away" % ch.display_name
 	cancel(ch, "")
 	asg.character_id = ch.id
 	asg.started_at_sim_time = world.sim_time
@@ -102,6 +105,10 @@ func validate_assignment(ch: Adventurer, asg: Assignment) -> String:
 		return "%s needs %s level %d" % [ch.display_name, registry.skills.get(skill, {}).get("name", skill), req]
 	if not asg.destination_id.is_empty() and not world.locations.has(asg.destination_id):
 		return "Unknown destination '%s'" % asg.destination_id
+	if not asg.destination_id.is_empty():
+		var reg: String = world.location_region(asg.destination_id)
+		if not reg.is_empty() and not world.is_region_unlocked(reg):
+			return "Unlock %s first" % registry.region_name(reg)
 	var h := handler_for(asg.activity_id)
 	if h == null:
 		return "Activity type '%s' is not supported" % act.get("type", "")
@@ -118,13 +125,16 @@ func cancel(ch: Adventurer, message := "Stopped") -> void:
 	ch.action_elapsed = 0.0
 	ch.travel_purpose = TP.NONE
 	ch.assignment = null
-	if ch.state == S.INJURED or ch.state == S.RESTING:
+	ch.on_waypoint = false
+	if ch.state == S.INJURED or ch.state == S.RESTING or ch.state == S.AWAY:
 		return
 	if ch.state != S.IDLE:
 		_set_state(ch, S.IDLE, message)
 
 
 func tick(ch: Adventurer, dt: float) -> void:
+	if ch.state == S.AWAY:
+		return  # expeditions and dungeons simulate their members themselves
 	if ch.state != S.COMBAT and ch.state != S.INJURED and ch.state != S.RESTING:
 		var mh := ch.max_health()
 		if ch.health < mh:
@@ -148,7 +158,7 @@ func tick(ch: Adventurer, dt: float) -> void:
 
 func _run_state(ch: Adventurer, t: float) -> float:
 	match ch.state:
-		S.IDLE, S.COMPLETED:
+		S.IDLE, S.COMPLETED, S.AWAY:
 			return 0.0
 		S.ASSIGNED:
 			set_state(ch, S.CHECKING_CONDITIONS)
@@ -220,24 +230,56 @@ func _pathfind(ch: Adventurer, t: float) -> float:
 		return t  # no budget this tick; tick() will stop and retry next tick
 	var result: PathResult
 	var target_id := ""
+	var goal := ch.target_tile
+	var adjacent := ch.target_adjacent
 	match ch.travel_purpose:
 		TP.TO_STORAGE:
-			result = world.pathfinder.find_path_to_adjacent(ch.tile, world.storage_tile)
+			if ch.deposit_tile.x < 0:
+				ch.deposit_tile = world.nearest_deposit(ch)
+			goal = ch.deposit_tile
+			adjacent = true
 		TP.TO_NODE:
 			var node: ResourceNodeState = world.nodes.get(ch.target_node_id)
 			if node == null:
 				set_state(ch, S.CHECKING_CONDITIONS)
 				return t
 			target_id = node.id
-			result = world.pathfinder.find_path_to_adjacent(ch.tile, node.tile)
+			goal = node.tile
+			adjacent = true
 		_:
 			target_id = ch.target_enemy_id if not ch.target_enemy_id.is_empty() else ch.target_station_id
-			if ch.target_adjacent:
-				result = world.pathfinder.find_path_to_adjacent(ch.tile, ch.target_tile)
-			else:
-				result = world.pathfinder.find_path(ch.tile, ch.target_tile)
+			if target_id.is_empty():
+				target_id = ch.target_key
+	# Hierarchical navigation: across regions, travel gate by gate (or by
+	# waystone) and re-plan at each waypoint.
+	ch.on_waypoint = false
+	var hop: Dictionary = world.nav.next_hop(ch.tile, goal)
+	match int(hop.kind):
+		RegionNavigator.Hop.TELEPORT:
+			var dest: Vector2i = hop.tile
+			ch.tile = world.free_tile_near(dest, world.character_order.find(ch.id))
+			ch.path.clear()
+			world.emit_event("fast_travel", {"character_id": ch.id, "to": ch.tile, "region": world.region_at(ch.tile)})
+			world.on_character_moved(ch)
+			return t  # still PATHFINDING: plan the rest from the far waystone
+		RegionNavigator.Hop.WALK:
+			goal = hop.tile
+			adjacent = false
+			ch.on_waypoint = true
+		RegionNavigator.Hop.WALK_ADJACENT:
+			goal = hop.tile
+			adjacent = true
+			ch.on_waypoint = true
+		RegionNavigator.Hop.NO_ROUTE:
+			result = PathResult.new()
+	if result == null:
+		result = world.pathfinder.find_path_to_adjacent(ch.tile, goal) if adjacent else world.pathfinder.find_path(ch.tile, goal)
 	if not result.reachable:
-		ch.path_failures += 1
+		# Exploration targets are plentiful: a sealed-off fog tile is just
+		# skipped for the rest of the assignment, not counted as "stuck".
+		var fog_target := target_id.begins_with("fog:")
+		if not fog_target:
+			ch.path_failures += 1
 		if ch.path_failures >= max_path_failures:
 			interrupt(ch, "Stuck: no route found")
 			return t
@@ -246,7 +288,7 @@ func _pathfind(ch: Adventurer, t: float) -> float:
 			set_state(ch, S.WAITING, "Cannot reach storage, retrying")
 		else:
 			if not target_id.is_empty():
-				ch.unreachable_until[target_id] = world.sim_time + unreachable_cooldown
+				ch.unreachable_until[target_id] = world.sim_time + (1.0e9 if fog_target else unreachable_cooldown)
 			release_targets(ch)
 			set_state(ch, S.CHECKING_CONDITIONS, "Route blocked, trying another spot")
 		return t
@@ -281,10 +323,17 @@ func _move(ch: Adventurer, t: float) -> float:
 			ch.tile = next
 			ch.move_progress = 0.0
 			ch.path_index += 1
+			world.on_character_moved(ch)
 		else:
 			ch.move_progress += t / full_time
 			return 0.0
 	if ch.path_index >= ch.path.size():
+		if ch.on_waypoint:
+			ch.on_waypoint = false
+			ch.path.clear()
+			ch.path_index = 0
+			set_state(ch, S.PATHFINDING)
+			return t
 		_arrive(ch)
 	return t
 
@@ -295,7 +344,7 @@ func _arrive(ch: Adventurer) -> void:
 	ch.move_progress = 0.0
 	if ch.travel_purpose == TP.TO_STORAGE:
 		ch.action_elapsed = 0.0
-		ch.facing = (world.storage_tile - ch.tile).sign()
+		ch.facing = (ch.deposit_tile - ch.tile).sign()
 		set_state(ch, S.DEPOSITING, "Depositing")
 		return
 	var h := _handler(ch)
@@ -349,6 +398,7 @@ func _deposit(ch: Adventurer, t: float) -> float:
 		ch.wait_remaining = waiting_retry_seconds * 5.0
 		set_state(ch, S.WAITING, "Storage full")
 		world.emit_event("interrupted", {"character_id": ch.id, "reason": "Storage full"})
+		world.emit_event("storage_full", {"character_id": ch.id})
 		ch.stats.interruptions = int(ch.stats.interruptions) + 1
 		return t
 	if asg == null:
@@ -398,7 +448,7 @@ func _after_rest(ch: Adventurer) -> void:
 		set_state(ch, S.IDLE, "Rested")
 		return
 	var h := _handler(ch)
-	if h and h.wants_restock(self, ch, ch.assignment) and WorldGrid.chebyshev(ch.tile, world.storage_tile) == 1:
+	if h and h.wants_restock(self, ch, ch.assignment) and _at_deposit(ch):
 		ch.action_elapsed = 0.0
 		set_state(ch, S.RESTOCKING, "Restocking")
 	else:
@@ -435,6 +485,7 @@ func grant_xp(ch: Adventurer, skill: String, base_xp: float) -> float:
 func begin_return(ch: Adventurer, message: String) -> void:
 	release_targets(ch)
 	ch.travel_purpose = TP.TO_STORAGE
+	ch.deposit_tile = world.nearest_deposit(ch)
 	# PATHFINDING resolves "already next to storage" instantly with an empty path.
 	set_state(ch, S.PATHFINDING, message)
 
@@ -445,6 +496,14 @@ func travel_to(ch: Adventurer, tile: Vector2i, adjacent: bool, message: String) 
 	ch.target_tile = tile
 	ch.target_adjacent = adjacent
 	set_state(ch, S.PATHFINDING, message)
+
+
+## True when standing next to any active deposit point (home or outpost).
+func _at_deposit(ch: Adventurer) -> bool:
+	for t in world.deposit_tiles():
+		if WorldGrid.chebyshev(ch.tile, t) == 1:
+			return true
+	return false
 
 
 func wait(ch: Adventurer, seconds: float, message: String) -> void:
@@ -458,6 +517,8 @@ func complete(ch: Adventurer) -> void:
 	set_state(ch, S.COMPLETED, "Assignment complete")
 	world.emit_event("assignment_completed", {"character_id": ch.id})
 	var asg := ch.assignment
+	if asg and String(registry.activities.get(asg.activity_id, {}).get("type", "")) == "crafting":
+		world.emit_event("crafting_finished", {"character_id": ch.id, "activity_id": asg.activity_id, "crafted": asg.deposited_primary})
 	if asg and not asg.route.is_empty():
 		_advance_route(ch, asg)
 
@@ -488,6 +549,7 @@ func interrupt(ch: Adventurer, reason: String) -> void:
 	world.emit_event("interrupted", {"character_id": ch.id, "reason": reason})
 	release_targets(ch)
 	ch.path.clear()
+	ch.on_waypoint = false
 	ch.travel_purpose = TP.NONE
 	set_state(ch, S.IDLE, reason)
 
@@ -504,6 +566,7 @@ func release_targets(ch: Adventurer) -> void:
 			e.disengage(ch.id)
 		ch.target_enemy_id = ""
 	ch.target_station_id = ""
+	ch.target_key = ""
 
 
 ## Kept for Phase 1 callers and tests.

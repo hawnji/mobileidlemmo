@@ -19,7 +19,26 @@ static func estimate(world: SimulationWorld, ch: Adventurer, activity_id: String
 			return _combat(world, ch, act, asg)
 		"construction":
 			return _construction(world, ch)
+		"exploration":
+			return _exploration(world, ch, act)
 	return _gathering(world, ch, act, return_fill_ratio)
+
+
+static func _exploration(world: SimulationWorld, ch: Adventurer, act: Dictionary) -> Dictionary:
+	var region := String(act.get("region", ""))
+	var pct := world.exploration.explored_pct(region)
+	# Rough: one survey every survey_seconds reveals part of a circle, but
+	# never more than the region has left (so XP/h falls as the map fills in).
+	var ri := world.exploration.region_ids.find(region)
+	var remaining := 0
+	if ri >= 0:
+		remaining = world.exploration.region_walkable[ri] - world.exploration.region_revealed[ri]
+	var r := float(world.reveal_radius(ch))
+	var per_survey := r * r * 1.6  # new tiles per survey once neighbours overlap
+	var tiles_per_hour := minf(3600.0 / ExplorationHandler.survey_seconds(world, ch) * per_survey, float(remaining))
+	return {"reachable": world.is_region_unlocked(region), "skill": "exploration", "item": "",
+		"items_per_hour": 0.0, "explored_pct": pct,
+		"xp_per_hour": tiles_per_hour * float(world.registry.get_config("exploration.xp_per_tile", 0.6)) * ch.xp_multiplier("exploration")}
 
 
 static func _storage_start(world: SimulationWorld) -> Vector2i:
@@ -35,7 +54,12 @@ static func _gathering(world: SimulationWorld, ch: Adventurer, act: Dictionary, 
 	var nodes := world.nodes_of_type(String(act.node_type), String(act.get("default_destination", "")))
 	if nodes.is_empty():
 		return {"reachable": false}
-	var start := _storage_start(world)
+	var depot := world.storage_tile
+	if world.outpost_level(world.region_at(nodes[0].tile)) > 0:
+		depot = world.outpost_of(world.region_at(nodes[0].tile)).depot_tile
+	gather /= world.local_multiplier(nodes[0].tile, "gather_speed")
+	var adj := world.pathfinder.adjacent_walkable(depot)
+	var start: Vector2i = adj[0] if not adj.is_empty() else _storage_start(world)
 	var best := INF
 	for n in nodes:
 		var r := world.pathfinder.find_path_to_adjacent(start, n.tile)

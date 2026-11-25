@@ -37,6 +37,23 @@ var buildings := {}
 var building_order: Array[String] = []
 var town_config := {}
 var stat_families := {}
+# --- Phase 3: world expansion -------------------------------------------
+var world_map := {}  # the connected map: rows, regions, gates, locations, ...
+var map_regions := {}  # region_id -> region def (rect, unlock, outpost, ...)
+var map_region_order: Array[String] = []
+var abilities := {}
+var ability_by_specialty := {}
+var quests := {}
+var quest_order: Array[String] = []
+var quest_config := {}
+var vendors := {}
+var dungeons := {}
+var dungeon_order: Array[String] = []
+var expeditions := {}
+var expedition_order: Array[String] = []
+var expedition_config := {}
+var encounter_config := {}
+var notification_config := {}
 var skill_xp_table: XpTable
 var character_xp_table: XpTable
 var load_errors := PackedStringArray()
@@ -107,10 +124,36 @@ func load_from(p_root: String) -> bool:
 		buildings[b.id] = b
 		building_order.append(String(b.id))
 	stat_families = _load_dict("config/stats.json").get("families", {})
-	var start_region := String(get_config("world.start_region", "greenvale_start"))
-	var region := _load_dict("regions/%s.json" % start_region)
-	if not region.is_empty():
-		regions[region.id] = region
+	var map_id := String(get_config("world.map", "world_map"))
+	world_map = _load_dict("regions/%s.json" % map_id)
+	if not world_map.is_empty():
+		regions[world_map.id] = world_map
+	map_region_order.clear()
+	for r in world_map.get("regions", []):
+		map_regions[r.id] = r
+		map_region_order.append(String(r.id))
+	var ab := _load_dict("characters/abilities.json")
+	for a in ab.get("abilities", []):
+		abilities[a.id] = a
+	ability_by_specialty = ab.get("by_specialty", {})
+	quest_config = _load_dict("quests/quests.json")
+	quest_order.clear()
+	for q in quest_config.get("quests", []):
+		quests[q.id] = q
+		quest_order.append(String(q.id))
+	for v in _load_list("economy/vendors.json", "vendors"):
+		vendors[v.id] = v
+	dungeon_order.clear()
+	for d in _load_list("dungeons/dungeons.json", "dungeons"):
+		dungeons[d.id] = d
+		dungeon_order.append(String(d.id))
+	expedition_config = _load_dict("expeditions/expeditions.json")
+	expedition_order.clear()
+	for e in expedition_config.get("expeditions", []):
+		expeditions[e.id] = e
+		expedition_order.append(String(e.id))
+	encounter_config = _load_dict("world/encounters.json")
+	notification_config = _load_dict("config/notifications.json")
 	return load_errors.is_empty()
 
 
@@ -162,6 +205,22 @@ func characters_by_acquisition(kind: String) -> Array[String]:
 	return out
 
 
+## The active ability of a character: explicit in data, else by combat specialty.
+func ability_for(character_def: Dictionary) -> Dictionary:
+	var aid := String(character_def.get("active_ability", ""))
+	if aid.is_empty():
+		aid = String(ability_by_specialty.get(character_def.get("combat_specialty", "warrior"), ""))
+	return abilities.get(aid, {})
+
+
+func region_name(region_id: String) -> String:
+	return String(map_regions.get(region_id, {}).get("name", region_id))
+
+
+func reputation_tiers() -> Array:
+	return quest_config.get("reputation", {}).get("tiers", [{"name": "Neutral", "points": 0}])
+
+
 func get_item_name(item_id: String) -> String:
 	return String(items.get(item_id, {}).get("name", item_id))
 
@@ -189,7 +248,7 @@ func validate() -> PackedStringArray:
 		var a: Dictionary = activities[a_id]
 		if String(a.get("type", "gathering")) == "gathering" and not node_types.has(a.get("node_type", "")):
 			errors.append("Activity %s references unknown node type %s" % [a_id, a.get("node_type")])
-		if String(a.get("type", "gathering")) != "combat" and not skills.has(a.get("skill", "")):
+		if not ["combat", "construction"].has(String(a.get("type", "gathering"))) and not skills.has(a.get("skill", "")):
 			errors.append("Activity %s references unknown skill %s" % [a_id, a.get("skill")])
 	for c_id in characters:
 		var c: Dictionary = characters[c_id]
@@ -267,6 +326,93 @@ func validate() -> PackedStringArray:
 					errors.append("Building %s unknown effect %s" % [b_id, k])
 	for r_id in regions:
 		errors.append_array(_validate_region(regions[r_id]))
+	errors.append_array(_validate_phase3())
+	return errors
+
+
+func _validate_phase3() -> PackedStringArray:
+	var errors := PackedStringArray()
+	for c_id in characters:
+		if ability_for(characters[c_id]).is_empty():
+			errors.append("Character %s has no active ability" % c_id)
+	for e_id in enemies:
+		var b: Variant = enemies[e_id].get("boss")
+		if b is Dictionary:
+			for ab in b.get("abilities", []):
+				if String(ab.get("kind", "")) == "summon" and not enemies.has(ab.get("enemy", "")):
+					errors.append("Boss %s summons unknown enemy %s" % [e_id, ab.get("enemy")])
+	for d_id in dungeons:
+		var d: Dictionary = dungeons[d_id]
+		if not enemies.has(d.get("boss", "")):
+			errors.append("Dungeon %s unknown boss" % d_id)
+		if not map_regions.has(d.get("region", "")):
+			errors.append("Dungeon %s unknown region" % d_id)
+		for f in d.get("floors", []):
+			for e in f.get("enemies", []):
+				if not enemies.has(e):
+					errors.append("Dungeon %s unknown enemy %s" % [d_id, e])
+		var found := false
+		for de in world_map.get("dungeon_entrances", []):
+			if de.id == d_id:
+				found = true
+		if not found:
+			errors.append("Dungeon %s has no entrance on the map" % d_id)
+	for x_id in expeditions:
+		var x: Dictionary = expeditions[x_id]
+		if not map_regions.has(x.get("region", "")):
+			errors.append("Expedition %s unknown region" % x_id)
+		for it in x.get("rewards", {}).get("items", []):
+			if not items.has(it.get("item", "")):
+				errors.append("Expedition %s unknown reward item %s" % [x_id, it.get("item")])
+		for s in x.get("rewards", {}).get("xp", {}):
+			if not skills.has(s):
+				errors.append("Expedition %s unknown xp skill %s" % [x_id, s])
+	for q_id in quests:
+		var q: Dictionary = quests[q_id]
+		for o in q.get("objectives", []) + q.get("prerequisites", []):
+			var t := String(o.get("type", ""))
+			if not Objectives.KNOWN_TYPES.has(t):
+				errors.append("Quest %s unknown objective type %s" % [q_id, t])
+			if o.has("item") and not items.has(o.item):
+				errors.append("Quest %s unknown item %s" % [q_id, o.item])
+			if o.has("enemy") and not enemies.has(o.enemy):
+				errors.append("Quest %s unknown enemy %s" % [q_id, o.enemy])
+			if o.has("quest") and not quests.has(o.quest):
+				errors.append("Quest %s unknown prerequisite quest %s" % [q_id, o.quest])
+			if o.has("dungeon") and not dungeons.has(o.dungeon):
+				errors.append("Quest %s unknown dungeon %s" % [q_id, o.dungeon])
+			if o.has("building") and not buildings.has(o.building):
+				errors.append("Quest %s unknown building %s" % [q_id, o.building])
+		var ch := String(q.get("rewards", {}).get("character", ""))
+		if not ch.is_empty() and not characters.has(ch):
+			errors.append("Quest %s rewards unknown character %s" % [q_id, ch])
+	for v_id in vendors:
+		for s in vendors[v_id].get("stock", []):
+			if not items.has(s.get("item", "")):
+				errors.append("Vendor %s unknown item %s" % [v_id, s.get("item")])
+	for enc in encounter_config.get("encounters", []):
+		if enc.has("enemy") and not enemies.has(enc.enemy):
+			errors.append("Encounter %s unknown enemy" % enc.get("id"))
+		for s in enc.get("stock", []):
+			if not items.has(s.get("item", "")):
+				errors.append("Encounter %s unknown item %s" % [enc.get("id"), s.get("item")])
+	var disc_ids := {}
+	for d in world_map.get("discoveries", []):
+		disc_ids[d.id] = true
+		var rw: Dictionary = d.get("rewards", {})
+		for it in rw.get("items", {}):
+			if not items.has(it):
+				errors.append("Discovery %s unknown item %s" % [d.id, it])
+		if rw.has("character") and not characters.has(rw.character):
+			errors.append("Discovery %s unknown character" % d.id)
+	for q_id in quests:
+		for o in quests[q_id].get("objectives", []):
+			if o.get("type") == "discover" and not disc_ids.has(o.get("discovery", "")):
+				errors.append("Quest %s unknown discovery %s" % [q_id, o.get("discovery")])
+	for r_id in recipes:
+		for reg in recipes[r_id].get("requires_reputation", {}):
+			if not map_regions.has(reg):
+				errors.append("Recipe %s requires reputation in unknown region %s" % [r_id, reg])
 	return errors
 
 
@@ -288,6 +434,9 @@ func _validate_region(region: Dictionary) -> PackedStringArray:
 	for loc in region.get("locations", []):
 		location_ids[loc.id] = true
 	for a_id in activities:
+		var ar := String(activities[a_id].get("region", ""))
+		if not ar.is_empty() and not map_regions.has(ar):
+			errors.append("Activity %s unknown region %s" % [a_id, ar])
 		var dest := String(activities[a_id].get("default_destination", ""))
 		if not dest.is_empty() and not location_ids.has(dest):
 			errors.append("Activity %s destination %s not in region %s" % [a_id, dest, region.get("id")])

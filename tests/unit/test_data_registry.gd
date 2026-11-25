@@ -9,11 +9,11 @@ func test_data_loads_and_validates_cleanly() -> void:
 func test_core_content_present() -> void:
 	var r := registry()
 	assert_eq(r.skill_order.size(), 24)
-	assert_eq(r.character_order.size(), 23)
+	assert_eq(r.character_order.size(), 24)
 	assert_eq(r.characters_by_acquisition("starter").size(), 3)
 	for a in ["mine_copper", "chop_oak", "fish_minnow"]:
 		assert_has(r.activities, a)
-	assert_has(r.regions, "greenvale_start")
+	assert_has(r.regions, "world")
 
 
 func test_config_lookup() -> void:

@@ -18,6 +18,25 @@ func setup(registry: DataRegistry, report: OfflineReport) -> void:
 		body.add_child(UiTheme.label(", ".join(cur), 20, UiTheme.ACCENT))
 	for b in report.buildings_completed:
 		body.add_child(UiTheme.label("%s reached level %d" % [registry.buildings.get(b.building, {}).get("name", b.building), int(b.level)], 20, UiTheme.GOOD))
+	for rid in report.explored_after:
+		var gain := float(report.explored_after[rid]) - float(report.explored_before.get(rid, 0.0))
+		if gain >= 0.005:
+			body.add_child(UiTheme.label("Explored %s: %d%% -> %d%%" % [registry.region_name(rid), roundi(float(report.explored_before.get(rid, 0.0)) * 100.0),
+				roundi(float(report.explored_after[rid]) * 100.0)], 19, UiTheme.GOOD))
+	for d in report.discoveries:
+		body.add_child(UiTheme.label("Discovered %s (%s)" % [d.get("name", ""), registry.region_name(String(d.get("region", "")))], 19, UiTheme.rarity_color("rare")))
+	for x in report.expeditions:
+		body.add_child(UiTheme.label("Expedition %s: %s" % [x.get("name", ""), "success" if x.get("success", false) else "failed"], 19,
+			UiTheme.GOOD if x.get("success", false) else UiTheme.BAD))
+	for dg in report.dungeons:
+		var res := String(dg.get("result", ""))
+		body.add_child(UiTheme.label("%s: %s" % [dg.get("name", ""), "cleared" if res == "cleared" else res], 19, UiTheme.GOOD if res == "cleared" else UiTheme.BAD))
+	for n in report.joined:
+		body.add_child(UiTheme.label("%s joined your settlement" % n, 19, UiTheme.rarity_color("epic")))
+	for q in report.quests_ready:
+		body.add_child(UiTheme.label("Quest ready to claim: %s" % q, 19, UiTheme.ACCENT))
+	if not report.encounters.is_empty():
+		body.add_child(UiTheme.label("%d world event(s) came and went" % report.encounters.size(), 17, UiTheme.TEXT_DIM))
 	if not report.storage_gained.is_empty():
 		body.add_child(UiTheme.label("Added to storage", 22, UiTheme.ACCENT))
 		var grid := ItemGrid.new()

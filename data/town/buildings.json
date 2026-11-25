@@ -649,7 +649,7 @@
   {
    "id": "expedition_center",
    "name": "Expedition Center",
-   "description": "Plan long expeditions (Phase 3).",
+   "description": "Plans expeditions. Each level adds an expedition slot.",
    "max_level": 5,
    "phase": 3,
    "levels": [
@@ -979,6 +979,249 @@
      "work_seconds": 1800,
      "effects": {
       "worker_capacity": 12
+     }
+    }
+   ]
+  },
+  {
+   "id": "outpost_irondeep",
+   "name": "Irondeep Outpost",
+   "kind": "outpost",
+   "region": "irondeep",
+   "max_level": 3,
+   "phase": 3,
+   "description": "Regional outpost: storage depot, supply station, crafting stations and a waystone for fast travel. Each level speeds up gathering in the region.",
+   "levels": [
+    {
+     "level": 1,
+     "cost": {
+      "gold": 1000,
+      "items": {
+       "oak_plank": 60,
+       "iron_bar": 20
+      }
+     },
+     "construction_level": 15,
+     "work_seconds": 240,
+     "requires": [
+      {
+       "type": "region",
+       "region": "irondeep"
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.05
+     }
+    },
+    {
+     "level": 2,
+     "cost": {
+      "gold": 4000,
+      "items": {
+       "oak_plank": 120,
+       "iron_bar": 60
+      }
+     },
+     "construction_level": 30,
+     "work_seconds": 600,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "irondeep",
+       "tier": 1
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.1,
+      "xp": 1.03
+     }
+    },
+    {
+     "level": 3,
+     "cost": {
+      "gold": 12000,
+      "items": {
+       "oak_plank": 200,
+       "iron_bar": 120
+      }
+     },
+     "construction_level": 45,
+     "work_seconds": 1200,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "irondeep",
+       "tier": 3
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.15,
+      "xp": 1.06
+     }
+    }
+   ]
+  },
+  {
+   "id": "outpost_whisperwood",
+   "name": "Druid Grove Outpost",
+   "kind": "outpost",
+   "region": "whisperwood",
+   "max_level": 3,
+   "phase": 3,
+   "description": "Regional outpost: storage depot, supply station, crafting stations and a waystone for fast travel. Each level speeds up gathering in the region.",
+   "levels": [
+    {
+     "level": 1,
+     "cost": {
+      "gold": 1000,
+      "items": {
+       "willow_plank": 60,
+       "steel_bar": 20
+      }
+     },
+     "construction_level": 15,
+     "work_seconds": 240,
+     "requires": [
+      {
+       "type": "region",
+       "region": "whisperwood"
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.05
+     }
+    },
+    {
+     "level": 2,
+     "cost": {
+      "gold": 4000,
+      "items": {
+       "willow_plank": 120,
+       "steel_bar": 60
+      }
+     },
+     "construction_level": 30,
+     "work_seconds": 600,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "whisperwood",
+       "tier": 1
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.1,
+      "xp": 1.03
+     }
+    },
+    {
+     "level": 3,
+     "cost": {
+      "gold": 12000,
+      "items": {
+       "willow_plank": 200,
+       "steel_bar": 120
+      }
+     },
+     "construction_level": 45,
+     "work_seconds": 1200,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "whisperwood",
+       "tier": 3
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.15,
+      "xp": 1.06
+     }
+    }
+   ]
+  },
+  {
+   "id": "outpost_ashen",
+   "name": "Sunwell Outpost",
+   "kind": "outpost",
+   "region": "ashen_desert",
+   "max_level": 3,
+   "phase": 3,
+   "description": "Regional outpost: storage depot, supply station, crafting stations and a waystone for fast travel. Each level speeds up gathering in the region.",
+   "levels": [
+    {
+     "level": 1,
+     "cost": {
+      "gold": 1000,
+      "items": {
+       "maple_plank": 60,
+       "mithril_bar": 20
+      }
+     },
+     "construction_level": 15,
+     "work_seconds": 240,
+     "requires": [
+      {
+       "type": "region",
+       "region": "ashen_desert"
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.05
+     }
+    },
+    {
+     "level": 2,
+     "cost": {
+      "gold": 4000,
+      "items": {
+       "maple_plank": 120,
+       "mithril_bar": 60
+      }
+     },
+     "construction_level": 30,
+     "work_seconds": 600,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "ashen_desert",
+       "tier": 1
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.1,
+      "xp": 1.03
+     }
+    },
+    {
+     "level": 3,
+     "cost": {
+      "gold": 12000,
+      "items": {
+       "maple_plank": 200,
+       "mithril_bar": 120
+      }
+     },
+     "construction_level": 45,
+     "work_seconds": 1200,
+     "requires": [
+      {
+       "type": "reputation",
+       "region": "ashen_desert",
+       "tier": 3
+      }
+     ],
+     "effects": {},
+     "local_effects": {
+      "gather_speed": 1.15,
+      "xp": 1.06
      }
     }
    ]

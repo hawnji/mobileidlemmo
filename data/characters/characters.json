@@ -54,7 +54,8 @@
    "palette": {
     "primary": "#8a5a2b",
     "secondary": "#c9a26b"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "sylvara_moonleaf",
@@ -112,7 +113,8 @@
    "palette": {
     "primary": "#2f6b3a",
     "secondary": "#d8e6c0"
-   }
+   },
+   "active_ability": "volley"
   },
   {
    "id": "tamsin_reed",
@@ -160,7 +162,8 @@
    "palette": {
     "primary": "#3b5b8c",
     "secondary": "#e0c9a0"
-   }
+   },
+   "active_ability": "cleave"
   },
   {
    "id": "pip_tumblewick",
@@ -208,7 +211,8 @@
    "palette": {
     "primary": "#a0522d",
     "secondary": "#f1d9a8"
-   }
+   },
+   "active_ability": "rally"
   },
   {
    "id": "hilda_brook",
@@ -256,7 +260,8 @@
    "palette": {
     "primary": "#4a7a8c",
     "secondary": "#d8cfa8"
-   }
+   },
+   "active_ability": "cleave"
   },
   {
    "id": "odo_ferris",
@@ -305,7 +310,8 @@
    "palette": {
     "primary": "#6b7a2f",
     "secondary": "#e8d8a0"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "nell_ashby",
@@ -353,7 +359,8 @@
    "palette": {
     "primary": "#7a4a2a",
     "secondary": "#c8b08a"
-   }
+   },
+   "active_ability": "cleave"
   },
   {
    "id": "rook_varga",
@@ -407,7 +414,8 @@
    "palette": {
     "primary": "#5a4a3a",
     "secondary": "#a89a7a"
-   }
+   },
+   "active_ability": "volley"
   },
   {
    "id": "mira_quell",
@@ -461,7 +469,8 @@
    "palette": {
     "primary": "#5a8a6a",
     "secondary": "#e0e8d0"
-   }
+   },
+   "active_ability": "mend"
   },
   {
    "id": "dunstan_crag",
@@ -514,7 +523,8 @@
    "palette": {
     "primary": "#6a3a2a",
     "secondary": "#b89a6a"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "kesh_tallow",
@@ -568,7 +578,8 @@
    "palette": {
     "primary": "#4a6a3a",
     "secondary": "#8a6a4a"
-   }
+   },
+   "active_ability": "cleave"
   },
   {
    "id": "garrick_emberforge",
@@ -623,7 +634,8 @@
    "palette": {
     "primary": "#8a2a1a",
     "secondary": "#d0a060"
-   }
+   },
+   "active_ability": "cleave"
   },
   {
    "id": "lyra_swiftwind",
@@ -676,7 +688,8 @@
    "palette": {
     "primary": "#3a6a8a",
     "secondary": "#e8e0b0"
-   }
+   },
+   "active_ability": "volley"
   },
   {
    "id": "bram_oakheart",
@@ -729,7 +742,8 @@
    "palette": {
     "primary": "#5a3a1a",
     "secondary": "#c0904a"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "sela_tidecaller",
@@ -782,7 +796,8 @@
    "palette": {
     "primary": "#2a5a8a",
     "secondary": "#a0d0e0"
-   }
+   },
+   "active_ability": "fireball"
   },
   {
    "id": "morgana_ashveil",
@@ -837,7 +852,8 @@
    "palette": {
     "primary": "#4a2a5a",
     "secondary": "#9ac080"
-   }
+   },
+   "active_ability": "fireball"
   },
   {
    "id": "thane_ironward",
@@ -893,7 +909,8 @@
    "palette": {
     "primary": "#7a7a8a",
     "secondary": "#e0c060"
-   }
+   },
+   "active_ability": "mend"
   },
   {
    "id": "vex_shadowstep",
@@ -949,7 +966,8 @@
    "palette": {
     "primary": "#2a2a3a",
     "secondary": "#8a3a5a"
-   }
+   },
+   "active_ability": "backstab"
   },
   {
    "id": "aurelia_dawnbringer",
@@ -1009,7 +1027,8 @@
    "palette": {
     "primary": "#d0b040",
     "secondary": "#f0f0e0"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "korrin_deepdelve",
@@ -1069,7 +1088,8 @@
    "palette": {
     "primary": "#8a5a9a",
     "secondary": "#e0c080"
-   }
+   },
+   "active_ability": "rally"
   },
   {
    "id": "elowen_starweaver",
@@ -1126,7 +1146,8 @@
    "palette": {
     "primary": "#3a3a8a",
     "secondary": "#c0c0f0"
-   }
+   },
+   "active_ability": "fireball"
   },
   {
    "id": "old_marrow",
@@ -1180,7 +1201,8 @@
    "palette": {
     "primary": "#5a5a4a",
     "secondary": "#a0a090"
-   }
+   },
+   "active_ability": "shield_wall"
   },
   {
    "id": "fenwick_the_lost",
@@ -1234,6 +1256,69 @@
    "palette": {
     "primary": "#4a6a5a",
     "secondary": "#d0c0a0"
+   },
+   "active_ability": "rally"
+  },
+  {
+   "id": "hulda_ironbraid",
+   "name": "Hulda Ironbraid",
+   "rarity": "epic",
+   "origin": "Dwarf",
+   "title": "Warden of Irondeep Hold",
+   "role": "smith",
+   "combat_specialty": "tank",
+   "combat_style": "melee",
+   "primary_affinity": "smithing",
+   "secondary_affinity": "mining",
+   "affinities": {
+    "smithing": {
+     "speed": 1.25,
+     "xp": 1.2
+    },
+    "mining": {
+     "speed": 1.15,
+     "xp": 1.1
+    }
+   },
+   "starting_skills": {
+    "smithing": 30,
+    "mining": 25,
+    "defense": 25,
+    "attack": 20,
+    "strength": 20
+   },
+   "base_stats": {
+    "health": 130,
+    "move_speed_tiles": 2.8,
+    "carry_capacity": 30
+   },
+   "passive": {
+    "id": "hold_warden",
+    "name": "Warden of the Hold",
+    "description": "+15% smithing speed, +10% armour.",
+    "effects": {
+     "craft_speed.smithing": 1.15,
+     "armor": 6
+    }
+   },
+   "traits": [
+    "hard_worker",
+    "battle_hardened",
+    "perfectionist"
+   ],
+   "personality": "Gruff, fair, and quietly delighted by anyone who can tell good steel from bad.",
+   "background": "Joins the player once Irondeep Hold trusts them (Honored reputation).",
+   "acquisition": "reputation",
+   "reputation": {
+    "region": "irondeep",
+    "tier": 2
+   },
+   "active_ability": "shield_wall",
+   "portrait": "res://assets/characters/portraits/hulda_ironbraid.png",
+   "sprite": "res://assets/characters/sprites/hulda_ironbraid.png",
+   "palette": {
+    "primary": "#7a3a2a",
+    "secondary": "#c0a060"
    }
   }
  ]

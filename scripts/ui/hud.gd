@@ -4,7 +4,8 @@ extends CanvasLayer
 ## navigation, toasts and modal screens. Reads simulation state; the only
 ## writes go through SimulationWorld's command API (assign / cancel).
 
-const NAV := [["World", "world"], ["Heroes", "heroes"], ["Recruit", "recruit"], ["Town", "town"], ["Storage", "storage"], ["Social", "social"]]
+const NAV := [["World", "world"], ["Heroes", "heroes"], ["Map", "map"], ["Quests", "quests"],
+	["Journeys", "journeys"], ["Town", "town"], ["Recruit", "recruit"], ["Storage", "storage"]]
 
 var world: SimulationWorld
 var _root: Control
@@ -18,6 +19,8 @@ var _toasts: VBoxContainer
 var _modal_layer: Control
 var _refresh_accum := 0.0
 var _speeds := [1.0, 5.0, 20.0]
+var _bell: Button
+var _quest_btn: Button
 
 
 func _ready() -> void:
@@ -68,6 +71,12 @@ func _build_top_bar() -> void:
 	_wallet_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_wallet_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	h.add_child(_wallet_label)
+	_bell = UiTheme.button("Bell", 18)
+	_bell.icon = UiTheme.texture("res://assets/ui/icons/bell.png")
+	_bell.custom_minimum_size = Vector2(90, 56)
+	_bell.tooltip_text = "Notifications"
+	_bell.pressed.connect(open_notifications)
+	h.add_child(_bell)
 	_speed_btn = UiTheme.button("x1", 20)
 	_speed_btn.custom_minimum_size = Vector2(70, 56)
 	_speed_btn.tooltip_text = "Simulation speed (prototype/dev)"
@@ -103,17 +112,19 @@ func _build_bottom() -> void:
 	_card_row.add_theme_constant_override("separation", 8)
 	_card_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_card_row)
-	var nav := HBoxContainer.new()
-	nav.add_theme_constant_override("separation", 4)
+	var nav := GridContainer.new()
+	nav.columns = 4
+	nav.add_theme_constant_override("h_separation", 4)
+	nav.add_theme_constant_override("v_separation", 4)
 	v.add_child(nav)
 	for spec in NAV:
 		var b := UiTheme.button(spec[0], 18)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.custom_minimum_size = Vector2(0, 64)
+		b.custom_minimum_size = Vector2(0, 56)
 		var key: String = spec[1]
 		b.pressed.connect(func() -> void: _on_nav(key))
-		if key == "social":
-			b.modulate = Color(1, 1, 1, 0.5)
+		if key == "quests":
+			_quest_btn = b
 		nav.add_child(b)
 
 
@@ -170,9 +181,32 @@ func _on_world_event(ev: Dictionary) -> void:
 		"interrupted":
 			var ch4: Adventurer = world.characters.get(ev.character_id)
 			toast("%s: %s" % [ch4.display_name if ch4 else "?", ev.reason], UiTheme.BAD)
-		"recruited":
-			if ev.get("new", false) and world.characters.has(ev.character_id) and not _cards.has(ev.character_id):
+		"recruited", "character_joined":
+			if (ev.type == "character_joined" or ev.get("new", false)) and world.characters.has(ev.character_id) and not _cards.has(ev.character_id):
 				_add_card(String(ev.character_id))
+			if ev.type == "character_joined":
+				toast("%s joined your settlement!" % ev.name, UiTheme.rarity_color("epic"))
+		"discovery":
+			toast("%s discovered %s" % [_name(ev.character_id), ev.name], UiTheme.rarity_color("rare"))
+		"region_unlocked":
+			toast("%s is now open!" % ev.name, UiTheme.ACCENT)
+		"quest_ready":
+			toast("Quest ready to claim: %s" % ev.name, UiTheme.GOOD)
+		"quest_started":
+			if String(ev.get("category", "")) == "main":
+				toast("New quest: %s" % ev.name, UiTheme.ACCENT)
+		"reputation_tier":
+			toast("%s reputation: %s" % [world.registry.region_name(String(ev.region)), ev.name], UiTheme.GOOD)
+		"expedition_completed":
+			toast("%s %s" % [ev.name, "succeeded!" if ev.success else "failed"], UiTheme.GOOD if ev.success else UiTheme.BAD)
+		"dungeon_completed":
+			toast("%s %s" % [ev.name, "cleared!" if ev.result == "cleared" else "failed"], UiTheme.GOOD if ev.result == "cleared" else UiTheme.BAD)
+		"encounter_started":
+			toast(String(ev.message), UiTheme.rarity_color("epic"))
+		"secret_revealed":
+			toast("A secret passage opened in %s" % world.registry.region_name(String(ev.region)), UiTheme.rarity_color("rare"))
+		"storage_full":
+			toast("Storage is full!", UiTheme.BAD)
 		"enemy_killed":
 			if not String(ev.get("variant", "")).is_empty():
 				toast("%s defeated a %s!" % [_name(ev.character_id), ev.name], UiTheme.rarity_color("epic"))
@@ -205,7 +239,18 @@ func _process(delta: float) -> void:
 	var day_t := world.day_phase()
 	var hours := int(day_t * 24.0)
 	var mins := int(fmod(day_t * 24.0, 1.0) * 60.0)
-	_clock.text = "Greenvale  |  %02d:%02d%s" % [hours, mins, "  (night)" if world.is_night() else ""]
+	var where := "World"
+	if world.characters.has(Game.selected_character_id):
+		where = world.registry.region_name(world.region_at(world.characters[Game.selected_character_id].tile))
+	_clock.text = "%s  |  %02d:%02d%s" % [where, hours, mins, "  (night)" if world.is_night() else ""]
+	var unread := world.notifications.unread_count()
+	_bell.text = str(unread) if unread > 0 else ""
+	_bell.modulate = UiTheme.ACCENT if unread > 0 else Color.WHITE
+	var ready := 0
+	for qid in world.quests.active:
+		if world.quests.is_complete(world, qid):
+			ready += 1
+	_quest_btn.text = "Quests (%d)" % ready if ready > 0 else "Quests"
 	_wallet_label.text = "%s gold  %s gems  %d tokens" % [ItemGrid._fmt(world.wallet.get_balance("gold")), ItemGrid._fmt(world.wallet.get_balance("gems")), world.wallet.get_balance("recruitment_tokens")]
 
 
@@ -231,8 +276,18 @@ func _on_nav(key: String) -> void:
 			p3.setup(world)
 		"storage":
 			open_storage()
-		"social":
-			toast("Friends and guilds arrive with multiplayer (Phase 4)", UiTheme.TEXT_DIM)
+		"map":
+			var pm := MapPanel.new()
+			_open_modal(pm)
+			pm.setup(world)
+		"quests":
+			var pq := QuestsPanel.new()
+			_open_modal(pq)
+			pq.setup(world)
+		"journeys":
+			var pj := JourneysPanel.new()
+			_open_modal(pj)
+			pj.setup(world, "events" if not world.encounters.active.is_empty() and world.expeditions.active.is_empty() else "expeditions")
 
 
 func open_assign(ch: Adventurer) -> void:
@@ -257,6 +312,12 @@ func open_storage() -> void:
 	var p := InventoryPanel.new()
 	_open_modal(p)
 	p.setup(world.registry, world.storage, "Village Storage", true, world)
+
+
+func open_notifications() -> void:
+	var p := NotificationsPanel.new()
+	_open_modal(p)
+	p.setup(world)
 
 
 func open_gear(ch: Adventurer) -> void:

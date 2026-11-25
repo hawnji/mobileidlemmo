@@ -209,6 +209,302 @@
    "required_level": 1,
    "animation": "build",
    "description": "Work on the active town construction project."
+  },
+  {
+   "id": "mine_coal",
+   "name": "Mine Coal",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 30,
+   "node_type": "coal_rock",
+   "default_destination": "silver_galleries",
+   "animation": "mine",
+   "description": "Mine coal in the Silver Galleries of Irondeep."
+  },
+  {
+   "id": "mine_silver",
+   "name": "Mine Silver",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 35,
+   "node_type": "silver_rock",
+   "default_destination": "silver_galleries",
+   "animation": "mine",
+   "description": "Mine silver ore in Irondeep."
+  },
+  {
+   "id": "mine_gems",
+   "name": "Mine Gems",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 40,
+   "node_type": "gem_rock",
+   "default_destination": "deep_tunnels",
+   "animation": "mine",
+   "description": "Chip gems out of the Deep Tunnels."
+  },
+  {
+   "id": "mine_mithril",
+   "name": "Mine Mithril",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 50,
+   "node_type": "mithril_rock",
+   "default_destination": "deep_tunnels",
+   "animation": "mine",
+   "description": "Mine mithril in the Deep Tunnels."
+  },
+  {
+   "id": "mine_adamantite",
+   "name": "Mine Adamantite",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 65,
+   "node_type": "adamantite_rock",
+   "default_destination": "red_mesa",
+   "animation": "mine",
+   "description": "Mine adamantite on the Red Mesa."
+  },
+  {
+   "id": "mine_sunstone",
+   "name": "Mine Sunstone",
+   "type": "gathering",
+   "skill": "mining",
+   "required_level": 75,
+   "node_type": "sunstone_rock",
+   "default_destination": "red_mesa",
+   "animation": "mine",
+   "description": "Carefully extract sunstone."
+  },
+  {
+   "id": "chop_maple",
+   "name": "Chop Maple",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 30,
+   "node_type": "maple_tree",
+   "default_destination": "maple_grove",
+   "animation": "chop",
+   "description": "Chop maple in Whisperwood's Maple Grove."
+  },
+  {
+   "id": "chop_yew",
+   "name": "Chop Yew",
+   "type": "gathering",
+   "skill": "woodcutting",
+   "required_level": 50,
+   "node_type": "yew_tree",
+   "default_destination": "yew_thicket",
+   "animation": "chop",
+   "description": "Chop yew in the Yew Thicket."
+  },
+  {
+   "id": "fish_cave_eel",
+   "name": "Fish Cave Eels",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 35,
+   "node_type": "cave_eel_spot",
+   "default_destination": "underground_lake",
+   "animation": "fish",
+   "description": "Fish eels in the Underground Lake."
+  },
+  {
+   "id": "fish_moonfish",
+   "name": "Fish Moonfish",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 50,
+   "node_type": "moonfish_spot",
+   "default_destination": "moonwell",
+   "animation": "fish",
+   "description": "Fish the glowing Moonwell."
+  },
+  {
+   "id": "fish_carp",
+   "name": "Fish Oasis Carp",
+   "type": "gathering",
+   "skill": "fishing",
+   "required_level": 30,
+   "node_type": "oasis_carp_spot",
+   "default_destination": "sunwell_oasis",
+   "animation": "fish",
+   "description": "Fish carp at the Sunwell Oasis."
+  },
+  {
+   "id": "forage_ranarr",
+   "name": "Forage Ranarr",
+   "type": "gathering",
+   "skill": "foraging",
+   "required_level": 30,
+   "node_type": "ranarr_patch",
+   "default_destination": "",
+   "animation": "forage",
+   "description": "Pick ranarr in Whisperwood's clearings."
+  },
+  {
+   "id": "forage_glowcap",
+   "name": "Forage Glowcaps",
+   "type": "gathering",
+   "skill": "foraging",
+   "required_level": 45,
+   "node_type": "glowcap_mushroom",
+   "default_destination": "mushroom_caves",
+   "animation": "forage",
+   "description": "Gather glowcaps in the Mushroom Caves."
+  },
+  {
+   "id": "dig_ruins",
+   "name": "Excavate Ruins",
+   "type": "gathering",
+   "skill": "archaeology",
+   "required_level": 1,
+   "node_type": "dig_site",
+   "default_destination": "old_ruins",
+   "animation": "mine",
+   "description": "Dig for pottery and coins in the Old Ruins."
+  },
+  {
+   "id": "dig_caches",
+   "name": "Dig Buried Caches",
+   "type": "gathering",
+   "skill": "archaeology",
+   "required_level": 30,
+   "node_type": "buried_cache",
+   "default_destination": "buried_city",
+   "animation": "mine",
+   "description": "Excavate caches in the Buried City."
+  },
+  {
+   "id": "dig_royal",
+   "name": "Excavate Royal Sites",
+   "type": "gathering",
+   "skill": "archaeology",
+   "required_level": 55,
+   "node_type": "royal_dig_site",
+   "default_destination": "buried_city",
+   "animation": "mine",
+   "description": "Search royal digs for tablets and idols."
+  },
+  {
+   "id": "hunt_bats",
+   "name": "Hunt Cave Bats",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "bat_roost",
+   "animation": "fight",
+   "description": "Bats in the Silver Galleries."
+  },
+  {
+   "id": "fight_golems",
+   "name": "Fight Golems",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "golem_halls",
+   "animation": "fight",
+   "description": "Rock golems and stone trolls. Magic works best."
+  },
+  {
+   "id": "hunt_spirits",
+   "name": "Banish Spirits",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "spirit_glades",
+   "animation": "fight",
+   "description": "Forest spirits. Bring melee."
+  },
+  {
+   "id": "hunt_enchanted_wolves",
+   "name": "Hunt Enchanted Wolves",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "wolfsong_ridge",
+   "animation": "fight",
+   "description": "Enchanted wolves on Wolfsong Ridge."
+  },
+  {
+   "id": "fell_treants",
+   "name": "Fell Treants",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "rotting_heart",
+   "animation": "fight",
+   "description": "Corrupted treants. Dangerous."
+  },
+  {
+   "id": "raid_raiders",
+   "name": "Raid the Raider Camp",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "raider_camp",
+   "animation": "fight",
+   "description": "Desert raiders near the ruins."
+  },
+  {
+   "id": "hunt_wyrms",
+   "name": "Hunt Sand Wyrms",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "wyrm_dunes",
+   "animation": "fight",
+   "description": "Sand wyrms in the eastern dunes."
+  },
+  {
+   "id": "fight_guardians",
+   "name": "Fight Ancient Guardians",
+   "type": "combat",
+   "skill": "",
+   "required_level": 1,
+   "default_destination": "guardian_court",
+   "animation": "fight",
+   "description": "Ancient guardians in the Buried City. Very dangerous."
+  },
+  {
+   "id": "explore_greenvale",
+   "name": "Explore Greenvale",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "greenvale",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of Greenvale, lifting the fog and searching for discoveries."
+  },
+  {
+   "id": "explore_irondeep",
+   "name": "Explore Irondeep",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "irondeep",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of Irondeep, lifting the fog and searching for discoveries."
+  },
+  {
+   "id": "explore_whisperwood",
+   "name": "Explore Whisperwood",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "whisperwood",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of Whisperwood, lifting the fog and searching for discoveries."
+  },
+  {
+   "id": "explore_ashen_desert",
+   "name": "Explore the Ashen Desert",
+   "type": "exploration",
+   "skill": "exploration",
+   "required_level": 1,
+   "region": "ashen_desert",
+   "animation": "walk",
+   "description": "Walk the unexplored parts of the Ashen Desert, lifting the fog and searching for discoveries."
   }
  ]
 }

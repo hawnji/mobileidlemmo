@@ -231,6 +231,370 @@
    "requires_building": {
     "farm": 2
    }
+  },
+  {
+   "id": "coal_rock",
+   "name": "Coal Rock",
+   "skill": "mining",
+   "required_level": 30,
+   "gather_seconds": 6.5,
+   "xp": 50,
+   "yield": {
+    "item": "coal_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "uncut_sapphire",
+     "chance": 0.003
+    }
+   ],
+   "charges": 4,
+   "respawn_seconds": 16,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/coal_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "silver_rock",
+   "name": "Silver Rock",
+   "skill": "mining",
+   "required_level": 35,
+   "gather_seconds": 7.0,
+   "xp": 65,
+   "yield": {
+    "item": "silver_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "uncut_sapphire",
+     "chance": 0.004
+    }
+   ],
+   "charges": 3,
+   "respawn_seconds": 20,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/silver_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "gem_rock",
+   "name": "Gem Rock",
+   "skill": "mining",
+   "required_level": 40,
+   "gather_seconds": 9.0,
+   "xp": 85,
+   "yield": {
+    "item": "uncut_sapphire",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "uncut_ruby",
+     "chance": 0.08
+    }
+   ],
+   "charges": 2,
+   "respawn_seconds": 45,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/gem_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "mithril_rock",
+   "name": "Mithril Rock",
+   "skill": "mining",
+   "required_level": 50,
+   "gather_seconds": 9.0,
+   "xp": 95,
+   "yield": {
+    "item": "mithril_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "uncut_ruby",
+     "chance": 0.004
+    }
+   ],
+   "charges": 3,
+   "respawn_seconds": 30,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/mithril_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "adamantite_rock",
+   "name": "Adamantite Rock",
+   "skill": "mining",
+   "required_level": 65,
+   "gather_seconds": 11.0,
+   "xp": 140,
+   "yield": {
+    "item": "adamantite_ore",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "sunstone",
+     "chance": 0.001
+    }
+   ],
+   "charges": 2,
+   "respawn_seconds": 45,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/adamantite_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "sunstone_rock",
+   "name": "Sunstone Vein",
+   "skill": "mining",
+   "required_level": 75,
+   "gather_seconds": 15.0,
+   "xp": 260,
+   "yield": {
+    "item": "sunstone",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [],
+   "charges": 1,
+   "respawn_seconds": 240,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/sunstone_rock.png",
+   "depleted_sprite": "res://assets/resources/nodes/rock_depleted.png"
+  },
+  {
+   "id": "maple_tree",
+   "name": "Maple Tree",
+   "skill": "woodcutting",
+   "required_level": 30,
+   "gather_seconds": 8.0,
+   "xp": 80,
+   "yield": {
+    "item": "maple_log",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "bird_nest",
+     "chance": 0.005
+    }
+   ],
+   "charges": 6,
+   "respawn_seconds": 22,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/maple_tree.png",
+   "depleted_sprite": "res://assets/resources/nodes/tree_stump.png"
+  },
+  {
+   "id": "yew_tree",
+   "name": "Yew Tree",
+   "skill": "woodcutting",
+   "required_level": 50,
+   "gather_seconds": 11.0,
+   "xp": 150,
+   "yield": {
+    "item": "yew_log",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "bird_nest",
+     "chance": 0.008
+    }
+   ],
+   "charges": 5,
+   "respawn_seconds": 40,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/yew_tree.png",
+   "depleted_sprite": "res://assets/resources/nodes/tree_stump.png"
+  },
+  {
+   "id": "cave_eel_spot",
+   "name": "Cave Eel Spot",
+   "skill": "fishing",
+   "required_level": 35,
+   "gather_seconds": 8.0,
+   "xp": 75,
+   "yield": {
+    "item": "raw_cave_eel",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "river_pearl",
+     "chance": 0.004
+    }
+   ],
+   "charges": 6,
+   "respawn_seconds": 18,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/fishing_spot.png",
+   "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+  },
+  {
+   "id": "moonfish_spot",
+   "name": "Moonfish Spot",
+   "skill": "fishing",
+   "required_level": 50,
+   "gather_seconds": 10.0,
+   "xp": 120,
+   "yield": {
+    "item": "raw_moonfish",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "river_pearl",
+     "chance": 0.008
+    }
+   ],
+   "charges": 4,
+   "respawn_seconds": 30,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/fishing_spot.png",
+   "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+  },
+  {
+   "id": "oasis_carp_spot",
+   "name": "Oasis Carp Spot",
+   "skill": "fishing",
+   "required_level": 30,
+   "gather_seconds": 7.5,
+   "xp": 60,
+   "yield": {
+    "item": "raw_carp",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [],
+   "charges": 6,
+   "respawn_seconds": 16,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/fishing_spot.png",
+   "depleted_sprite": "res://assets/resources/nodes/fishing_spot_calm.png"
+  },
+  {
+   "id": "ranarr_patch",
+   "name": "Ranarr Patch",
+   "skill": "foraging",
+   "required_level": 30,
+   "gather_seconds": 7.0,
+   "xp": 60,
+   "yield": {
+    "item": "ranarr",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [],
+   "charges": 3,
+   "respawn_seconds": 40,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/herb_bush.png",
+   "depleted_sprite": "res://assets/resources/nodes/herb_bush_picked.png"
+  },
+  {
+   "id": "glowcap_mushroom",
+   "name": "Glowcap Cluster",
+   "skill": "foraging",
+   "required_level": 45,
+   "gather_seconds": 8.0,
+   "xp": 95,
+   "yield": {
+    "item": "glowcap",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [],
+   "charges": 3,
+   "respawn_seconds": 50,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/glowcap_mushroom.png",
+   "depleted_sprite": "res://assets/resources/nodes/glowcap_picked.png"
+  },
+  {
+   "id": "dig_site",
+   "name": "Dig Site",
+   "skill": "archaeology",
+   "required_level": 1,
+   "gather_seconds": 8.0,
+   "xp": 30,
+   "yield": {
+    "item": "pottery_shard",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "ancient_coin",
+     "chance": 0.05
+    }
+   ],
+   "charges": 4,
+   "respawn_seconds": 30,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/dig_site.png",
+   "depleted_sprite": "res://assets/resources/nodes/dig_site_done.png"
+  },
+  {
+   "id": "buried_cache",
+   "name": "Buried Cache",
+   "skill": "archaeology",
+   "required_level": 30,
+   "gather_seconds": 10.0,
+   "xp": 90,
+   "yield": {
+    "item": "ancient_coin",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "royal_tablet",
+     "chance": 0.02
+    }
+   ],
+   "charges": 3,
+   "respawn_seconds": 60,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/dig_site.png",
+   "depleted_sprite": "res://assets/resources/nodes/dig_site_done.png"
+  },
+  {
+   "id": "royal_dig_site",
+   "name": "Royal Dig Site",
+   "skill": "archaeology",
+   "required_level": 55,
+   "gather_seconds": 14.0,
+   "xp": 200,
+   "yield": {
+    "item": "royal_tablet",
+    "min": 1,
+    "max": 1
+   },
+   "rare_drops": [
+    {
+     "item": "golden_idol",
+     "chance": 0.01
+    }
+   ],
+   "charges": 2,
+   "respawn_seconds": 120,
+   "blocks_movement": true,
+   "sprite": "res://assets/resources/nodes/royal_dig_site.png",
+   "depleted_sprite": "res://assets/resources/nodes/dig_site_done.png"
   }
  ]
 }

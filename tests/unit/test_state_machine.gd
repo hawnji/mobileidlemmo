@@ -25,8 +25,8 @@ func test_every_state_can_be_cancelled_to_idle() -> void:
 		assert_true(CharacterStates.can_transition(s, S.IDLE))
 
 
-func test_all_fourteen_states_exist_with_labels() -> void:
-	assert_eq(S.size(), 14)
+func test_all_fifteen_states_exist_with_labels() -> void:
+	assert_eq(S.size(), 15)
 	for s in S.values():
 		assert_ne(CharacterStates.label_of(s), "?")
 		assert_eq(CharacterStates.from_name(CharacterStates.name_of(s)), s)

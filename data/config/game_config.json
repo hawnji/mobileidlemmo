@@ -32,10 +32,10 @@
   "file_path": "user://worldbound_save.json"
  },
  "world": {
-  "start_region": "greenvale_start",
   "chunk_size_tiles": 16,
   "tile_size_px": 32,
-  "day_length_seconds": 1440.0
+  "day_length_seconds": 1440.0,
+  "map": "world_map"
  },
  "combat": {
   "default_attack_interval": 2.6,
@@ -93,5 +93,18 @@
    "damage": 1.04,
    "max_health": 5
   }
+ },
+ "exploration": {
+  "base_reveal_radius": 4,
+  "reveal_radius_per_levels": 25,
+  "xp_per_tile": 4.0,
+  "discovery_detect_radius": 2,
+  "frontier_search_limit": 6000,
+  "explore_complete_pct": 0.98,
+  "walk_reveal_radius": 1,
+  "survey_seconds": 60.0
+ },
+ "navigation": {
+  "fast_travel_min_distance": 40
  }
 }

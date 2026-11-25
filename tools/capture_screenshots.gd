@@ -130,6 +130,82 @@ func _process(_delta: float) -> bool:
 		1060:
 			_snap("16_construction")
 		1065:
+			# Phase 3: regions, map, quests, journeys, dungeons, fog.
+			var w4 = game.world
+			w4.wallet.earn("gold", 20000, "screenshot")
+			w4._set_region_unlocked("irondeep")
+			w4.town.levels["expedition_center"] = 1
+			w4.town.recompute(w4.registry)
+			w4._apply_account_effects()
+			w4.assign_activity("sylvara_moonleaf", Assignment.create("sylvara_moonleaf", w4.registry.activities["explore_greenvale"]))
+			w4.assign_activity("tamsin_reed", Assignment.create("tamsin_reed", w4.registry.activities["explore_irondeep"]))
+			w4.encounters.spawn_random(w4, "travelling_merchant")
+			w4.encounters.spawn_random(w4, "bountiful_vein")
+			game.time_scale = 20.0
+			hud._close_modals()
+		1200:
+			game.time_scale = 1.0
+			hud._on_nav("map")
+		1220:
+			_snap("17_world_map")
+		1225:
+			hud._on_nav("quests")
+		1245:
+			_snap("18_quests")
+		1250:
+			for c in hud._modal_layer.get_children():
+				if c is QuestsPanel:
+					c._tab = "rep"
+					c.refresh()
+		1265:
+			_snap("19_reputation_vendors")
+		1270:
+			var w5 = game.world
+			w5.start_expedition("greenvale_survey", ["brom_stonefist"])
+			hud._on_nav("journeys")
+			for c in hud._modal_layer.get_children():
+				if c is JourneysPanel:
+					c._tab = "expeditions"
+					c._team = ["sylvara_moonleaf"]
+					c.refresh()
+		1290:
+			_snap("20_expeditions")
+		1295:
+			var w6 = game.world
+			w6.storage.add("cooked_trout", 20)
+			w6.record_source("cooked_trout", 20, "screenshot")
+			for cid in ["sylvara_moonleaf"]:
+				var ch = w6.characters[cid]
+				for sk in ["attack", "strength", "defense"]:
+					ch.skills.set_level(sk, 40)
+				ch.invalidate_stats()
+			w6.start_dungeon("goblin_warren", ["sylvara_moonleaf"])
+			game.time_scale = 5.0
+		1360:
+			game.time_scale = 1.0
+			for c in hud._modal_layer.get_children():
+				if c is JourneysPanel:
+					c._tab = "dungeons"
+					c.refresh()
+		1380:
+			_snap("21_dungeon_run")
+		1385:
+			for c in hud._modal_layer.get_children():
+				if c is JourneysPanel:
+					c._tab = "events"
+					c.refresh()
+		1400:
+			_snap("22_world_events")
+		1405:
+			hud.open_notifications()
+		1420:
+			_snap("23_notifications")
+		1425:
+			hud._close_modals()
+			game.select_character("tamsin_reed", true)
+		1480:
+			_snap("24_irondeep_fog")
+		1485:
 			print("screenshots: %d saved to %s" % [_shots, ProjectSettings.globalize_path(_out)])
 			return true
 	return false

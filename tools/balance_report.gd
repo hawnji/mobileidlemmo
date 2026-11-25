@@ -57,4 +57,91 @@ func _initialize() -> void:
 		for it in ch.stats.crafted:
 			made += int(ch.stats.crafted[it])
 		print("| %s | %s | %d | %d -> %d |" % [ch.display_name, r.name, made, lv0, ch.skills.get_level(String(r.skill))])
+	_phase3(reg)
 	quit()
+
+
+## Phase 3: exploration pace, expedition odds and dungeon outcomes for teams
+## at reference levels (all skills set to the level, character level too).
+func _phase3(reg: DataRegistry) -> void:
+	print("")
+	print("| Region | Explorer time to 35% / 98% explored (one starter, fresh world) |")
+	print("|---|---|")
+	for rid in ["greenvale"]:
+		var w := SimulationWorld.create_new(reg, 7)
+		var cid: String = w.character_order[0]
+		w.assign_activity(cid, Assignment.create(cid, reg.activities["explore_" + rid]))
+		var t35 := -1.0
+		var t := 0.0
+		while t < 14400.0 and w.exploration.explored_pct(rid) < 0.98:
+			w.advance(60.0, 1.0)
+			t += 60.0
+			if t35 < 0.0 and w.exploration.explored_pct(rid) >= 0.35:
+				t35 = t
+		print("| %s | %s / %s |" % [reg.region_name(rid), OfflineReport.format_duration(t35), OfflineReport.format_duration(t)])
+	print("")
+	print("| Reference member (geared) | Level 10 | 20 | 30 | 40 | 50 | 60 |")
+	print("|---|---|---|---|---|---|---|")
+	var cells0 := []
+	for lv in [10, 20, 30, 40, 50, 60]:
+		var w0 := SimulationWorld.create_new(reg, 7)
+		cells0.append(str(int(ExpeditionState.member_power(_leveled(w0.characters[w0.character_order[0]], lv, w0)))))
+	print("| Power | %s |" % " | ".join(cells0))
+	print("")
+	print("| Expedition | Recommended power | Chance at level 20 | 40 | 60 |")
+	print("|---|---|---|---|---|")
+	for xid in reg.expeditions:
+		var x: Dictionary = reg.expeditions[xid]
+		var cells := []
+		for lv in [20, 40, 60]:
+			var w := SimulationWorld.create_new(reg, 7)
+			var team := []
+			for cid in w.character_order.slice(0, int(x.team_size)):
+				team.append(_leveled(w.characters[cid], lv, w))
+			while team.size() < int(x.team_size):
+				team.append(team[0])
+			cells.append("%d%%" % roundi(w.expeditions.success_chance(w, x, team, true) * 100.0))
+		print("| %s | %d | %s |" % [x.name, int(x.recommended_power), " | ".join(cells)])
+	print("")
+	print("| Dungeon | Party | Result at level 20 | 40 | 60 |")
+	print("|---|---|---|---|---|")
+	for did in reg.dungeons:
+		var d: Dictionary = reg.dungeons[did]
+		var cells := []
+		for lv in [20, 40, 60]:
+			var w := SimulationWorld.create_new(reg, 7)
+			for rid in reg.map_region_order:
+				w._set_region_unlocked(rid)
+			w.storage.add("cooked_trout", 60)
+			w.record_source("cooked_trout", 60, "report")
+			var team := []
+			for cid in w.character_order.slice(0, int(d.party_max)):
+				_leveled(w.characters[cid], lv, w)
+				team.append(cid)
+			var run := DungeonRun.create(w, did, team)
+			while not run.tick(w, 1.0):
+				pass
+			cells.append("%s %s" % [run.result, OfflineReport.format_duration(run.elapsed)])
+		print("| %s | %d | %s |" % [d.name, int(d.party_max), " | ".join(cells)])
+
+
+## Sets every relevant skill and the character level to `lv` and equips the
+## gear tier a player would have at that level (bronze/iron/mithril/adamantite).
+func _leveled(ch: Adventurer, lv: int, w: SimulationWorld = null) -> Adventurer:
+	for s in ["attack", "strength", "defense", "ranged", "magic", "exploration", "mining", "archaeology", "woodcutting", "foraging"]:
+		ch.skills.set_level(s, lv)
+	ch.character_xp = float(ch.registry.character_xp_table.xp_for_level(lv))
+	if w:
+		var tier: String = "adamantite" if lv >= 45 else ("mithril" if lv >= 30 else ("iron" if lv >= 15 else "bronze"))
+		var wood: String = "yew" if lv >= 45 else ("maple" if lv >= 30 else ("willow" if lv >= 15 else "oak"))
+		var staff: String = wood + "_staff" if lv >= 15 else "apprentice_staff"
+		var weapon: String = {"melee": tier + "_sword", "ranged": wood + "_shortbow", "magic": staff}[ch.combat_style()]
+		for it in [weapon, tier + "_helm", tier + "_platebody", tier + "_platelegs", tier + "_gloves", tier + "_boots"]:
+			if w.registry.items.has(it):
+				w.storage.add(it, 1)
+				w.record_source(it, 1, "report")
+				w.equip(ch.id, it)
+	ch.invalidate_stats()
+	ch.health = ch.max_health()
+	return ch
+
