@@ -350,5 +350,5 @@ func load_dict(d: Dictionary) -> void:
 	for k in ["gathered", "deposited", "crafted", "kills"]:
 		if not (stats.get(k) is Dictionary):
 			stats[k] = {}
-	if assignment == null and is_busy() and state != S.INJURED and state != S.RESTING:
+	if assignment == null and is_busy() and state != S.INJURED and state != S.RESTING and state != S.AWAY:
 		state = S.IDLE
