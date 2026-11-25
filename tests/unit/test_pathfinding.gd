@@ -103,5 +103,30 @@ func test_every_node_in_starter_map_is_reachable_from_storage() -> void:
 	var w := new_world()
 	var start := w.pathfinder.adjacent_walkable(w.storage_tile)[0]
 	for nid in w.node_order:
+		if w.region_at(w.nodes[nid].tile) != "greenvale":
+			continue
 		var r := w.pathfinder.find_path_to_adjacent(start, w.nodes[nid].tile)
 		assert_true(r.reachable, "node %s unreachable" % nid)
+
+
+func test_every_node_in_the_world_is_reachable_once_all_regions_are_open() -> void:
+	var w := new_world()
+	for rid in w.registry.map_region_order:
+		w._set_region_unlocked(rid)
+	var start := w.pathfinder.adjacent_walkable(w.storage_tile)[0]
+	for nid in w.node_order:
+		if w.nodes[nid].hidden:
+			continue
+		var r := w.pathfinder.find_path_to_adjacent(start, w.nodes[nid].tile)
+		assert_true(r.reachable, "node %s unreachable" % nid)
+	for sid in w.enemy_order:
+		assert_true(w.pathfinder.find_path_to_adjacent(start, w.enemies[sid].tile).reachable, "enemy %s unreachable" % sid)
+
+
+func test_locked_gates_block_other_regions() -> void:
+	var w := new_world()
+	var start := w.pathfinder.adjacent_walkable(w.storage_tile)[0]
+	var silver: ResourceNodeState = w.nodes["silver_rock_1"]
+	assert_false(w.pathfinder.find_path_to_adjacent(start, silver.tile).reachable, "Irondeep must be sealed while locked")
+	w._set_region_unlocked("irondeep")
+	assert_true(w.pathfinder.find_path_to_adjacent(start, silver.tile).reachable)

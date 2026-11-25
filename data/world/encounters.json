@@ -1,0 +1,95 @@
+{
+ "schema_version": 1,
+ "first_delay_seconds": 300.0,
+ "interval_seconds": [
+  600.0,
+  1500.0
+ ],
+ "max_active": 2,
+ "encounters": [
+  {
+   "id": "treasure_goblin",
+   "name": "Treasure Goblin",
+   "kind": "spawn_enemy",
+   "enemy": "treasure_goblin",
+   "weight": 3,
+   "duration": 600.0,
+   "location_kind": "hunting_ground",
+   "message": "A Treasure Goblin appeared in %s!"
+  },
+  {
+   "id": "bountiful_vein",
+   "name": "Bountiful Harvest",
+   "kind": "bonus_location",
+   "weight": 4,
+   "duration": 900.0,
+   "location_kind": "resource_area",
+   "yield_mult": 2.0,
+   "message": "%s is unusually bountiful: double yields for a while!"
+  },
+  {
+   "id": "travelling_merchant",
+   "name": "Travelling Merchant",
+   "kind": "merchant",
+   "weight": 2,
+   "duration": 1200.0,
+   "location_kind": "village",
+   "message": "A travelling merchant set up shop in %s.",
+   "stock": [
+    {
+     "item": "explorers_compass",
+     "price": {
+      "gems": 120
+     },
+     "qty": 1
+    },
+    {
+     "item": "restoration_draught",
+     "price": {
+      "gold": 400
+     },
+     "qty": 10
+    },
+    {
+     "item": "uncut_ruby",
+     "price": {
+      "gems": 30
+     },
+     "qty": 3
+    },
+    {
+     "item": "expedition_rations",
+     "price": {
+      "gold": 60
+     },
+     "qty": 20
+    }
+   ]
+  },
+  {
+   "id": "monster_surge",
+   "name": "Monster Surge",
+   "kind": "surge",
+   "weight": 2,
+   "duration": 900.0,
+   "location_kind": "hunting_ground",
+   "respawn_mult": 0.33,
+   "gold_mult": 1.5,
+   "message": "Monsters are swarming %s: faster respawns and more gold!"
+  },
+  {
+   "id": "wandering_hero",
+   "name": "Wandering Hero",
+   "kind": "hero",
+   "weight": 1,
+   "duration": 900.0,
+   "location_kind": "resource_area",
+   "rarities": [
+    "rare",
+    "epic"
+   ],
+   "radius": 4,
+   "message": "A wandering adventurer was seen near %s. Send someone to meet them!"
+  }
+ ]
+}

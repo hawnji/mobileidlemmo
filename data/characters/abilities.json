@@ -1,0 +1,75 @@
+{
+ "schema_version": 1,
+ "by_specialty": {
+  "tank": "shield_wall",
+  "warrior": "cleave",
+  "ranger": "volley",
+  "mage": "fireball",
+  "healer": "mend",
+  "assassin": "backstab",
+  "support": "rally"
+ },
+ "abilities": [
+  {
+   "id": "shield_wall",
+   "name": "Shield Wall",
+   "cooldown": 20.0,
+   "kind": "guard",
+   "duration": 6.0,
+   "damage_taken_mult": 0.5,
+   "taunt": true,
+   "description": "Draws enemy attacks and halves damage taken for 6 s."
+  },
+  {
+   "id": "cleave",
+   "name": "Cleave",
+   "cooldown": 12.0,
+   "kind": "strike_all",
+   "damage_mult": 1.0,
+   "description": "Hits every enemy at full damage."
+  },
+  {
+   "id": "volley",
+   "name": "Volley",
+   "cooldown": 14.0,
+   "kind": "multi_strike",
+   "hits": 3,
+   "damage_mult": 0.8,
+   "description": "Three quick shots."
+  },
+  {
+   "id": "fireball",
+   "name": "Fireball",
+   "cooldown": 16.0,
+   "kind": "strike",
+   "damage_mult": 3.0,
+   "description": "A single devastating spell."
+  },
+  {
+   "id": "mend",
+   "name": "Mend",
+   "cooldown": 15.0,
+   "kind": "heal_party",
+   "pct": 0.25,
+   "description": "Heals every ally for 25% of their health."
+  },
+  {
+   "id": "backstab",
+   "name": "Backstab",
+   "cooldown": 10.0,
+   "kind": "strike",
+   "damage_mult": 2.2,
+   "always_hits": true,
+   "description": "A guaranteed critical strike."
+  },
+  {
+   "id": "rally",
+   "name": "Rally",
+   "cooldown": 25.0,
+   "kind": "buff_party",
+   "duration": 8.0,
+   "damage_mult": 1.3,
+   "description": "Allies deal 30% more damage for 8 s."
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "schema_version": 1,
+ "cooldown_seconds": 60.0,
+ "max_kept": 60,
+ "categories": [
+  {
+   "id": "discoveries",
+   "name": "Rare discoveries",
+   "default_enabled": true,
+   "events": [
+    "discovery",
+    "rare_drop",
+    "rare_enemy",
+    "secret_revealed"
+   ]
+  },
+  {
+   "id": "expeditions",
+   "name": "Completed expeditions",
+   "default_enabled": true,
+   "events": [
+    "expedition_completed"
+   ]
+  },
+  {
+   "id": "dungeons",
+   "name": "Dungeons and bosses",
+   "default_enabled": true,
+   "events": [
+    "dungeon_completed"
+   ]
+  },
+  {
+   "id": "crafting",
+   "name": "Completed crafting",
+   "default_enabled": true,
+   "events": [
+    "crafting_finished"
+   ]
+  },
+  {
+   "id": "inventory",
+   "name": "Inventory-full characters",
+   "default_enabled": true,
+   "events": [
+    "storage_full"
+   ]
+  },
+  {
+   "id": "world_events",
+   "name": "World events",
+   "default_enabled": true,
+   "events": [
+    "encounter_started",
+    "region_unlocked"
+   ]
+  },
+  {
+   "id": "quests",
+   "name": "Quests ready to claim",
+   "default_enabled": true,
+   "events": [
+    "quest_ready"
+   ]
+  },
+  {
+   "id": "recruitment",
+   "name": "Recruitment available",
+   "default_enabled": false,
+   "events": [
+    "tokens_ready"
+   ]
+  },
+  {
+   "id": "characters",
+   "name": "Characters joining or injured",
+   "default_enabled": true,
+   "events": [
+    "character_joined",
+    "character_injured"
+   ]
+  },
+  {
+   "id": "guild",
+   "name": "Guild events",
+   "default_enabled": true,
+   "events": [
+    "guild_event"
+   ]
+  }
+ ]
+}

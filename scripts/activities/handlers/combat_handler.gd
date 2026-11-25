@@ -233,9 +233,14 @@ func _on_kill(e: ActivityEngine, ch: Adventurer, target: EnemyState, asg: Assign
 					ch.record("gathered", it, added)
 					loot[it] = int(loot.get(it, 0)) + added
 	var g: Array = target.def.get("gold", [0, 0])
-	var gold := int(round(world.rng.randi_range(int(g[0]), int(g[1])) * float(vdef.get("gold_multiplier", 1.0))))
+	var gold := int(round(world.rng.randi_range(int(g[0]), int(g[1])) * float(vdef.get("gold_multiplier", 1.0)) * world.encounters.gold_multiplier_at(target.tile)))
 	if gold > 0:
 		world.wallet.earn("gold", gold, "loot")
+	var cur: Dictionary = target.def.get("currencies", {})
+	for c in cur:
+		var amt := world.rng.randi_range(int(cur[c][0]), int(cur[c][1]))
+		if amt > 0:
+			world.wallet.earn(String(c), amt, "loot")
 	var hxp := float(reg.get_config("combat.hunting_xp_per_enemy_level", 2.0)) * int(target.def.get("level", 1)) * float(vdef.get("xp_multiplier", 1.0))
 	e.grant_xp(ch, "hunting", hxp)
 	ch.record("kills", target.enemy_id, 1)

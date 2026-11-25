@@ -57,7 +57,7 @@ def save(im, rel):
 
 # ---------------------------------------------------------------- tiles ----
 GRASS = hexrgb("#4f8a3c")
-atlas = Image.new("RGBA", (T * 8, T * 3), (0, 0, 0, 0))
+atlas = Image.new("RGBA", (T * 8, T * 4), (0, 0, 0, 0))
 
 
 def put_tile(im, cx, cy):
@@ -420,7 +420,10 @@ for s in skills:
 
 # ======================================================= Phase 2 content ====
 MAT = {"bronze": "#c08a4a", "iron": "#9aa3ab", "oak": "#a0703a", "willow": "#8a9a52", "apprentice": "#a0703a",
-       "quartz": "#dfe3f5", "pearl": "#efe8f2", "leather": "#8a5a2b"}
+       "quartz": "#dfe3f5", "pearl": "#efe8f2", "leather": "#8a5a2b",
+       # Phase 3
+       "steel": "#7f8a94", "silver": "#d8dde3", "mithril": "#6a8fd0", "adamantite": "#3f8a62", "maple": "#c0884a", "yew": "#6a4a3a",
+       "sapphire": "#3a6ad0", "sunstone": "#f0a030", "deepforge": "#c0502a", "heartwood": "#7a3a2a", "explorers": "#c0a060", "trowel": "#9aa3ab"}
 
 
 def mat_of(item_id):
@@ -435,7 +438,7 @@ def draw_item(d, it):
     m = mat_of(iid)
     dark = shade(m, 0.55)
     if cat == "ore":
-        ore_icon("#7a8590")(d)
+        ore_icon({"coal_ore": "#2a2a2a", "silver_ore": "#d8dde3", "mithril_ore": "#6a8fd0", "adamantite_ore": "#3f8a62"}.get(iid, "#7a8590"))(d)
     elif cat == "bar":
         d.polygon([(4, 20), (10, 12), (28, 12), (22, 20)], fill=shade(m, 1.2), outline=dark)
         d.polygon([(4, 20), (22, 20), (22, 26), (4, 26)], fill=m, outline=dark)
@@ -678,3 +681,132 @@ for cid in ("gold", "gems", "recruitment_tokens"):
          f"assets/ui/icons/{cid}.png")
 
 print("placeholder art generated")
+
+
+# ======================================================= Phase 3 content ====
+# Terrain row 3: gate, dunes, ruin floor, ruin wall, moss, enchanted trees, stone ground.
+atlas = Image.open(ROOT / "assets/environments/tiles/greenvale_tiles.png").convert("RGBA")
+if atlas.size[1] < T * 4:
+    bigger = Image.new("RGBA", (T * 8, T * 4), (0, 0, 0, 0))
+    bigger.paste(atlas, (0, 0))
+    atlas = bigger
+gate = noise_tile(hexrgb("#8a8478"), 0.05)
+d = ImageDraw.Draw(gate)
+d.rectangle([0, 0, 5, T], fill=hexrgb("#5a5550"))
+d.rectangle([T - 6, 0, T, T], fill=hexrgb("#5a5550"))
+d.arc([2, -10, 30, 18], 0, 180, fill=hexrgb("#3a3530"), width=3)
+put_tile(gate, 0, 3)
+dunes = noise_tile(hexrgb("#d8b878"), 0.05, hexrgb("#c09c5a"), 20)
+d = ImageDraw.Draw(dunes)
+for y in (8, 20):
+    d.arc([-8, y - 6, 40, y + 6], 200, 340, fill=hexrgb("#b8955a"))
+put_tile(dunes, 1, 3)
+ruin = noise_tile(hexrgb("#b8a682"), 0.05)
+d = ImageDraw.Draw(ruin)
+for y in range(0, T, 10):
+    d.line([(0, y), (T, y)], fill=hexrgb("#968660"))
+    off = 0 if (y // 10) % 2 == 0 else 8
+    for x in range(off, T, 16):
+        d.line([(x, y), (x, y + 10)], fill=hexrgb("#968660"))
+put_tile(ruin, 2, 3)
+wall = noise_tile(hexrgb("#8a7650"), 0.05)
+d = ImageDraw.Draw(wall)
+for y in range(0, T, 6):
+    d.line([(0, y), (T, y)], fill=hexrgb("#5e5034"))
+d.rectangle([0, 0, T - 1, T - 1], outline=hexrgb("#4a3e26"))
+put_tile(wall, 3, 3)
+moss = noise_tile(hexrgb("#4a7a5a"), 0.07, hexrgb("#8ad0a0"), 14)
+put_tile(moss, 4, 3)
+ench = noise_tile(hexrgb("#2a3a4a"), 0.05)
+d = ImageDraw.Draw(ench)
+for (cx, cy, r) in [(8, 10, 9), (23, 9, 9), (16, 22, 10), (4, 26, 6), (28, 25, 6)]:
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=hexrgb("#3a2a5a"))
+    d.ellipse([cx - r + 3, cy - r + 2, cx, cy - 1], fill=hexrgb("#6a4a9a"))
+put_tile(ench, 5, 3)
+stone = noise_tile(hexrgb("#7d7974"), 0.07, hexrgb("#5d5954"), 30)
+put_tile(stone, 6, 3)
+save(atlas, "assets/environments/tiles/greenvale_tiles.png")
+
+# Resource nodes
+for name, ore in (("coal_rock", "#1e1e1e"), ("silver_rock", "#e8edf3"), ("gem_rock", "#3a6ad0"), ("mithril_rock", "#6a8fd0"),
+                  ("adamantite_rock", "#3f8a62"), ("sunstone_rock", "#f0a030")):
+    save(rock(hexrgb("#6d6864"), hexrgb(ore)), f"assets/resources/nodes/{name}.png")
+for name, leaf, trunk in (("maple_tree", ["#a0461e", "#c0602a", "#e08a3a"], "#6b4a2a"), ("yew_tree", ["#1e3a2a", "#2a4a34", "#3a5a40"], "#4a3020")):
+    im = Image.new("RGBA", (T, 48), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([5, 40, 27, 47], fill=(0, 0, 0, 80))
+    d.rectangle([13, 28, 18, 44], fill=hexrgb(trunk))
+    for (cx, cy, r, i) in [(16, 18, 13, 0), (10, 14, 8, 1), (21, 12, 8, 1), (15, 8, 7, 2)]:
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=hexrgb(leaf[i]))
+    save(im, f"assets/resources/nodes/{name}.png")
+for name, lit in (("glowcap_mushroom", True), ("glowcap_picked", False)):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([4, 24, 28, 31], fill=(0, 0, 0, 60))
+    for (x, h) in ((9, 10), (16, 14), (23, 9)):
+        d.rectangle([x - 1, 27 - h, x + 1, 27], fill=hexrgb("#d8d0b8"))
+        if lit:
+            d.chord([x - 5, 22 - h, x + 5, 32 - h], 180, 360, fill=hexrgb("#60e0d0"))
+    save(im, f"assets/resources/nodes/{name}.png")
+for name, gold in (("dig_site", False), ("royal_dig_site", True), ("dig_site_done", None)):
+    im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([3, 10, 29, 30], fill=hexrgb("#8a6a40"), outline=hexrgb("#5a4020"))
+    if gold is not None:
+        d.ellipse([9, 15, 23, 25], fill=hexrgb("#6a4a28"))
+        d.line([(20, 4), (26, 18)], fill=hexrgb("#7a532e"), width=2)
+        d.polygon([(24, 16), (30, 20), (26, 24)], fill=hexrgb("#9aa3ab"))
+        if gold:
+            d.ellipse([12, 17, 17, 22], fill=hexrgb("#f0c040"))
+    save(im, f"assets/resources/nodes/{name}.png")
+for name, col in (("outpost_depot", "#5a7a3a"),):
+    im = chest.copy()
+    save(im, f"assets/environments/props/{name}.png")
+im = Image.new("RGBA", (T, T), (0, 0, 0, 0))
+d = ImageDraw.Draw(im)
+d.polygon([(4, 30), (8, 10), (16, 4), (24, 10), (28, 30)], fill=hexrgb("#2a2420"), outline=hexrgb("#5a5048"))
+d.rectangle([11, 16, 21, 30], fill=hexrgb("#0a0806"))
+save(im, "assets/environments/props/dungeon_entrance.png")
+
+# Enemies
+enemy("cave_bat", T, lambda d, s: (d.polygon([(2, 12), (12, 16), (16, 12), (20, 16), (30, 12), (24, 22), (16, 20), (8, 22)], fill=hexrgb("#4a3a4a")),
+      d.point([(14, 15), (18, 15)], fill=(240, 60, 60, 255))))
+enemy("rock_golem", 48, lambda d, s: (d.rectangle([12, 14, 36, 38], fill=hexrgb("#7a7470")), d.rectangle([16, 4, 32, 16], fill=hexrgb("#8a8480")),
+      d.rectangle([4, 16, 12, 34], fill=hexrgb("#6a6460")), d.rectangle([36, 16, 44, 34], fill=hexrgb("#6a6460")),
+      d.point([(20, 9), (28, 9)], fill=(120, 200, 255, 255)), d.rectangle([14, 38, 22, 46], fill=hexrgb("#5a5450")), d.rectangle([26, 38, 34, 46], fill=hexrgb("#5a5450"))))
+enemy("stone_troll", 48, lambda d, s: (d.rectangle([14, 18, 34, 38], fill=hexrgb("#6a6a72")), d.ellipse([15, 4, 33, 22], fill=hexrgb("#7a7a82")),
+      d.point([(20, 12), (28, 12)], fill=(250, 220, 60, 255)), d.rectangle([8, 20, 14, 34], fill=hexrgb("#6a6a72")), d.rectangle([34, 20, 40, 34], fill=hexrgb("#6a6a72")),
+      d.rectangle([16, 38, 22, 46], fill=hexrgb("#5a5a62")), d.rectangle([26, 38, 32, 46], fill=hexrgb("#5a5a62"))))
+enemy("enchanted_wolf", T, lambda d, s: (d.ellipse([5, 13, 25, 25], fill=hexrgb("#6a7ab0")), d.polygon([(21, 9), (31, 14), (24, 20)], fill=hexrgb("#8a9ad0")),
+      d.polygon([(22, 9), (24, 4), (26, 10)], fill=hexrgb("#5a6aa0")), d.rectangle([8, 24, 10, 30], fill=hexrgb("#4a5a90")), d.rectangle([19, 24, 21, 30], fill=hexrgb("#4a5a90"))))
+enemy("forest_spirit", T, lambda d, s: (d.ellipse([8, 4, 24, 20], fill=(150, 240, 200, 200)), d.polygon([(8, 14), (24, 14), (20, 30), (16, 24), (12, 30)], fill=(120, 220, 180, 170)),
+      d.point([(13, 11), (19, 11)], fill=(20, 60, 40, 255))))
+enemy("corrupted_treant", 48, lambda d, s: (d.rectangle([18, 16, 30, 44], fill=hexrgb("#4a3020")), d.ellipse([6, 0, 42, 24], fill=hexrgb("#3a2a4a")),
+      d.line([(18, 26), (6, 18)], fill=hexrgb("#4a3020"), width=4), d.line([(30, 26), (42, 18)], fill=hexrgb("#4a3020"), width=4),
+      d.point([(21, 20), (27, 20)], fill=(200, 80, 255, 255))))
+enemy("desert_raider", T, humanoid("#c08a5a"))
+enemy("sand_wyrm", 48, lambda d, s: (d.arc([4, 10, 44, 46], 180, 360, fill=hexrgb("#c09040"), width=10), d.ellipse([32, 18, 46, 30], fill=hexrgb("#d0a050")),
+      d.point([(40, 22)], fill=(200, 30, 30, 255))))
+enemy("ancient_guardian", 48, lambda d, s: (d.rectangle([14, 12, 34, 40], fill=hexrgb("#c0a060")), d.rectangle([17, 2, 31, 14], fill=hexrgb("#d0b070")),
+      d.point([(21, 7), (27, 7)], fill=(60, 220, 255, 255)), d.line([(36, 40), (40, 6)], fill=hexrgb("#8a6a3a"), width=3),
+      d.rectangle([16, 40, 22, 46], fill=hexrgb("#a08050")), d.rectangle([26, 40, 32, 46], fill=hexrgb("#a08050"))))
+enemy("treasure_goblin", T, lambda d, s: (humanoid("#e0c040")(d, s), d.ellipse([20, 14, 30, 26], fill=hexrgb("#8a5a2b")), d.ellipse([22, 16, 26, 20], fill=hexrgb("#f0d050"))))
+enemy("goblin_chieftain", 48, lambda d, s: (d.rectangle([14, 18, 34, 38], fill=hexrgb("#4a7a3a")), d.ellipse([15, 4, 33, 22], fill=hexrgb("#5a8a4a")),
+      d.polygon([(15, 6), (19, 0), (24, 5), (29, 0), (33, 6)], fill=hexrgb("#e0b030")), d.point([(20, 12), (28, 12)], fill=(250, 220, 60, 255)),
+      d.line([(38, 36), (44, 8)], fill=hexrgb("#7a532e"), width=3), d.polygon([(42, 6), (48, 10), (44, 18)], fill=hexrgb("#9aa3ab"))))
+for boss, body, acc in (("deepforge_colossus", "#7a3a2a", "#f08a30"), ("heartrot_ancient", "#3a2a3a", "#b060f0"), ("sand_king", "#c0a060", "#f0d050")):
+    im = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse([8, 54, 56, 63], fill=(0, 0, 0, 90))
+    d.rectangle([18, 20, 46, 54], fill=hexrgb(body))
+    d.ellipse([20, 2, 44, 26], fill=shade(hexrgb(body), 1.2))
+    d.rectangle([6, 22, 18, 46], fill=hexrgb(body))
+    d.rectangle([46, 22, 58, 46], fill=hexrgb(body))
+    d.point([(27, 13), (28, 13), (36, 13), (37, 13)], fill=hexrgb(acc))
+    d.rectangle([22, 30, 42, 36], fill=hexrgb(acc))
+    save(im, f"assets/enemies/{boss}.png")
+
+# Region / map UI icons
+for name, col in (("map", "#3d6fb0"), ("quest", "#c9a030"), ("expedition", "#5a7a3a"), ("bell", "#e0b030"), ("dungeon", "#7a3030")):
+    icon(lambda d, col=col: (d.rounded_rectangle([3, 3, 29, 29], 6, fill=shade(hexrgb(col), 0.7), outline=hexrgb(col), width=2)), f"assets/ui/icons/{name}.png")
+print("phase 3 placeholder art generated")

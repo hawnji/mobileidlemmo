@@ -29,6 +29,9 @@ func validate(e: ActivityEngine, ch: Adventurer, asg: Assignment, act: Dictionar
 		var need: Dictionary = r.requires_building
 		var b := String(need.keys()[0])
 		return "Requires %s level %d" % [e.registry.buildings.get(b, {}).get("name", b), int(need[b])]
+	var rep_gap: String = e.world.quests.recipe_gap(r)
+	if not rep_gap.is_empty():
+		return rep_gap
 	if e.world.nearest_station(ch, String(r.station)).is_empty():
 		return "No %s in this region" % r.station
 	var units := 0
@@ -147,10 +150,13 @@ func complete_craft(e: ActivityEngine, ch: Adventurer, r: Dictionary) -> void:
 			for it in outputs:
 				outputs[it] = int(outputs[it]) * 2
 	# Check space as if inputs were removed.
-	var free_after := ch.inventory.free_units() + (0 if preserved else _input_units(r))
 	var out_units := 0
 	for it in outputs:
 		out_units += int(outputs[it])
+	# A preserve roll on a full pack would block the craft: consume the inputs instead.
+	if preserved and out_units > ch.inventory.free_units():
+		preserved = false
+	var free_after := ch.inventory.free_units() + (0 if preserved else _input_units(r))
 	if out_units > free_after:
 		# Drop the double-craft bonus first; if even one batch cannot fit, stop.
 		if not burnt:
@@ -209,7 +215,15 @@ func restock_batches(e: ActivityEngine, ch: Adventurer, asg: Assignment) -> int:
 	var units := _input_units(r)
 	if units <= 0:
 		return 0
-	var k := int(ch.inventory.free_units() / units)
+	var free := ch.inventory.free_units()
+	# Leave room for one batch of products so preserve and double-craft rolls
+	# can pay out instead of being wasted on a full pack.
+	var skill := String(r.skill)
+	if ch.stat("preserve_chance", skill) > 0.0 or ch.stat("double_craft_chance", skill) > 0.0:
+		free -= _output_units(r)
+	var k := int(maxi(free, 0) / units)
+	if k == 0 and ch.inventory.free_units() >= units:
+		k = 1
 	for it in r.inputs:
 		if e.world.locked_items.has(it):
 			return 0

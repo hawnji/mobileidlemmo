@@ -14,6 +14,9 @@ var charges := 1
 var respawn_seconds := 10.0
 var respawn_remaining := 0.0
 var reserved_by := ""
+## Hidden nodes exist in data but cannot be used or seen until a discovery
+## reveals them (Phase 3).
+var hidden := false
 
 
 static func create(p_id: String, p_type: Dictionary, p_tile: Vector2i) -> ResourceNodeState:
@@ -32,7 +35,7 @@ func is_depleted() -> bool:
 
 
 func is_available_for(character_id: String) -> bool:
-	return not is_depleted() and (reserved_by.is_empty() or reserved_by == character_id)
+	return not hidden and not is_depleted() and (reserved_by.is_empty() or reserved_by == character_id)
 
 
 func reserve(character_id: String) -> bool:

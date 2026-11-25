@@ -48,6 +48,8 @@ var action_elapsed := 0.0
 var target_node_id := ""
 var target_enemy_id := ""
 var target_station_id := ""
+## Generic target key for handlers without a node/enemy/station (exploration).
+var target_key := ""
 var target_tile := Vector2i.ZERO
 var target_adjacent := true
 var wait_remaining := 0.0
@@ -56,6 +58,13 @@ var unreachable_until := {}  # target id -> sim_time
 var status_message := ""
 var attack_timer := 0.0
 var injured_remaining := 0.0
+## Phase 3: "expedition:<id>" / "dungeon:<id>" while off the map.
+var away := ""
+## The current path ends at a navigation waypoint (gate or waystone), not
+## at the real destination: re-plan on arrival.
+var on_waypoint := false
+## Where the current return trip deposits (home storage or an outpost depot).
+var deposit_tile := Vector2i(-1, -1)
 
 ## Lifetime counters (also used to build offline reports).
 var stats := {"gathered": {}, "deposited": {}, "crafted": {}, "kills": {}, "trips": 0, "actions": 0, "interruptions": 0, "damage_dealt": 0, "deaths": 0}
@@ -219,6 +228,10 @@ func is_busy() -> bool:
 	return state != S.IDLE and state != S.COMPLETED
 
 
+func active_ability() -> Dictionary:
+	return registry.ability_for(definition)
+
+
 func record(stat_key: String, item_id: String, qty: int) -> void:
 	var d: Dictionary = stats[stat_key]
 	d[item_id] = int(d.get(item_id, 0)) + qty
@@ -259,6 +272,7 @@ func to_dict() -> Dictionary:
 		"target_node_id": target_node_id,
 		"target_enemy_id": target_enemy_id,
 		"target_station_id": target_station_id,
+		"target_key": target_key,
 		"target_tile": [target_tile.x, target_tile.y],
 		"target_adjacent": target_adjacent,
 		"wait_remaining": wait_remaining,
@@ -266,6 +280,9 @@ func to_dict() -> Dictionary:
 		"status_message": status_message,
 		"attack_timer": attack_timer,
 		"injured_remaining": injured_remaining,
+		"away": away,
+		"on_waypoint": on_waypoint,
+		"deposit_tile": [deposit_tile.x, deposit_tile.y],
 		"stats": stats.duplicate(true),
 	}
 
@@ -316,6 +333,7 @@ func load_dict(d: Dictionary) -> void:
 	target_node_id = String(d.get("target_node_id", ""))
 	target_enemy_id = String(d.get("target_enemy_id", ""))
 	target_station_id = String(d.get("target_station_id", ""))
+	target_key = String(d.get("target_key", ""))
 	target_tile = JsonData.to_vec2i(d.get("target_tile"), Vector2i.ZERO)
 	target_adjacent = bool(d.get("target_adjacent", true))
 	wait_remaining = float(d.get("wait_remaining", 0.0))
@@ -323,6 +341,9 @@ func load_dict(d: Dictionary) -> void:
 	status_message = String(d.get("status_message", ""))
 	attack_timer = maxf(float(d.get("attack_timer", 0.0)), 0.0)
 	injured_remaining = maxf(float(d.get("injured_remaining", 0.0)), 0.0)
+	away = String(d.get("away", ""))
+	on_waypoint = bool(d.get("on_waypoint", false))
+	deposit_tile = JsonData.to_vec2i(d.get("deposit_tile"), Vector2i(-1, -1))
 	var st: Variant = d.get("stats")
 	if st is Dictionary:
 		stats.merge(st, true)

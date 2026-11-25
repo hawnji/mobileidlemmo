@@ -1,0 +1,3401 @@
+{
+ "schema_version": 3,
+ "id": "world",
+ "name": "Worldbound",
+ "description": "The connected world: Greenvale, Irondeep Mountains, Whisperwood and the Ashen Desert.",
+ "width": 128,
+ "height": 96,
+ "rows": [
+  "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "T........................s~~~s..........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "Tfffffffffffffffffff......s~~~s.........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccccccccccccccccc^^^^^^",
+  "Tffffffffffffffffffff.....s~~~s,,.......^^^^^^^cccccccccccccc^^^^^^^ccccccccccccccccccccccccccccccc^cccccccccccccccccccccc^^^^^^",
+  "TfffffTfffffffffTffff...,..s~~~s........^^^^^^^cccccccccccccc^^^^^^^cccc^^^cccccccc^^cccccccccccccc^cccccccccccccccccccccc^^^^^^",
+  "TffffffffTfffffffffff...,..s~~~s.........^^^^^^cccccccccccccc^^^^^^^ccccccccccccccccccccccccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TffTTfTTTfffffTfTffff....,.s~~~s.........^^^^^^cccccccccccccc^^^^^^^cccc^^^^^^^^cc^^^cccccccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TffffffffTffffTfTffff......s~~~s..........^^^^^cccccccccccccc^^^^^^^ccccccccccccccccccccccc^^^cccccccccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TfffTffffffffffffffff......s~~~s...........^^^^cccccccccccccc^^^^^^^ccccccccccccccccccccccccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "Tffffffffffffffffffff......s~~~s....,......^^^^cccccccccccccc^^^^^^^cccccc^^^^^^c^^^ccccccccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "Tffffffffffffffffffff...,..s~~~s,...........^^^cccccccccccccc^^^^^^^c^^^ccccccccccccccccccccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TfffTffffffffffffTff.......s~~~s.............^^^^^ccccc^cccc^^^^^^^^c^^^cccccccccccccc^^^^ccccccccc^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TffTTTTTfffffffffTff...,.,.s~~~s.,............^^^^ccccc^cccc^^^^^^^^ccccccccccccccccccccccccccccccQ^cccc~~~~~~~~~~~~~ccccc^^^^^^",
+  "TffffTffffffTTffffff.......s~~~s.......,.......^^^ccccc^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccc^^^^^^^^^^^^Qcccccccccccccccccccccc^^^^^^",
+  "TfffffTffffffTTfffff.......s~~~s.............,...^^c=c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccc^^^^^^^^^^^^Qcccccccccccccccccccccc^^^^^^",
+  "Tffffffffffffffffff.......s~~~s...................^c=c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccc^^^^^^^^^^^^Qcccccccccccccccccccccc^^^^^^",
+  "TfffffffffffffTffff.......s~~~s.,..................c=c^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccc^^^^^^^^^^^^Q^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "TffffTfffffffffffff.......s~~~s...........,.......,.=..........^^^^^^^^^^^^^^^ppppppcccppppppp^^^^^Q^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "TfffffTffffffTfffff......s~~~s......................=..........^^^^^^^^^^^^^^^pHHHHppppppHHHHp^^^^^Qcccccccccccccccccccccccccc^^",
+  "TfffTTfffffffffffff......s~~~s.,..............,.....=..,.......^^^^^^^^^^^^^^^pHHHHppppppHHHHp^^^^^^cccccccccccccccc^ccccccccc^^",
+  "TffTTTfffffffffffff..,...s~~~s.........,............=..........^^^^^^^^^^^^^^^pHHHHppppppHHHHp^^^^^^ccc^cccccccccccc^c^^^ccccc^^",
+  "TffffTfffffffffffff..,..s~~~s...............=========,.........^^^^^^^^^^^^^^^pppppppppppppppp^^^^^^cccccccccccccccc^^cccccccc^^",
+  "TfffffffffffTTTffff.....s~~~s.......pppppppppppppppp=.,....,...^^kkkkkkkkkkkkkpppppppppppppppp^^^^^^ccccccccccccc^cc^^^ccccccc^^",
+  "TfffffffffTffffffff....s~~~s........pHHHHpppHHHHHpHHH..........^^kkkkkkkkkkkkkppppppppppppppppkkkkkkccccccccccccc^ccc^cccccccc^^",
+  "TfffffffffTTffffffff...s~~~s..,.....pHHHHpppHHHHHpHHH..........^^kkkkkkkkkkkkkppppppppppppppp=======ccccccccccccc^cccccccccccc^^",
+  "TfffffffffTTffffffff...s~~~s........pHHHHpppHHHHHpHHH,.........gg=============ppppppppppppppppkkkkkkcccccccccccccccccccccccccc^^",
+  "Tfffffffffffffffffff,..s~~~s........ppppppppppppppHHH..........^^kkkkkkkkkkkkkppppppppppppppppkkkkkkcccccccccccccc^ccccccccccc^^",
+  "TfffffffffTTffffffff...s~~~s........ppppppppppppppppp..........^^kkkkkkkkkkkkkpppppppppppppppp^^^^^^ccccccccc^^^^c^ccccccccccc^^",
+  "TffffffTTfffTffffffff..s~~~s........ppppppppppppppppp..........^^kkkkkkkkkkkkkpHHHHppppppHHHHp^^^^^^ccccccccccccc^^ccc^ccccccc^^",
+  "TfffffffTfTTff==========bbb==========pppppppppppppppp...,.....,^^^^^^^^^^^^^^^pHHHHppppppHHHHp^^^^^^ccc^ccccccccc^^ccccccccccc^^",
+  "TffffffffTffff==========bbb=========ppppppppppppppppp......,...^^^^^^^^^^^^^^^pHHHHppppppHHHHp^^^^^^ccc^ccccc^^^c^cccccccccccc^^",
+  "Tffffffffffffffffffff..s~~~s........pHHHHppppppppHHHH..........^^^^^^^^^^^^^^^pppppppppppppppp^^^^^^ccc^ccccccccccccccc^cccccc^^",
+  "TfffffffffffffTffffff..s~~~s........pHHHHppppppppHHHH..........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccccccccccccccc^ccc^cccccc^^",
+  "TfffffffffTfTffffffff..s~~~s........pHHHHppHHHHppHHHH.........,^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccccccccc^^^cc^cc^ccc^^",
+  "TfffffffffffTTTffffff...s~~~s.......pHHHHppHHHHppHHHH...,.....,^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ccccccccccccccc^^cc^c^^^cc^^",
+  "TfffffffffTTfffffffff...s~~~s,......pppppppHHHHpppppp.,........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccccc^ccccc^ccccc^ccc^^",
+  "TfffffffffTTffffffff....s~~~s..............=..,....,...........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccccccccccc^ccccc^ccc^^",
+  "TffffffffTfTffffffff.....s~~~s.======......=...................^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccc^cccccccccccccccc^^^cc^^",
+  "TfffffffffffffffTTff.....s~~~s.....wwwwwwww=wwwwwwww......,....^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccc^ccccc^cc^^ccc^ccc^^",
+  "TfffffffffTTffffTfff....,.s~~~s.....xxxxxxxxxxxxxxx....,....,..^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccc^cccc^^^c^^ccc^ccc^^",
+  "TffffTfffffffffTTTT.......s~~~s.....xxxxxxxxxxxxxxx...,........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cccccccc^ccccc^cc^^ccccccc^^",
+  "TfffffffffTTTfffTTf.....,.s~~~s.....xxxxxxxxxxxxxxx.,..........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kkccccccccccccccccccccccc^^",
+  "TffffffffffffffTfff....,..,s~~~s....xxxxxxxxxxxxxxx............^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kk^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "TffffffffffffffffTf........s~~~s....xxxxxxxxxxxxxxx,...........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kk^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "TffffffffffffffTfTf........s~~~s....xxxxxxxxxxxxxxx............^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kk^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "Tffffffffffffffffff........s~~~s.,.wwwwwwwwwwwwwwwww...........^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kk^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "T..........................s~~~s...............................^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^kk=kk^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "TTTTTTTTTTTTTTTTgTTTTTTTTTTT~~~TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^g^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "eeeeeeeeeeeeeeee=eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+  "efffffffffffffff=ffffffffffffffffffffffffffffffffffffffffffefffe^dddddddddddddddddddddddddddddddsddd=dddddddddddddddddddddddddd^",
+  "efffffffefffffff=ffffffffffffffffffffffffffffffffffffffffffffefe^drrrrrrrrrrrrrrrrrrrdddddddddsssssd=ddddddddddsddddddddddddddd^",
+  "efffffffefffffff=fffffffeeeffffffffffffffffffffffffffffffffffffe^srrrrrrrrrrrrrRRRrRRddddddddsssssss=ddddddddsssssddddddddddddd^",
+  "eeeeffmfeffmffff=fffffffffffffffffmffffffffffffffffffffffffffffe^srrrRrrrrrrrrrrrrrrrdddddddddsssssd=dddddddsssssssdddddddddddd^",
+  "effffmmmffmmmfff=ffffffffffffffemmmmmfeefffffffffffffffffffffffe^srrrRrrrrrrrrrrRrrrrdddddddddddsdsd=ddddddddsssssddddddddddddd^",
+  "efffmmmmmfmmffff=ffffffffffffeeeeemffffffffffffffffffffffffffffe^drrrRrrrrrrrrrrRrrrrdddddddddddssss=ddddddddddsddddddddddddddd^",
+  "effffemmfmmmffff=eeefffffffffeeeffffefffffffff=ffffffffffffffffe^drrrrrrrrRRRRrRrrrrrddddddddddsssss=sddddddddsddddsddddddddddd^",
+  "effffemfffmfffff=fffffffffffffffffffefeeffffff=ffffffffffffffffe^drrrrrrrrrrrrrRrrrrrdddddddddddssss=ddddddddsssddsssdddsdddddd^",
+  "effffeffffffffff=feeefffmmmmmmmmmmmmmmmmffffff=ffffffffffffffffe^drrRRRrRrrrrrrRRRRrrdddddddddddddsd=sddddddsssssddsdsssssssddd^",
+  "efffffffffffffff========mHHHmmppppmmmHHHffffff=ffffffffffffffffe^drrrrRrRrrrrrrRrrRr===pppppppppppds=sssdddddsssddddsdddssssddd^",
+  "efffefffffffffffffffffffmHHHmmppppmmmHHHffffff=ffffffffffffffefe^drrrrRRRRRRrrrrrrRrrdpHHHppppHHHpss=ssssdddddsdddddsdddddsdddd^",
+  "effeeeffffffffffffffmfffmHHHmmppppmmmHHHffffff=ffffffffffffffffe^drrrRRrRrrRrrrrrrRRRRpHHHppppHHHpds=ss.dddddddddddsssddddddddd^",
+  "efffeffffffffffffffmmmffmmmmmmmmmmmmmmmmmfffmm=mmffffffffeqeeffe^drrrRRRRrrrrrrrRrrrrdpHHHppppHHHpdd.......dddddddddsdddddddddd^",
+  "effffffffffffffffemmmmmfmmmmmmmm===============mmmfffffffeqeeffe^drrrrRrrrrrRRRRRrrrrsppppppppppppd....~....ddddddddsdddddddddd^",
+  "effffffffffffffeeeeemmffmmmmmmmmmmmmmmmmmfffmmeeefffffeffeqeeffe^drRrrRrrrrrrrrrRRrrrdpppppppppppp...~~~~~...dddddddddddddddddd^",
+  "effffffffffffffffeefmfffmmmmmmmmmmmmmmmmmfffffmffffeeeeeeeqefffe^drRrrrrrrrrrrrrRrrrrdppppppppppp==..~~~~~...dddddddddddddddddd^",
+  "efffffffffffffffffefffffmmmmmmmmmmmmmmmmmfffffffffffffeffeqefffe^dddddddddddddddddddddppppppppppp...~~~~~~~...ddddddddddddddddd^",
+  "efffffffffmfffffffffffffmHHHmmmmmmmmmmmmmfffffffffffeeeeeeqeeffe^dddddddddddddddddddddpppppppppppp...~~~~~...dddddddddddddddddd^",
+  "effffffmmmmmmmfffffffffemHHHmmmmmmmmmmmmmfffffffffffffeffeqeeefe^dddddddddddddddddddddpHHHpppppppp...~~~~~...dddddddddddddddddd^",
+  "effeffmmmm~mmmmfffffffffmHHHmmmmmmmmmmmmmffffffffffffffffeqeeffe^dddddddddddddddddddddpHHHppppppppd....~....ddddddddddddddddddd^",
+  "eeeeeemm~~~~~mmfffffffffmmmmmmmm=mmmmmmmmffffmfffffffffffeqefffe^ddddddddddddddddddsddpHHHppppppppdd.......dddddddddddddddddddd^",
+  "effefmm~~~~~~~===========fffffff=fffffffffmmmmmmmffffffmmeqefffe^dddddddddddddddddsssdppppppppppp=ssddd.ssddddddddddddddddddddd^",
+  "efffffmm~~~~~mmfffffffffffffffff=ffffffffffffmffffffffmmmeqemffe^dddddddddddsddddsssss=ddddddddds=sssssssssdddddddddddsdddddddd^",
+  "efffefmmmm~mmmmfffmfffffmffeeeee=ffffffffffffffffffffffmmeqefffe^ddddddddddsssddddsssd=ddddddddss=ssssdsssddddddddddddsdddddddd^",
+  "efffeffmmmmmmmeeemmmmmfmmmffffef=ffffffffffffffffffffffffeqefffe^dddddddddsssssddddsdd=ddddddddds=sssdddsdsddddddddddsssddddddd^",
+  "efffefffffmfffffffmfffmmmmmffeee=fffffffffffffffeffffffffeqefffe^ddddddddddsssdddddddd=dddddddddd=sdddddsssssdddsdddddsdddddddd^",
+  "efffffffffffffffffffeffmmmffffef=fffffffffffffffeffffffffeqefefe^dddddddddddsddddddddd=dddddddddd=dddddsssssssssssssddsdddddddd^",
+  "efffffff=========================fffffffffffffffeffffffffeqefefe^ddddddddddddddddddddd=dddddddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "efffffff=fffefffffffefffffffffff=fffffffcccccccccccccccccccccefe^ddddddddddddddddddddd=dddddddddd=ddddssrrrrrrrrrrrrrrrrrrrrrrr^",
+  "efffffff=fffffffefffffffffffffff=fffffffcccccccccccccccccccccffe^ddddddddddddddddddddd=dddddddddd=dddsssrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffff=fffffffeffeffffffffffff=fffffffcccccccccccccccccccccffe^ddddddddddddddddddsdd=dsdddddddd=ddddssrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffff=fffffffffffffffffffeeee===============================gg======================ssssdddddd=ddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "effffffe=fffffffffffffeffffffffeeeffffffcccccccccccccccccccccffe^dddddddddds=sdddddsdsssssssddddd=ddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffeeeffffffffefffeeeefffffffefffffffcccccccccccccccccccccffe^ddddddddddd=dddddddddsssssdddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffefeffffffffeeefeeeeeeffffffffffffffccc^^^cccccccccccccccffe^dddkkkkkkkk=k^kkkkkkdddssssddddd=ddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "eeefeeeffffffffffefffefeefffffffffffffffccccccc^^^cccccccccccffe^dddkkkkkkkkk^^^^kkkkdddddsdddddd========rrrrrrrrrrrrrrrrrrrrrr^",
+  "effffeffffffffffffffffeeefffffffffffffffcccccccccccccc^^^ccccffe^dddkkkk^kkk^k^^^^^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffffffffffffffffffffeffffffffffffffffcc^^^ccccccc^^^ccccccffe^dddkkk^^^k^^^kk^^^^kdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "efffffffffffffffffffffffffffffffffffffffcccccccccc^^^cc^^^cccffe^dddkkkk^kk^^^kkkk^kkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffefffffffffffffffffffffmmfffffffffffccccccccccccc^^^cccccffe^dddkkkkkkk^^^kkk^^^kdddddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffeeeffffffffffffffffffffeffffffffffffccccccccc^^^cccccccccffe^dddkkkkkkkk^kkkkk^kkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "effffeeeffffffffffffffffffffefffffffffffcccccccc^^^^^^^^cccccffe^dddkkkkkkk^^^kkkkkkkssssdddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffeffffffffffffffffffffeeeefffffffffcccccccccccccccccccccffe^dddkkkkkkk^^kkkkkkkkdsdddddddddddddddddrrRrrrrRrrrrRrrrrRrrrrr^",
+  "efffffffffffffffffffffffffffefffffffffffcccccccccccccccccccccefe^dddkkkkkk^^^kkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effcfffffffffffffffffffffffffffffffffffffffffffffffffffffffeeeee^dddkkkkkkk^kkkkkkkkkdddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefe^ddddsssddddddddddddddddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrr^",
+  "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+ ],
+ "spawn_tile": [
+  44,
+  30
+ ],
+ "storage": {
+  "id": "village_storage",
+  "name": "Village Storage",
+  "tile": [
+   44,
+   28
+  ]
+ },
+ "regions": [
+  {
+   "id": "greenvale",
+   "name": "Greenvale",
+   "rect": [
+    0,
+    0,
+    64,
+    48
+   ],
+   "level_range": [
+    1,
+    25
+   ],
+   "color": "#6fae4f",
+   "description": "The starting valley: a riverside village, an oak forest and a small copper mine.",
+   "waystone": [
+    44,
+    28
+   ],
+   "unlocked_by_default": true
+  },
+  {
+   "id": "irondeep",
+   "name": "Irondeep Mountains",
+   "rect": [
+    64,
+    0,
+    64,
+    48
+   ],
+   "level_range": [
+    20,
+    55
+   ],
+   "color": "#9aa3ab",
+   "description": "Dwarven halls, silver galleries and an underground lake beneath the peaks.",
+   "outpost": "outpost_irondeep",
+   "unlock": {
+    "conditions": [
+     {
+      "type": "quest",
+      "quest": "mq_02_eastern_pass"
+     },
+     {
+      "type": "skill",
+      "skill": "mining",
+      "level": 20
+     },
+     {
+      "type": "explored",
+      "region": "greenvale",
+      "pct": 0.35
+     }
+    ],
+    "cost": {
+     "gold": 500
+    }
+   },
+   "outpost_depot": [
+    86,
+    24
+   ],
+   "outpost_rect": [
+    84,
+    18,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "whisperwood",
+   "name": "Whisperwood",
+   "rect": [
+    0,
+    48,
+    64,
+    48
+   ],
+   "level_range": [
+    25,
+    60
+   ],
+   "color": "#7a5ab0",
+   "description": "An enchanted forest of ancient trees, spirit glades and mushroom caves.",
+   "outpost": "outpost_whisperwood",
+   "unlock": {
+    "conditions": [
+     {
+      "type": "quest",
+      "quest": "mq_04_whispers"
+     },
+     {
+      "type": "skill",
+      "skill": "woodcutting",
+      "level": 30
+     },
+     {
+      "type": "explored",
+      "region": "greenvale",
+      "pct": 0.5
+     }
+    ],
+    "cost": {
+     "gold": 2000
+    }
+   },
+   "outpost_depot": [
+    32,
+    64
+   ],
+   "outpost_rect": [
+    30,
+    58,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "ashen_desert",
+   "name": "Ashen Desert",
+   "rect": [
+    64,
+    48,
+    64,
+    48
+   ],
+   "level_range": [
+    40,
+    75
+   ],
+   "color": "#d8a85a",
+   "description": "Sand dunes over a buried kingdom: ruins, tombs and rare minerals.",
+   "outpost": "outpost_ashen",
+   "unlock": {
+    "conditions": [
+     {
+      "type": "quest",
+      "quest": "mq_06_into_the_sands"
+     },
+     {
+      "type": "character_level",
+      "level": 30
+     },
+     {
+      "type": "explored",
+      "region": "irondeep",
+      "pct": 0.3
+     }
+    ],
+    "cost": {
+     "gold": 6000
+    }
+   },
+   "outpost_depot": [
+    92,
+    64
+   ],
+   "outpost_rect": [
+    90,
+    59,
+    3,
+    3
+   ]
+  }
+ ],
+ "gates": [
+  {
+   "id": "gate_irondeep",
+   "name": "Eastern Pass",
+   "a": [
+    63,
+    25
+   ],
+   "b": [
+    64,
+    25
+   ],
+   "regions": [
+    "greenvale",
+    "irondeep"
+   ]
+  },
+  {
+   "id": "gate_whisperwood",
+   "name": "Whisperwood Trail",
+   "a": [
+    16,
+    47
+   ],
+   "b": [
+    16,
+    48
+   ],
+   "regions": [
+    "greenvale",
+    "whisperwood"
+   ]
+  },
+  {
+   "id": "gate_ashen_north",
+   "name": "Scorched Stair",
+   "a": [
+    100,
+    47
+   ],
+   "b": [
+    100,
+    48
+   ],
+   "regions": [
+    "irondeep",
+    "ashen_desert"
+   ]
+  },
+  {
+   "id": "gate_ashen_west",
+   "name": "Dune Gate",
+   "a": [
+    63,
+    80
+   ],
+   "b": [
+    64,
+    80
+   ],
+   "regions": [
+    "whisperwood",
+    "ashen_desert"
+   ]
+  }
+ ],
+ "locations": [
+  {
+   "id": "greenvale_hollow",
+   "name": "Greenvale Hollow",
+   "kind": "village",
+   "rect": [
+    35,
+    21,
+    18,
+    16
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_mine",
+   "name": "Greenvale Mine",
+   "kind": "resource_area",
+   "rect": [
+    46,
+    2,
+    15,
+    15
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oakwood_forest",
+   "name": "Oakwood Forest",
+   "kind": "resource_area",
+   "rect": [
+    1,
+    2,
+    21,
+    44
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "greenvale_river",
+   "name": "Greenvale River",
+   "kind": "resource_area",
+   "rect": [
+    24,
+    32,
+    10,
+    14
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "hollow_farms",
+   "name": "Hollow Farms",
+   "kind": "resource_area",
+   "rect": [
+    35,
+    38,
+    17,
+    8
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "upper_river",
+   "name": "Upper River",
+   "kind": "resource_area",
+   "rect": [
+    22,
+    1,
+    12,
+    16
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "willow_bend",
+   "name": "Willow Bend",
+   "kind": "resource_area",
+   "rect": [
+    26,
+    16,
+    8,
+    10
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "east_meadows",
+   "name": "East Meadows",
+   "kind": "hunting_ground",
+   "rect": [
+    56,
+    17,
+    7,
+    20
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "wolf_den",
+   "name": "Wolf Den",
+   "kind": "hunting_ground",
+   "rect": [
+    1,
+    1,
+    11,
+    9
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "goblin_camp",
+   "name": "Goblin Camp",
+   "kind": "hunting_ground",
+   "rect": [
+    53,
+    38,
+    10,
+    9
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "troll_hollow",
+   "name": "Troll Hollow",
+   "kind": "hunting_ground",
+   "rect": [
+    1,
+    39,
+    9,
+    8
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "irondeep_hold",
+   "name": "Irondeep Hold",
+   "kind": "village",
+   "rect": [
+    77,
+    16,
+    18,
+    17
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "silver_galleries",
+   "name": "Silver Galleries",
+   "kind": "resource_area",
+   "rect": [
+    67,
+    2,
+    33,
+    12
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "underground_lake",
+   "name": "Underground Lake",
+   "kind": "resource_area",
+   "rect": [
+    100,
+    1,
+    22,
+    16
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "deep_tunnels",
+   "name": "Deep Tunnels",
+   "kind": "resource_area",
+   "rect": [
+    100,
+    17,
+    26,
+    13
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "golem_halls",
+   "name": "Golem Halls",
+   "kind": "hunting_ground",
+   "rect": [
+    100,
+    30,
+    26,
+    12
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "bat_roost",
+   "name": "Bat Roost",
+   "kind": "hunting_ground",
+   "rect": [
+    67,
+    2,
+    16,
+    12
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "druid_grove",
+   "name": "Druid Grove",
+   "kind": "village",
+   "rect": [
+    23,
+    56,
+    19,
+    15
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_grove",
+   "name": "Maple Grove",
+   "kind": "resource_area",
+   "rect": [
+    40,
+    49,
+    22,
+    12
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "moonwell",
+   "name": "Moonwell",
+   "kind": "resource_area",
+   "rect": [
+    4,
+    65,
+    13,
+    11
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "mushroom_caves",
+   "name": "Mushroom Caves",
+   "kind": "resource_area",
+   "rect": [
+    40,
+    77,
+    22,
+    17
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_thicket",
+   "name": "Yew Thicket",
+   "kind": "resource_area",
+   "rect": [
+    2,
+    79,
+    26,
+    16
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "spirit_glades",
+   "name": "Spirit Glades",
+   "kind": "hunting_ground",
+   "rect": [
+    2,
+    49,
+    20,
+    14
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "wolfsong_ridge",
+   "name": "Wolfsong Ridge",
+   "kind": "hunting_ground",
+   "rect": [
+    42,
+    63,
+    14,
+    13
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "rotting_heart",
+   "name": "Rotting Heart",
+   "kind": "hunting_ground",
+   "rect": [
+    2,
+    84,
+    24,
+    11
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "sunwell_oasis",
+   "name": "Sunwell Oasis",
+   "kind": "village",
+   "rect": [
+    85,
+    57,
+    26,
+    15
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "old_ruins",
+   "name": "Old Ruins",
+   "kind": "resource_area",
+   "rect": [
+    65,
+    49,
+    21,
+    17
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "red_mesa",
+   "name": "Red Mesa",
+   "kind": "resource_area",
+   "rect": [
+    67,
+    82,
+    19,
+    13
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "buried_city",
+   "name": "Buried City",
+   "kind": "resource_area",
+   "rect": [
+    103,
+    75,
+    24,
+    20
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "raider_camp",
+   "name": "Raider Camp",
+   "kind": "hunting_ground",
+   "rect": [
+    65,
+    66,
+    20,
+    13
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "wyrm_dunes",
+   "name": "Wyrm Dunes",
+   "kind": "hunting_ground",
+   "rect": [
+    108,
+    49,
+    19,
+    24
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "guardian_court",
+   "name": "Guardian Court",
+   "kind": "hunting_ground",
+   "rect": [
+    103,
+    75,
+    24,
+    20
+   ],
+   "region": "ashen_desert"
+  }
+ ],
+ "resource_nodes": [
+  {
+   "id": "copper_rock_1",
+   "type": "copper_rock",
+   "tile": [
+    48,
+    5
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_rock_2",
+   "type": "copper_rock",
+   "tile": [
+    51,
+    4
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_rock_3",
+   "type": "copper_rock",
+   "tile": [
+    55,
+    5
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_rock_4",
+   "type": "copper_rock",
+   "tile": [
+    58,
+    8
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_rock_5",
+   "type": "copper_rock",
+   "tile": [
+    49,
+    9
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "copper_rock_6",
+   "type": "copper_rock",
+   "tile": [
+    57,
+    11
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "tin_rock_1",
+   "type": "tin_rock",
+   "tile": [
+    53,
+    7
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "tin_rock_2",
+   "type": "tin_rock",
+   "tile": [
+    59,
+    4
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "tin_rock_3",
+   "type": "tin_rock",
+   "tile": [
+    47,
+    7
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "iron_rock_1",
+   "type": "iron_rock",
+   "tile": [
+    56,
+    12
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "iron_rock_2",
+   "type": "iron_rock",
+   "tile": [
+    59,
+    12
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "iron_rock_3",
+   "type": "iron_rock",
+   "tile": [
+    60,
+    9
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_1",
+   "type": "oak_tree",
+   "tile": [
+    17,
+    25
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_2",
+   "type": "oak_tree",
+   "tile": [
+    8,
+    18
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_3",
+   "type": "oak_tree",
+   "tile": [
+    18,
+    38
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_4",
+   "type": "oak_tree",
+   "tile": [
+    12,
+    27
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_5",
+   "type": "oak_tree",
+   "tile": [
+    17,
+    33
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_6",
+   "type": "oak_tree",
+   "tile": [
+    12,
+    37
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_7",
+   "type": "oak_tree",
+   "tile": [
+    10,
+    10
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_8",
+   "type": "oak_tree",
+   "tile": [
+    13,
+    32
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_9",
+   "type": "oak_tree",
+   "tile": [
+    9,
+    14
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_10",
+   "type": "oak_tree",
+   "tile": [
+    7,
+    31
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_11",
+   "type": "oak_tree",
+   "tile": [
+    18,
+    22
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "oak_tree_12",
+   "type": "oak_tree",
+   "tile": [
+    5,
+    39
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_1",
+   "type": "herb_bush",
+   "tile": [
+    12,
+    12
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_2",
+   "type": "herb_bush",
+   "tile": [
+    4,
+    27
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_3",
+   "type": "herb_bush",
+   "tile": [
+    6,
+    16
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_4",
+   "type": "herb_bush",
+   "tile": [
+    10,
+    16
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_5",
+   "type": "herb_bush",
+   "tile": [
+    16,
+    31
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_6",
+   "type": "herb_bush",
+   "tile": [
+    6,
+    37
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_7",
+   "type": "herb_bush",
+   "tile": [
+    4,
+    35
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "herb_bush_8",
+   "type": "herb_bush",
+   "tile": [
+    3,
+    14
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "minnow_spot_1",
+   "type": "minnow_spot",
+   "tile": [
+    27,
+    34
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "minnow_spot_2",
+   "type": "minnow_spot",
+   "tile": [
+    28,
+    37
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "minnow_spot_3",
+   "type": "minnow_spot",
+   "tile": [
+    29,
+    40
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "minnow_spot_4",
+   "type": "minnow_spot",
+   "tile": [
+    30,
+    43
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "trout_spot_1",
+   "type": "trout_spot",
+   "tile": [
+    30,
+    4
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "trout_spot_2",
+   "type": "trout_spot",
+   "tile": [
+    30,
+    8
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "trout_spot_3",
+   "type": "trout_spot",
+   "tile": [
+    30,
+    12
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "willow_tree_1",
+   "type": "willow_tree",
+   "tile": [
+    29,
+    18
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "willow_tree_2",
+   "type": "willow_tree",
+   "tile": [
+    28,
+    21
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "willow_tree_3",
+   "type": "willow_tree",
+   "tile": [
+    27,
+    24
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "potato_patch_1",
+   "type": "potato_patch",
+   "tile": [
+    38,
+    40
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "potato_patch_2",
+   "type": "potato_patch",
+   "tile": [
+    41,
+    40
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "potato_patch_3",
+   "type": "potato_patch",
+   "tile": [
+    44,
+    40
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "potato_patch_4",
+   "type": "potato_patch",
+   "tile": [
+    47,
+    40
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "marrentill_patch_1",
+   "type": "marrentill_patch",
+   "tile": [
+    38,
+    43
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "marrentill_patch_2",
+   "type": "marrentill_patch",
+   "tile": [
+    42,
+    43
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "marrentill_patch_3",
+   "type": "marrentill_patch",
+   "tile": [
+    46,
+    43
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "silver_rock_1",
+   "type": "silver_rock",
+   "tile": [
+    96,
+    6
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "silver_rock_2",
+   "type": "silver_rock",
+   "tile": [
+    88,
+    5
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "silver_rock_3",
+   "type": "silver_rock",
+   "tile": [
+    95,
+    9
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "silver_rock_4",
+   "type": "silver_rock",
+   "tile": [
+    97,
+    11
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "silver_rock_5",
+   "type": "silver_rock",
+   "tile": [
+    88,
+    8
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_1",
+   "type": "coal_rock",
+   "tile": [
+    82,
+    7
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_2",
+   "type": "coal_rock",
+   "tile": [
+    74,
+    7
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_3",
+   "type": "coal_rock",
+   "tile": [
+    83,
+    10
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_4",
+   "type": "coal_rock",
+   "tile": [
+    73,
+    11
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_5",
+   "type": "coal_rock",
+   "tile": [
+    76,
+    8
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_6",
+   "type": "coal_rock",
+   "tile": [
+    81,
+    4
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_1",
+   "type": "cave_eel_spot",
+   "tile": [
+    104,
+    6
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_2",
+   "type": "cave_eel_spot",
+   "tile": [
+    104,
+    10
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_3",
+   "type": "cave_eel_spot",
+   "tile": [
+    110,
+    12
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_4",
+   "type": "cave_eel_spot",
+   "tile": [
+    116,
+    7
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_5",
+   "type": "cave_eel_spot",
+   "tile": [
+    116,
+    11
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_eel_spot_6",
+   "type": "cave_eel_spot",
+   "tile": [
+    110,
+    5
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "mithril_rock_1",
+   "type": "mithril_rock",
+   "tile": [
+    112,
+    24
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "mithril_rock_2",
+   "type": "mithril_rock",
+   "tile": [
+    122,
+    24
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "mithril_rock_3",
+   "type": "mithril_rock",
+   "tile": [
+    108,
+    22
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "mithril_rock_4",
+   "type": "mithril_rock",
+   "tile": [
+    107,
+    18
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "mithril_rock_5",
+   "type": "mithril_rock",
+   "tile": [
+    104,
+    23
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "gem_rock_1",
+   "type": "gem_rock",
+   "tile": [
+    117,
+    26
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "gem_rock_2",
+   "type": "gem_rock",
+   "tile": [
+    115,
+    20
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "gem_rock_3",
+   "type": "gem_rock",
+   "tile": [
+    124,
+    21
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_7",
+   "type": "coal_rock",
+   "tile": [
+    119,
+    28
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_8",
+   "type": "coal_rock",
+   "tile": [
+    111,
+    28
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "coal_rock_9",
+   "type": "coal_rock",
+   "tile": [
+    112,
+    18
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "gem_rock_4",
+   "type": "gem_rock",
+   "tile": [
+    92,
+    4
+   ],
+   "region": "irondeep",
+   "hidden": true
+  },
+  {
+   "id": "maple_tree_1",
+   "type": "maple_tree",
+   "tile": [
+    47,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_2",
+   "type": "maple_tree",
+   "tile": [
+    50,
+    57
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_3",
+   "type": "maple_tree",
+   "tile": [
+    41,
+    56
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_4",
+   "type": "maple_tree",
+   "tile": [
+    47,
+    50
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_5",
+   "type": "maple_tree",
+   "tile": [
+    54,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_6",
+   "type": "maple_tree",
+   "tile": [
+    54,
+    60
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_7",
+   "type": "maple_tree",
+   "tile": [
+    48,
+    59
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "maple_tree_8",
+   "type": "maple_tree",
+   "tile": [
+    52,
+    50
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_tree_1",
+   "type": "yew_tree",
+   "tile": [
+    17,
+    87
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_tree_2",
+   "type": "yew_tree",
+   "tile": [
+    11,
+    82
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_tree_3",
+   "type": "yew_tree",
+   "tile": [
+    19,
+    80
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_tree_4",
+   "type": "yew_tree",
+   "tile": [
+    14,
+    83
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "yew_tree_5",
+   "type": "yew_tree",
+   "tile": [
+    10,
+    88
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "moonfish_spot_1",
+   "type": "moonfish_spot",
+   "tile": [
+    8,
+    70
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "moonfish_spot_2",
+   "type": "moonfish_spot",
+   "tile": [
+    12,
+    70
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "moonfish_spot_3",
+   "type": "moonfish_spot",
+   "tile": [
+    10,
+    69
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "glowcap_mushroom_1",
+   "type": "glowcap_mushroom",
+   "tile": [
+    44,
+    91
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "glowcap_mushroom_2",
+   "type": "glowcap_mushroom",
+   "tile": [
+    51,
+    82
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "glowcap_mushroom_3",
+   "type": "glowcap_mushroom",
+   "tile": [
+    49,
+    81
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "glowcap_mushroom_4",
+   "type": "glowcap_mushroom",
+   "tile": [
+    42,
+    79
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "glowcap_mushroom_5",
+   "type": "glowcap_mushroom",
+   "tile": [
+    48,
+    87
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_1",
+   "type": "ranarr_patch",
+   "tile": [
+    34,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_2",
+   "type": "ranarr_patch",
+   "tile": [
+    29,
+    62
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_3",
+   "type": "ranarr_patch",
+   "tile": [
+    8,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_4",
+   "type": "ranarr_patch",
+   "tile": [
+    6,
+    71
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_5",
+   "type": "ranarr_patch",
+   "tile": [
+    4,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "ranarr_patch_6",
+   "type": "ranarr_patch",
+   "tile": [
+    29,
+    57
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "dig_site_1",
+   "type": "dig_site",
+   "tile": [
+    83,
+    54
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "dig_site_2",
+   "type": "dig_site",
+   "tile": [
+    70,
+    51
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "dig_site_3",
+   "type": "dig_site",
+   "tile": [
+    75,
+    58
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "dig_site_4",
+   "type": "dig_site",
+   "tile": [
+    77,
+    57
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "dig_site_5",
+   "type": "dig_site",
+   "tile": [
+    76,
+    51
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "dig_site_6",
+   "type": "dig_site",
+   "tile": [
+    79,
+    53
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "buried_cache_1",
+   "type": "buried_cache",
+   "tile": [
+    117,
+    85
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "buried_cache_2",
+   "type": "buried_cache",
+   "tile": [
+    112,
+    82
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "buried_cache_3",
+   "type": "buried_cache",
+   "tile": [
+    120,
+    76
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "buried_cache_4",
+   "type": "buried_cache",
+   "tile": [
+    111,
+    77
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "royal_dig_site_1",
+   "type": "royal_dig_site",
+   "tile": [
+    108,
+    93
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "royal_dig_site_2",
+   "type": "royal_dig_site",
+   "tile": [
+    123,
+    92
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "royal_dig_site_3",
+   "type": "royal_dig_site",
+   "tile": [
+    114,
+    88
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "adamantite_rock_1",
+   "type": "adamantite_rock",
+   "tile": [
+    78,
+    91
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "adamantite_rock_2",
+   "type": "adamantite_rock",
+   "tile": [
+    69,
+    87
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "adamantite_rock_3",
+   "type": "adamantite_rock",
+   "tile": [
+    81,
+    92
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "adamantite_rock_4",
+   "type": "adamantite_rock",
+   "tile": [
+    82,
+    90
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sunstone_rock_1",
+   "type": "sunstone_rock",
+   "tile": [
+    71,
+    90
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sunstone_rock_2",
+   "type": "sunstone_rock",
+   "tile": [
+    74,
+    87
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "oasis_carp_spot_1",
+   "type": "oasis_carp_spot",
+   "tile": [
+    100,
+    65
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "oasis_carp_spot_2",
+   "type": "oasis_carp_spot",
+   "tile": [
+    106,
+    65
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "oasis_carp_spot_3",
+   "type": "oasis_carp_spot",
+   "tile": [
+    103,
+    62
+   ],
+   "region": "ashen_desert"
+  }
+ ],
+ "stations": [
+  {
+   "id": "furnace_1",
+   "type": "furnace",
+   "name": "Furnace",
+   "tile": [
+    37,
+    28
+   ]
+  },
+  {
+   "id": "anvil_1",
+   "type": "anvil",
+   "name": "Anvil",
+   "tile": [
+    39,
+    28
+   ]
+  },
+  {
+   "id": "workbench_1",
+   "type": "workbench",
+   "name": "Workbench",
+   "tile": [
+    48,
+    28
+   ]
+  },
+  {
+   "id": "range_1",
+   "type": "range",
+   "name": "Cooking Range",
+   "tile": [
+    50,
+    28
+   ]
+  },
+  {
+   "id": "alchemy_table_1",
+   "type": "alchemy_table",
+   "name": "Alchemy Table",
+   "tile": [
+    52,
+    30
+   ]
+  },
+  {
+   "id": "furnace_irondeep",
+   "type": "furnace",
+   "name": "Dwarven Furnace",
+   "tile": [
+    80,
+    24
+   ],
+   "outpost": "outpost_irondeep"
+  },
+  {
+   "id": "anvil_irondeep",
+   "type": "anvil",
+   "name": "Dwarven Anvil",
+   "tile": [
+    82,
+    24
+   ],
+   "outpost": "outpost_irondeep"
+  },
+  {
+   "id": "range_whisperwood",
+   "type": "range",
+   "name": "Druid Hearth",
+   "tile": [
+    28,
+    64
+   ],
+   "outpost": "outpost_whisperwood"
+  },
+  {
+   "id": "alchemy_whisperwood",
+   "type": "alchemy_table",
+   "name": "Druid Still",
+   "tile": [
+    36,
+    64
+   ],
+   "outpost": "outpost_whisperwood"
+  },
+  {
+   "id": "workbench_ashen",
+   "type": "workbench",
+   "name": "Oasis Workbench",
+   "tile": [
+    88,
+    64
+   ],
+   "outpost": "outpost_ashen"
+  },
+  {
+   "id": "furnace_ashen",
+   "type": "furnace",
+   "name": "Sun Furnace",
+   "tile": [
+    95,
+    64
+   ],
+   "outpost": "outpost_ashen"
+  }
+ ],
+ "enemy_spawns": [
+  {
+   "id": "slime_1",
+   "enemy": "slime",
+   "tile": [
+    58,
+    19
+   ]
+  },
+  {
+   "id": "slime_2",
+   "enemy": "slime",
+   "tile": [
+    61,
+    22
+   ]
+  },
+  {
+   "id": "slime_3",
+   "enemy": "slime",
+   "tile": [
+    58,
+    26
+   ]
+  },
+  {
+   "id": "slime_4",
+   "enemy": "slime",
+   "tile": [
+    60,
+    30
+   ]
+  },
+  {
+   "id": "giant_rat_1",
+   "enemy": "giant_rat",
+   "tile": [
+    60,
+    18
+   ]
+  },
+  {
+   "id": "giant_rat_2",
+   "enemy": "giant_rat",
+   "tile": [
+    57,
+    23
+   ]
+  },
+  {
+   "id": "giant_rat_3",
+   "enemy": "giant_rat",
+   "tile": [
+    61,
+    27
+   ]
+  },
+  {
+   "id": "giant_rat_4",
+   "enemy": "giant_rat",
+   "tile": [
+    58,
+    33
+   ]
+  },
+  {
+   "id": "wolf_1",
+   "enemy": "wolf",
+   "tile": [
+    4,
+    4
+   ]
+  },
+  {
+   "id": "wolf_2",
+   "enemy": "wolf",
+   "tile": [
+    7,
+    5
+   ]
+  },
+  {
+   "id": "wolf_3",
+   "enemy": "wolf",
+   "tile": [
+    5,
+    7
+   ]
+  },
+  {
+   "id": "wolf_4",
+   "enemy": "wolf",
+   "tile": [
+    9,
+    3
+   ]
+  },
+  {
+   "id": "goblin_1",
+   "enemy": "goblin",
+   "tile": [
+    55,
+    41
+   ]
+  },
+  {
+   "id": "goblin_2",
+   "enemy": "goblin",
+   "tile": [
+    58,
+    40
+   ]
+  },
+  {
+   "id": "goblin_3",
+   "enemy": "goblin",
+   "tile": [
+    60,
+    43
+   ]
+  },
+  {
+   "id": "goblin_archer_1",
+   "enemy": "goblin_archer",
+   "tile": [
+    57,
+    44
+   ]
+  },
+  {
+   "id": "goblin_archer_2",
+   "enemy": "goblin_archer",
+   "tile": [
+    61,
+    41
+   ]
+  },
+  {
+   "id": "goblin_warrior_1",
+   "enemy": "goblin_warrior",
+   "tile": [
+    59,
+    45
+   ]
+  },
+  {
+   "id": "forest_troll_1",
+   "enemy": "forest_troll",
+   "tile": [
+    5,
+    43
+   ]
+  },
+  {
+   "id": "cave_bat_1",
+   "enemy": "cave_bat",
+   "tile": [
+    76,
+    4
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_bat_2",
+   "enemy": "cave_bat",
+   "tile": [
+    80,
+    8
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_bat_3",
+   "enemy": "cave_bat",
+   "tile": [
+    70,
+    4
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_bat_4",
+   "enemy": "cave_bat",
+   "tile": [
+    69,
+    9
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "cave_bat_5",
+   "enemy": "cave_bat",
+   "tile": [
+    79,
+    11
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "rock_golem_1",
+   "enemy": "rock_golem",
+   "tile": [
+    111,
+    39
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "rock_golem_2",
+   "enemy": "rock_golem",
+   "tile": [
+    104,
+    40
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "rock_golem_3",
+   "enemy": "rock_golem",
+   "tile": [
+    117,
+    32
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "rock_golem_4",
+   "enemy": "rock_golem",
+   "tile": [
+    104,
+    33
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "rock_golem_5",
+   "enemy": "rock_golem",
+   "tile": [
+    112,
+    35
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "stone_troll_1",
+   "enemy": "stone_troll",
+   "tile": [
+    124,
+    37
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "stone_troll_2",
+   "enemy": "stone_troll",
+   "tile": [
+    108,
+    32
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "stone_troll_3",
+   "enemy": "stone_troll",
+   "tile": [
+    119,
+    35
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "forest_spirit_1",
+   "enemy": "forest_spirit",
+   "tile": [
+    12,
+    54
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "forest_spirit_2",
+   "enemy": "forest_spirit",
+   "tile": [
+    11,
+    62
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "forest_spirit_3",
+   "enemy": "forest_spirit",
+   "tile": [
+    7,
+    57
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "forest_spirit_4",
+   "enemy": "forest_spirit",
+   "tile": [
+    15,
+    56
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "enchanted_wolf_1",
+   "enemy": "enchanted_wolf",
+   "tile": [
+    51,
+    72
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "enchanted_wolf_2",
+   "enemy": "enchanted_wolf",
+   "tile": [
+    44,
+    73
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "enchanted_wolf_3",
+   "enemy": "enchanted_wolf",
+   "tile": [
+    55,
+    71
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "enchanted_wolf_4",
+   "enemy": "enchanted_wolf",
+   "tile": [
+    53,
+    75
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "enchanted_wolf_5",
+   "enemy": "enchanted_wolf",
+   "tile": [
+    50,
+    66
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "corrupted_treant_1",
+   "enemy": "corrupted_treant",
+   "tile": [
+    23,
+    90
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "corrupted_treant_2",
+   "enemy": "corrupted_treant",
+   "tile": [
+    22,
+    93
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "corrupted_treant_3",
+   "enemy": "corrupted_treant",
+   "tile": [
+    19,
+    90
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "desert_raider_1",
+   "enemy": "desert_raider",
+   "tile": [
+    75,
+    68
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "desert_raider_2",
+   "enemy": "desert_raider",
+   "tile": [
+    76,
+    72
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "desert_raider_3",
+   "enemy": "desert_raider",
+   "tile": [
+    71,
+    73
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "desert_raider_4",
+   "enemy": "desert_raider",
+   "tile": [
+    66,
+    67
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "desert_raider_5",
+   "enemy": "desert_raider",
+   "tile": [
+    73,
+    70
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sand_wyrm_1",
+   "enemy": "sand_wyrm",
+   "tile": [
+    124,
+    62
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sand_wyrm_2",
+   "enemy": "sand_wyrm",
+   "tile": [
+    120,
+    52
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sand_wyrm_3",
+   "enemy": "sand_wyrm",
+   "tile": [
+    111,
+    53
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "sand_wyrm_4",
+   "enemy": "sand_wyrm",
+   "tile": [
+    125,
+    58
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "ancient_guardian_1",
+   "enemy": "ancient_guardian",
+   "tile": [
+    120,
+    81
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "ancient_guardian_2",
+   "enemy": "ancient_guardian",
+   "tile": [
+    108,
+    81
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "ancient_guardian_3",
+   "enemy": "ancient_guardian",
+   "tile": [
+    109,
+    85
+   ],
+   "region": "ashen_desert"
+  },
+  {
+   "id": "ancient_guardian_4",
+   "enemy": "ancient_guardian",
+   "tile": [
+    106,
+    77
+   ],
+   "region": "ashen_desert"
+  }
+ ],
+ "building_plots": [
+  {
+   "building": "town_hall",
+   "rect": [
+    37,
+    23,
+    4,
+    3
+   ],
+   "work_tile": [
+    38,
+    26
+   ]
+  },
+  {
+   "building": "bank",
+   "rect": [
+    44,
+    23,
+    5,
+    3
+   ],
+   "work_tile": [
+    46,
+    26
+   ]
+  },
+  {
+   "building": "tavern",
+   "rect": [
+    50,
+    23,
+    3,
+    4
+   ],
+   "work_tile": [
+    49,
+    25
+   ]
+  },
+  {
+   "building": "blacksmith",
+   "rect": [
+    37,
+    31,
+    4,
+    4
+   ],
+   "work_tile": [
+    38,
+    30
+   ]
+  },
+  {
+   "building": "workshop",
+   "rect": [
+    49,
+    31,
+    4,
+    4
+   ],
+   "work_tile": [
+    50,
+    30
+   ]
+  },
+  {
+   "building": "academy",
+   "rect": [
+    43,
+    33,
+    4,
+    3
+   ],
+   "work_tile": [
+    44,
+    32
+   ]
+  },
+  {
+   "building": "farm",
+   "rect": [
+    36,
+    39,
+    15,
+    6
+   ],
+   "work_tile": [
+    41,
+    37
+   ]
+  },
+  {
+   "building": "housing",
+   "rect": [
+    54,
+    23,
+    2,
+    2
+   ],
+   "work_tile": [
+    54,
+    25
+   ]
+  },
+  {
+   "building": "marketplace",
+   "rect": [
+    54,
+    27,
+    2,
+    2
+   ],
+   "work_tile": [
+    54,
+    29
+   ]
+  },
+  {
+   "building": "barracks",
+   "rect": [
+    54,
+    31,
+    2,
+    2
+   ],
+   "work_tile": [
+    54,
+    33
+   ]
+  },
+  {
+   "building": "guild_hall",
+   "rect": [
+    33,
+    23,
+    2,
+    2
+   ],
+   "work_tile": [
+    34,
+    25
+   ]
+  },
+  {
+   "building": "expedition_center",
+   "rect": [
+    33,
+    32,
+    2,
+    2
+   ],
+   "work_tile": [
+    34,
+    34
+   ]
+  },
+  {
+   "building": "outpost_irondeep",
+   "rect": [
+    84,
+    18,
+    4,
+    3
+   ],
+   "work_tile": [
+    85,
+    21
+   ]
+  },
+  {
+   "building": "outpost_whisperwood",
+   "rect": [
+    30,
+    58,
+    4,
+    3
+   ],
+   "work_tile": [
+    31,
+    61
+   ]
+  },
+  {
+   "building": "outpost_ashen",
+   "rect": [
+    90,
+    59,
+    3,
+    3
+   ],
+   "work_tile": [
+    91,
+    62
+   ]
+  }
+ ],
+ "outposts": [
+  {
+   "building": "outpost_irondeep",
+   "rect": [
+    84,
+    18,
+    4,
+    3
+   ],
+   "work_tile": [
+    85,
+    21
+   ],
+   "depot_tile": [
+    86,
+    24
+   ],
+   "stations": [
+    {
+     "id": "furnace_irondeep",
+     "type": "furnace",
+     "name": "Dwarven Furnace",
+     "tile": [
+      80,
+      24
+     ]
+    },
+    {
+     "id": "anvil_irondeep",
+     "type": "anvil",
+     "name": "Dwarven Anvil",
+     "tile": [
+      82,
+      24
+     ]
+    }
+   ]
+  },
+  {
+   "building": "outpost_whisperwood",
+   "rect": [
+    30,
+    58,
+    4,
+    3
+   ],
+   "work_tile": [
+    31,
+    61
+   ],
+   "depot_tile": [
+    32,
+    64
+   ],
+   "stations": [
+    {
+     "id": "range_whisperwood",
+     "type": "range",
+     "name": "Druid Hearth",
+     "tile": [
+      28,
+      64
+     ]
+    },
+    {
+     "id": "alchemy_whisperwood",
+     "type": "alchemy_table",
+     "name": "Druid Still",
+     "tile": [
+      36,
+      64
+     ]
+    }
+   ]
+  },
+  {
+   "building": "outpost_ashen",
+   "rect": [
+    90,
+    59,
+    3,
+    3
+   ],
+   "work_tile": [
+    91,
+    62
+   ],
+   "depot_tile": [
+    92,
+    64
+   ],
+   "stations": [
+    {
+     "id": "workbench_ashen",
+     "type": "workbench",
+     "name": "Oasis Workbench",
+     "tile": [
+      88,
+      64
+     ]
+    },
+    {
+     "id": "furnace_ashen",
+     "type": "furnace",
+     "name": "Sun Furnace",
+     "tile": [
+      95,
+      64
+     ]
+    }
+   ]
+  }
+ ],
+ "dungeon_entrances": [
+  {
+   "id": "goblin_warren",
+   "tile": [
+    58,
+    46
+   ],
+   "region": "greenvale"
+  },
+  {
+   "id": "deepforge_vault",
+   "tile": [
+    124,
+    40
+   ],
+   "region": "irondeep"
+  },
+  {
+   "id": "heartrot_hollow",
+   "tile": [
+    3,
+    93
+   ],
+   "region": "whisperwood"
+  },
+  {
+   "id": "tomb_of_the_sand_king",
+   "tile": [
+    125,
+    93
+   ],
+   "region": "ashen_desert"
+  }
+ ],
+ "discoveries": [
+  {
+   "id": "old_watchtower",
+   "name": "Old Watchtower",
+   "kind": "ruin",
+   "tile": [
+    33,
+    9
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 1
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 120
+    },
+    "currencies": {
+     "gold": 80
+    }
+   },
+   "description": "A crumbling tower overlooking the upper river."
+  },
+  {
+   "id": "forest_shrine",
+   "name": "Forgotten Forest Shrine",
+   "kind": "shrine",
+   "tile": [
+    11,
+    22
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 1
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 150
+    },
+    "currencies": {
+     "recruitment_tokens": 2
+    }
+   },
+   "description": "Moss-covered stones still hum faintly."
+  },
+  {
+   "id": "smugglers_cache",
+   "name": "Smuggler's Cache",
+   "kind": "chest",
+   "tile": [
+    60,
+    46
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 5,
+    "specialty": "assassin"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 200
+    },
+    "currencies": {
+     "gold": 400,
+     "gems": 20
+    }
+   },
+   "description": "Only a sharp-eyed rogue would notice the loose stones."
+  },
+  {
+   "id": "river_spirit_stone",
+   "name": "River Spirit Stone",
+   "kind": "magic",
+   "tile": [
+    30,
+    44
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 5,
+    "specialty": "mage"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 200,
+     "magic": 300
+    },
+    "items": {
+     "river_pearl": 2
+    }
+   },
+   "description": "A mage feels the stone's pull."
+  },
+  {
+   "id": "abandoned_shaft",
+   "name": "Abandoned Mine Shaft",
+   "kind": "cave",
+   "tile": [
+    60,
+    13
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 3,
+    "affinity": "mining"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 200,
+     "mining": 250
+    },
+    "items": {
+     "iron_ore": 25
+    }
+   },
+   "description": "A miner recognises old tool marks."
+  },
+  {
+   "id": "meadow_ring",
+   "name": "Fairy Ring",
+   "kind": "magic",
+   "tile": [
+    59,
+    35
+   ],
+   "region": "greenvale",
+   "requires": {
+    "exploration": 1
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 100
+    },
+    "currencies": {
+     "gems": 10
+    }
+   },
+   "description": "Mushrooms in a perfect circle."
+  },
+  {
+   "id": "dwarven_tunnel",
+   "name": "Ancient Dwarven Tunnel",
+   "kind": "secret_passage",
+   "tile": [
+    98,
+    13
+   ],
+   "region": "irondeep",
+   "requires": {
+    "exploration": 10,
+    "affinity": "mining"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 600
+    },
+    "reveal_secret": "irondeep_tunnel"
+   },
+   "description": "A miner finds a sealed tunnel linking the galleries to the deep mines."
+  },
+  {
+   "id": "hidden_gem_vein",
+   "name": "Hidden Gem Vein",
+   "kind": "hidden_node",
+   "tile": [
+    92,
+    5
+   ],
+   "region": "irondeep",
+   "requires": {
+    "exploration": 25
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 500
+    },
+    "reveal_node": "gem_rock_4"
+   },
+   "description": "Glittering rock behind a fallen slab."
+  },
+  {
+   "id": "dwarven_cache",
+   "name": "Dwarven Supply Cache",
+   "kind": "chest",
+   "tile": [
+    70,
+    10
+   ],
+   "region": "irondeep",
+   "requires": {
+    "exploration": 12
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 400
+    },
+    "items": {
+     "steel_bar": 10,
+     "cooked_trout": 20
+    },
+    "currencies": {
+     "gold": 600
+    }
+   },
+   "description": "Provisions left for travellers."
+  },
+  {
+   "id": "lake_shrine",
+   "name": "Lakeside Shrine",
+   "kind": "shrine",
+   "tile": [
+    118,
+    3
+   ],
+   "region": "irondeep",
+   "requires": {
+    "exploration": 15
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 500
+    },
+    "currencies": {
+     "recruitment_tokens": 5
+    }
+   },
+   "description": "A shrine to the deep waters."
+  },
+  {
+   "id": "golem_forge",
+   "name": "Ruined Golem Forge",
+   "kind": "ruin",
+   "tile": [
+    113,
+    41
+   ],
+   "region": "irondeep",
+   "requires": {
+    "exploration": 20,
+    "specialty": "mage"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 700,
+     "magic": 800
+    },
+    "items": {
+     "uncut_sapphire": 3
+    }
+   },
+   "description": "Runes only a mage can read."
+  },
+  {
+   "id": "lost_camp",
+   "name": "Fenwick's Lost Camp",
+   "kind": "npc",
+   "tile": [
+    12,
+    63
+   ],
+   "region": "whisperwood",
+   "requires": {
+    "exploration": 15
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 800
+    },
+    "character": "fenwick_the_lost"
+   },
+   "description": "A cold campfire, a hand-drawn map, and a very lost explorer."
+  },
+  {
+   "id": "ranger_trail",
+   "name": "Hidden Ranger Trail",
+   "kind": "secret_passage",
+   "tile": [
+    56,
+    61
+   ],
+   "region": "whisperwood",
+   "requires": {
+    "exploration": 15,
+    "specialty": "ranger"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 600
+    },
+    "reveal_secret": "whisperwood_trail"
+   },
+   "description": "Bent twigs mark a trail through the thicket."
+  },
+  {
+   "id": "moonwell_altar",
+   "name": "Moonwell Altar",
+   "kind": "magic",
+   "tile": [
+    10,
+    66
+   ],
+   "region": "whisperwood",
+   "requires": {
+    "exploration": 18
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 600
+    },
+    "items": {
+     "moonfish": 5
+    },
+    "currencies": {
+     "gems": 30
+    }
+   },
+   "description": "Moonlight pools on the altar stone."
+  },
+  {
+   "id": "druid_circle",
+   "name": "Druid Circle",
+   "kind": "ruin",
+   "tile": [
+    20,
+    90
+   ],
+   "region": "whisperwood",
+   "requires": {
+    "exploration": 22
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 700,
+     "herblore": 500
+    },
+    "items": {
+     "ranarr": 10
+    }
+   },
+   "description": "Standing stones wrapped in roots."
+  },
+  {
+   "id": "spore_hoard",
+   "name": "Spore Hoard",
+   "kind": "chest",
+   "tile": [
+    60,
+    91
+   ],
+   "region": "whisperwood",
+   "requires": {
+    "exploration": 20,
+    "specialty": "assassin"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 600
+    },
+    "currencies": {
+     "gold": 1500,
+     "gems": 40
+    }
+   },
+   "description": "Someone hid their savings in the mushrooms."
+  },
+  {
+   "id": "sunken_obelisk",
+   "name": "Sunken Obelisk",
+   "kind": "magic",
+   "tile": [
+    80,
+    52
+   ],
+   "region": "ashen_desert",
+   "requires": {
+    "exploration": 25,
+    "specialty": "mage"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 1000,
+     "magic": 1500
+    },
+    "items": {
+     "sunstone": 1
+    }
+   },
+   "description": "Half-buried glyphs glow at dusk."
+  },
+  {
+   "id": "caravan_wreck",
+   "name": "Caravan Wreck",
+   "kind": "chest",
+   "tile": [
+    92,
+    88
+   ],
+   "region": "ashen_desert",
+   "requires": {
+    "exploration": 25
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 900
+    },
+    "currencies": {
+     "gold": 2500
+    },
+    "items": {
+     "cooked_carp": 20
+    }
+   },
+   "description": "Bleached wagons, half full."
+  },
+  {
+   "id": "kings_road",
+   "name": "The King's Road",
+   "kind": "ruin",
+   "tile": [
+    110,
+    74
+   ],
+   "region": "ashen_desert",
+   "requires": {
+    "exploration": 30
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 1200,
+     "archaeology": 1500
+    },
+    "currencies": {
+     "recruitment_tokens": 8
+    }
+   },
+   "description": "Paving stones lead to the buried city."
+  },
+  {
+   "id": "tomb_robbers_stash",
+   "name": "Tomb Robber's Stash",
+   "kind": "chest",
+   "tile": [
+    124,
+    77
+   ],
+   "region": "ashen_desert",
+   "requires": {
+    "exploration": 30,
+    "specialty": "assassin"
+   },
+   "rewards": {
+    "xp": {
+     "exploration": 1000
+    },
+    "currencies": {
+     "gems": 80
+    },
+    "items": {
+     "golden_idol": 1
+    }
+   },
+   "description": "Rogues leave marks for other rogues."
+  }
+ ],
+ "secrets": [
+  {
+   "id": "irondeep_tunnel",
+   "tiles": [
+    [
+     99,
+     13
+    ],
+    [
+     99,
+     14
+    ],
+    [
+     99,
+     15
+    ],
+    [
+     99,
+     16
+    ],
+    [
+     99,
+     17
+    ],
+    [
+     99,
+     18
+    ],
+    [
+     98,
+     12
+    ]
+   ],
+   "region": "irondeep",
+   "reveals_as": "c"
+  },
+  {
+   "id": "whisperwood_trail",
+   "tiles": [
+    [
+     58,
+     61
+    ],
+    [
+     58,
+     62
+    ],
+    [
+     58,
+     63
+    ],
+    [
+     58,
+     64
+    ],
+    [
+     58,
+     65
+    ],
+    [
+     58,
+     66
+    ],
+    [
+     58,
+     67
+    ],
+    [
+     58,
+     68
+    ],
+    [
+     58,
+     69
+    ],
+    [
+     58,
+     70
+    ],
+    [
+     58,
+     71
+    ],
+    [
+     58,
+     72
+    ],
+    [
+     58,
+     73
+    ],
+    [
+     58,
+     74
+    ],
+    [
+     58,
+     75
+    ],
+    [
+     58,
+     76
+    ]
+   ],
+   "region": "whisperwood",
+   "reveals_as": "m"
+  }
+ ]
+}
